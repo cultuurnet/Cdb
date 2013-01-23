@@ -4,7 +4,7 @@
  * @class
  * Representation of a virtual address element in the cdb xml.
  */
-class CultureFeed_Cdb_Data_VirtualAddress implements CultureFeed_Cdb_IElement {
+class CultureFeed_Cdb_Data_Address_VirtualAddress implements CultureFeed_Cdb_IElement {
 
   /**
    * Title from the virtual address.
@@ -53,7 +53,7 @@ class CultureFeed_Cdb_Data_VirtualAddress implements CultureFeed_Cdb_IElement {
 
   /**
    * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
-   * @return CultureFeed_Cdb_Data_VirtualAddress
+   * @return CultureFeed_Cdb_Data_Address_VirtualAddress
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 

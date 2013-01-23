@@ -4,7 +4,7 @@
  * @class
  * Representation of a physical address element in the cdb xml.
  */
-class CultureFeed_Cdb_Data_PhysicalAddress implements CultureFeed_Cdb_IElement {
+class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IElement {
 
   /**
    * Street from the address.
@@ -38,7 +38,7 @@ class CultureFeed_Cdb_Data_PhysicalAddress implements CultureFeed_Cdb_IElement {
 
   /**
    * Geo information from the address.
-   * @var CultureFeed_Cdb_GeoInformation
+   * @var CultureFeed_Cdb_Data_Address_GeoInformation
    */
   protected $gis;
 
@@ -131,10 +131,10 @@ class CultureFeed_Cdb_Data_PhysicalAddress implements CultureFeed_Cdb_IElement {
 
   /**
    * Set the geo information.
-   * @param CultureFeed_Cdb_Data_GeoInformation $gis
+   * @param CultureFeed_Cdb_Data_Address_GeoInformation $gis
    *   Geo information to set.
    */
-  public function setGeoInformation(CultureFeed_Cdb_Data_GeoInformation $gis) {
+  public function setGeoInformation(CultureFeed_Cdb_Data_Address_GeoInformation $gis) {
     $this->gis = $gis;
   }
 
@@ -162,7 +162,7 @@ class CultureFeed_Cdb_Data_PhysicalAddress implements CultureFeed_Cdb_IElement {
 
   /**
    * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
-   * @return CultureFeed_Cdb_Data_PhysicalAddress
+   * @return CultureFeed_Cdb_Data_Address_PhysicalAddress
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
@@ -182,7 +182,7 @@ class CultureFeed_Cdb_Data_PhysicalAddress implements CultureFeed_Cdb_IElement {
       throw new CultureFeed_ParseException("Zip code is missing for physical address");
     }
 
-    $physicalAddress = new CultureFeed_Cdb_Data_PhysicalAddress();
+    $physicalAddress = new CultureFeed_Cdb_Data_Address_PhysicalAddress();
     $physicalAddress->setCity((string)$xmlElement->city);
     $physicalAddress->setCountry((string)$xmlElement->country);
     $physicalAddress->setStreet((string)$xmlElement->street);
@@ -193,7 +193,7 @@ class CultureFeed_Cdb_Data_PhysicalAddress implements CultureFeed_Cdb_IElement {
     }
 
     if (!empty($xmlElement->gis)) {
-      $physicalAddress->setGeoInformation(CultureFeed_Cdb_Data_GeoInformation::parseFromCdbXml($xmlElement->gis));
+      $physicalAddress->setGeoInformation(CultureFeed_Cdb_Data_Address_GeoInformation::parseFromCdbXml($xmlElement->gis));
     }
 
     return $physicalAddress;

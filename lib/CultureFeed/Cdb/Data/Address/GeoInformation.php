@@ -4,7 +4,7 @@
  * @class
  * Representation of geo information in the cdb xml.
  */
-class CultureFeed_Cdb_Data_GeoInformation implements CultureFeed_Cdb_IElement {
+class CultureFeed_Cdb_Data_Address_GeoInformation implements CultureFeed_Cdb_IElement {
 
   /**
    * X coördinate from the location.
@@ -79,7 +79,7 @@ class CultureFeed_Cdb_Data_GeoInformation implements CultureFeed_Cdb_IElement {
 
   /**
    * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
-   * @return CultureFeed_Cdb_Data_GeoInformation
+   * @return CultureFeed_Cdb_Data_Address_GeoInformation
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
@@ -87,7 +87,7 @@ class CultureFeed_Cdb_Data_GeoInformation implements CultureFeed_Cdb_IElement {
       throw new CultureFeed_ParseException("Coördinates are missing on gis element");
     }
 
-    return new CultureFeed_Cdb_Data_GeoInformation((string)$xmlElement->xcoordinate, (string)$xmlElement->ycoordinate);
+    return new CultureFeed_Cdb_Data_Address_GeoInformation((string)$xmlElement->xcoordinate, (string)$xmlElement->ycoordinate);
 
   }
 
