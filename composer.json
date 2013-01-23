@@ -1,0 +1,10 @@
+{
+    "name": "cultuurnet/cdb",
+    "description": "PHP library for hydrating/manipulating CultuurNet's Cdb XML documents",
+    "license": "Apache-2.0",
+    "autoload": {
+        "psr-0": {
+            "CultureFeed_Cdb_": ["lib"]
+        }
+    }
+}
