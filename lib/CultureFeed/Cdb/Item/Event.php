@@ -13,7 +13,12 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
    */
   protected $externalId;
 
-  /**
+    /**
+     * @var string
+     */
+    protected $cdbId;
+
+    /**
    * Publication date for the event.
    *
    * @var string
@@ -87,6 +92,13 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
     return $this->externalId;
   }
 
+    /**
+     * @return string
+     */
+    public function getCdbId() {
+        return $this->cdbId;
+    }
+
   /**
    * Get the publication date for this event.
    */
@@ -131,6 +143,8 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
 
   /**
    * Get the details from this event.
+   *
+   * @return CultureFeed_Cdb_Data_EventDetail[]
    */
   public function getDetails() {
     return $this->details;
@@ -165,6 +179,13 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
   public function setExternalId($id) {
     $this->externalId = $id;
   }
+
+    /**
+     * @param string $id
+     */
+    public function setCdbId($id) {
+        $this->cdbId = $id;
+    }
 
   /**
    * Set the publication date for this event.
@@ -333,75 +354,73 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
    * @return CultureFeed_Cdb_Item_Event
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
-
-    if (empty($xmlElement->events->event)) {
-      throw new CultureFeed_ParseException('No event was found in the xml');
-    }
-
-    $xmlEvent = $xmlElement->events->event;
-    if (empty($xmlEvent->calendar)) {
+    if (empty($xmlElement->calendar)) {
       throw new CultureFeed_ParseException('Calendar missing for event element');
     }
 
-    if (empty($xmlEvent->categories)) {
+    if (empty($xmlElement->categories)) {
       throw new CultureFeed_ParseException('Categories missing for event element');
     }
 
-    if (empty($xmlEvent->contactinfo)) {
+    if (empty($xmlElement->contactinfo)) {
       throw new CultureFeed_ParseException('Contact info missing for event element');
     }
 
-    if (empty($xmlEvent->eventdetails)) {
+    if (empty($xmlElement->eventdetails)) {
       throw new CultureFeed_ParseException('Eventdetails missing for event element');
     }
 
-    if (empty($xmlEvent->location)) {
+    if (empty($xmlElement->location)) {
       throw new CultureFeed_ParseException('Location missing for event element');
     }
 
-    $event_attributes = $xmlEvent->attributes();
+    $event_attributes = $xmlElement->attributes();
     $event = new CultureFeed_Cdb_Item_Event();
 
     // Set ID.
     if (isset($event_attributes['cdbid'])) {
-      $event->setExternalId((string)$event_attributes['cdbid']);
+      $event->setCdbId((string)$event_attributes['cdbid']);
     }
 
-    if (!empty($xmlEvent->agefrom)) {
-      $event->setAgeFrom((int)$xmlEvent->agefrom);
+    if (isset($event_attributes['externalid'])) {
+      $event->setExternalId((string)$event_attributes['externalid']);
+    }
+
+    if (!empty($xmlElement->agefrom)) {
+      $event->setAgeFrom((int)$xmlElement->agefrom);
     }
 
     // Set calendar information.
-    $calendar_type = key($xmlEvent->calendar);
+    $calendar_type = key($xmlElement->calendar);
     if ($calendar_type == 'permanentopeningtimes') {
-      $event->setCalendar(CultureFeed_Cdb_Data_Calendar_Permanent::parseFromCdbXml($xmlEvent->calendar));
+      $event->setCalendar(CultureFeed_Cdb_Data_Calendar_Permanent::parseFromCdbXml($xmlElement->calendar));
     }
     elseif ($calendar_type == 'timestamps') {
-      $event->setCalendar(CultureFeed_Cdb_Data_Calendar_TimestampList::parseFromCdbXml($xmlEvent->calendar->timestamps));
+      $event->setCalendar(CultureFeed_Cdb_Data_Calendar_TimestampList::parseFromCdbXml($xmlElement->calendar->timestamps));
     }
     elseif ($calendar_type == 'periods') {
-      $event->setCalendar(CultureFeed_Cdb_Data_Calendar_PeriodList::parseFromCdbXml($xmlEvent->calendar));
+      $event->setCalendar(CultureFeed_Cdb_Data_Calendar_PeriodList::parseFromCdbXml($xmlElement->calendar));
     }
 
     // Set categories
-    $event->setCategories(CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml($xmlEvent->categories));
+    $event->setCategories(CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml($xmlElement->categories));
 
     // Set contact information.
-    $event->setContactInfo(CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml($xmlEvent->contactinfo));
+    $event->setContactInfo(CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml($xmlElement->contactinfo));
 
     // Set event details.
-    $event->setDetails(CultureFeed_Cdb_Data_EventDetailList::parseFromCdbXml($xmlEvent->eventdetails));
+    $event->setDetails(CultureFeed_Cdb_Data_EventDetailList::parseFromCdbXml($xmlElement->eventdetails));
 
     // Set location.
-    $event->setLocation(CultureFeed_Cdb_Data_Location::parseFromCdbXml($xmlEvent->location));
+    $event->setLocation(CultureFeed_Cdb_Data_Location::parseFromCdbXml($xmlElement->location));
 
     // Set organiser
-    $event->setOrganiser(CultureFeed_Cdb_Data_Organiser::parseFromCdbXml($xmlEvent->organiser));
+    $event->setOrganiser(CultureFeed_Cdb_Data_Organiser::parseFromCdbXml($xmlElement->organiser));
 
     // Set the keywords.
 
-    if (!empty($xmlEvent->keywords)) {
-      $keywords = explode(';', $xmlEvent->keywords);
+    if (!empty($xmlElement->keywords)) {
+      $keywords = explode(';', $xmlElement->keywords);
       foreach ($keywords as $keyword) {
         $event->addKeyword($keyword);
       }
