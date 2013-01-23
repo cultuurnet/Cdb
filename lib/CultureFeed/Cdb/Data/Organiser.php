@@ -73,24 +73,26 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement {
    * @return CultureFeed_Cdb_Data_Organiser
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
+    $organiser = new CultureFeed_Cdb_Data_Organiser();
 
     if (empty($xmlElement->label) && empty($xmlElement->actor)) {
       //throw new CultureFeed_ParseException("One of the required fields (actor or label) is missing for organiser element");
     }
 
-    $attributes = $xmlElement->label->attributes();
-
-    $organiser = new CultureFeed_Cdb_Data_Organiser();
     if (!empty($xmlElement->label)) {
-      $organiser->setLabel((string)$xmlElement->label);
-    }
+        $organiser->setLabel((string) $xmlElement->label);
 
-    if (isset($attributes['cdbid'])) {
-      $organiser->setCdbid((string)$attributes['cdbid']);
+        $attributes = $xmlElement->label->attributes();
+        if (!empty($attributes->cdbid)) {
+            $organiser->setCdbid((string)$attributes->cdbid);
+        }
+    }
+    elseif (!empty($xmlElement->actor)) {
+
+        // @todo handle actor child element if present
     }
 
     return $organiser;
-
   }
 
 }
