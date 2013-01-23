@@ -52,10 +52,10 @@ class CultureFeed_Cdb_Data_VirtualAddress implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement)
+   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
    * @return CultureFeed_Cdb_Data_VirtualAddress
    */
-  public static function parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement) {
+  public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
   }
 

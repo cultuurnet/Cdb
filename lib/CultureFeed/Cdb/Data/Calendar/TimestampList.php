@@ -35,10 +35,10 @@ class CultureFeed_Cdb_Data_Calendar_TimestampList extends CultureFeed_Cdb_Data_C
   }
 
   /**
-   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement)
+   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
    * @return CultureFeed_Cdb_Data_PeriodList
    */
-  public static function parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement) {
+  public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     $timestampList = new CultureFeed_Cdb_Data_Calendar_TimestampList();
     if (!empty($xmlElement->timestamp)) {

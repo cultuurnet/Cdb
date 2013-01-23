@@ -23,10 +23,10 @@ class CultureFeed_Cdb_Data_EventDetailList extends CultureFeed_Cdb_Data_DetailLi
   }
 
   /**
-   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement)
+   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
    * @return CultureFeed_Cdb_Data_EventDetailList
    */
-  public static function parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement) {
+  public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     $detailList = new CultureFeed_Cdb_Data_EventDetailList();
     if (!empty($xmlElement->eventdetail)) {

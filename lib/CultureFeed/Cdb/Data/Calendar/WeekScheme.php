@@ -74,10 +74,10 @@ class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IEleme
   }
 
   /**
-   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement)
+   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
    * @return CultureFeed_Cdb_Data_Calendar_Weekscheme
    */
-  public static function parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement) {
+  public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     foreach (CultureFeed_Cdb_Data_Calendar_SchemeDay::$allowedDays as $day) {
       if (!isset($xmlElement->{$day})) {

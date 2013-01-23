@@ -121,7 +121,7 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
   public function getLocation() {
     return $this->location;
   }
-  
+
   /**
    * Get the organiser from this event.
    */
@@ -236,7 +236,7 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
   public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser) {
     $this->organiser = $organiser;
   }
-  
+
   /**
    * Set the details from this event.
    * @param CultureFeed_Cdb_Data_EventDetailList $details
@@ -319,7 +319,7 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
     if ($this->location) {
       $this->location->appendToDOM($eventElement);
     }
-    
+
     if ($this->organiser) {
       $this->organiser->appendToDOM($eventElement);
     }
@@ -329,10 +329,10 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement)
+   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
    * @return CultureFeed_Cdb_Item_Event
    */
-  public static function parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement) {
+  public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (empty($xmlElement->events->event)) {
       throw new CultureFeed_ParseException('No event was found in the xml');
@@ -397,9 +397,9 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
 
     // Set organiser
     $event->setOrganiser(CultureFeed_Cdb_Data_Organiser::parseFromCdbXml($xmlEvent->organiser));
-    
+
     // Set the keywords.
-    
+
     if (!empty($xmlEvent->keywords)) {
       $keywords = explode(';', $xmlEvent->keywords);
       foreach ($keywords as $keyword) {

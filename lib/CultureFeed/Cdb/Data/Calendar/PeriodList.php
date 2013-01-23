@@ -33,10 +33,10 @@ class CultureFeed_Cdb_Data_Calendar_PeriodList extends CultureFeed_Cdb_Data_Cale
   }
 
   /**
-   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement)
+   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
    * @return CultureFeed_Cdb_Data_Calendar_PeriodList
    */
-  public static function parseFromCdbXml(CultureFeed_SimpleXMLElement $xmlElement) {
+  public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     $periodList = new CultureFeed_Cdb_Data_Calendar_PeriodList();
 
