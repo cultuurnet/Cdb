@@ -6,5 +6,10 @@
         "psr-0": {
             "CultureFeed_Cdb_": ["lib"]
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }
