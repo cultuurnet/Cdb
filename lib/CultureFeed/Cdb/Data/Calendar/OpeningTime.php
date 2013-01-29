@@ -21,14 +21,17 @@ class CultureFeed_Cdb_Data_Calendar_OpeningTime implements CultureFeed_Cdb_IElem
   /**
    * Construct a new openingTime.
    *
-   * @param string $dateFrom
+   * @param string $openFrom
    *   Start time for the opening time.
-   * @param string $dateTo
+   * @param string|null $openTill
    *   End time for the opening time.
    */
-  public function __construct($openFrom, $openTill) {
+  public function __construct($openFrom, $openTill = NULL) {
     $this->setOpenFrom($openFrom);
-    $this->setOpenTill($openTill);
+
+    if ($openTill) {
+      $this->setOpenTill($openTill);
+    }
   }
 
   /**
@@ -75,7 +78,9 @@ class CultureFeed_Cdb_Data_Calendar_OpeningTime implements CultureFeed_Cdb_IElem
 
     $openingElement = $dom->createElement('openingtime');
     $openingElement->setAttribute('from', $this->openFrom);
-    $openingElement->setAttribute('to', $this->openTill);
+    if ($this->openTill) {
+      $openingElement->setAttribute('to', $this->openTill);
+    }
 
     $element->appendChild($openingElement);
 
@@ -92,11 +97,14 @@ class CultureFeed_Cdb_Data_Calendar_OpeningTime implements CultureFeed_Cdb_IElem
       throw new CultureFeed_ParseException("Required attribute 'from' is missing on openingtime");
     }
 
-    if (!isset($attributes['to'])) {
-      throw new CultureFeed_ParseException("Required attribute 'to' is missing on openingtime");
+    $openFrom = (string)$attributes['from'];
+
+    $openTill = NULL;
+    if (isset($attributes['to'])) {
+      $openTill = (string)$attributes['to'];
     }
 
-    return new CultureFeed_Cdb_Data_Calendar_OpeningTime((string)$attributes['from'], (string)$attributes['to']);
+    return new CultureFeed_Cdb_Data_Calendar_OpeningTime($openFrom, $openTill);
 
   }
 
