@@ -25,7 +25,7 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement {
 
   /**
    * Location actor.
-   * @var
+   * @var CultureFeed_Cdb_Item_Actor
    */
   protected $actor;
 
@@ -57,6 +57,20 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement {
    */
   public function getLabel() {
     return $this->label;
+  }
+
+  /**
+   * @return CultureFeed_Cdb_Item_Actor
+   */
+  public function getActor() {
+    return $this->actor;
+  }
+
+  /**
+   * @param CultureFeed_Cdb_Item_Actor $actor
+   */
+  public function setActor(CultureFeed_Cdb_Item_Actor $actor) {
+    $this->actor = $actor;
   }
 
   /**
@@ -131,8 +145,12 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement {
       }
     }
 
-    return $location;
+    if (!empty($xmlElement->actor)) {
+      $actor = CultureFeed_Cdb_Item_Actor::parseFromCdbXml($xmlElement->actor);
+      $location->setActor($actor);
+    }
 
+    return $location;
   }
 
 }

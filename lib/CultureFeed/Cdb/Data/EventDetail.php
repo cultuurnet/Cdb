@@ -7,6 +7,11 @@
 class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement {
 
   /**
+   * @var string
+   */
+  protected $calendarSummary;
+
+  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMElement $element) {
@@ -24,6 +29,20 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
 
     $element->appendChild($detailElement);
 
+  }
+
+  /**
+   * @param string $summary
+   */
+  public function setCalendarSummary($summary) {
+    $this->calendarSummary = $summary;
+  }
+
+  /**
+   * @return string
+   */
+  public function getCalendarSummary() {
+    return $this->calendarSummary;
   }
 
   /**
@@ -47,6 +66,10 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
 
     if (!empty($xmlElement->shortdescription)) {
       $eventDetail->setShortDescription((string)$xmlElement->shortdescription);
+    }
+
+    if (!empty($xmlElement->calendarsummary)) {
+      $eventDetail->setCalendarSummary((string)$xmlElement->calendarsummary);
     }
 
     return $eventDetail;

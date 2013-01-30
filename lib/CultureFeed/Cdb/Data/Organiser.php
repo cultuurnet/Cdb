@@ -18,6 +18,11 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement {
   protected $cdbid;
 
   /**
+   * @var CultureFeed_Cdb_Item_Actor
+   */
+  protected $actor;
+
+  /**
    * Get the cdbid for this organiser.
    */
   public function getCdbid() {
@@ -46,6 +51,20 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement {
    */
   public function setLabel($label) {
     $this->label = $label;
+  }
+
+  /**
+   * @param CultureFeed_Cdb_Item_Actor $actor
+   */
+  public function setActor(CultureFeed_Cdb_Item_Actor $actor) {
+    $this->actor = $actor;
+  }
+
+  /**
+   * @return CultureFeed_Cdb_Item_Actor
+   */
+  public function getActor() {
+    return $this->actor;
   }
 
   /**
@@ -88,8 +107,8 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement {
         }
     }
     elseif (!empty($xmlElement->actor)) {
-
-        // @todo handle actor child element if present
+      $actor = CultureFeed_Cdb_Item_Actor::parseFromCdbXml($xmlElement->actor);
+      $organiser->setActor($actor);
     }
 
     return $organiser;
