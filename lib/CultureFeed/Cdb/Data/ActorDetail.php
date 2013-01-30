@@ -17,13 +17,22 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
     $detailElement->setAttribute('lang', $this->language);
 
     if (!empty($this->shortDescription)) {
-      $detailElement->appendChild($dom->createElement('shortdescription', htmlentities($this->shortDescription)));
+      $element = $dom->createElement('shortdescription');
+      $element->appendChild($dom->createTextNode($this->shortDescription));
+      $detailElement->appendChild($element);
     }
 
-    $detailElement->appendChild($dom->createElement('title', htmlentities($this->title)));
+    if (!empty($this->longDescription)) {
+      $element = $dom->createElement('longdescription');
+      $element->appendChild($dom->createTextNode($this->longDescription));
+      $detailElement->appendChild($element);
+    }
+
+    $titleElement = $dom->createElement('title');
+    $titleElement->appendChild($dom->createTextNode($this->title));
+    $detailElement->appendChild($titleElement);
 
     $element->appendChild($detailElement);
-
   }
 
   /**
@@ -47,6 +56,10 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
 
     if (!empty($xmlElement->shortdescription)) {
       $actorDetail->setShortDescription((string)$xmlElement->shortdescription);
+    }
+
+    if (!empty($xmlElement->longdescription)) {
+      $actorDetail->setLongDescription((string)$xmlElement->longdescription);
     }
 
     return $actorDetail;

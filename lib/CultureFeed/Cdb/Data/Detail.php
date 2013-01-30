@@ -21,6 +21,11 @@ abstract class CultureFeed_Cdb_Data_Detail {
   protected $shortDescription;
 
   /**
+   * @var string
+   */
+  protected $longDescription;
+
+  /**
    * Language from current detail.
    * @var string
    */
@@ -35,9 +40,20 @@ abstract class CultureFeed_Cdb_Data_Detail {
 
   /**
    * Get the short description from current detail.
+   *
+   * @return string
    */
   public function getShortDescription() {
     return $this->shortDescription;
+  }
+
+  /**
+   * Get the long description from current detail.
+   *
+   * @return string
+   */
+  public function getLongDescription() {
+    return $this->longDescription;
   }
 
   /**
@@ -61,6 +77,13 @@ abstract class CultureFeed_Cdb_Data_Detail {
    */
   public function setShortDescription($description) {
     $this->shortDescription = $description;
+  }
+
+  /**
+   * Set the long description from current detail.
+   */
+  public function setLongDescription($description) {
+    $this->longDescription = $description;
   }
 
   /**
