@@ -11,6 +11,10 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
    */
   protected $calendarSummary;
 
+  public function __construct() {
+    $this->media = new CultureFeed_Cdb_Data_Media();
+  }
+
   /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
@@ -85,8 +89,12 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
       $eventDetail->setCalendarSummary((string)$xmlElement->calendarsummary);
     }
 
+    if (!empty($xmlElement->media->file)) {
+      foreach ($xmlElement->media->file as $fileElement) {
+        $eventDetail->media->add(CultureFeed_Cdb_Data_File::parseFromCdbXML($fileElement));
+      }
+    }
+
     return $eventDetail;
-
   }
-
 }

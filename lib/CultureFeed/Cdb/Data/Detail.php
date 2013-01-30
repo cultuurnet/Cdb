@@ -32,6 +32,11 @@ abstract class CultureFeed_Cdb_Data_Detail {
   protected $language;
 
   /**
+   * @var CultureFeed_Cdb_Data_Media
+   */
+  protected $media;
+
+  /**
    * Get the title from current detail.
    */
   public function getTitle() {
@@ -93,4 +98,7 @@ abstract class CultureFeed_Cdb_Data_Detail {
     $this->language = $language;
   }
 
+  public function getMedia() {
+    return $this->media;
+  }
 }

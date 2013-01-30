@@ -6,6 +6,10 @@
  */
 class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement {
 
+  public function __construct() {
+    $this->media = new CultureFeed_Cdb_Data_Media();
+  }
+
   /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
@@ -60,6 +64,12 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
 
     if (!empty($xmlElement->longdescription)) {
       $actorDetail->setLongDescription((string)$xmlElement->longdescription);
+    }
+
+    if (!empty($xmlElement->media->file)) {
+      foreach ($xmlElement->media->file as $fileElement) {
+        $actorDetail->media->add(CultureFeed_Cdb_Data_File::parseFromCdbXML($fileElement));
+      }
     }
 
     return $actorDetail;
