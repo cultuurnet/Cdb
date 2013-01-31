@@ -86,12 +86,11 @@ class CultureFeed_Cdb_Data_Calendar_Exceptions implements CultureFeed_Cdb_IEleme
 
     $exceptions = new CultureFeed_Cdb_Data_Calendar_Exceptions();
 
-    foreach ($xmlElement as $exceptionElement) {
-      $exceptions->add(CultureFeed_Cdb_Data_Calendar_Timestamp::parseFromCdbXml($exceptionElement));
+    foreach ($xmlElement->timestamp as $timestampElement) {
+      $exceptions->add(CultureFeed_Cdb_Data_Calendar_Timestamp::parseFromCdbXml($timestampElement));
     }
 
     return $exceptions;
-
   }
 
 }
