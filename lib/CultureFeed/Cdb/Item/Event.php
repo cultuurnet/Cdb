@@ -415,7 +415,9 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
     $event->setLocation(CultureFeed_Cdb_Data_Location::parseFromCdbXml($xmlElement->location));
 
     // Set organiser
-    $event->setOrganiser(CultureFeed_Cdb_Data_Organiser::parseFromCdbXml($xmlElement->organiser));
+    if (!empty($xmlElement->organiser)) {
+      $event->setOrganiser(CultureFeed_Cdb_Data_Organiser::parseFromCdbXml($xmlElement->organiser));
+    }
 
     // Set the keywords.
 
