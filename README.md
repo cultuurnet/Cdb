@@ -1,5 +1,5 @@
-CultuurNet\Cdb aims to be a fluent PHP library for manipulating, serializing 
-and deserializing data present in CultuurNet's [CdbXML][cdbxml] format. The library 
+CultuurNet\Cdb aims to be a fluent PHP library for manipulating, serializing
+and deserializing data present in CultuurNet's [CdbXML][cdbxml] format. The library
 currently supports CdbXML 3.1.
 
 History
@@ -21,7 +21,7 @@ Installation
 You are free to install the CultuurNet\Cdb PHP library in whatever way that fits you.
 However, we recommend to use [Composer][composer].
 
-Require the cultuurnet/cdb package (it is [registered on Packagist][packagist]) in 
+Require the cultuurnet/cdb package (it is [registered on Packagist][packagist]) in
 your project's composer.json file.
 
 ```json
@@ -68,11 +68,19 @@ Third party code should use the new classes which are functionally identical.
 
 CultureFeed_Cdb_Item_Event::parseFromCdbXml() used to expect a SimpleXMLElement argument
 containing an events element, and parsed the first event element inside that events element.
-However, CultureFeed_Cdb_Item_Event is supposed to represent a single event, and therefore 
+However, CultureFeed_Cdb_Item_Event is supposed to represent a single event, and therefore
 CultureFeed_Cdb_Item_Event::parseFromCdbXml() should only have expectations about a single
 'event' XML element and its contents, in line with how the other classes in the CultuurNet\Cdb
 library handle parsing from XML. Third party code should from now on pass a single event
 XML element to CultureFeed_Cdb_Item_Event::parseFromCdbXml().
+
+### Event external ID vs. CdbId ###
+When parsing CdbXML with CultureFeed_Cdb_Item_Event::parseFromCdbXml(), the CdbId was erroneously set as
+the external Id with CultureFeed_Cdb_Item_Event::setExternalId(). Third party code could use
+CultureFeed_Cdb_Item_event::getExternalId() to get the CdbId. From now on the CdbId should be retrieved with
+CultureFeed_Cdb_Item_event::getCdbId() or set with CultureFeed_Cdb_Item_event::setCdbId().
+CultureFeed_Cdb_Item_event::getExternalId() and CultureFeed_Cdb_Item_event::setExternalId()
+exclusively used to retrieve and set the external ID of an event, NOT the CdbId.
 
 [composer]: http://getcomposer.org
 [packagist]: https://packagist.org/packages/cultuurnet/cdb
