@@ -86,6 +86,12 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
   protected $keywords;
 
   /**
+   * Relations from this event.
+   * @var array List with related productions.
+   */
+  protected $relations;
+
+  /**
    * Get the external ID from this event.
    */
   public function getExternalId() {
@@ -301,6 +307,28 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Add a relation to the event.
+   * @param CultureFeed_Cdb_Item_Production $production
+   */
+  public function addRelation(CultureFeed_Cdb_Item_Production $production) {
+    $this->relations[$production->getCdbId()] = $production;
+  }
+
+  /**
+   * Delete a relation from the event.
+   * @param string $cdbid Cdbid to delete
+   */
+  public function deleteRelation($cdbid) {
+
+    if (!isset($this->relations[$cdbid])) {
+      throw new Exception('Trying to remove a non-existing relation.');
+    }
+
+    unset($this->relations[$cdbid]);
+
+  }
+
+  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMElement $element) {
@@ -345,6 +373,22 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
       $this->organiser->appendToDOM($eventElement);
     }
 
+    if (!empty($this->relations)) {
+
+      $relationsElement = $dom->createElement('eventrelations');
+
+      foreach ($this->relations as $relation) {
+        $relationElement = $dom->createElement('relatedproduction');
+        $relationElement->appendChild($dom->createTextNode($relation->getTitle()));
+        $relationElement->setAttribute('cdbid', $relation->getCdbid());
+        $relationElement->setAttribute('externalid', $relation->getExternalId());
+        $relationsElement->appendChild($relationElement);
+      }
+
+      $eventElement->appendChild($relationsElement);
+
+    }
+
     $element->appendChild($eventElement);
 
   }
@@ -354,6 +398,7 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
    * @return CultureFeed_Cdb_Item_Event
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
+
     if (empty($xmlElement->calendar)) {
       throw new CultureFeed_ParseException('Calendar missing for event element');
     }
@@ -417,6 +462,24 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
     // Set organiser
     if (!empty($xmlElement->organiser)) {
       $event->setOrganiser(CultureFeed_Cdb_Data_Organiser::parseFromCdbXml($xmlElement->organiser));
+    }
+
+    // Set relations.
+    if (!empty($xmlElement->eventrelations) && !empty($xmlElement->eventrelations->relatedproduction)) {
+
+      foreach ($xmlElement->eventrelations->relatedproduction as $relatedProduction) {
+
+        $attributes = $relatedProduction->attributes();
+        print_r($attributes);
+        $production = new CultureFeed_Cdb_Item_Production();
+        $production->setCdbId((string)$attributes['cdbid']);
+        $production->setExternalId((string)$attributes['externalid']);
+        $production->setTitle((string)$relatedProduction);
+
+        $event->addRelation($production);
+
+      }
+
     }
 
     // Set the keywords.

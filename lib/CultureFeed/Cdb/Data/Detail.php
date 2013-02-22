@@ -37,6 +37,12 @@ abstract class CultureFeed_Cdb_Data_Detail {
   protected $media;
 
   /**
+   * Price information from the item.
+   * @var CultureFeed_Cdb_Data_Price
+   */
+  protected $price;
+
+  /**
    * Get the title from current detail.
    */
   public function getTitle() {
@@ -69,6 +75,20 @@ abstract class CultureFeed_Cdb_Data_Detail {
   }
 
   /**
+   * Get the list of media items from current detail.
+   */
+  public function getMedia() {
+    return $this->media;
+  }
+
+  /**
+   * Get the price information from current detail.
+   */
+  public function getPrice() {
+    return $this->price;
+  }
+
+  /**
    * Set the title from current detail.
    * @param $title
    *   Title to set.
@@ -98,7 +118,12 @@ abstract class CultureFeed_Cdb_Data_Detail {
     $this->language = $language;
   }
 
-  public function getMedia() {
-    return $this->media;
+  /**
+   * Set the price information for current detail.
+   * @param CultureFeed_Cdb_Data_Price $price
+   */
+  public function setPrice($price) {
+    $this->price = $price;
   }
+
 }

@@ -16,6 +16,22 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
   }
 
   /**
+   * Set the calendar summary.
+   * @param string $summary
+   */
+  public function setCalendarSummary($summary) {
+    $this->calendarSummary = $summary;
+  }
+
+  /**
+   * Get the calendar summary.
+   * @return string
+   */
+  public function getCalendarSummary() {
+    return $this->calendarSummary;
+  }
+
+  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMElement $element) {
@@ -25,37 +41,38 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
     $detailElement = $dom->createElement('eventdetail');
     $detailElement->setAttribute('lang', $this->language);
 
-    if (!empty($this->shortDescription)) {
-      $element = $dom->createElement('shortdescription');
-      $element->appendChild($dom->createTextNode($this->shortDescription));
-      $detailElement->appendChild($element);
-    }
-
-    if (!empty($this->longDescription)) {
-      $element = $dom->createElement('longdescription');
-      $element->appendChild($dom->createTextNode($this->longDescription));
-      $detailElement->appendChild($element);
-    }
-
     $titleElement = $dom->createElement('title');
     $titleElement->appendChild($dom->createTextNode($this->title));
     $detailElement->appendChild($titleElement);
 
+    if (!empty($this->shortDescription)) {
+      $descriptionElement = $dom->createElement('shortdescription');
+      $descriptionElement->appendChild($dom->createTextNode($this->shortDescription));
+      $detailElement->appendChild($descriptionElement);
+    }
+
+    if (!empty($this->longDescription)) {
+      $descriptionElement = $dom->createElement('longdescription');
+      $descriptionElement->appendChild($dom->createTextNode($this->longDescription));
+      $detailElement->appendChild($descriptionElement);
+    }
+
+    if (!empty($this->calendarSummary)) {
+      $summaryElement = $dom->createElement('calendarsummary');
+      $summaryElement->appendChild($dom->createTextNode($this->calendarSummary));
+      $detailElement->appendChild($summaryElement);
+    }
+
+    if (!empty($this->media)) {
+      $this->media->appendToDOM($detailElement);
+    }
+
+    if (!empty($this->price)) {
+      $this->price->appendToDOM($detailElement);
+    }
+
     $element->appendChild($detailElement);
-  }
 
-  /**
-   * @param string $summary
-   */
-  public function setCalendarSummary($summary) {
-    $this->calendarSummary = $summary;
-  }
-
-  /**
-   * @return string
-   */
-  public function getCalendarSummary() {
-    return $this->calendarSummary;
   }
 
   /**
@@ -93,6 +110,10 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
       foreach ($xmlElement->media->file as $fileElement) {
         $eventDetail->media->add(CultureFeed_Cdb_Data_File::parseFromCdbXML($fileElement));
       }
+    }
+
+    if (!empty($xmlElement->price)) {
+      $eventDetail->setPrice(CultureFeed_Cdb_Data_Price::parseFromCdbXml($xmlElement->price));
     }
 
     return $eventDetail;
