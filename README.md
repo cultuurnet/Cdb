@@ -84,9 +84,9 @@ XML element to CultureFeed_Cdb_Item_Event::parseFromCdbXml().
 ### Event external ID vs. CdbId ###
 When parsing CdbXML with CultureFeed_Cdb_Item_Event::parseFromCdbXml(), the CdbId was erroneously set as
 the external Id with CultureFeed_Cdb_Item_Event::setExternalId(). Third party code could use
-CultureFeed_Cdb_Item_event::getExternalId() to get the CdbId. From now on the CdbId should be retrieved with
-CultureFeed_Cdb_Item_event::getCdbId() or set with CultureFeed_Cdb_Item_event::setCdbId().
-CultureFeed_Cdb_Item_event::getExternalId() and CultureFeed_Cdb_Item_event::setExternalId()
+CultureFeed_Cdb_Item_Event::getExternalId() to get the CdbId. From now on the CdbId should be retrieved with
+CultureFeed_Cdb_Item_Event::getCdbId() or set with CultureFeed_Cdb_Item_Event::setCdbId().
+CultureFeed_Cdb_Item_Event::getExternalId() and CultureFeed_Cdb_Item_Event::setExternalId()
 should be exclusively used to retrieve and set the external ID of an event, NOT the CdbId.
 
 [composer]: http://getcomposer.org
