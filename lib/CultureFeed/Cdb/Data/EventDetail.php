@@ -40,27 +40,17 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
 
     $detailElement = $dom->createElement('eventdetail');
     $detailElement->setAttribute('lang', $this->language);
-
-    $titleElement = $dom->createElement('title');
-    $titleElement->appendChild($dom->createTextNode($this->title));
-    $detailElement->appendChild($titleElement);
-
-    if (!empty($this->shortDescription)) {
-      $descriptionElement = $dom->createElement('shortdescription');
-      $descriptionElement->appendChild($dom->createTextNode($this->shortDescription));
-      $detailElement->appendChild($descriptionElement);
+    
+    if (!empty($this->calendarSummary)) {
+      $summaryElement = $dom->createElement('calendarsummary');
+      $summaryElement->appendChild($dom->createTextNode($this->calendarSummary));
+      $detailElement->appendChild($summaryElement);
     }
 
     if (!empty($this->longDescription)) {
       $descriptionElement = $dom->createElement('longdescription');
       $descriptionElement->appendChild($dom->createTextNode($this->longDescription));
       $detailElement->appendChild($descriptionElement);
-    }
-
-    if (!empty($this->calendarSummary)) {
-      $summaryElement = $dom->createElement('calendarsummary');
-      $summaryElement->appendChild($dom->createTextNode($this->calendarSummary));
-      $detailElement->appendChild($summaryElement);
     }
 
     if (count($this->media) > 0) {
@@ -70,6 +60,16 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
     if (!empty($this->price)) {
       $this->price->appendToDOM($detailElement);
     }
+    
+    if (!empty($this->shortDescription)) {
+      $descriptionElement = $dom->createElement('shortdescription');
+      $descriptionElement->appendChild($dom->createTextNode($this->shortDescription));
+      $detailElement->appendChild($descriptionElement);
+    }
+    
+    $titleElement = $dom->createElement('title');
+    $titleElement->appendChild($dom->createTextNode($this->title));
+    $detailElement->appendChild($titleElement);
 
     $element->appendChild($detailElement);
 
