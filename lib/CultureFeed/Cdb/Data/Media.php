@@ -1,6 +1,6 @@
 <?php
 
-class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator {
+class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator, Countable {
 
   /**
    * Current position in the list.
@@ -103,5 +103,9 @@ class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator {
     }
 
     return $media;
+  }
+
+  public function count() {
+    return count($this->details);
   }
 }

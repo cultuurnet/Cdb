@@ -63,7 +63,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
       $detailElement->appendChild($summaryElement);
     }
 
-    if (!empty($this->media)) {
+    if (count($this->media) > 0) {
       $this->media->appendToDOM($detailElement);
     }
 
