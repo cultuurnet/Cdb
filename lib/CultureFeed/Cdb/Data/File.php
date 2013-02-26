@@ -303,7 +303,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
     }
 
     if (!empty($this->fileType)) {
-      $fileElement->appendChild($dom->createElement('filetype', $this->fileName));
+      $fileElement->appendChild($dom->createElement('filetype', $this->fileType));
     }
 
     if (!empty($this->hLink)) {
