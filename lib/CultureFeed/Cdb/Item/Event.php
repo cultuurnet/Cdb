@@ -341,6 +341,10 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
       $eventElement->appendChild($dom->createElement('agefrom', $this->ageFrom));
     }
 
+    if ($this->cdbId) {
+      $eventElement->setAttribute('cdbid', $this->cdbId);
+    }
+
     if ($this->externalId) {
       $eventElement->setAttribute('externalid', $this->externalId);
     }
