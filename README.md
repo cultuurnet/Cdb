@@ -39,7 +39,7 @@ PSR-0 compliant autoloader. If you are using Composer, you can simply
 include the autoloader Composer generated.
 
 When using Drupal, there is a very simple way to use the autoloader of Composer.
-Just include it in the settings.php file of your site:
+Just include it in the settings.php file of your site (after you copied the composer.json file to the root dir of your Drupal install and ran the ``composer install`` command):
 
 ```php
 require 'vendor/autoload.php';
