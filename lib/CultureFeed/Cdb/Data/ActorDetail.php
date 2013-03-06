@@ -6,8 +6,33 @@
  */
 class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement {
 
+  /**
+   * Calendar summary from this eventDetail.
+   * @var string
+   */
+  protected $calendarSummary;
+
+  /**
+   * Construct the ActorDetail.
+   */
   public function __construct() {
     $this->media = new CultureFeed_Cdb_Data_Media();
+  }
+
+  /**
+   * Get the calendar summary.
+   * @return string
+   */
+  public function getCalendarSummary() {
+    return $this->calendarSummary;
+  }
+
+  /**
+   * Set the calendar summary.
+   * @param string $summary
+   */
+  public function setCalendarSummary($summary) {
+    $this->calendarSummary = $summary;
   }
 
   /**
@@ -20,21 +45,29 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
     $detailElement = $dom->createElement('actordetail');
     $detailElement->setAttribute('lang', $this->language);
 
-    if (!empty($this->shortDescription)) {
-      $element = $dom->createElement('shortdescription');
-      $element->appendChild($dom->createTextNode($this->shortDescription));
-      $detailElement->appendChild($element);
-    }
-
-    if (!empty($this->longDescription)) {
-      $element = $dom->createElement('longdescription');
-      $element->appendChild($dom->createTextNode($this->longDescription));
-      $detailElement->appendChild($element);
-    }
-
     $titleElement = $dom->createElement('title');
     $titleElement->appendChild($dom->createTextNode($this->title));
     $detailElement->appendChild($titleElement);
+
+    if ($this->calendarSummary) {
+      $detailElement->appendChild($dom->createTextNode($this->calendarSummary));
+    }
+
+    if (count($this->media) > 0) {
+      $this->media->appendToDOM($detailElement);
+    }
+
+    if (!empty($this->shortDescription)) {
+      $descriptionElement = $dom->createElement('shortdescription');
+      $descriptionElement->appendChild($dom->createTextNode($this->shortDescription));
+      $detailElement->appendChild($descriptionElement);
+    }
+
+    if (!empty($this->longDescription)) {
+      $descriptionElement = $dom->createElement('longdescription');
+      $descriptionElement->appendChild($dom->createTextNode($this->longDescription));
+      $detailElement->appendChild($descriptionElement);
+    }
 
     $element->appendChild($detailElement);
   }
@@ -57,6 +90,10 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
     $actorDetail = new self();
     $actorDetail->setTitle((string)$xmlElement->title);
     $actorDetail->setLanguage((string)$attributes['lang']);
+
+    if (!empty($xmlElement->calendarsummary)) {
+      $actorDetail->setCalendarSummary((string)$xmlElement->calendarsummary);
+    }
 
     if (!empty($xmlElement->shortdescription)) {
       $actorDetail->setShortDescription((string)$xmlElement->shortdescription);

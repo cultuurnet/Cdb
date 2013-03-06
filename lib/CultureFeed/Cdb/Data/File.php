@@ -287,19 +287,21 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
     if (!empty($this->channel)) {
       $fileElement->setAttribute('channel', $this->channel);
     }
-    
+
     if (!empty($this->copyright)) {
       $copyrightElement = $dom->createElement('copyright');
       $copyrightElement->appendChild($dom->createTextNode($this->copyright));
       $fileElement->appendChild($copyrightElement);
     }
-    
+
     if (!empty($this->creationDate)) {
       $fileElement->setAttribute('creationdate', $this->creationDate);
     }
-    
+
     if (!empty($this->fileName)) {
-      $fileElement->appendChild($dom->createElement('filename', $this->fileName));
+      $fileNameElement = $dom->createElement('filename');
+      $fileNameElement->appendChild($dom->createTextNode($this->fileName));
+      $fileElement->appendChild($fileNameElement);
     }
 
     if (!empty($this->fileType)) {
@@ -307,7 +309,9 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
     }
 
     if (!empty($this->hLink)) {
-      $fileElement->appendChild($dom->createElement('hlink', $this->hLink));
+      $hLinkElement = $dom->createElement('hlink');
+      $hLinkElement->appendChild($dom->createTextNode($this->hLink));
+      $fileElement->appendChild($hLinkElement);
     }
 
     if ($this->main) {
@@ -317,19 +321,21 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
     if (!empty($this->mediaType)) {
       $fileElement->appendChild($dom->createElement('mediatype', $this->mediaType));
     }
-    
+
     if (!empty($this->plainText)) {
       $plainTextElement = $dom->createElement('plaintext');
       $plainTextElement->appendChild($dom->createTextNode($this->plainText));
       $fileElement->appendChild($plainTextElement);
     }
-    
+
     if ($this->private) {
       $fileElement->setAttribute('private', 'true');
     }
 
     if (!empty($this->title)) {
-      $fileElement->appendChild($dom->createElement('title', $this->title));
+      $titleElement = $dom->createElement('title');
+      $titleElement->appendChild($dom->createTextNode($this->title));
+      $fileElement->appendChild($titleElement);
     }
 
     $element->appendChild($fileElement);

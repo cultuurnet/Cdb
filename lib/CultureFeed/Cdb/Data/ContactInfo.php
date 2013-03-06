@@ -167,12 +167,12 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
       $address->appendToDom($contactElement);
     }
 
-    foreach ($this->phones as $phone) {
-      $phone->appendToDom($contactElement);
-    }
-
     foreach ($this->mails as $mail) {
       $mail->appendToDom($contactElement);
+    }
+
+    foreach ($this->phones as $phone) {
+      $phone->appendToDom($contactElement);
     }
 
     foreach ($this->urls as $url) {

@@ -67,11 +67,18 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
     $dom = $element->ownerDocument;
 
     $priceElement = $dom->createElement('price');
-    $priceElement->appendChild($dom->createElement('pricevalue', $this->value));
 
-    $description_element = $dom->createElement('pricedescription');
-    $description_element->appendChild($dom->createTextNode($this->description));
-    $priceElement->appendChild($description_element);
+    if ($this->value) {
+      $valueElement = $dom->createElement('pricevalue');
+      $valueElement->appendChild($dom->createTextNode($this->value));
+      $priceElement->appendChild($valueElement);
+    }
+
+    if ($this->description) {
+      $descriptionElement = $dom->createElement('pricedescription');
+      $descriptionElement->appendChild($dom->createTextNode($this->description));
+      $priceElement->appendChild($descriptionElement);
+    }
 
     $element->appendChild($priceElement);
 

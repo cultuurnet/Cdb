@@ -43,7 +43,7 @@ class CultureFeed_Cdb_Default {
 
   }
 
-  public function getXml() {
+  public function __toString() {
 
     $dom = new DOMDocument('1.0', 'UTF-8');
     $dom->formatOutput = true;
