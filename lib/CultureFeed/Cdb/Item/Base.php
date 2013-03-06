@@ -118,7 +118,7 @@ abstract class CultureFeed_Cdb_Item_Base {
    * Add a relation to the current item.
    * @param CultureFeed_Cdb_Item_Base $item
    */
-  public function addRelation(CultureFeed_Cdb_Item_Base $item) {
+  public function addRelation(CultureFeed_Cdb_Item_Reference $item) {
     $this->relations[$item->getCdbId()] = $item;
   }
 
