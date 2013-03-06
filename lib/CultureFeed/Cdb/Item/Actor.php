@@ -1,72 +1,15 @@
 <?php
 
-class CultureFeed_Cdb_Item_Actor implements CultureFeed_Cdb_IElement {
+/**
+ * @class
+ * Representation of an actor on the culturefeed.
+ */
+class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement {
 
   /**
    * @var CultureFeed_Cdb_Data_ActorDetailList
    */
   protected $details;
-
-  /**
-   * @var string
-   */
-  protected $cdbId;
-
-  /**
-   * @var CultureFeed_Cdb_Data_CategoryList
-   */
-  protected $categories;
-
-  /**
-   * Appends the current object to the passed DOM tree.
-   *
-   * @param DOMElement $element
-   *   The DOM tree to append to.
-   */
-  public function appendToDOM(DOMElement $element) {
-    // TODO: Implement appendToDOM() method.
-  }
-
-  /**
-   * Parse a new object from a given cdbxml element.
-   * @param CultureFeed_SimpleXMLElement $xmlElement
-   *   XML to parse.
-   * @throws CultureFeed_ParseException
-   */
-  public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
-    $actor = new self();
-
-    $actor_attributes = $xmlElement->attributes();
-
-    if (isset($actor_attributes['cdbid'])) {
-      $actor->setCdbId((string)$actor_attributes['cdbid']);
-    }
-    // Set categories
-    $actor->setCategories(CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml($xmlElement->categories));
-
-    if (!empty($xmlElement->actordetails)) {
-      $actor->setDetails(CultureFeed_Cdb_Data_ActorDetailList::parseFromCdbXml($xmlElement->actordetails));
-    }
-    else {
-      $actor->setDetails(new CultureFeed_Cdb_Data_ActorDetailList());
-    }
-
-    return $actor;
-  }
-
-  /**
-   * @param string $id
-   */
-  public function setCdbId($id) {
-    $this->cdbId = $id;
-  }
-
-  /**
-   * @return string
-   */
-  public function getCdbId() {
-    return $this->cdbId;
-  }
 
   /**
    * Set the details from this actor.
@@ -75,15 +18,6 @@ class CultureFeed_Cdb_Item_Actor implements CultureFeed_Cdb_IElement {
    */
   public function setDetails(CultureFeed_Cdb_Data_ActorDetailList $details) {
     $this->details = $details;
-  }
-
-  /**
-   * Set the categories from this actor.
-   * @param CultureFeed_Cdb_Data_CategoryList $categories
-   *   Categories to set.
-   */
-  public function setCategories(CultureFeed_Cdb_Data_CategoryList $categories) {
-    $this->categories = $categories;
   }
 
   /**
@@ -110,9 +44,55 @@ class CultureFeed_Cdb_Item_Actor implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Get the categories from this event.
+   * Appends the current object to the passed DOM tree.
+   *
+   * @param DOMElement $element
+   *   The DOM tree to append to.
    */
-  public function getCategories() {
-    return $this->categories;
+  public function appendToDOM(DOMElement $element) {
+    // TODO: Implement appendToDOM() method.
   }
+
+  /**
+   * Parse a new object from a given cdbxml element.
+   * @param CultureFeed_SimpleXMLElement $xmlElement
+   *   XML to parse.
+   * @throws CultureFeed_ParseException
+   */
+  public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
+
+    $actor = new self();
+
+    $actor_attributes = $xmlElement->attributes();
+
+    if (isset($actor_attributes['cdbid'])) {
+      $actor->setCdbId((string)$actor_attributes['cdbid']);
+    }
+
+    if (isset($actor_attributes['externalid'])) {
+      $actor->setExternalId((string)$actor_attributes['externalid']);
+    }
+
+    // Set categories
+    $actor->setCategories(CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml($xmlElement->categories));
+
+    if (!empty($xmlElement->actordetails)) {
+      $actor->setDetails(CultureFeed_Cdb_Data_ActorDetailList::parseFromCdbXml($xmlElement->actordetails));
+    }
+    else {
+      $actor->setDetails(new CultureFeed_Cdb_Data_ActorDetailList());
+    }
+
+    // Set the keywords.
+    if (!empty($xmlElement->keywords)) {
+      $keywords = explode(';', $xmlElement->keywords);
+      foreach ($keywords as $keyword) {
+        $actor->addKeyword($keyword);
+      }
+    }
+
+    return $actor;
+
+  }
+
 }
