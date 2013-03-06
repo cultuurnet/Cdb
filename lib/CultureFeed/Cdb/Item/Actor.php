@@ -38,15 +38,6 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
   }
 
   /**
-   * Get the details from this actor.
-   *
-   * @return CultureFeed_Cdb_Data_ActorDetail[]
-   */
-  public function getDetails() {
-    return $this->details;
-  }
-
-  /**
    * Get the contact info from this actor.
    */
   public function getContactInfo() {
@@ -58,15 +49,6 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
    */
   public function getWeekScheme() {
     return $this->weekScheme;
-  }
-
-  /**
-   * Set the details from this actor.
-   * @param CultureFeed_Cdb_Data_ActorDetailList $details
-   *   Detail information from the actor.
-   */
-  public function setDetails(CultureFeed_Cdb_Data_ActorDetailList $details) {
-    $this->details = $details;
   }
 
   /**
@@ -83,20 +65,6 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
    */
   public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $weekScheme) {
     $this->weekScheme = $weekScheme;
-  }
-
-  /**
-   * @param string $language_code
-   *
-   * @return CultureFeed_Cdb_Data_ActorDetail|NULL
-   */
-  public function getDetailByLanguage($language_code) {
-    /* @var CultureFeed_Cdb_Data_ActorDetail $detail */
-    foreach ($this->details as $detail) {
-      if ($language_code == $detail->getLanguage()) {
-        return $detail;
-      }
-    }
   }
 
   /**

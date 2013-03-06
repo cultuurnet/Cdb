@@ -7,7 +7,7 @@
 class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement {
 
   /**
-   * Calendar summary from this eventDetail.
+   * Calendar summary from this actorDetail.
    * @var string
    */
   protected $calendarSummary;
@@ -45,12 +45,16 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
     $detailElement = $dom->createElement('actordetail');
     $detailElement->setAttribute('lang', $this->language);
 
-    $titleElement = $dom->createElement('title');
-    $titleElement->appendChild($dom->createTextNode($this->title));
-    $detailElement->appendChild($titleElement);
-
     if ($this->calendarSummary) {
+      $summaryElement = $dom->createElement('calendarsummary');
+      $summaryElement->appendChild($dom->createTextNode($this->calendarSummary));
       $detailElement->appendChild($dom->createTextNode($this->calendarSummary));
+    }
+
+    if (!empty($this->longDescription)) {
+      $descriptionElement = $dom->createElement('longdescription');
+      $descriptionElement->appendChild($dom->createTextNode($this->longDescription));
+      $detailElement->appendChild($descriptionElement);
     }
 
     if (count($this->media) > 0) {
@@ -63,13 +67,12 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
       $detailElement->appendChild($descriptionElement);
     }
 
-    if (!empty($this->longDescription)) {
-      $descriptionElement = $dom->createElement('longdescription');
-      $descriptionElement->appendChild($dom->createTextNode($this->longDescription));
-      $detailElement->appendChild($descriptionElement);
-    }
+    $titleElement = $dom->createElement('title');
+    $titleElement->appendChild($dom->createTextNode($this->title));
+    $detailElement->appendChild($titleElement);
 
     $element->appendChild($detailElement);
+
   }
 
   /**

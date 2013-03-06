@@ -7,16 +7,30 @@
 abstract class CultureFeed_Cdb_Item_Base {
 
   /**
-   * External id from an item.
+   * External id from the item.
    *
    * @var string
    */
   protected $externalId;
 
   /**
+   * cdbId from the item.
    * @var string
    */
   protected $cdbId;
+
+  /**
+   * Categories from the item.
+   * @var CultureFeed_Cdb_Data_CategoryList
+   */
+  protected $categories;
+
+  /**
+   * Details from the item.
+   *
+   * @var CultureFeed_Cdb_Data_DetailList
+   */
+  protected $details;
 
   /**
    * Keywords from the item
@@ -24,30 +38,25 @@ abstract class CultureFeed_Cdb_Item_Base {
    */
   protected $keywords;
 
-/**
-   * Categories from the items.
-   * @var CultureFeed_Cdb_Data_CategoryList
-   */
-  protected $categories;
-
   /**
-   * Relations from this item.
+   * Relations from the item.
    * @var array List with related items.
    */
   protected $relations;
 
   /**
-   * Get the external ID from this event.
+   * Get the external ID from this item.
    */
   public function getExternalId() {
     return $this->externalId;
   }
 
   /**
+   * Get the Cdbid from this item.
    * @return string
    */
   public function getCdbId() {
-      return $this->cdbId;
+    return $this->cdbId;
   }
 
   /**
@@ -55,6 +64,15 @@ abstract class CultureFeed_Cdb_Item_Base {
    */
   public function getCategories() {
     return $this->categories;
+  }
+
+  /**
+   * Get the details from this item.
+   *
+   * @return CultureFeed_Cdb_Data_DetailList
+   */
+  public function getDetails() {
+    return $this->details;
   }
 
   /**
@@ -82,7 +100,7 @@ abstract class CultureFeed_Cdb_Item_Base {
   }
 
   /**
-   * Set the categories from this event.
+   * Set the categories from this item.
    * @param CultureFeed_Cdb_Data_CategoryList $categories
    *   Categories to set.
    */
@@ -91,7 +109,16 @@ abstract class CultureFeed_Cdb_Item_Base {
   }
 
   /**
-   * Add a keyword to this event.
+   * Set the details from this item.
+   * @param CultureFeed_Cdb_Data_DetailList $details
+   *   Detail information from the current item.
+   */
+  public function setDetails(CultureFeed_Cdb_Data_DetailList $details) {
+    $this->details = $details;
+  }
+
+  /**
+   * Add a keyword to this item.
    * @param string $keyword
    *   Add a keyword.
    */
@@ -100,7 +127,7 @@ abstract class CultureFeed_Cdb_Item_Base {
   }
 
   /**
-   * Delete a keyword from this event.
+   * Delete a keyword from this item.
    * @param string $keyword
    *   Keyword to remove.
    */
@@ -123,7 +150,7 @@ abstract class CultureFeed_Cdb_Item_Base {
   }
 
   /**
-   * Delete a relation from the event.
+   * Delete a relation from the item.
    * @param string $cdbid Cdbid to delete
    */
   public function deleteRelation($cdbid) {
@@ -134,6 +161,22 @@ abstract class CultureFeed_Cdb_Item_Base {
 
     unset($this->relations[$cdbid]);
 
+  }
+
+  /**
+   * Get the details for a given language.
+   * @param string $language_code
+   *   Language code to get.
+   *
+   * @return CultureFeed_Cdb_Data_Detail|NULL
+   */
+  public function getDetailByLanguage($language_code) {
+    /* @var CultureFeed_Cdb_Data_ActorDetail $detail */
+    foreach ($this->details as $detail) {
+      if ($language_code == $detail->getLanguage()) {
+        return $detail;
+      }
+    }
   }
 
 }

@@ -33,13 +33,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   protected $calendar;
 
   /**
-   * Details from an event.
-   *
-   * @var CultureFeed_Cdb_Data_EventDetailList
-   */
-  protected $details;
-
-  /**
    * Contact info for an event.
    *
    * @var CultureFeed_Cdb_Data_ContactInfo
@@ -100,15 +93,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
    */
   public function getOrganiser() {
     return $this->organiser;
-  }
-
-  /**
-   * Get the details from this event.
-   *
-   * @return CultureFeed_Cdb_Data_EventDetail[]
-   */
-  public function getDetails() {
-    return $this->details;
   }
 
   /**
@@ -190,15 +174,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   }
 
   /**
-   * Set the details from this event.
-   * @param CultureFeed_Cdb_Data_EventDetailList $details
-   *   Detail information from the event.
-   */
-  public function setDetails(CultureFeed_Cdb_Data_EventDetailList $details) {
-    $this->details = $details;
-  }
-
-  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMElement $element) {
@@ -252,11 +227,18 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
       $relationsElement = $dom->createElement('eventrelations');
 
       foreach ($this->relations as $relation) {
+
         $relationElement = $dom->createElement('relatedproduction');
         $relationElement->appendChild($dom->createTextNode($relation->getTitle()));
         $relationElement->setAttribute('cdbid', $relation->getCdbid());
-        $relationElement->setAttribute('externalid', $relation->getExternalId());
+
+        $externalId = $relation->getExternalId();
+        if ($externalId) {
+          $relationElement->setAttribute('externalid', $relation->getExternalId());
+        }
+
         $relationsElement->appendChild($relationElement);
+
       }
 
       $eventElement->appendChild($relationsElement);

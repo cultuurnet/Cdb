@@ -2,18 +2,18 @@
 
 /**
  * Class CultureFeed_Cdb_Item_Reference
- * 
- * Holds references to between Items.
+ *
+ * Holds references between different Cdb Items.
  */
 Class CultureFeed_Cdb_Item_Reference {
-	
+
 	private $title = '';
 	private $cdbId = '';
 	private $externalId = '';
-	
+
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param string $cdbId
 	 * @param string $title
 	 * @param string $externalId
@@ -50,4 +50,5 @@ Class CultureFeed_Cdb_Item_Reference {
 	public function getTitle($title) {
 		return $this->title;
 	}
+
 }
