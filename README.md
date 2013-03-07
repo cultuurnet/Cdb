@@ -51,6 +51,15 @@ Backwards Compatibility
 This section contains information regarding possible backwards compatibility breaks, and outlines
 the necessary steps for upgrading third party code using the CultuurNet\Cdb library.
 
+2013-03-07
+----------
+
+### CultureFeed_ParseException replaced by CultureFeed_Cdb_ParseException ###
+
+The CultuurNet\Cdb library was still using CultureFeed_ParseException from the culturefeed module,
+an undesired dependency. A new class CultureFeed_Cdb_ParseException has been introduced, and is used
+now instead of CultureFeed_ParseException.
+
 2013-01-23
 ----------
 
