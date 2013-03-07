@@ -94,7 +94,7 @@ class CultureFeed_Cdb_Data_Calendar_OpeningTime implements CultureFeed_Cdb_IElem
 
     $attributes = $xmlElement->attributes();
     if (!isset($attributes['from'])) {
-      throw new CultureFeed_ParseException("Required attribute 'from' is missing on openingtime");
+      throw new CultureFeed_Cdb_ParseException("Required attribute 'from' is missing on openingtime");
     }
 
     $openFrom = (string)$attributes['from'];

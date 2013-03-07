@@ -117,11 +117,11 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (empty($xmlElement->categories)) {
-      throw new CultureFeed_ParseException('Categories missing for actor element');
+      throw new CultureFeed_Cdb_ParseException('Categories missing for actor element');
     }
 
     if (empty($xmlElement->actordetails)) {
-      throw new CultureFeed_ParseException('Actordetails missing for actor element');
+      throw new CultureFeed_Cdb_ParseException('Actordetails missing for actor element');
     }
 
     $actor = new self();

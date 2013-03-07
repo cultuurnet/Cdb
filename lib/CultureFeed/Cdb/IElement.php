@@ -17,7 +17,7 @@ interface CultureFeed_Cdb_IElement {
    * Parse a new object from a given cdbxml element.
    * @param SimpleXMLElement $xmlElement
    *   XML to parse.
-   * @throws CultureFeed_ParseException
+   * @throws CultureFeed_Cdb_ParseException
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement);
 

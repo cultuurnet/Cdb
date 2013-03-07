@@ -95,7 +95,7 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement {
     $organiser = new CultureFeed_Cdb_Data_Organiser();
 
     if (empty($xmlElement->label) && empty($xmlElement->actor)) {
-      //throw new CultureFeed_ParseException("One of the required fields (actor or label) is missing for organiser element");
+      //throw new CultureFeed_Cdb_ParseException("One of the required fields (actor or label) is missing for organiser element");
     }
 
     if (!empty($xmlElement->label)) {

@@ -91,7 +91,7 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (!isset($xmlElement->pricevalue) ) {
-      throw new CultureFeed_ParseException("Value missing for price element");
+      throw new CultureFeed_Cdb_ParseException("Value missing for price element");
     }
 
     $price = new CultureFeed_Cdb_Data_Price((string)$xmlElement->pricevalue);

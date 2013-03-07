@@ -131,7 +131,7 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement {
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (empty($xmlElement->address)) {
-      throw new CultureFeed_ParseException("Address missing for location element");
+      throw new CultureFeed_Cdb_ParseException("Address missing for location element");
     }
 
     $address = CultureFeed_Cdb_Data_Address::parseFromCdbXml($xmlElement->address);

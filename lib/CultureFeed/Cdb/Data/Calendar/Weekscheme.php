@@ -81,7 +81,7 @@ class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IEleme
 
     foreach (CultureFeed_Cdb_Data_Calendar_SchemeDay::$allowedDays as $day) {
       if (!isset($xmlElement->{$day})) {
-        throw new CultureFeed_ParseException("Missing required data for " . $day);
+        throw new CultureFeed_Cdb_ParseException("Missing required data for " . $day);
       }
     }
 

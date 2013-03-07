@@ -256,23 +256,23 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (empty($xmlElement->calendar)) {
-      throw new CultureFeed_ParseException('Calendar missing for event element');
+      throw new CultureFeed_Cdb_ParseException('Calendar missing for event element');
     }
 
     if (empty($xmlElement->categories)) {
-      throw new CultureFeed_ParseException('Categories missing for event element');
+      throw new CultureFeed_Cdb_ParseException('Categories missing for event element');
     }
 
     if (empty($xmlElement->contactinfo)) {
-      throw new CultureFeed_ParseException('Contact info missing for event element');
+      throw new CultureFeed_Cdb_ParseException('Contact info missing for event element');
     }
 
     if (empty($xmlElement->eventdetails)) {
-      throw new CultureFeed_ParseException('Eventdetails missing for event element');
+      throw new CultureFeed_Cdb_ParseException('Eventdetails missing for event element');
     }
 
     if (empty($xmlElement->location)) {
-      throw new CultureFeed_ParseException('Location missing for event element');
+      throw new CultureFeed_Cdb_ParseException('Location missing for event element');
     }
 
     $event_attributes = $xmlElement->attributes();
