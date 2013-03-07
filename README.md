@@ -38,8 +38,11 @@ The library is [PSR-0][psr-0] compliant, so you can load its classes with any
 PSR-0 compliant autoloader. If you are using Composer, you can simply
 include the autoloader Composer generated.
 
-When using Drupal, there is a very simple way to use the autoloader of Composer.
-Just include it in the settings.php file of your site (after you copied the composer.json file to the root dir of your Drupal install and ran the ``composer install`` command):
+When using Drupal, there is a very simple way to use the autoloader of Composer: 
+
+- place in your Drupal root dir a file with the name composer.json and the json content
+- run ``composer install``
+- include this in the settings.php file of your site:
 
 ```php
 require 'vendor/autoload.php';
