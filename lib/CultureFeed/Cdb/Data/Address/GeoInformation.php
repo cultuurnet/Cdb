@@ -59,7 +59,7 @@ class CultureFeed_Cdb_Data_Address_GeoInformation implements CultureFeed_Cdb_IEl
    * Get the y coördinate.
    */
   public function getYCoordinate() {
-    return $this->YCoordinate;
+    return $this->yCoordinate;
   }
 
   /**
