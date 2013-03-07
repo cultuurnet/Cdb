@@ -326,12 +326,11 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
       foreach ($xmlElement->eventrelations->relatedproduction as $relatedProduction) {
 
         $attributes = $relatedProduction->attributes();
-        $production = new CultureFeed_Cdb_Item_Production();
-        $production->setCdbId((string)$attributes['cdbid']);
-        $production->setExternalId((string)$attributes['externalid']);
-        $production->setTitle((string)$relatedProduction);
 
-        $event->addRelation($production);
+        $event->addRelation(new CultureFeed_Cdb_Item_Reference(
+        	  (string)$attributes['cdbid'],
+        		(string)$relatedProduction,
+        		(string)$attributes['externalid']));
 
       }
 

@@ -41,7 +41,7 @@ class CultureFeed_Cdb_Default {
       break;
 
       case 'CultureFeed_Cdb_Item_Production':
-        $this->items['productions'] = $item;
+        $this->items['productions'][] = $item;
       break;
 
       default:
