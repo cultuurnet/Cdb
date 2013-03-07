@@ -67,11 +67,18 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
     $dom = $element->ownerDocument;
 
     $priceElement = $dom->createElement('price');
-    $priceElement->appendChild($dom->createElement('pricevalue', $this->value));
 
-    $description_element = $dom->createElement('pricedescription');
-    $description_element->appendChild($dom->createTextNode($this->description));
-    $priceElement->appendChild($description_element);
+    if ($this->value) {
+      $valueElement = $dom->createElement('pricevalue');
+      $valueElement->appendChild($dom->createTextNode($this->value));
+      $priceElement->appendChild($valueElement);
+    }
+
+    if ($this->description) {
+      $descriptionElement = $dom->createElement('pricedescription');
+      $descriptionElement->appendChild($dom->createTextNode($this->description));
+      $priceElement->appendChild($descriptionElement);
+    }
 
     $element->appendChild($priceElement);
 
@@ -84,7 +91,7 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (!isset($xmlElement->pricevalue) ) {
-      throw new CultureFeed_ParseException("Value missing for price element");
+      throw new CultureFeed_Cdb_ParseException("Value missing for price element");
     }
 
     $price = new CultureFeed_Cdb_Data_Price((string)$xmlElement->pricevalue);

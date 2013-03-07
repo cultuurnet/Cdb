@@ -4,21 +4,9 @@
  * @class
  * Representation of an event on the culturefeed.
  */
-class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
+class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement {
 
   /**
-   * External id from an event.
-   *
-   * @var string
-   */
-  protected $externalId;
-
-    /**
-     * @var string
-     */
-    protected $cdbId;
-
-    /**
    * Publication date for the event.
    *
    * @var string
@@ -30,7 +18,7 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
    *
    * @var string
    */
-  protected  $publicationTime = '00:00:00';
+  protected $publicationTime = '00:00:00';
 
   /**
    * Minimum age for the event.
@@ -43,13 +31,6 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
    * @var CultureFeed_Cdb_Data_Calendar
    */
   protected $calendar;
-
-  /**
-   * Details from an event.
-   *
-   * @var CultureFeed_Cdb_Data_EventDetailList
-   */
-  protected $details;
 
   /**
    * Contact info for an event.
@@ -71,39 +52,6 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
    * @var CultureFeed_Cdb_Data_Organiser
    */
   protected $organiser;
-
-
-  /**
-   * Categories from the event.
-   * @var CultureFeed_Cdb_Data_CategoryList
-   */
-  protected $categories;
-
-  /**
-   * Keywords from the event
-   * @var array List with keywords.
-   */
-  protected $keywords;
-
-  /**
-   * Relations from this event.
-   * @var array List with related productions.
-   */
-  protected $relations;
-
-  /**
-   * Get the external ID from this event.
-   */
-  public function getExternalId() {
-    return $this->externalId;
-  }
-
-    /**
-     * @return string
-     */
-    public function getCdbId() {
-        return $this->cdbId;
-    }
 
   /**
    * Get the publication date for this event.
@@ -148,50 +96,11 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Get the details from this event.
-   *
-   * @return CultureFeed_Cdb_Data_EventDetail[]
-   */
-  public function getDetails() {
-    return $this->details;
-  }
-
-  /**
    * Get the contact info from this event.
    */
   public function getContactInfo() {
     return $this->contactInfo;
   }
-
-  /**
-   * Get the categories from this event.
-   */
-  public function getCategories() {
-    return $this->categories;
-  }
-
-  /**
-   * Get the keywords from this event.
-   */
-  public function getKeywords() {
-    return $this->keywords;
-  }
-
-  /**
-   * Set the external id from this event.
-   * @param string $id
-   *   ID to set.
-   */
-  public function setExternalId($id) {
-    $this->externalId = $id;
-  }
-
-    /**
-     * @param string $id
-     */
-    public function setCdbId($id) {
-        $this->cdbId = $id;
-    }
 
   /**
    * Set the publication date for this event.
@@ -265,70 +174,6 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the details from this event.
-   * @param CultureFeed_Cdb_Data_EventDetailList $details
-   *   Detail information from the event.
-   */
-  public function setDetails(CultureFeed_Cdb_Data_EventDetailList $details) {
-    $this->details = $details;
-  }
-
-  /**
-   * Set the categories from this event.
-   * @param CultureFeed_Cdb_Data_CategoryList $categories
-   *   Categories to set.
-   */
-  public function setCategories(CultureFeed_Cdb_Data_CategoryList $categories) {
-    $this->categories = $categories;
-  }
-
-  /**
-   * Add a keyword to this event.
-   * @param string $keyword
-   *   Add a keyword.
-   */
-  public function addKeyword($keyword) {
-    $this->keywords[$keyword] = $keyword;
-  }
-
-  /**
-   * Delete a keyword from this event.
-   * @param string $keyword
-   *   Keyword to remove.
-   */
-  public function deleteKeyword($keyword) {
-
-    if (!isset($this->keywords[$keyword])) {
-      throw new Exception('Trying to remove a non-existing keyword.');
-    }
-
-    unset($this->keywords[$keyword]);
-
-  }
-
-  /**
-   * Add a relation to the event.
-   * @param CultureFeed_Cdb_Item_Production $production
-   */
-  public function addRelation(CultureFeed_Cdb_Item_Production $production) {
-    $this->relations[$production->getCdbId()] = $production;
-  }
-
-  /**
-   * Delete a relation from the event.
-   * @param string $cdbid Cdbid to delete
-   */
-  public function deleteRelation($cdbid) {
-
-    if (!isset($this->relations[$cdbid])) {
-      throw new Exception('Trying to remove a non-existing relation.');
-    }
-
-    unset($this->relations[$cdbid]);
-
-  }
-
-  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMElement $element) {
@@ -382,11 +227,18 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
       $relationsElement = $dom->createElement('eventrelations');
 
       foreach ($this->relations as $relation) {
+
         $relationElement = $dom->createElement('relatedproduction');
         $relationElement->appendChild($dom->createTextNode($relation->getTitle()));
         $relationElement->setAttribute('cdbid', $relation->getCdbid());
-        $relationElement->setAttribute('externalid', $relation->getExternalId());
+
+        $externalId = $relation->getExternalId();
+        if ($externalId) {
+          $relationElement->setAttribute('externalid', $relation->getExternalId());
+        }
+
         $relationsElement->appendChild($relationElement);
+
       }
 
       $eventElement->appendChild($relationsElement);
@@ -404,23 +256,23 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (empty($xmlElement->calendar)) {
-      throw new CultureFeed_ParseException('Calendar missing for event element');
+      throw new CultureFeed_Cdb_ParseException('Calendar missing for event element');
     }
 
     if (empty($xmlElement->categories)) {
-      throw new CultureFeed_ParseException('Categories missing for event element');
+      throw new CultureFeed_Cdb_ParseException('Categories missing for event element');
     }
 
     if (empty($xmlElement->contactinfo)) {
-      throw new CultureFeed_ParseException('Contact info missing for event element');
+      throw new CultureFeed_Cdb_ParseException('Contact info missing for event element');
     }
 
     if (empty($xmlElement->eventdetails)) {
-      throw new CultureFeed_ParseException('Eventdetails missing for event element');
+      throw new CultureFeed_Cdb_ParseException('Eventdetails missing for event element');
     }
 
     if (empty($xmlElement->location)) {
-      throw new CultureFeed_ParseException('Location missing for event element');
+      throw new CultureFeed_Cdb_ParseException('Location missing for event element');
     }
 
     $event_attributes = $xmlElement->attributes();
@@ -474,7 +326,6 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
       foreach ($xmlElement->eventrelations->relatedproduction as $relatedProduction) {
 
         $attributes = $relatedProduction->attributes();
-        print_r($attributes);
         $production = new CultureFeed_Cdb_Item_Production();
         $production->setCdbId((string)$attributes['cdbid']);
         $production->setExternalId((string)$attributes['externalid']);
@@ -487,7 +338,6 @@ class CultureFeed_Cdb_Item_Event implements CultureFeed_Cdb_IElement {
     }
 
     // Set the keywords.
-
     if (!empty($xmlElement->keywords)) {
       $keywords = explode(';', $xmlElement->keywords);
       foreach ($keywords as $keyword) {

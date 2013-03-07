@@ -157,7 +157,7 @@ class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_IElemen
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (empty($xmlElement->date)) {
-      throw new CultureFeed_ParseException("Date is missing for timestamp");
+      throw new CultureFeed_Cdb_ParseException("Date is missing for timestamp");
     }
 
     $attributes = $xmlElement->attributes();

@@ -7,20 +7,13 @@
 class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement {
 
   /**
+   * Calendar summary from this eventDetail.
    * @var string
    */
   protected $calendarSummary;
 
   public function __construct() {
     $this->media = new CultureFeed_Cdb_Data_Media();
-  }
-
-  /**
-   * Set the calendar summary.
-   * @param string $summary
-   */
-  public function setCalendarSummary($summary) {
-    $this->calendarSummary = $summary;
   }
 
   /**
@@ -32,6 +25,14 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
   }
 
   /**
+   * Set the calendar summary.
+   * @param string $summary
+   */
+  public function setCalendarSummary($summary) {
+    $this->calendarSummary = $summary;
+  }
+
+  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMElement $element) {
@@ -40,7 +41,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
 
     $detailElement = $dom->createElement('eventdetail');
     $detailElement->setAttribute('lang', $this->language);
-    
+
     if (!empty($this->calendarSummary)) {
       $summaryElement = $dom->createElement('calendarsummary');
       $summaryElement->appendChild($dom->createTextNode($this->calendarSummary));
@@ -60,13 +61,13 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
     if (!empty($this->price)) {
       $this->price->appendToDOM($detailElement);
     }
-    
+
     if (!empty($this->shortDescription)) {
       $descriptionElement = $dom->createElement('shortdescription');
       $descriptionElement->appendChild($dom->createTextNode($this->shortDescription));
       $detailElement->appendChild($descriptionElement);
     }
-    
+
     $titleElement = $dom->createElement('title');
     $titleElement->appendChild($dom->createTextNode($this->title));
     $detailElement->appendChild($titleElement);
@@ -82,12 +83,12 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (empty($xmlElement->title)) {
-      throw new CultureFeed_ParseException("Title missing for eventdetail element");
+      throw new CultureFeed_Cdb_ParseException("Title missing for eventdetail element");
     }
 
     $attributes = $xmlElement->attributes();
     if (empty($attributes['lang'])) {
-      throw new CultureFeed_ParseException("Lang missing for eventdetail element");
+      throw new CultureFeed_Cdb_ParseException("Lang missing for eventdetail element");
     }
 
     $eventDetail = new Culturefeed_Cdb_Data_EventDetail();

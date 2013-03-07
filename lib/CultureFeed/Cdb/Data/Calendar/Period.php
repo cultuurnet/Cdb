@@ -138,11 +138,11 @@ class CultureFeed_Cdb_Data_Calendar_Period implements CultureFeed_Cdb_IElement {
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (empty($xmlElement->datefrom)) {
-      throw new CultureFeed_ParseException("Date from is missing for period");
+      throw new CultureFeed_Cdb_ParseException("Date from is missing for period");
     }
 
     if (empty($xmlElement->dateto)) {
-      throw new CultureFeed_ParseException("Date to is missing for period");
+      throw new CultureFeed_Cdb_ParseException("Date to is missing for period");
     }
 
     $period = new CultureFeed_Cdb_Data_Calendar_Period((string)$xmlElement->datefrom, (string)$xmlElement->dateto);

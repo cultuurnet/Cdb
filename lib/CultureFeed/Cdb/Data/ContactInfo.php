@@ -167,12 +167,12 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
       $address->appendToDom($contactElement);
     }
 
-    foreach ($this->phones as $phone) {
-      $phone->appendToDom($contactElement);
-    }
-
     foreach ($this->mails as $mail) {
       $mail->appendToDom($contactElement);
+    }
+
+    foreach ($this->phones as $phone) {
+      $phone->appendToDom($contactElement);
     }
 
     foreach ($this->urls as $url) {
@@ -190,7 +190,7 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (empty($xmlElement->address)) {
-      throw new CultureFeed_ParseException("Address information for contactinfo element missing.");
+      throw new CultureFeed_Cdb_ParseException("Address information for contactinfo element missing.");
     }
 
     $contactInfo = new CultureFeed_Cdb_Data_ContactInfo();

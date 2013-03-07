@@ -17,33 +17,44 @@ class CultureFeed_Cdb_Default {
   const CDB_SCHEME_NAME = 'cdbxml';
 
   /**
-   * List of possible items in the CDB.
+   * List of items to be placed in the CdbXml.
    * @var array
    */
-  private $items = array(
-    'events' => array(),
-    'actors' => array(),
-    'productions' => array(),
-  );
+  private $items = array();
 
   /**
-   * Add an item from a given type to the items list.
-   * @param string $type
-   *   Type of item to add.
-   * @param $item
+   * Add an item from a  to the items list.
+   * @param CultureFeed_Cdb_Item_Base $item
    *  Item to add
    * @throws Exception.
    */
-  public function addItem($type, $item) {
-    if (!array_key_exists($type, $this->items)) {
-      throw new Exception("Trying to add an unknown item type '$type'");
-    }
+  public function addItem(CultureFeed_Cdb_Item_Base $item) {
 
-    $this->items[$type][] = $item;
+    switch (get_class($item)) {
+
+      case 'CultureFeed_Cdb_Item_Actor':
+        $this->items['actors'][] = $item;
+      break;
+
+      case 'CultureFeed_Cdb_Item_Event':
+        $this->items['events'][] = $item;
+      break;
+
+      case 'CultureFeed_Cdb_Item_Production':
+        $this->items['productions'] = $item;
+      break;
+
+      default:
+        throw new Exception("Trying to add an unknown item type '$type'");
+
+    }
 
   }
 
-  public function getXml() {
+  /**
+   * Print the Cdb.
+   */
+  public function __toString() {
 
     $dom = new DOMDocument('1.0', 'UTF-8');
     $dom->formatOutput = true;

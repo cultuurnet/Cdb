@@ -6,8 +6,33 @@
  */
 class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement {
 
+  /**
+   * Calendar summary from this actorDetail.
+   * @var string
+   */
+  protected $calendarSummary;
+
+  /**
+   * Construct the ActorDetail.
+   */
   public function __construct() {
     $this->media = new CultureFeed_Cdb_Data_Media();
+  }
+
+  /**
+   * Get the calendar summary.
+   * @return string
+   */
+  public function getCalendarSummary() {
+    return $this->calendarSummary;
+  }
+
+  /**
+   * Set the calendar summary.
+   * @param string $summary
+   */
+  public function setCalendarSummary($summary) {
+    $this->calendarSummary = $summary;
   }
 
   /**
@@ -20,16 +45,26 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
     $detailElement = $dom->createElement('actordetail');
     $detailElement->setAttribute('lang', $this->language);
 
-    if (!empty($this->shortDescription)) {
-      $element = $dom->createElement('shortdescription');
-      $element->appendChild($dom->createTextNode($this->shortDescription));
-      $detailElement->appendChild($element);
+    if ($this->calendarSummary) {
+      $summaryElement = $dom->createElement('calendarsummary');
+      $summaryElement->appendChild($dom->createTextNode($this->calendarSummary));
+      $detailElement->appendChild($dom->createTextNode($this->calendarSummary));
     }
 
     if (!empty($this->longDescription)) {
-      $element = $dom->createElement('longdescription');
-      $element->appendChild($dom->createTextNode($this->longDescription));
-      $detailElement->appendChild($element);
+      $descriptionElement = $dom->createElement('longdescription');
+      $descriptionElement->appendChild($dom->createTextNode($this->longDescription));
+      $detailElement->appendChild($descriptionElement);
+    }
+
+    if (count($this->media) > 0) {
+      $this->media->appendToDOM($detailElement);
+    }
+
+    if (!empty($this->shortDescription)) {
+      $descriptionElement = $dom->createElement('shortdescription');
+      $descriptionElement->appendChild($dom->createTextNode($this->shortDescription));
+      $detailElement->appendChild($descriptionElement);
     }
 
     $titleElement = $dom->createElement('title');
@@ -37,6 +72,7 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
     $detailElement->appendChild($titleElement);
 
     $element->appendChild($detailElement);
+
   }
 
   /**
@@ -46,17 +82,21 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
     if (empty($xmlElement->title)) {
-      throw new CultureFeed_ParseException("Title missing for actordetail element");
+      throw new CultureFeed_Cdb_ParseException("Title missing for actordetail element");
     }
 
     $attributes = $xmlElement->attributes();
     if (empty($attributes['lang'])) {
-      throw new CultureFeed_ParseException("Lang missing for actordetail element");
+      throw new CultureFeed_Cdb_ParseException("Lang missing for actordetail element");
     }
 
     $actorDetail = new self();
     $actorDetail->setTitle((string)$xmlElement->title);
     $actorDetail->setLanguage((string)$attributes['lang']);
+
+    if (!empty($xmlElement->calendarsummary)) {
+      $actorDetail->setCalendarSummary((string)$xmlElement->calendarsummary);
+    }
 
     if (!empty($xmlElement->shortdescription)) {
       $actorDetail->setShortDescription((string)$xmlElement->shortdescription);

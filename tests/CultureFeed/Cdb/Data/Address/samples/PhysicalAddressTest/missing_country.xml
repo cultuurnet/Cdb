@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<physical>
+    <city>Brussel</city>
+    <zipcode>1000</zipcode>
+    <street>Sint-Gisleinstraat</street>
+    <housenr>62</housenr>
+    <gis>
+        <xcoordinate>4,3488</xcoordinate>
+        <ycoordinate>50,8391</ycoordinate>
+    </gis>
+</physical>

@@ -1,6 +1,16 @@
 <?php
 
-class CultureFeed_Cdb_Item_Actor implements CultureFeed_Cdb_IElement {
+/**
+ * @class
+ * Representation of an actor on the culturefeed.
+ */
+class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement {
+
+  /**
+   * Is the actor object centrally guarded for uniqueness
+   * @var bool
+   */
+  protected $asset;
 
   /**
    * @var CultureFeed_Cdb_Data_ActorDetailList
@@ -8,32 +18,112 @@ class CultureFeed_Cdb_Item_Actor implements CultureFeed_Cdb_IElement {
   protected $details;
 
   /**
-   * @var string
-   */
-  protected $cdbId;
-
-  /**
-   * @var CultureFeed_Cdb_Data_CategoryList
-   */
-  protected $categories;
-
-  /**
-   * Appends the current object to the passed DOM tree.
+   * Contact info for an actor.
    *
-   * @param DOMElement $element
-   *   The DOM tree to append to.
+   * @var CultureFeed_Cdb_Data_ContactInfo
    */
-  public function appendToDOM(DOMElement $element) {
-    // TODO: Implement appendToDOM() method.
+  protected $contactInfo;
+
+  /**
+   * Week scheme for the opening times from the actor.
+   * @var CultureFeed_Cdb_Data_Calendar_WeekScheme
+   */
+  protected $weekScheme;
+
+  /**
+   * Construct the actor.
+   */
+  public function __construct() {
+    $this->details = new CultureFeed_Cdb_Data_ActorDetailList();
   }
 
   /**
-   * Parse a new object from a given cdbxml element.
-   * @param CultureFeed_SimpleXMLElement $xmlElement
-   *   XML to parse.
-   * @throws CultureFeed_ParseException
+   * Get the contact info from this actor.
+   */
+  public function getContactInfo() {
+    return $this->contactInfo;
+  }
+
+  /**
+   * Get the weekscheme from this actor.
+   */
+  public function getWeekScheme() {
+    return $this->weekScheme;
+  }
+
+  /**
+   * Set the contact info from this contact.
+   * @param CultureFeed_Cdb_Data_Calendar $contactInfo
+   *   Contact info to set.
+   */
+  public function setContactInfo(CultureFeed_Cdb_Data_ContactInfo $contactInfo) {
+    $this->contactInfo = $contactInfo;
+  }
+
+  /**
+   * Get the weekscheme from this actor.
+   */
+  public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $weekScheme) {
+    $this->weekScheme = $weekScheme;
+  }
+
+  /**
+   * @see CultureFeed_Cdb_IElement::appendToDOM()
+   */
+  public function appendToDOM(DOMElement $element) {
+
+    $dom = $element->ownerDocument;
+
+    $actorElement = $dom->createElement('actor');
+
+    if ($this->cdbId) {
+      $actorElement->setAttribute('cdbid', $this->cdbId);
+    }
+
+    if ($this->externalId) {
+      $actorElement->setAttribute('externalid', $this->externalId);
+    }
+
+    if ($this->details) {
+      $this->details->appendToDOM($actorElement);
+    }
+
+    if ($this->categories) {
+      $this->categories->appendToDOM($actorElement);
+    }
+
+    if ($this->contactInfo) {
+      $this->contactInfo->appendToDOM($actorElement);
+    }
+
+    if (count($this->keywords) > 0) {
+      $keywordElement = $dom->createElement('keywords');
+      $keywordElement->appendChild($dom->createTextNode(implode(';', $this->keywords)));
+      $actorElement->appendChild($keywordElement);
+    }
+
+    if ($this->weekScheme) {
+      $this->weekScheme->appendToDOM($actorElement);
+    }
+
+    $element->appendChild($actorElement);
+
+  }
+
+  /**
+   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
+   * @return CultureFeed_Cdb_Item_Actor
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
+
+    if (empty($xmlElement->categories)) {
+      throw new CultureFeed_Cdb_ParseException('Categories missing for actor element');
+    }
+
+    if (empty($xmlElement->actordetails)) {
+      throw new CultureFeed_Cdb_ParseException('Actordetails missing for actor element');
+    }
+
     $actor = new self();
 
     $actor_attributes = $xmlElement->attributes();
@@ -41,78 +131,36 @@ class CultureFeed_Cdb_Item_Actor implements CultureFeed_Cdb_IElement {
     if (isset($actor_attributes['cdbid'])) {
       $actor->setCdbId((string)$actor_attributes['cdbid']);
     }
+
+    if (isset($actor_attributes['externalid'])) {
+      $actor->setExternalId((string)$actor_attributes['externalid']);
+    }
+
+    $actor->setDetails(CultureFeed_Cdb_Data_ActorDetailList::parseFromCdbXml($xmlElement->actordetails));
+
     // Set categories
     $actor->setCategories(CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml($xmlElement->categories));
 
-    if (!empty($xmlElement->actordetails)) {
-      $actor->setDetails(CultureFeed_Cdb_Data_ActorDetailList::parseFromCdbXml($xmlElement->actordetails));
+    // Set contact information.
+    if (!empty($xmlElement->contactinfo)) {
+      $actor->setContactInfo(CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml($xmlElement->contactinfo));
     }
-    else {
-      $actor->setDetails(new CultureFeed_Cdb_Data_ActorDetailList());
+
+    // Set the keywords.
+    if (!empty($xmlElement->keywords)) {
+      $keywords = explode(';', $xmlElement->keywords);
+      foreach ($keywords as $keyword) {
+        $actor->addKeyword($keyword);
+      }
+    }
+
+    // Set the weekscheme.
+    if (!empty($xmlElement->weekscheme)) {
+      $actor->setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme::parseFromCdbXml($xmlElement->weekscheme));
     }
 
     return $actor;
+
   }
 
-  /**
-   * @param string $id
-   */
-  public function setCdbId($id) {
-    $this->cdbId = $id;
-  }
-
-  /**
-   * @return string
-   */
-  public function getCdbId() {
-    return $this->cdbId;
-  }
-
-  /**
-   * Set the details from this actor.
-   * @param CultureFeed_Cdb_Data_ActorDetailList $details
-   *   Detail information from the actor.
-   */
-  public function setDetails(CultureFeed_Cdb_Data_ActorDetailList $details) {
-    $this->details = $details;
-  }
-
-  /**
-   * Set the categories from this actor.
-   * @param CultureFeed_Cdb_Data_CategoryList $categories
-   *   Categories to set.
-   */
-  public function setCategories(CultureFeed_Cdb_Data_CategoryList $categories) {
-    $this->categories = $categories;
-  }
-
-  /**
-   * Get the details from this event.
-   *
-   * @return CultureFeed_Cdb_Data_ActorDetail[]
-   */
-  public function getDetails() {
-    return $this->details;
-  }
-
-  /**
-   * @param string $language_code
-   *
-   * @return CultureFeed_Cdb_Data_ActorDetail|NULL
-   */
-  public function getDetailByLanguage($language_code) {
-    /* @var CultureFeed_Cdb_Data_ActorDetail $detail */
-    foreach ($this->details as $detail) {
-      if ($language_code == $detail->getLanguage()) {
-        return $detail;
-      }
-    }
-  }
-
-  /**
-   * Get the categories from this event.
-   */
-  public function getCategories() {
-    return $this->categories;
-  }
 }
