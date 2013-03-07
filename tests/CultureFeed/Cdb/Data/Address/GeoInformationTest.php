@@ -4,7 +4,7 @@ class CultureFeed_Cdb_Data_Address_GeoInformationTest extends PHPUnit_Framework_
 {
     public function sampleCoordinates() {
         return array(
-            array('4,34890', '50,84740, '),
+            array('4,34890', '50,84740'),
             array('4,3488', '50,8391'),
         );
     }
