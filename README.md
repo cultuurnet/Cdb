@@ -27,7 +27,7 @@ your project's composer.json file.
 ```json
 {
     "require": {
-        "cultuurnet/cdb": "1.0.*@dev",
+        "cultuurnet/cdb": "1.0.*@dev"
     }
 }
 ```
