@@ -26,20 +26,49 @@ Class CultureFeed_Cdb_Item_Reference {
 
 	/**
 	 * getCdbId().
-	 * @param string $cdbId
-	 * @return string
+	 * 
+	 * @return string $cdbId
 	 */
-	public function getCdbId($cdbId) {
+	public function getCdbId() {
 		return $this->cdbId;
 	}
 
 	/**
+	 * setCdbId().
+	 * 
+	 * @param string $cdbId
+	 * @return string
+	 */
+	public function setCdbId($cdbId) {
+		$this->cdbId = $cdbId;
+	}
+
+	/**
 	 * getExternalId().
+	 * 
+	 * @return string
+	 */
+	public function getExternalId() {
+		return $this->externalId;
+	}
+
+	/**
+	 * setExternalId().
+	 * 
 	 * @param string $externalId
 	 * @return string
 	 */
-	public function getExternalId($externalId) {
-		return $this->externalId;
+	public function setExternalId($externalId) {
+		$this->externalId = $externalId;
+	}
+
+	/**
+	 * getTitle().
+	 * 
+	 * @return string
+	 */
+	public function getTitle() {
+		return $this->title;
 	}
 
 	/**
@@ -47,8 +76,8 @@ Class CultureFeed_Cdb_Item_Reference {
 	 * @param string $title
 	 * @return string
 	 */
-	public function getTitle($title) {
-		return $this->title;
+	public function setTitle($title) {
+		$this->title = $title;
 	}
 
 }
