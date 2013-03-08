@@ -19,8 +19,8 @@ class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement {
   protected $role;
 
   /**
-   * (optional) Actor for the performer.
-   * @var Actor
+   * Actor for the performer.
+   * @var CultureFeed_Cdb_Item_Actor
    */
   protected $actor;
 
@@ -47,7 +47,7 @@ class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement {
 
   /**
    * Set the label of the performer.
-   * 
+   *
    * @param string $label
    *   Label of the performer
    */
@@ -57,7 +57,7 @@ class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement {
 
   /**
    * Set the role of the performer.
-   * 
+   *
    * @param string $role
    *   Role of the performer
    */
@@ -67,7 +67,7 @@ class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement {
 
   /**
    * Set the actor.
-   * 
+   *
    * @param CultureFeed_Cdb_Item_Actor $actor
    *   The actor.
    */
@@ -83,15 +83,15 @@ class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement {
     $dom = $element->ownerDocument;
 
     $performerElement = $dom->createElement('performer');
-    
+
     $labelElement = $dom->createElement('label');
     $labelElement->appendChild($dom->createTextNode($this->label));
     $performerElement->appendChild($labelElement);
-    
+
     $roleElement = $dom->createElement('role');
     $roleElement->appendChild($dom->createTextNode($this->role));
     $performerElement->appendChild($roleElement);
-    
+
     $element->appendChild($performerElement);
 
   }
@@ -107,11 +107,11 @@ class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement {
     if (!empty($xmlElement->label)) {
       $performer->setLabel($xmlElement->label);
     }
-    
+
     if (!empty($xmlElement->role)) {
       $performer->setRole($xmlElement->role);
     }
-    
+
     if (!empty($xmlElement->actor)) {
       $performer->setActor(CultureFeed_Cdb_Item_Actor::parseFromCdbXml($xmlElement->actor));
     }

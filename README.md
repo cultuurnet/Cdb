@@ -27,7 +27,7 @@ your project's composer.json file.
 ```json
 {
     "require": {
-        "cultuurnet/cdb": "1.0.*@dev",
+        "cultuurnet/cdb": "1.0.*@dev"
     }
 }
 ```
@@ -62,6 +62,15 @@ the necessary steps for upgrading third party code using the CultuurNet\Cdb libr
 The CultuurNet\Cdb library was still using CultureFeed_ParseException from the culturefeed module,
 an undesired dependency. A new class CultureFeed_Cdb_ParseException has been introduced, and is used
 now instead of CultureFeed_ParseException.
+
+### Arguments from addItem in CultureFeed_Cdb_Default changed to $item ###
+
+The addItem method was using 2 arguments: type, $item. This has been changed to only $item.
+The type will be internally decided based on the class from $item.
+
+### getXml from CultureFeed_Cdb_Default changed to __toString ###
+
+The getXml method from CultureFeed_Cdb_Default has been replaced by the __toString method.
 
 2013-01-23
 ----------

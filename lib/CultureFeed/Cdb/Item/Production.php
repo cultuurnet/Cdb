@@ -2,8 +2,12 @@
 
 class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
         implements CultureFeed_Cdb_IElement {
-  
-  private $ageFrom = "";
+
+  /**
+   * Minimum age for the production.
+   * @var int
+   */
+  protected $ageFrom;
 
   /**
 <<<<<<< Updated upstream
@@ -90,7 +94,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
   /**
    * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
-   * 
+   *
    * @return CultureFeed_Cdb_Item_Production
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
@@ -98,11 +102,11 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
     if (empty($xmlElement->categories)) {
       throw new CultureFeed_ParseException('Categories are required for production element');
     }
-    
+
     if (empty($xmlElement->productiondetails)) {
       throw new CultureFeed_ParseException('Production details are required for production element');
     }
-    
+
     $attributes = $xmlElement->attributes();
     $production = new CultureFeed_Cdb_Item_Production();
 
@@ -110,11 +114,11 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
     if (isset($attributes['cdbid'])) {
       $production->setCdbId((string)$attributes['cdbid']);
     }
-    
+
     if (isset($attributes['externalid'])) {
       $production->setExternalId((string)$attributes['externalid']);
     }
-    
+
     if (!empty($xmlElement->agefrom)) {
       $production->setAgeFrom((int)$xmlElement->agefrom);
     }
@@ -148,7 +152,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
     }
 
     return $production;
-    
+
   }
 
 }
