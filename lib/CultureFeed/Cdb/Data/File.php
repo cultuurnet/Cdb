@@ -2,10 +2,34 @@
 
 class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
 
-  const
+  /**
+   * Constants for the different allowed file types.
+   */
+  const FILE_TYPE_JPEG = 'jpeg';
+  const FILE_TYPE_GIF = 'gif';
+  const FILE_TYPE_PNG = 'png';
+  const FILE_TYPE_MP3 = 'mp3';
+  const FILE_TYPE_QUICK_TIME = 'qt';
+  const FILE_TYPE_MOV = 'mov';
+  const FILE_TYPE_WMV = 'wmv';
+  const FILE_TYPE_WAV = 'wav';
+  const FILE_TYPE_RM = 'rm';
+  const FILE_TYPE_AVI = 'avi';
+  const FILE_TYPE_MPG = 'mpg';
+  const FILE_TYPE_SWF = 'swf';
+  const FILE_TYPE_PDF = 'pdf';
+  const FILE_TYPE_RTF = 'rtf';
+  const FILE_TYPE_DOC = 'doc';
+  const FILE_TYPE_XLS = 'xls';
+  const FILE_TYPE_TXT = 'txt';
+  const FILE_TYPE_HTML = 'html(1)';
+  const FILE_TYPE_ZIP = 'zip';
+  const FILE_TYPE_UNKNOWN = 'onbepaald';
 
+  /**
+   * Constants for the media types.
+   */
   const MEDIA_TYPE_PHOTO = 'photo';
-
   const MEDIA_TYPE_WEBRESOURCE = 'webresource';
 
   /**
@@ -79,30 +103,6 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
    * @var string
    */
   protected $plainText;
-
-  /**
-   * Constants for the different allowed file types.
-   */
-  const FILE_TYPE_JPEG = 'jpeg';
-  const FILE_TYPE_GIF = 'gif';
-  const FILE_TYPE_PNG = 'png';
-  const FILE_TYPE_MP3 = 'mp3';
-  const FILE_TYPE_QUICK_TIME = 'qt';
-  const FILE_TYPE_MOV = 'mov';
-  const FILE_TYPE_WMV = 'wmv';
-  const FILE_TYPE_WAV = 'wav';
-  const FILE_TYPE_RM = 'rm';
-  const FILE_TYPE_AVI = 'avi';
-  const FILE_TYPE_MPG = 'mpg';
-  const FILE_TYPE_SWF = 'swf';
-  const FILE_TYPE_PDF = 'pdf';
-  const FILE_TYPE_RTF = 'rtf';
-  const FILE_TYPE_DOC = 'doc';
-  const FILE_TYPE_XLS = 'xls';
-  const FILE_TYPE_TXT = 'txt';
-  const FILE_TYPE_HTML = 'html(1)';
-  const FILE_TYPE_ZIP = 'zip';
-  const FILE_TYPE_UNKNOWN = 'onbepaald';
 
 
   /**
