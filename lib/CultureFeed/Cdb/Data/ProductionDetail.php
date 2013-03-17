@@ -10,7 +10,7 @@ class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail 
    * @var string
    */
   protected $calendarSummary;
-  
+
   /**
    * @var CultureFeed_Cdb_Data_PerformerList
    */
@@ -25,7 +25,7 @@ class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail 
 
   /**
    * Get the calendar summary.
-   * 
+   *
    * @return string
    */
   public function getCalendarSummary() {
@@ -34,7 +34,7 @@ class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail 
 
   /**
    * Get the performers.
-   * 
+   *
    * @return CultureFeed_Cdb_Data_PerformersList
    */
   public function getPerformers() {
@@ -43,16 +43,16 @@ class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail 
 
   /**
    * Set the calendar summary.
-   * 
+   *
    * @param string $summary
    */
   public function setCalendarSummary($summary) {
     $this->calendarSummary = $summary;
   }
-  
+
   /**
    * Set the performers.
-   * 
+   *
    * @param CultureFeed_Cdb_Data_PerformersList $performers
    */
   public function setPerformers(CultureFeed_Cdb_Data_PerformerList $performers) {
@@ -78,7 +78,7 @@ class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail 
     if (count($this->media) > 0) {
       $this->media->appendToDOM($detailElement);
     }
-    
+
     if (count($this->performers) > 0) {
       $this->performers->appendToDOM($detailElement);
     }
@@ -86,13 +86,13 @@ class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail 
     if (!empty($this->price)) {
       $this->price->appendToDOM($detailElement);
     }
-    
+
     if (!empty($this->shortDescription)) {
       $descriptionElement = $dom->createElement('shortdescription');
       $descriptionElement->appendChild($dom->createTextNode($this->shortDescription));
       $detailElement->appendChild($descriptionElement);
     }
-    
+
     $titleElement = $dom->createElement('title');
     $titleElement->appendChild($dom->createTextNode($this->title));
     $detailElement->appendChild($titleElement);
@@ -103,7 +103,7 @@ class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail 
 
   /**
    * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
-   * @return CultureFeed_Cdb_Data_ProductionDetailList
+   * @return CultureFeed_Cdb_Data_ProductionDetail
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
