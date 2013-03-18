@@ -33,17 +33,17 @@ class CultureFeed_Cdb_Data_Url implements CultureFeed_Cdb_IElement {
    * @param $bool $forReservations
    *   Usable for reservations or not
    */
-  public function __construct($url, $isMain, $forReservations) {
+  public function __construct($url, $isMain = FALSE, $forReservations = FALSE) {
     $this->url = $url;
     $this->main = $isMain;
     $this->reservation = $forReservations;
   }
 
   /**
-   * Is the current mail the main mail, or not
+   * Is the current url the main url, or not
    * @return bool
    */
-  public function isMainMail() {
+  public function isMain() {
     return $this->main;
   }
 
@@ -85,7 +85,7 @@ class CultureFeed_Cdb_Data_Url implements CultureFeed_Cdb_IElement {
    * @param string $url
    *   Url to set.
    */
-  public function setMailAddress($url) {
+  public function setUrl($url) {
     $this->url = $url;
   }
 

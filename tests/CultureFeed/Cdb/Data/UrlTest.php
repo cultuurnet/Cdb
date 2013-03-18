@@ -33,4 +33,30 @@ class CultureFeed_Cdb_Data_UrlTest extends PHPUnit_Framework_TestCase
 
         $this->assertEqualXMLStructure($sample->documentElement, $items->item(0));
     }
+
+    public function testGetUrlReturnsUrlSetBefore() {
+        $urlString = 'http://example.com/?foo=1&bar=2';
+        $url = new CultureFeed_Cdb_Data_Url($urlString, FALSE, FALSE);
+        $this->assertEquals($urlString, $url->getUrl());
+
+        $newUrlString = 'http://example.com';
+        $url->setUrl($urlString);
+        $url->setUrl($newUrlString, $url->getUrl());
+    }
+
+    public function testIsMainReturnMainSetBefore() {
+        $urlString = 'http://example.com/?foo=1&bar=2';
+
+        $url = new CultureFeed_Cdb_Data_Url($urlString, FALSE, FALSE);
+        $this->assertEquals(FALSE, $url->isMain());
+
+        $url->setMain(TRUE);
+        $this->assertEquals(TRUE, $url->isMain());
+
+        $url = new CultureFeed_Cdb_Data_Url($urlString, TRUE, FALSE);
+        $this->assertEquals(TRUE, $url->isMain());
+
+        $url->setMain(FALSE);
+        $this->assertEquals(FALSE, $url->isMain());
+    }
 }

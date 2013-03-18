@@ -38,7 +38,7 @@ The library is [PSR-0][psr-0] compliant, so you can load its classes with any
 PSR-0 compliant autoloader. If you are using Composer, you can simply
 include the autoloader Composer generated.
 
-When using Drupal, there is a very simple way to use the autoloader of Composer: 
+When using Drupal, there is a very simple way to use the autoloader of Composer:
 
 - place in your Drupal root dir a file with the name composer.json and the json content
 - run ``composer install``
@@ -53,6 +53,16 @@ Backwards Compatibility
 
 This section contains information regarding possible backwards compatibility breaks, and outlines
 the necessary steps for upgrading third party code using the CultuurNet\Cdb library.
+
+2013-03-18
+----------
+
+### Rename of setMailAddress() and isMainMail() member methods of CultureFeed_Cdb_Data_Url ###
+
+The following methods of CultureFeed_Cdb_Data_Url have been renamed to properly describe their goal:
+
+* setMailAddress() is now called setUrl()
+* isMainMail is now called isMain()
 
 2013-03-07
 ----------
