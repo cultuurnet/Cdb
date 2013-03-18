@@ -67,7 +67,7 @@ class CultureFeed_Cdb_Data_Url implements CultureFeed_Cdb_IElement {
    * @param bool $isMain
    *   State to set.
    */
-  public function setMain($isMain) {
+  public function setMain($isMain = TRUE) {
     $this->main = $isMain;
   }
 
@@ -76,7 +76,7 @@ class CultureFeed_Cdb_Data_Url implements CultureFeed_Cdb_IElement {
    * @param bool $forReservation
    *   State to set.
    */
-  public function setReservation($forReservation) {
+  public function setReservation($forReservation = TRUE) {
     $this->reservation = $forReservation;
   }
 
