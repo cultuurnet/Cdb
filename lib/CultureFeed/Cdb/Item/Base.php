@@ -163,20 +163,4 @@ abstract class CultureFeed_Cdb_Item_Base {
 
   }
 
-  /**
-   * Get the details for a given language.
-   * @param string $language_code
-   *   Language code to get.
-   *
-   * @return CultureFeed_Cdb_Data_Detail|NULL
-   */
-  public function getDetailByLanguage($language_code) {
-    /* @var CultureFeed_Cdb_Data_ActorDetail $detail */
-    foreach ($this->details as $detail) {
-      if ($language_code == $detail->getLanguage()) {
-        return $detail;
-      }
-    }
-  }
-
 }
