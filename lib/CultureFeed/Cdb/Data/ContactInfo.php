@@ -189,15 +189,13 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
-    if (empty($xmlElement->address)) {
-      throw new CultureFeed_Cdb_ParseException("Address information for contactinfo element missing.");
-    }
-
     $contactInfo = new CultureFeed_Cdb_Data_ContactInfo();
 
     // Address from contact information.
-    $contactInfo->addAddress(CultureFeed_Cdb_Data_Address::parseFromCdbXml($xmlElement->address));
-
+    if (!empty($xmlElement->address)) {
+      $contactInfo->addAddress(CultureFeed_Cdb_Data_Address::parseFromCdbXml($xmlElement->address));
+    }
+    
     // Mails.
     if (!empty($xmlElement->mail)) {
       foreach ($xmlElement->mail as $mailElement) {
