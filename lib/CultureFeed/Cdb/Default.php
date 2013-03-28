@@ -52,6 +52,32 @@ class CultureFeed_Cdb_Default {
   }
 
   /**
+   * Parse a given xml element to an CultureFeed_Cdb_Item_Base.
+   * @param SimpleXMLElement $xmlElement
+   *   XML element from the item to parse.
+   */
+  public static function parseItem(SimpleXMLElement $xmlElement) {
+
+      // Return the correct cdb item.
+    switch ($xmlElement->getName()) {
+
+      case 'event':
+        return CultureFeed_Cdb_Item_Event::parseFromCdbXml($xmlElement);
+
+      case 'production':
+        return CultureFeed_Cdb_Item_Production::parseFromCdbXml($xmlElement);
+
+      case 'actor':
+        return CultureFeed_Cdb_Item_Actor::parseFromCdbXml($xmlElement);
+
+      default:
+        return NULL;
+
+    }
+
+  }
+
+  /**
    * Print the Cdb.
    */
   public function __toString() {

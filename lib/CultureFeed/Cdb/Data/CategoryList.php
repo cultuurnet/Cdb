@@ -63,6 +63,15 @@ class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElement, Ite
   }
 
   /**
+   * Get all the categories from this list from a given type.
+   * @param $type string
+   *   Type of categories to get.
+   */
+  public function getCategoriesByType($type) {
+
+  }
+
+  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMElement $element) {
