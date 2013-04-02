@@ -31,6 +31,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
    */
   const MEDIA_TYPE_PHOTO = 'photo';
   const MEDIA_TYPE_WEBRESOURCE = 'webresource';
+  const MEDIA_TYPE_CULTUREFEED_PAGE = 'culturefeed-page';
 
   /**
    * Is the current file a main file.

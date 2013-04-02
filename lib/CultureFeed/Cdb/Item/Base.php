@@ -83,6 +83,13 @@ abstract class CultureFeed_Cdb_Item_Base {
   }
 
   /**
+   * Get the relations from this item.
+   */
+  public function getRelations() {
+    return $this->relations;
+  }
+
+  /**
    * Set the external id from this item.
    * @param string $id
    *   ID to set.

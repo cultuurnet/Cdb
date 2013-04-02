@@ -22,6 +22,16 @@ class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement {
   const CATEGORY_TYPE_PUBLICSCOPE = 'publicscope';
 
   /**
+   * Category type educationfield.
+   */
+  const CATEGORY_TYPE_EDUCATION_FIELD = 'educationfield';
+
+  /**
+   * Category type educationlevel.
+   */
+  const CATEGORY_TYPE_EDUCATION_LEVEL = 'educationlevel';
+
+  /**
    * Type of category.
    * @var string
    */

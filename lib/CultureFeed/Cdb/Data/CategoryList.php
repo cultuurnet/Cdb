@@ -69,6 +69,35 @@ class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElement, Ite
    */
   public function getCategoriesByType($type) {
 
+    $categories = array();
+    foreach ($this->categories as $category) {
+      if ($category->getType() == $type) {
+        $categories[] = $category;
+      }
+    }
+
+    return $categories;
+
+  }
+
+
+  /**
+   * Does the given category id exists in this list.
+   *
+   * @param string $id
+   *   Category id. Ex 0.57.0.0.0
+   * @return bool
+   */
+  function hasCategory($id) {
+
+    foreach ($this->categories as $category) {
+      if ($category->getId() == $id) {
+        return TRUE;
+      }
+    }
+
+    return FALSE;
+
   }
 
   /**
