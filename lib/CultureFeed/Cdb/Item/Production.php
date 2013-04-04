@@ -10,10 +10,36 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
   protected $ageFrom;
 
   /**
+   * Maximum participants
+   * @var int
+   */
+  protected $maxParticipants;
+
+  /**
+   * Booking period for this event.
+   * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
+   */
+  protected $bookingPeriod;
+
+  /**
    * Get the minimum age for this production.
    */
   public function getAgeFrom() {
     return $this->ageFrom;
+  }
+
+  /**
+   * Get the maximum amount of participants.
+   */
+  public function getMaxParticipants() {
+    return $this->maxParticipants;
+  }
+
+  /**
+   * Get the booking period.
+   */
+  public function getBookingPeriod() {
+    return $this->bookingPeriod;
   }
 
   /**
@@ -34,6 +60,20 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
   }
 
   /**
+   * Set the maximum amount of participants.
+   */
+  public function setMaxParticipants($maxParticipants) {
+    $this->maxParticipants = $maxParticipants;
+  }
+
+  /**
+   * Set the booking period.
+   */
+  public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod) {
+    $this->bookingPeriod = $bookingPeriod;
+  }
+
+  /**
    * Appends the current object to the passed DOM tree.
    *
    * @param DOMElement $element
@@ -47,6 +87,14 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
     if ($this->ageFrom) {
       $productionElement->appendChild($dom->createElement('agefrom', $this->ageFrom));
+    }
+
+    if ($this->maxParticipants) {
+      $productionElement->appendChild($dom->createElement('maxparticipants', $this->maxParticipants));
+    }
+
+    if ($this->bookingPeriod) {
+      $this->bookingPeriod->appendToDOM($productionElement);
     }
 
     if ($this->cdbId) {
@@ -120,6 +168,16 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
     // Set production details.
     $production->setDetails(CultureFeed_Cdb_Data_ProductionDetailList::parseFromCdbXml($xmlElement->productiondetails));
+
+      // Set max participants.
+    if (!empty($xmlElement->maxparticipants)) {
+      $production->setMaxParticipants((int)$xmlElement->maxparticipants);
+    }
+
+    // Set booking period.
+    if (!empty($xmlElement->bookingperiod)) {
+      $production->setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod::parseFromCdbXml($xmlElement->bookingperiod));
+    }
 
     // Set the related events for this production.
     if (!empty($xmlElement->relatedevents) && !empty($xmlElement->relatedevents->id)) {

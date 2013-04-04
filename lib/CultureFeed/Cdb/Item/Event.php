@@ -40,18 +40,30 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   protected $contactInfo;
 
   /**
-   * Location from an event.
+   * Location of an event.
    *
    * @var CultureFeed_Cdb_Data_Location
    */
   protected $location;
 
   /**
-   * Organiser from an event.
+   * Organiser of an event.
    *
    * @var CultureFeed_Cdb_Data_Organiser
    */
   protected $organiser;
+
+  /**
+   * Maximum participants
+   * @var int
+   */
+  protected $maxParticipants;
+
+  /**
+   * Booking period for this event.
+   * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
+   */
+  protected $bookingPeriod;
 
   /**
    * Get the publication date for this event.
@@ -100,6 +112,20 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
    */
   public function getContactInfo() {
     return $this->contactInfo;
+  }
+
+  /**
+   * Get the maximum amount of participants.
+   */
+  public function getMaxParticipants() {
+    return $this->maxParticipants;
+  }
+
+  /**
+   * Get the booking period.
+   */
+  public function getBookingPeriod() {
+    return $this->bookingPeriod;
   }
 
   /**
@@ -174,6 +200,20 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   }
 
   /**
+   * Set the maximum amount of participants.
+   */
+  public function setMaxParticipants($maxParticipants) {
+    $this->maxParticipants = $maxParticipants;
+  }
+
+  /**
+   * Set the booking period.
+   */
+  public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod) {
+    $this->bookingPeriod = $bookingPeriod;
+  }
+
+  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMElement $element) {
@@ -220,6 +260,14 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     if ($this->organiser) {
       $this->organiser->appendToDOM($eventElement);
+    }
+
+    if ($this->maxParticipants) {
+      $eventElement->appendChild($dom->createElement('maxparticipants', $this->maxParticipants));
+    }
+
+    if ($this->bookingPeriod) {
+      $this->bookingPeriod->appendToDOM($eventelement);
     }
 
     if (!empty($this->relations)) {
@@ -318,6 +366,16 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     // Set organiser
     if (!empty($xmlElement->organiser)) {
       $event->setOrganiser(CultureFeed_Cdb_Data_Organiser::parseFromCdbXml($xmlElement->organiser));
+    }
+
+    // Set max participants.
+    if (!empty($xmlElement->maxparticipants)) {
+      $event->setMaxParticipants((int)$xmlElement->maxparticipants);
+    }
+
+    // Set booking period.
+    if (!empty($xmlElement->bookingperiod)) {
+      $event->setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod::parseFromCdbXml($xmlElement->bookingperiod));
     }
 
     // Set relations.

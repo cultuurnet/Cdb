@@ -155,6 +155,77 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Get the reservation contact info.
+   * @return array()
+   */
+  public function getReservationInfo() {
+
+    $info = array();
+
+    foreach ($this->urls as $url) {
+      if ($url->isForReservations()) {
+        $info['url'][] = $url->getUrl();
+      }
+    }
+
+    foreach ($this->phones as $phone) {
+      if ($phone->isForReservations()) {
+        $info['phone'][] = $phone->getNumber();
+      }
+    }
+
+    foreach ($this->mails as $mail) {
+      if ($mail->isForReservations()) {
+        $info['mails'][] = $mail->getAddress();
+      }
+    }
+
+    return $info;
+
+  }
+
+  /**
+   * Get the main contact info.
+   * @return array()
+   */
+  public function getMainInfo() {
+
+    $info = array();
+
+    foreach ($this->urls as $url) {
+      if ($url->isMain()) {
+        $info['url'][] = $url->getUrl();
+      }
+    }
+
+    foreach ($this->phones as $phone) {
+      if ($phone->isMain()) {
+        $info['phone'][] = $phone->getNumber();
+      }
+    }
+
+    foreach ($this->mails as $mail) {
+      if ($mail->isMain()) {
+        $info['mails'][] = $mail->getAddress();
+      }
+    }
+
+    return $info;
+
+  }
+
+  /**
+   * Get the reservation url.
+   */
+  public function getReservationUrl() {
+    foreach ($this->urls as $url) {
+      if ($url->isForReservations()) {
+        return $url->getUrl();
+      }
+    }
+  }
+
+  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMElement $element) {
@@ -195,7 +266,7 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
     if (!empty($xmlElement->address)) {
       $contactInfo->addAddress(CultureFeed_Cdb_Data_Address::parseFromCdbXml($xmlElement->address));
     }
-    
+
     // Mails.
     if (!empty($xmlElement->mail)) {
       foreach ($xmlElement->mail as $mailElement) {

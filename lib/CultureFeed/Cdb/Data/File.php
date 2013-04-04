@@ -30,9 +30,15 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
    * Constants for the media types.
    */
   const MEDIA_TYPE_PHOTO = 'photo';
+  const MEDIA_TYPE_VIDEO = 'video';
   const MEDIA_TYPE_WEBRESOURCE = 'webresource';
   const MEDIA_TYPE_CULTUREFEED_PAGE = 'culturefeed-page';
   const MEDIA_TYPE_RESERVATIONS = 'reservations';
+
+  /**
+   * Constants for relation types.
+   */
+  const REL_TYPE_ORGANISER = 'organiser';
 
   /**
    * Is the current file a main file.
@@ -95,13 +101,19 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   protected $fileType;
 
   /**
+   * Relation type.
+   * @var string
+   */
+  protected $relationType;
+
+  /**
    * Link to the file.
    * @var string
    */
   protected $hLink;
 
   /**
-   * Description or review from the file.
+   * Description or review of the file.
    * @var string
    */
   protected $plainText;
@@ -124,7 +136,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Return the cdbid from this file.
+   * Return the cdbid of this file.
    * @return string
    */
   public function getCdbid() {
@@ -132,14 +144,14 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Return the creation date from this file.
+   * Return the creation date of this file.
    */
   public function getCreationDate() {
     return $this->creationDate;
   }
 
   /**
-   * Get the media type from this file.
+   * Get the media type of this file.
    * @return string
    */
   public function getMediaType() {
@@ -147,7 +159,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Get the channel from this file.
+   * Get the channel of this file.
    * @return string
    */
   public function getChannel() {
@@ -155,7 +167,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Get the title from this file.
+   * Get the title of this file.
    * @return string
    */
   public function getTitle() {
@@ -163,7 +175,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Get the copyright information from this file.
+   * Get the copyright information of this file.
    * @return string
    */
   public function getCopyright() {
@@ -171,7 +183,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Get the filename from this file.
+   * Get the filename of this file.
    * @return string
    */
   public function getFileName() {
@@ -179,11 +191,18 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Get the file type for this file.
+   * Get the file type of this file.
    * @return string
    */
   public function getFileType() {
     return $this->fileType;
+  }
+
+  /**
+   * Get the relation type of this file.
+   */
+  public function getRelationType() {
+    return $this->relationType;
   }
 
   /**
@@ -195,7 +214,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Get the description or review from this file.
+   * Get the description or review of this file.
    * @return string
    */
   public function getPlainText() {
@@ -203,7 +222,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the main status from this file.
+   * Set the main status of this file.
    * @param bool Main status to set.
    */
   public function setMain($main) {
@@ -211,7 +230,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the private status from this file.
+   * Set the private status of this file.
    * @param bool Private status to set.
    */
   public function setPrivate($private) {
@@ -219,7 +238,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the cdbid from this file.
+   * Set the cdbid of this file.
    * @param string $cdbid Cdbid to set.
    */
   public function setCdbid($cdbid) {
@@ -227,7 +246,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the creation date from this file.
+   * Set the creation date of this file.
    * @param string $date Date to set.
    */
   public function setCreationDate($date) {
@@ -235,7 +254,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the media type from this file.
+   * Set the media type of this file.
    * @param string $type Type to set.
    */
   public function setMediaType($type) {
@@ -243,7 +262,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the source channel from this file.
+   * Set the source channel of this file.
    * @param string $channel Channel to set.
    */
   public function setChannel($channel) {
@@ -251,7 +270,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the title from this file.
+   * Set the title of this file.
    * @param string $title Title to set.
    */
   public function setTitle($title) {
@@ -259,7 +278,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the copyright information from this file.
+   * Set the copyright information of this file.
    * @param string $copyright Copyright to set.
    */
   public function setCopyright($copyright) {
@@ -267,7 +286,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the filename from this file.
+   * Set the filename of this file.
    * @param string $fileName filename to set.
    */
   public function setFileName($fileName) {
@@ -275,11 +294,19 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the filetype from this file.
+   * Set the filetype of this file.
    * @param string $fileType filetype to set.
    */
   public function setFileType($fileType) {
     $this->fileType = $fileType;
+  }
+
+  /**
+   * Set the relation type of this file.
+   * @param string $relationType
+   */
+  public function setRelationType($relationType) {
+    $this->relationType = $relationType;
   }
 
   /**
@@ -291,7 +318,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the description / review text from this file.
+   * Set the description / review text of this file.
    */
   public function setPlainText($text) {
     $this->plainText = $text;
@@ -335,6 +362,10 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
 
     if (!empty($this->fileType)) {
       $fileElement->appendChild($dom->createElement('filetype', $this->fileType));
+    }
+
+    if (!empty($this->relationType)) {
+      $fileElement->appendChild($dom->createElement('reltype', $this->relationType));
     }
 
     if (!empty($this->hLink)) {
@@ -412,6 +443,10 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
 
     if (!empty($xmlElement->filetype)) {
       $file->fileType = (string)$xmlElement->filetype;
+    }
+
+    if (!empty($xmlElement->reltype)) {
+      $file->relationType = (string)$xmlElement->reltype;
     }
 
     if (!empty($xmlElement->hlink)) {
