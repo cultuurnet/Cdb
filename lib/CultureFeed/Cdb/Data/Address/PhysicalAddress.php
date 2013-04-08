@@ -170,9 +170,9 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
       throw new CultureFeed_Cdb_ParseException("City is missing for physical address");
     }
 
-    if (empty($xmlElement->country)) {
+    /*if (empty($xmlElement->country)) {
       throw new CultureFeed_Cdb_ParseException("Country is missing for physical address");
-    }
+    }*/
 
     if (empty($xmlElement->zipcode)) {
       throw new CultureFeed_Cdb_ParseException("Zip code is missing for physical address");
@@ -181,7 +181,6 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
     $physicalAddress = new CultureFeed_Cdb_Data_Address_PhysicalAddress();
 
     $physicalAddress->setCity((string)$xmlElement->city);
-    $physicalAddress->setCountry((string)$xmlElement->country);
     $physicalAddress->setZip((string)$xmlElement->zipcode);
 
     if (!empty($xmlElement->street)) {
@@ -190,6 +189,10 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
 
     if (!empty($xmlElement->housenr)) {
       $physicalAddress->setHouseNumber((string)$xmlElement->housenr);
+    }
+
+    if (!empty($xmlElement->country)) {
+      $physicalAddress->setCountry((string)$xmlElement->country);
     }
 
     if (!empty($xmlElement->gis)) {

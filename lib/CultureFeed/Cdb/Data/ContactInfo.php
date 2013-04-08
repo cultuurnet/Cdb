@@ -176,7 +176,7 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
 
     foreach ($this->mails as $mail) {
       if ($mail->isForReservations()) {
-        $info['mails'][] = $mail->getAddress();
+        $info['mails'][] = $mail->getMailAddress();
       }
     }
 

@@ -7,29 +7,15 @@
 class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement {
 
   /**
-   * Category type event_type.
+   * Category types.
    */
   const CATEGORY_TYPE_EVENT_TYPE = 'eventtype';
-
-  /**
-   * Category type theme.
-   */
   const CATEGORY_TYPE_THEME = 'theme';
-
-  /**
-   * Category type publicscope.
-   */
   const CATEGORY_TYPE_PUBLICSCOPE = 'publicscope';
-
-  /**
-   * Category type educationfield.
-   */
   const CATEGORY_TYPE_EDUCATION_FIELD = 'educationfield';
-
-  /**
-   * Category type educationlevel.
-   */
   const CATEGORY_TYPE_EDUCATION_LEVEL = 'educationlevel';
+  const CATEGORY_TYPE_FACILITY = 'facility';
+  const CATEGORY_TYPE_TARGET_AUDIANCE = 'targetaudience';
 
   /**
    * Type of category.
