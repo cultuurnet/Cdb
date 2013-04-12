@@ -105,11 +105,11 @@ class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement {
     $performer = new CultureFeed_Cdb_Data_Performer();
 
     if (!empty($xmlElement->label)) {
-      $performer->setLabel($xmlElement->label);
+      $performer->setLabel((string) $xmlElement->label);
     }
 
     if (!empty($xmlElement->role)) {
-      $performer->setRole($xmlElement->role);
+      $performer->setRole((string) $xmlElement->role);
     }
 
     if (!empty($xmlElement->actor)) {

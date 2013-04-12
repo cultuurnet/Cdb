@@ -418,15 +418,15 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
     }
 
     if (isset($attributes['cdbid'])) {
-      $file->cdbid = $attributes['cdbid'];
+      $file->cdbid = (string)$attributes['cdbid'];
     }
 
     if (isset($attributes['creationdate'])) {
-      $file->creationDate = $attributes['creationdate'];
+      $file->creationDate = (string)$attributes['creationdate'];
     }
 
     if (isset($attributes['channel'])) {
-      $file->channel = $attributes['channel'];
+      $file->channel = (string)$attributes['channel'];
     }
 
     if (isset($attributes['private'])) {
