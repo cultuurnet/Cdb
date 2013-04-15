@@ -224,27 +224,35 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
 
     // Set address.
     $address = new CultureFeed_Cdb_Data_Address_PhysicalAddress();
+    $has_address = FALSE;
     if (!empty($xmlElement->city)) {
       $address->setCity((string) $xmlElement->city);
+      $has_address = TRUE;
     }
 
     if (!empty($xmlElement->street)) {
       $address->setStreet((string) $xmlElement->street);
+      $has_address = TRUE;
     }
 
     if (!empty($xmlElement->zip)) {
       $address->setZip((string) $xmlElement->zip);
+      $has_address = TRUE;
     }
 
     if (!empty($xmlElement->country)) {
       $address->setCountry((string) $xmlElement->country);
+      $has_address = TRUE;
     }
 
     if (!empty($xmlElement->lat) && !empty($xmlElement->lon)) {
       $address->setGeoInformation(new CultureFeed_Cdb_Data_Address_GeoInformation((string) $xmlElement->lat, (string) $xmlElement->lon));
+      $has_address = TRUE;
     }
 
-    $page->setAddress($address);
+    if ($has_address) {
+      $page->setAddress($address);
+    }
 
     // Set contact info.
     if (!empty($xmlElement->contactInfo->email)) {
