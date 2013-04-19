@@ -56,6 +56,12 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   protected $links;
 
   /**
+   * Image of this page.
+   * @var String url
+   */
+  protected $image;
+
+  /**
    * Get the id of this page.
    * @return string
    */
@@ -69,6 +75,14 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
    */
   public function getName() {
     return $this->name;
+  }
+
+  /**
+   * Get the image of this page.
+   * @return string
+   */
+  public function getImage() {
+    return $this->image;
   }
 
   /**
@@ -132,6 +146,14 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
    */
   public function setName($name) {
     $this->name = $name;
+  }
+
+  /**
+   * Set the image of this page.
+   * @param string $image
+   */
+  public function setImage($image) {
+    $this->image = $image;
   }
 
   /**
@@ -222,6 +244,11 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
       $page->setDescription((string) $xmlElement->description);
     }
 
+    // Set the image.
+    if (!empty($xmlElement->image)) {
+      $page->setImage((string) $xmlElement->image);
+    }
+
     // Set address.
     $address = new CultureFeed_Cdb_Data_Address_PhysicalAddress();
     $has_address = FALSE;
@@ -269,6 +296,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
         $links[$link->getName()] = (string) $link;
       }
     }
+    $page->setLinks($links);
 
     return $page;
 
