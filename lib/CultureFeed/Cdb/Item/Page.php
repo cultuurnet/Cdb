@@ -147,7 +147,15 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
    * @return Boolean
    */
   public function getVisibility() {
-    return $this->visible;
+    return $this->visible == "true" ? true : false;
+  }
+
+  /**
+   * Alias of getVisibility.
+   * @return Boolean
+   */
+  public function isVisible() {
+    return $this->getVisibility();
   }
 
   /**
