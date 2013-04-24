@@ -60,6 +60,16 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
    * @var String url
    */
   protected $image;
+  
+  /**
+   * Indicates whether the page is visible.
+   */
+  protected $visible;
+  
+  /**
+   * Indicates whether the contact information is visible.
+   */
+  protected $contactVisible;
 
   /**
    * Get the id of this page.
@@ -133,6 +143,22 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Get the visibility.
+   * @return Boolean
+   */
+  public function getVisibility() {
+    return $this->visible;
+  }
+
+  /**
+   * Get the visibility of the contact information.
+   * @return Boolean
+   */
+  public function getContactVisibility() {
+    return $this->contactVisible;
+  }
+  
+  /**
    * Set the id.
    * @param string $id
    */
@@ -205,6 +231,22 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Set the visibility.
+   * @param Boolean $visible
+   */
+  public function setVisibility($visible) {
+    $this->visible = $visible;
+  }
+
+  /**
+   * Set the visibility of the contactInformation.
+   * @param Boolean $visible
+   */
+  public function setContactVisibility($visible) {
+    $this->contactVisible = $visible;
+  }
+  
+  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMElement $element) {
@@ -249,31 +291,37 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
       $page->setImage((string) $xmlElement->image);
     }
 
+    // Set the visibility.
+    if (!empty($xmlElement->visible)) {
+      $page->setVisibility((string) $xmlElement->visible);
+    }
+
     // Set address.
     $address = new CultureFeed_Cdb_Data_Address_PhysicalAddress();
+    $addressElement = $xmlElement->address;
     $has_address = FALSE;
-    if (!empty($xmlElement->city)) {
-      $address->setCity((string) $xmlElement->city);
+    if (!empty($addressElement->city)) {
+      $address->setCity((string) $addressElement->city);
       $has_address = TRUE;
     }
 
-    if (!empty($xmlElement->street)) {
-      $address->setStreet((string) $xmlElement->street);
+    if (!empty($addressElement->street)) {
+      $address->setStreet((string) $addressElement->street);
       $has_address = TRUE;
     }
 
-    if (!empty($xmlElement->zip)) {
-      $address->setZip((string) $xmlElement->zip);
+    if (!empty($addressElement->zip)) {
+      $address->setZip((string) $addressElement->zip);
       $has_address = TRUE;
     }
 
-    if (!empty($xmlElement->country)) {
-      $address->setCountry((string) $xmlElement->country);
+    if (!empty($addressElement->country)) {
+      $address->setCountry((string) $addressElement->country);
       $has_address = TRUE;
     }
 
-    if (!empty($xmlElement->lat) && !empty($xmlElement->lon)) {
-      $address->setGeoInformation(new CultureFeed_Cdb_Data_Address_GeoInformation((string) $xmlElement->lat, (string) $xmlElement->lon));
+    if (!empty($addressElement->lat) && !empty($addressElement->lon)) {
+      $address->setGeoInformation(new CultureFeed_Cdb_Data_Address_GeoInformation((string) $addressElement->lat, (string) $addressElement->lon));
       $has_address = TRUE;
     }
 
@@ -288,6 +336,10 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
     if (!empty($xmlElement->contactInfo->telephone)) {
       $page->setTelephone((string) $xmlElement->contactInfo->telephone);
     }
+    
+    // Set the contact visibility.
+    // @todo Check which (new) field this is?
+    $page->setContactVisibility(true);
 
     // Set links.
     $links = array();
