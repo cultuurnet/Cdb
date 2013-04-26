@@ -67,9 +67,10 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   protected $visible;
   
   /**
-   * Indicates whether the contact information is visible.
+   * Permissions of a page.
+   * @var CultureFeed_Cdb_Data_PagePermissions
    */
-  protected $contactVisible;
+  protected $permissions = NULL;
 
   /**
    * Get the id of this page.
@@ -151,19 +152,19 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Get the permissions.
+   * @return CultureFeed_Cdb_Data_PagePermissions
+   */
+  public function getPermissions() {
+    return $this->permissions;
+  }
+
+  /**
    * Alias of getVisibility.
    * @return Boolean
    */
   public function isVisible() {
     return $this->getVisibility();
-  }
-
-  /**
-   * Get the visibility of the contact information.
-   * @return Boolean
-   */
-  public function getContactVisibility() {
-    return $this->contactVisible;
   }
   
   /**
@@ -247,11 +248,11 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   }
 
   /**
-   * Set the visibility of the contactInformation.
-   * @param Boolean $visible
+   * Set the permissions.
+   * @param CultureFeed_Cdb_Data_PagePermissions $permissions
    */
-  public function setContactVisibility($visible) {
-    $this->contactVisible = $visible;
+  public function setPermissions($permissions) {
+    $this->permissions = $permissions;
   }
   
   /**
@@ -344,10 +345,6 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
     if (!empty($xmlElement->contactInfo->telephone)) {
       $page->setTelephone((string) $xmlElement->contactInfo->telephone);
     }
-    
-    // Set the contact visibility.
-    // @todo Check which (new) field this is?
-    $page->setContactVisibility(true);
 
     // Set links.
     $links = array();
@@ -357,6 +354,9 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
       }
     }
     $page->setLinks($links);
+    
+    // Set the permissions.
+    $page->setPermissions(CultureFeed_Cdb_Data_PagePermissions::parseFromCdbXml($xmlElement->permissions));
 
     return $page;
 
