@@ -19,6 +19,12 @@ class CultureFeed_Cdb_Data_Address implements CultureFeed_Cdb_IElement {
   protected $virtualAddress;
 
   /**
+   * Label for this address.
+   * @var string
+   */
+  protected $label;
+
+  /**
    * Construct a new address.
    * @param CultureFeed_Cdb_Data_Address_PhysicalAddress $physical
    *   Physical address.
@@ -47,6 +53,13 @@ class CultureFeed_Cdb_Data_Address implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Get the label.
+   */
+  public function getLabel() {
+    return $this->label;
+  }
+
+  /**
    * Set the physical address
    * @param CultureFeed_Cdb_Data_Address_PhysicalAddress $address
    *   Address to set.
@@ -62,6 +75,15 @@ class CultureFeed_Cdb_Data_Address implements CultureFeed_Cdb_IElement {
    */
   public function setVirtualAddress(CultureFeed_Cdb_Data_Address_VirtualAddress $address) {
     $this->virtualAddress = $address;
+  }
+
+  /**
+   * Set the label of this address.
+   * @param string $label
+   *   Label to set.
+   */
+  public function setLabel($label) {
+    $this->label = $label;
   }
 
   /**
@@ -92,14 +114,21 @@ class CultureFeed_Cdb_Data_Address implements CultureFeed_Cdb_IElement {
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
-    if (empty($xmlElement->physical)) {
-      throw new Exception('Missing physical address to construct new address');
+    $address = new CultureFeed_Cdb_Data_Address();
+    if (!empty($xmlElement->physical)) {
+      $address->setPhysicalAddress(CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml($xmlElement->physical));
     }
 
-    $physicalAddress = CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml($xmlElement->physical);
-    $address = new CultureFeed_Cdb_Data_Address($physicalAddress);
+    if (!empty($xmlElement->virtual)) {
+      $address->setVirtualAddress(CultureFeed_Cdb_Data_Address_VirtualAddress::parseFromCdbXml($xmlElement->virtual));
+    }
+
+    if (!empty($xmlElement->label)) {
+      $address->setLabel((string)$xmlElement->label);
+    }
 
     return $address;
+
   }
 
 }
