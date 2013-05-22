@@ -20,6 +20,12 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
    * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
    */
   protected $bookingPeriod;
+  
+  /**
+   * organiser
+   * @var CultureFeed_Cdb_Data_Organiser
+   */
+  protected $organiser;
 
   /**
    * Get the minimum age for this production.
@@ -43,6 +49,13 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
   }
 
   /**
+   * Get the organiser from this event.
+   */
+  public function getOrganiser() {
+    return $this->organiser;
+  }
+
+  /**
    * Set the minimum age for this production.
    * @param int $age
    *   Minimum age.
@@ -58,6 +71,16 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
     $this->ageFrom = $age;
 
   }
+  
+  /**
+   * Set an organiser.
+   * 
+   * @param CultureFeed_Cdb_Data_Organiser $organiser
+   */
+  public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser) {
+    $this->organiser = $organiser;
+  }
+  
 
   /**
    * Set the maximum amount of participants.
@@ -161,6 +184,11 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
     if (!empty($xmlElement->agefrom)) {
       $production->setAgeFrom((int)$xmlElement->agefrom);
+    }
+    
+    // Set organiser.
+    if (!empty($xmlElement->organiser)) {
+      $production->setOrganiser(CultureFeed_Cdb_Data_Organiser::parseFromCdbXml($xmlElement->organiser));
     }
 
     // Set categories
