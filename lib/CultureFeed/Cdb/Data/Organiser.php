@@ -103,7 +103,7 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement {
 
         $attributes = $xmlElement->label->attributes();
         if (!empty($attributes->cdbid)) {
-            $organiser->setCdbid((string)$attributes->cdbid);
+          $organiser->setCdbid((string)$attributes->cdbid);
         }
     }
     elseif (!empty($xmlElement->actor)) {
