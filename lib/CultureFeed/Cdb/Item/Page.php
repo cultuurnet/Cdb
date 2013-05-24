@@ -355,7 +355,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
         if (strpos($url, 'http://') !== 0) {
           $url = 'http://' . $url;
         }
-        $links[$link->getName()] = (string) $link;
+        $links[$link->getName()] = $url;
       }
     }
     $page->setLinks($links);
