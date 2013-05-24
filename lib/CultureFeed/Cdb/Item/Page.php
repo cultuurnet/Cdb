@@ -60,12 +60,12 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
    * @var String url
    */
   protected $image;
-  
+
   /**
    * Indicates whether the page is visible.
    */
   protected $visible;
-  
+
   /**
    * Permissions of a page.
    * @var CultureFeed_Cdb_Data_PagePermissions
@@ -166,7 +166,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   public function isVisible() {
     return $this->getVisibility();
   }
-  
+
   /**
    * Set the id.
    * @param string $id
@@ -254,7 +254,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   public function setPermissions($permissions) {
     $this->permissions = $permissions;
   }
-  
+
   /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
@@ -350,11 +350,16 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
     $links = array();
     if (!empty($xmlElement->links)) {
       foreach ($xmlElement->links->children() as $link) {
+        $url = (string) $link;
+        // Make sure http is in front of the url.
+        if (strpos($url, 'http://') !== 0) {
+          $url = 'http://' . $url;
+        }
         $links[$link->getName()] = (string) $link;
       }
     }
     $page->setLinks($links);
-    
+
     // Set the permissions.
     $page->setPermissions(CultureFeed_Cdb_Data_PagePermissions::parseFromCdbXml($xmlElement->permissions));
 

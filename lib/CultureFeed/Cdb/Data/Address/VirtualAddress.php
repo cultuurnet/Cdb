@@ -57,6 +57,12 @@ class CultureFeed_Cdb_Data_Address_VirtualAddress implements CultureFeed_Cdb_IEl
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
+    if (empty($xmlElement->title)) {
+      throw new CultureFeed_Cdb_ParseException("Title is missing for virtual address");
+    }
+
+    return new self((string)$xmlElement->title);
+
   }
 
 }

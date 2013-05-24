@@ -119,9 +119,9 @@ class CultureFeed_Cdb_Data_Address implements CultureFeed_Cdb_IElement {
       $address->setPhysicalAddress(CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml($xmlElement->physical));
     }
 
-    /*if (!empty($xmlElement->virtual)) {
+    if (!empty($xmlElement->virtual)) {
       $address->setVirtualAddress(CultureFeed_Cdb_Data_Address_VirtualAddress::parseFromCdbXml($xmlElement->virtual));
-    }*/
+    }
 
     if (!empty($xmlElement->label)) {
       $address->setLabel((string)$xmlElement->label);
