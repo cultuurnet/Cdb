@@ -121,11 +121,13 @@ class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement {
 
     $attributes = $xmlElement->attributes();
     if (!isset($attributes['type'])) {
-      throw new CultureFeed_Cdb_ParseException("Category type missing for category element");
+      return;
+      //throw new CultureFeed_Cdb_ParseException("Category type missing for category element");
     }
 
     if (!isset($attributes['catid'])) {
-      throw new CultureFeed_Cdb_ParseException("Category ID missing for category element");
+      return;
+      //throw new CultureFeed_Cdb_ParseException("Category ID missing for category element");
     }
 
     return new CultureFeed_Cdb_Data_Category((string)$attributes['type'], (string)$attributes['catid'], (string)$xmlElement);

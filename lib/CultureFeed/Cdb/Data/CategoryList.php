@@ -126,7 +126,10 @@ class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElement, Ite
 
     if (!empty($xmlElement->category)) {
       foreach ($xmlElement->category as $categoryElement) {
-        $categoryList->add(CultureFeed_Cdb_Data_Category::parseFromCdbXml($categoryElement));
+        $category = CultureFeed_Cdb_Data_Category::parseFromCdbXml($categoryElement);
+        if ($category) {
+          $categoryList->add($category);
+        }
       }
     }
 
