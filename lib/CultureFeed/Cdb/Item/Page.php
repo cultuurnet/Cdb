@@ -330,8 +330,13 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
     }
 
     if (!empty($addressElement->lat) && !empty($addressElement->lon)) {
-      $address->setGeoInformation(new CultureFeed_Cdb_Data_Address_GeoInformation((string) $addressElement->lat, (string) $addressElement->lon));
-      $has_address = TRUE;
+
+      $coordinates = $addressElement->lat . '-' . $addressElement->lon;
+      if ($coordinates != '0.0-0.0') {
+        $address->setGeoInformation(new CultureFeed_Cdb_Data_Address_GeoInformation((string) $addressElement->lat, (string) $addressElement->lon));
+        $has_address = TRUE;
+      }
+
     }
 
     if ($has_address) {
@@ -350,12 +355,18 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
     $links = array();
     if (!empty($xmlElement->links)) {
       foreach ($xmlElement->links->children() as $link) {
+
         $url = (string) $link;
+        if (empty($url)) {
+          continue;
+        }
+
         // Make sure http is in front of the url.
         if (strpos($url, 'http://') !== 0) {
           $url = 'http://' . $url;
         }
         $links[$link->getName()] = $url;
+
       }
     }
     $page->setLinks($links);
