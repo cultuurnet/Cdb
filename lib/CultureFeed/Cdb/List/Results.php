@@ -91,14 +91,62 @@ class CultureFeed_Cdb_List_Results implements Iterator {
 
     $results = new self();
 
-    foreach ($xmlElement->list->item as $item) {
-      $results->items[] = CultureFeed_Cdb_List_Item::parseFromCdbXml($item);
+    if ($xmlElement->list) {
+      $results->items = self::parseFromCdbXmlList($xmlElement);
+    }
+    else {
+      $results->items = self::parseFromCdbXmlXmlview($xmlElement);
     }
 
-    $results->setTotalResultsFound((int)$xmlElement->nofrecords);
+    $results->setTotalResultsFound((int) $xmlElement->nofrecords);
 
     return $results;
 
+  }
+
+  /**
+   * Get the list items
+   * @param SimpleXMLElement $xmlElement
+   * @return array
+   */
+  protected static function parseFromCdbXmlList(SimpleXMLElement $xmlElement) {
+
+    $items = array();
+
+    foreach ($xmlElement->list->item as $item) {
+      $items[] = CultureFeed_Cdb_List_Item::parseFromCdbXml($item);
+    }
+
+    return $items;
+  }
+
+  /**
+   * Get the xmlview items
+   * @param SimpleXMLElement $xmlElement
+   * @return array
+   */
+  protected static function parseFromCdbXmlXmlview(SimpleXMLElement $xmlElement) {
+
+    $items = array();
+
+    if ($xmlElement->events) {
+      $listName = 'events';
+      $itemName = 'event';
+    }
+    elseif ($xmlElement->actors) {
+      $listName = 'actors';
+      $itemName = 'actor';
+    }
+    elseif ($xmlElement->productions) {
+      $listName = 'productions';
+      $itemName = 'production';
+    }
+
+    foreach ($xmlElement->$listName->$itemName as $item) {
+      $items[] = CultureFeed_Cdb_Default::parseItem($item);
+    }
+
+    return $items;
   }
 
 }
