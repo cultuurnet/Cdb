@@ -362,7 +362,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
         }
 
         // Make sure http is in front of the url.
-        if (strpos($url, 'http://') !== 0) {
+        if (strpos($url, 'http://') !== 0 && strpos($url, 'https://') !== 0) {
           $url = 'http://' . $url;
         }
         $links[$link->getName()] = $url;

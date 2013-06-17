@@ -84,6 +84,13 @@ class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElemen
   }
 
   /**
+   * Check if the current day is open or not.
+   */
+  public function isOpen() {
+    return $this->openType == self::SCHEMEDAY_OPEN_TYPE_OPEN;
+  }
+
+  /**
    * Set the day name.
    * @param string $dayName
    *   Name of the day to set.

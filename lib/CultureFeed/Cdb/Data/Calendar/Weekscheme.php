@@ -56,6 +56,13 @@ class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IEleme
   }
 
   /**
+   * Return all the days.
+   */
+  public function getDays() {
+    return $this->days;
+  }
+
+  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMELement $element) {

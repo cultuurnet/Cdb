@@ -20,7 +20,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
    * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
    */
   protected $bookingPeriod;
-  
+
   /**
    * organiser
    * @var CultureFeed_Cdb_Data_Organiser
@@ -71,16 +71,16 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
     $this->ageFrom = $age;
 
   }
-  
+
   /**
    * Set an organiser.
-   * 
+   *
    * @param CultureFeed_Cdb_Data_Organiser $organiser
    */
   public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser) {
     $this->organiser = $organiser;
   }
-  
+
 
   /**
    * Set the maximum amount of participants.
@@ -185,7 +185,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
     if (!empty($xmlElement->agefrom)) {
       $production->setAgeFrom((int)$xmlElement->agefrom);
     }
-    
+
     // Set organiser.
     if (!empty($xmlElement->organiser)) {
       $production->setOrganiser(CultureFeed_Cdb_Data_Organiser::parseFromCdbXml($xmlElement->organiser));
@@ -208,7 +208,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
     }
 
     // Set the related events for this production.
-    if (!empty($xmlElement->relatedevents) && !empty($xmlElement->relatedevents->id)) {
+    if (!empty($xmlElement->relatedevents) && isset($xmlElement->relatedevents->id)) {
 
       foreach ($xmlElement->relatedevents->id as $relatedItem) {
 

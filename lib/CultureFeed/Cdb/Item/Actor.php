@@ -38,21 +38,21 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
   }
 
   /**
-   * Get the contact info from this actor.
+   * Get the contact info of this actor.
    */
   public function getContactInfo() {
     return $this->contactInfo;
   }
 
   /**
-   * Get the weekscheme from this actor.
+   * Get the weekscheme of this actor.
    */
   public function getWeekScheme() {
     return $this->weekScheme;
   }
 
   /**
-   * Set the contact info from this contact.
+   * Set the contact info of this contact.
    * @param CultureFeed_Cdb_Data_Calendar $contactInfo
    *   Contact info to set.
    */
@@ -61,7 +61,7 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
   }
 
   /**
-   * Get the weekscheme from this actor.
+   * Get the weekscheme of this actor.
    */
   public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $weekScheme) {
     $this->weekScheme = $weekScheme;
