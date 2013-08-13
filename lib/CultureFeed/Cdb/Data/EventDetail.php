@@ -12,6 +12,14 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
    */
   protected $calendarSummary;
 
+  /**
+   * @var CultureFeed_Cdb_Data_PerformerList
+   */
+  protected $performers;
+
+  /**
+   * Constructor.
+   */
   public function __construct() {
     $this->media = new CultureFeed_Cdb_Data_Media();
   }
@@ -25,11 +33,29 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
   }
 
   /**
+   * Get the performers.
+   *
+   * @return CultureFeed_Cdb_Data_PerformersList
+   */
+  public function getPerformers() {
+    return $this->performers;
+  }
+
+  /**
    * Set the calendar summary.
    * @param string $summary
    */
   public function setCalendarSummary($summary) {
     $this->calendarSummary = $summary;
+  }
+
+  /**
+   * Set the performers.
+   *
+   * @param CultureFeed_Cdb_Data_PerformersList $performers
+   */
+  public function setPerformers(CultureFeed_Cdb_Data_PerformerList $performers) {
+    $this->performers = $performers;
   }
 
   /**
@@ -56,6 +82,10 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
 
     if (count($this->media) > 0) {
       $this->media->appendToDOM($detailElement);
+    }
+
+    if (count($this->performers) > 0) {
+      $this->performers->appendToDOM($detailElement);
     }
 
     if (!empty($this->price)) {
@@ -105,6 +135,11 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
 
     if (!empty($xmlElement->calendarsummary)) {
       $eventDetail->setCalendarSummary((string)$xmlElement->calendarsummary);
+    }
+
+    // Set Performers.
+    if (!empty($xmlElement->performers)) {
+      $eventDetail->setPerformers(CultureFeed_Cdb_Data_PerformerList::parseFromCdbXml($xmlElement->performers));
     }
 
     if (!empty($xmlElement->media->file)) {
