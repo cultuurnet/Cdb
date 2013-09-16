@@ -32,8 +32,19 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   const MEDIA_TYPE_PHOTO = 'photo';
   const MEDIA_TYPE_VIDEO = 'video';
   const MEDIA_TYPE_WEBRESOURCE = 'webresource';
+  const MEDIA_TYPE_WEBSITE = 'website';
   const MEDIA_TYPE_CULTUREFEED_PAGE = 'culturefeed-page';
   const MEDIA_TYPE_RESERVATIONS = 'reservations';
+  const MEDIA_TYPE_ROADMAP = 'roadmap';
+  const MEDIA_TYPE_TEXT = 'text';
+  const MEDIA_TYPE_IMAGEWEB = 'imageweb';
+  const MEDIA_TYPE_IMAGEPRINT = 'imageprint';
+  const MEDIA_TYPE_BLOG = 'blog';
+  const MEDIA_TYPE_YOUTUBE = 'youtube';
+  const MEDIA_TYPE_GOOGLEPLUS = 'google-plus';
+  const MEDIA_TYPE_TWITTER = 'twitter';
+  const MEDIA_TYPE_FACEBOOK = 'facebook';
+  const MEDIA_TYPE_TAGLINE = 'tagline';
 
   /**
    * Constants for relation types.
