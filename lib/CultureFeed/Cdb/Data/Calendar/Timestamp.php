@@ -164,7 +164,7 @@ class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_IElemen
     $timestamp = new CultureFeed_Cdb_Data_Calendar_Timestamp((string)$xmlElement->date);
 
     if (isset($attributes['opentype'])) {
-      $timestamp->setOpenType($attributes['opentype']);
+      $timestamp->setOpenType((string)$attributes['opentype']);
     }
 
     if (!empty($xmlElement->timestart)) {
