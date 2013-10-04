@@ -93,11 +93,9 @@ class CultureFeed_Cdb_Default {
     foreach ($this->items as $type => $itemsFromType) {
 
       if ($itemsFromType) {
-        $typeElement = $dom->createElement($type);
-        $cdbElement->appendChild($typeElement);
 
         foreach ($itemsFromType as $item) {
-          $item->appendToDOM($typeElement);
+          $item->appendToDOM($cdbElement);
         }
 
       }
