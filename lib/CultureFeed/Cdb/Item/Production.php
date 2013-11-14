@@ -65,6 +65,12 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
       $this->details->appendToDOM($productionElement);
     }
     
+    if (count($this->keywords) > 0) {
+      $keywordElement = $dom->createElement('keywords');
+      $keywordElement->appendChild($dom->createTextNode(implode(';', $this->keywords)));
+      $productionElement->appendChild($keywordElement);
+    }
+    
     if (!empty($this->relations)) {
 
       $relationsElement = $dom->createElement('eventrelations');
@@ -79,12 +85,6 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
       $productionElement->appendChild($relationsElement);
 
-    }
-    
-    if (count($this->keywords) > 0) {
-      $keywordElement = $dom->createElement('keywords');
-      $keywordElement->appendChild($dom->createTextNode(implode(';', $this->keywords)));
-      $productionElement->appendChild($keywordElement);
     }
 
     $element->appendChild($productionElement);
