@@ -10,22 +10,14 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
   protected $ageFrom;
 
   /**
-<<<<<<< Updated upstream
    * Get the minimum age for this production.
-=======
-   * Get the minimum age for this event.
->>>>>>> Stashed changes
    */
   public function getAgeFrom() {
     return $this->ageFrom;
   }
 
   /**
-<<<<<<< Updated upstream
    * Set the minimum age for this production.
-=======
-   * Set the minimum age for this event.
->>>>>>> Stashed changes
    * @param int $age
    *   Minimum age.
    *
@@ -87,6 +79,12 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
       $productionElement->appendChild($relationsElement);
 
+    }
+    
+    if (count($this->keywords) > 0) {
+      $keywordElement = $dom->createElement('keywords');
+      $keywordElement->appendChild($dom->createTextNode(implode(';', $this->keywords)));
+      $productionElement->appendChild($keywordElement);
     }
 
     $element->appendChild($productionElement);
