@@ -253,6 +253,12 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     if ($this->details) {
       $this->details->appendToDOM($eventElement);
     }
+    
+    if (count($this->keywords) > 0) {
+      $keywordElement = $dom->createElement('keywords');
+      $keywordElement->appendChild($dom->createTextNode(implode(';', $this->keywords)));
+      $eventElement->appendChild($keywordElement);
+    }   
 
     if ($this->location) {
       $this->location->appendToDOM($eventElement);
