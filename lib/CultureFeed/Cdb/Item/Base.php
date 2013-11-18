@@ -18,6 +18,13 @@ abstract class CultureFeed_Cdb_Item_Base {
    * @var string
    */
   protected $cdbId;
+  
+  
+  /**
+   * Is item private
+   * @var bool
+   */
+  protected $private;
 
   /**
    * Categories from the item.
@@ -58,6 +65,14 @@ abstract class CultureFeed_Cdb_Item_Base {
   public function getCdbId() {
     return $this->cdbId;
   }
+  
+  /**
+   * Get if item is private.
+   * @return bool
+   */
+  public function isPrivate() {
+    return $this->private;
+  }
 
   /**
    * Get the categories from this item.
@@ -97,6 +112,14 @@ abstract class CultureFeed_Cdb_Item_Base {
    */
   public function setCdbId($id) {
     $this->cdbId = $id;
+  }
+  
+  /**
+   * Set if item is private.
+   * @param bool $id
+   */
+  public function setPrivate($private) {
+    $this->private = $private;
   }
 
   /**

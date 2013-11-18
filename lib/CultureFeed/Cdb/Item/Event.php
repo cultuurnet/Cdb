@@ -189,6 +189,10 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     if ($this->cdbId) {
       $eventElement->setAttribute('cdbid', $this->cdbId);
     }
+    
+    if ($this->private) {
+      $eventElement->setAttribute('private', ($this->private) ? 'true' : 'false');
+    }
 
     if ($this->externalId) {
       $eventElement->setAttribute('externalid', $this->externalId);
@@ -287,6 +291,10 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     // Set ID.
     if (isset($event_attributes['cdbid'])) {
       $event->setCdbId((string)$event_attributes['cdbid']);
+    }
+    
+    if (isset($event_attributes['private'])) {
+      $event->setPrivate(filter_var((string)$event_attributes['private'], FILTER_VALIDATE_BOOLEAN));
     }
 
     if (isset($event_attributes['externalid'])) {
