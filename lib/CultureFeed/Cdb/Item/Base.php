@@ -24,7 +24,7 @@ abstract class CultureFeed_Cdb_Item_Base {
    * Is item private
    * @var bool
    */
-  protected $private;
+  protected $private = FALSE;
 
   /**
    * Categories from the item.
