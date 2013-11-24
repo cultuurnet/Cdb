@@ -12,6 +12,19 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $this->event = new CultureFeed_Cdb_Item_Event();
     }
 
+    /**
+     * @param $fileName
+     * @return SimpleXMLElement
+     */
+    public function loadSample($fileName) {
+        $sampleDir = __DIR__ . '/samples/EventTest/';
+        $filePath = $sampleDir . $fileName;
+
+        $xml = simplexml_load_file($filePath, 'SimpleXMLElement', 0, \CultureFeed_Cdb_Default::CDB_SCHEME_URL);
+
+        return $xml;
+    }
+
     public function testAppendsCdbidAttributeOnlyWhenCdbidIsSet()
     {
         $this->assertEquals(NULL, $this->event->getCdbId());
@@ -47,5 +60,61 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $items->length);
 
         $this->assertEquals($uuid, $items->item(0)->textContent);
+    }
+
+    /**
+     * @return array
+     */
+    public function privatePropertyValues() {
+        return array(
+            array(TRUE),
+            array(FALSE),
+        );
+    }
+
+    /**
+     * @dataProvider privatePropertyValues
+     */
+    public function testAppendsBooleanPrivateProperty($value) {
+        $this->assertInternalType('boolean', $this->event->isPrivate());
+        $this->assertEquals(FALSE, $this->event->isPrivate());
+
+        $dom = new DOMDocument();
+        $eventsElement = $dom->createElement('events');
+        $dom->appendChild($eventsElement);
+        $this->event->appendToDOM($eventsElement);
+
+        $xpath = new DOMXPath($dom);
+
+        $items = $xpath->query('/events/event');
+        $this->assertEquals(1, $items->length);
+
+        $items = $xpath->query('/events/event/@private');
+        $this->assertEquals(0, $items->length);
+
+        $this->event->setPrivate($value);
+
+        $this->assertInternalType('boolean', $this->event->isPrivate());
+        $this->assertEquals($value, $this->event->isPrivate());
+    }
+
+    public function privatePropertySamples() {
+        return array(
+          array('private.xml', TRUE),
+          array('non-private.xml', FALSE),
+        );
+    }
+
+    /**
+     * @dataProvider privatePropertySamples
+     * @param $sampleName
+     * @param $value
+     */
+    public function testCreateFromXmlParsesPrivateAttribute($sampleName, $value) {
+        $xml = $this->loadSample($sampleName);
+        //var_dump($xml->asXML());
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
+
+        $this->assertEquals($value, $event->isPrivate());
     }
 }

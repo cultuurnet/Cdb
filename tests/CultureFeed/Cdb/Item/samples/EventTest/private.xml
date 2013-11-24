@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cdb:event xmlns:cdb="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.1/FINAL" availablefrom="2011-10-12T00:00:00" availableto="2100-01-01T00:00:00" cdbid="30b9f8ff-54a1-4034-871f-0a1bf5d3d6ea" createdby="chrisjacobs" creationdate="2011-10-12T16:21:20" externalid="CDB:a46d7ee3-4e51-4791-ae3d-966d675e34f7" isparent="false" lastupdated="2011-10-12T16:56:55" lastupdatedby="chrisjacobs" pctcomplete="75" published="true" owner="UiTdatabank Validatoren" private="true" validator="UiTdatabank Validatoren" wfstatus="approved">
+    <cdb:activities>
+        <cdb:activity count="1" type="like"/>
+        <cdb:activity count="0" type="attend"/>
+        <cdb:activity count="0" type="comment"/>
+        <cdb:activity count="2" type="recommend"/>
+        <cdb:activity count="0" type="facebook_share"/>
+        <cdb:activity count="1" type="review"/>
+    </cdb:activities>
+    <cdb:calendar>
+        <cdb:permanentopeningtimes>
+            <cdb:permanent>
+                <cdb:weekscheme>
+                    <cdb:monday opentype="open"/>
+                    <cdb:tuesday opentype="open"/>
+                    <cdb:wednesday opentype="open"/>
+                    <cdb:thursday opentype="open"/>
+                    <cdb:friday opentype="open"/>
+                    <cdb:saturday opentype="open"/>
+                    <cdb:sunday opentype="open"/>
+                </cdb:weekscheme>
+            </cdb:permanent>
+        </cdb:permanentopeningtimes>
+    </cdb:calendar>
+    <cdb:categories>
+        <cdb:category catid="0.16.0.0.0" type="eventtype">Park of tuin</cdb:category>
+        <cdb:category catid="reg.1576" type="flandersregion">1090 Jette (Brussel)</cdb:category>
+    </cdb:categories>
+    <cdb:comments/>
+    <cdb:contactinfo>
+        <cdb:address>
+            <cdb:physical>
+                <cdb:city>Jette</cdb:city>
+                <cdb:country>BE</cdb:country>
+                <cdb:gis>
+                    <cdb:xcoordinate>4.308873</cdb:xcoordinate>
+                    <cdb:ycoordinate>50.884838</cdb:ycoordinate>
+                </cdb:gis>
+                <cdb:housenr>z/n</cdb:housenr>
+                <cdb:street>Laarbeeklaan</cdb:street>
+                <cdb:zipcode>1090</cdb:zipcode>
+            </cdb:physical>
+        </cdb:address>
+        <cdb:url main="true">http://www.modalshift.be/IMG/pdf/Laarbeekbos.pdf</cdb:url>
+    </cdb:contactinfo>
+    <cdb:eventdetails>
+        <cdb:eventdetail lang="nl">
+            <cdb:media>
+                <cdb:file creationdate="12/10/2011 16:52:34" main="true">
+                    <cdb:copyright>Laarbeekbos</cdb:copyright>
+                    <cdb:filename>f8442780-161e-4295-9fca-cd037c5c0305.jpg</cdb:filename>
+                    <cdb:filetype>jpeg</cdb:filetype>
+                    <cdb:hlink>http://media.uitdatabank.be/20111012/f8442780-161e-4295-9fca-cd037c5c0305.jpg</cdb:hlink>
+                    <cdb:mediatype>photo</cdb:mediatype>
+                </cdb:file>
+            </cdb:media>
+            <cdb:shortdescription>Het prachtige berkenbos Laarbeekbos is het grootste bosgebied in het noorden van Brussel. Klein en groot kan zijn gading vinden op dit groene plekje. Kinderen kunnen hun behendigheid testen op de klimmast. </cdb:shortdescription>
+            <cdb:title>Het Laarbeekbos</cdb:title>
+        </cdb:eventdetail>
+    </cdb:eventdetails>
+    <cdb:keywords>ook voor kinderen;Buitenspeeltuin</cdb:keywords>
+    <cdb:location>
+        <cdb:address>
+            <cdb:physical>
+                <cdb:city>Jette</cdb:city>
+                <cdb:country>BE</cdb:country>
+                <cdb:gis>
+                    <cdb:xcoordinate>4.308873</cdb:xcoordinate>
+                    <cdb:ycoordinate>50.884838</cdb:ycoordinate>
+                </cdb:gis>
+                <cdb:housenr>z/n</cdb:housenr>
+                <cdb:street>Laarbeeklaan</cdb:street>
+                <cdb:zipcode>1090</cdb:zipcode>
+            </cdb:physical>
+        </cdb:address>
+        <cdb:label>Laarbeekbos</cdb:label>
+    </cdb:location>
+</cdb:event>
