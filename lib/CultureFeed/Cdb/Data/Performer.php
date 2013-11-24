@@ -84,13 +84,15 @@ class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement {
 
     $performerElement = $dom->createElement('performer');
 
+    if ($this->role) {
+      $roleElement = $dom->createElement('role');
+      $roleElement->appendChild($dom->createTextNode($this->role));
+      $performerElement->appendChild($roleElement);
+    }
+
     $labelElement = $dom->createElement('label');
     $labelElement->appendChild($dom->createTextNode($this->label));
     $performerElement->appendChild($labelElement);
-
-    $roleElement = $dom->createElement('role');
-    $roleElement->appendChild($dom->createTextNode($this->role));
-    $performerElement->appendChild($roleElement);
 
     $element->appendChild($performerElement);
 

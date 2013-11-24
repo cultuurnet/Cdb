@@ -96,7 +96,8 @@ class CultureFeed_Cdb_Data_Url implements CultureFeed_Cdb_IElement {
 
     $dom = $element->ownerDocument;
 
-    $urlElement = $dom->createElement('url', $this->url);
+    $urlElement = $dom->createElement('url');
+    $urlElement->appendChild($dom->createTextNode($this->url));
 
     if ($this->main) {
       $urlElement->setAttribute('main', 'true');
