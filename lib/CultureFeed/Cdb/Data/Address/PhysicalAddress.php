@@ -170,9 +170,9 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
       throw new CultureFeed_Cdb_ParseException("City is missing for physical address");
     }
 
-    /*if (empty($xmlElement->country)) {
+    if (empty($xmlElement->country)) {
       throw new CultureFeed_Cdb_ParseException("Country is missing for physical address");
-    }*/
+    }
 
     if (empty($xmlElement->zipcode)) {
       throw new CultureFeed_Cdb_ParseException("Zip code is missing for physical address");
