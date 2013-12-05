@@ -140,7 +140,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
       $keywordElement = $dom->createElement('keywords');
       $keywordElement->appendChild($dom->createTextNode(implode(';', $this->keywords)));
       $productionElement->appendChild($keywordElement);
-    } 
+    }
 
     if (!empty($this->relations)) {
 

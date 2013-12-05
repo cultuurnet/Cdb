@@ -18,6 +18,12 @@ class CultureFeed_Cdb_List_Item {
    * @var string
    */
   protected $cdbId;
+  
+  /**
+   * Is item private.
+   * @var bool
+   */
+  protected $private;
 
   /**
    * Title from the item
@@ -270,6 +276,14 @@ class CultureFeed_Cdb_List_Item {
   }
 
   /**
+   * Set item private.
+   * @param bool $private
+   */
+  public function setPrivate($private) {
+    $this->private = $private;
+  }
+
+  /**
    * Set the short description from current item.
    */
   public function setShortDescription($description) {
@@ -397,6 +411,10 @@ class CultureFeed_Cdb_List_Item {
 
     // Set ID.
     $item->setCdbId((string)$attributes['cidn']);
+    
+    if (!empty($attributes['private'])) {
+      $item->setPrivate((bool)$attributes['private']);
+    }
 
     if (!empty($attributes['externalid'])) {
       $item->setExternalId((string)$attributes['externalid']);
