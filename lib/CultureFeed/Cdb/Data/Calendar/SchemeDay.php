@@ -6,6 +6,14 @@
  */
 class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElement {
 
+  const MONDAY = 'monday';
+  const TUESDAY = 'tuesday';
+  const WEDNESDAY = 'wednesday';
+  const THURSDAY = 'thursday';
+  const FRIDAY = 'friday';
+  const SATURDAY = 'saturday';
+  const SUNDAY = 'sunday';
+
   public static $allowedDays = array(
     'monday',
     'tuesday',
