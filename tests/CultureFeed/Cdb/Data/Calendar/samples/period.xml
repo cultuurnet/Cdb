@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf8"?>
+<calendar>
+    <period>
+        <datefrom>2013-12-06</datefrom>
+        <dateto>2013-12-25</dateto>
+        <weekscheme>
+            <monday opentype="open"/>
+            <tuesday opentype="open"/>
+            <wednesday opentype="open"/>
+            <thursday opentype="byappointment"/>
+            <friday opentype="open"/>
+            <saturday opentype="closed"/>
+            <sunday opentype="closed"/>
+        </weekscheme>
+    </period>
+</calendar>

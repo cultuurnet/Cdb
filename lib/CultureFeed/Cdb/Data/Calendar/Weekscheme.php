@@ -3,12 +3,20 @@
 /**
  * @class
  * Representation of a weekscheme element in the cdb xml.
+ *
+ * @method CultureFeed_Cdb_Data_Calendar_SchemeDay monday
+ * @method CultureFeed_Cdb_Data_Calendar_SchemeDay tuesday
+ * @method CultureFeed_Cdb_Data_Calendar_SchemeDay wednesday
+ * @method CultureFeed_Cdb_Data_Calendar_SchemeDay thursday
+ * @method CultureFeed_Cdb_Data_Calendar_SchemeDay friday
+ * @method CultureFeed_Cdb_Data_Calendar_SchemeDay saturday
+ * @method CultureFeed_Cdb_Data_Calendar_SchemeDay sunday
  */
 class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IElement {
 
   /**
    * Opening information for all days.
-   * @var array
+   * @var CultureFeed_Cdb_Data_Calendar_SchemeDay[]
    */
   protected $days = array(
     'monday' => NULL,
@@ -104,6 +112,22 @@ class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IEleme
 
     return $weekscheme;
 
+  }
+
+  public function __call($name, $arguments) {
+    if (array_key_exists($name, $this->days)) {
+      if (!$this->days[$name] instanceof CultureFeed_Cdb_Data_Calendar_SchemeDay) {
+        $day = new CultureFeed_Cdb_Data_Calendar_SchemeDay($name);
+        $this->setDay($name, $day);
+      }
+      else {
+        $day = $this->days[$name];
+      }
+
+      return $day;
+    }
+
+    throw new Exception("Call to undefined method {$name} of class " . __CLASS__);
   }
 
 }

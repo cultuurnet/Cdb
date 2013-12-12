@@ -37,6 +37,12 @@ class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElemen
   const SCHEMEDAY_OPEN_TYPE_CLOSED = 'closed';
 
   /**
+   * Scheme open type: byappointment
+   * @var string
+   */
+  const SCHEMEDAY_OPEN_TYPE_BY_APPOINTMENT = 'byappointment';
+
+  /**
    * Name of the week day
    * @var string
    */
@@ -117,18 +123,53 @@ class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElemen
    * Set the opening type.
    * @param string $type
    *   Opening type to set.
+   *
+   * @return $this
    */
   public function setOpenType($type) {
     $this->openType = $type;
+
+    return $this;
+  }
+
+  /**
+   * @return $this
+   */
+  public function setClosed() {
+    $this->setOpenType(self::SCHEMEDAY_OPEN_TYPE_CLOSED);
+
+    return $this;
+  }
+
+  /**
+   * @return $this
+   */
+  public function setOpen() {
+    $this->setOpenType(self::SCHEMEDAY_OPEN_TYPE_OPEN);
+
+    return $this;
+  }
+
+  /**
+   * @return $this
+   */
+  public function setOpenByAppointment() {
+    $this->setOpenType(self::SCHEMEDAY_OPEN_TYPE_BY_APPOINTMENT);
+
+    return $this;
   }
 
   /**
    * Add an opening time.
    * @param CultureFeed_Cdb_Data_Calendar_OpeningTime $openingTime
    *   Opening time to add.
+   *
+   * @return $this
    */
   public function addOpeningTime(CultureFeed_Cdb_Data_Calendar_OpeningTime $openingTime) {
     $this->openingTimes[] = $openingTime;
+
+    return $this;
   }
 
   /**
