@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf8"?>
+<period>
+    <weekscheme>
+        <monday opentype="closed"/>
+        <tuesday opentype="open"/>
+        <wednesday opentype="open"/>
+        <thursday opentype="closed"/>
+        <friday opentype="open"/>
+        <saturday opentype="open"/>
+        <sunday opentype="closed"/>
+    </weekscheme>
+</period>
