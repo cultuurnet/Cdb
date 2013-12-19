@@ -151,9 +151,12 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
     if ($this->gis) {
       $this->gis->appendToDOM($physicalElement);
     }
-
-    $physicalElement->appendChild($dom->createElement('housenr', $this->houseNumber));
-    $physicalElement->appendChild($dom->createElement('street', $this->street));
+    if ($this->houseNumber) {
+      $physicalElement->appendChild($dom->createElement('housenr', $this->houseNumber));
+    }
+    if ($this->street) {
+      $physicalElement->appendChild($dom->createElement('street', $this->street));
+    }
     $physicalElement->appendChild($dom->createElement('zipcode', $this->zip));
 
     $element->appendChild($physicalElement);
