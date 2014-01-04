@@ -21,6 +21,13 @@ abstract class CultureFeed_Cdb_Data_Calendar implements Iterator {
   const OPEN_TYPE_BYAPPOINTMENT = 'byappointment';
 
   /**
+   * Regular expression for matching a ISO8601 formatted time (xml primitive datatype xs:time).
+   *
+   * Source: "Regular Expressions Cookbook", ISBN-13 978-0-596-52068-7.
+   */
+  const ISO8601_REGEX_TIME = '^(2[0-3]|[0-1][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)??(Z|[+-](?:2[0-3]|[0-1][0-9]):[0-5][0-9])?$';
+
+  /**
    * Current position in the list.
    * @var int
    */
@@ -87,7 +94,7 @@ abstract class CultureFeed_Cdb_Data_Calendar implements Iterator {
    * @throws Exception
    */
   public static function validateTime($value) {
-    if (!preg_match('/^([0-9]{2}):([0-9]{2}):([0-9]{2})$/', $value)) {
+    if (!preg_match('/' . self::ISO8601_REGEX_TIME . '/', $value)) {
       throw new UnexpectedValueException('Invalid time: ' . $value);
     }
   }
