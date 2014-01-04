@@ -112,18 +112,18 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
-    if (empty($xmlElement->title)) {
-      throw new CultureFeed_Cdb_ParseException("Title missing for eventdetail element");
-    }
-
     $attributes = $xmlElement->attributes();
     if (empty($attributes['lang'])) {
       throw new CultureFeed_Cdb_ParseException("Lang missing for eventdetail element");
     }
 
     $eventDetail = new Culturefeed_Cdb_Data_EventDetail();
-    $eventDetail->setTitle((string)$xmlElement->title);
+
     $eventDetail->setLanguage((string)$attributes['lang']);
+
+    if (!empty($xmlElement->title)) {
+        $eventDetail->setTitle((string)$xmlElement->title);
+    }
 
     if (!empty($xmlElement->shortdescription)) {
       $eventDetail->setShortDescription((string)$xmlElement->shortdescription);
