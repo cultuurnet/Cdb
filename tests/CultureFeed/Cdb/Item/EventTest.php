@@ -117,4 +117,14 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($value, $event->isPrivate());
     }
+
+    public function testParseCdbXMLGuideExample6Dot2() {
+        $xml = $this->loadSample('cdbxml-guide-example-6-2.xml');
+
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
+
+        $this->assertInstanceOf('CultureFeed_Cdb_Item_Event', $event);
+
+        $this->assertEquals('ea37cae2-c91e-4810-89ab-e060432d2b78', $event->getCdbId());
+    }
 }
