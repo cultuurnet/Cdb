@@ -7,6 +7,66 @@
 class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement {
 
   /**
+   * @var string
+   */
+  protected $availableFrom;
+
+  /**
+   * @var string
+   */
+  protected $availableTo;
+
+  /**
+   * @var string
+   */
+  protected $createdBy;
+
+  /**
+   * @var string
+   */
+  protected $creationDate;
+
+  /**
+   * @var bool
+   */
+  protected $isParent;
+
+  /**
+   * @var string
+   */
+  protected $lastUpdated;
+
+  /**
+   * @var string
+   */
+  protected $lastUpdatedBy;
+
+  /**
+   * @var string
+   */
+  protected $owner;
+
+  /**
+   * @var float
+   */
+  protected $pctComplete;
+
+  /**
+   * @var bool
+   */
+  protected $published;
+
+  /**
+   * @var string
+   */
+  protected $validator;
+
+  /**
+   * @var string
+   */
+  protected $wfStatus;
+
+  /**
    * Publication date for the event.
    *
    * @var string
@@ -64,6 +124,126 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
    * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
    */
   protected $bookingPeriod;
+
+  public function setAvailableFrom($value) {
+    $this->availableFrom = $value;
+  }
+
+  public function getAvailableFrom() {
+    return $this->availableFrom;
+  }
+
+  public function setAvailableTo($value) {
+    $this->availableTo = $value;
+  }
+
+  public function getAvailableTo() {
+    return $this->availableTo;
+  }
+
+  public function setCreatedBy($author) {
+    $this->createdBy = $author;
+  }
+
+  public function getCreatedBy() {
+    return $this->createdBy;
+  }
+
+  public function setCreationDate($value) {
+    $this->creationDate = $value;
+  }
+
+  public function getCreationDate() {
+    return $this->creationDate;
+  }
+
+  /**
+   * @return bool
+   */
+  public function isParent() {
+    return $this->isParent;
+  }
+
+  /**
+   * @param bool $value
+   */
+  public function setIsParent($value) {
+    $this->isParent = $value;
+  }
+
+  public function getLastUpdated() {
+    return $this->lastUpdated;
+  }
+
+  public function setLastUpdated($value) {
+    $this->lastUpdated = $value;
+  }
+
+  public function getLastUpdatedBy() {
+    return $this->lastUpdatedBy;
+  }
+
+  public function setLastUpdatedBy($author) {
+    $this->lastUpdatedBy = $author;
+  }
+
+  public function getOwner() {
+    return $this->owner;
+  }
+
+  public function setOwner($owner) {
+    $this->owner = $owner;
+  }
+
+  public function getPctComplete() {
+    return $this->pctComplete;
+  }
+
+  public function setPctComplete($pct) {
+    $this->pctComplete = $pct;
+  }
+
+  /**
+   * @return bool
+   */
+  public function isPublished() {
+    return $this->published;
+  }
+
+  /**
+   * @param bool $value
+   */
+  public function setPublished($value) {
+    $this->published = $value;
+  }
+
+  /**
+   * @return string
+   */
+  public function getValidator() {
+    return $this->validator;
+  }
+
+  /**
+   * @param string $value
+   */
+  public function setValidator($value) {
+    $this->validator = $value;
+  }
+
+  /**
+   * @return string
+   */
+  public function getWfStatus() {
+    return $this->wfStatus;
+  }
+
+  /**
+   * @param string $status
+   */
+  public function setWfStatus($status) {
+    $this->wfStatus = $status;
+  }
 
   /**
    * Get the publication date for this event.
@@ -340,13 +520,61 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     if (isset($event_attributes['cdbid'])) {
       $event->setCdbId((string)$event_attributes['cdbid']);
     }
-    
+
+    if (isset($event_attributes['availablefrom'])) {
+      $event->setAvailableFrom((string)$event_attributes['availablefrom']);
+    }
+
+    if (isset($event_attributes['availableto'])) {
+      $event->setAvailableTo((string)$event_attributes['availableto']);
+    }
+
+    if (isset($event_attributes['createdby'])) {
+      $event->setCreatedBy($event_attributes['createdby']);
+    }
+
+    if (isset($event_attributes['creationdate'])) {
+      $event->setCreationDate((string)$event_attributes['creationdate']);
+    }
+
     if (isset($event_attributes['private'])) {
       $event->setPrivate(filter_var((string)$event_attributes['private'], FILTER_VALIDATE_BOOLEAN));
     }
 
     if (isset($event_attributes['externalid'])) {
       $event->setExternalId((string)$event_attributes['externalid']);
+    }
+
+    if (isset($event_attributes['isparent'])) {
+      $event->setIsParent(filter_var((string)$event_attributes['isparent'], FILTER_VALIDATE_BOOLEAN));
+    }
+
+    if (isset($event_attributes['lastupdated'])) {
+      $event->setLastUpdated((string)$event_attributes['lastupdated']);
+    }
+
+    if (isset($event_attributes['lastupdatedby'])) {
+      $event->setLastUpdatedBy((string)$event_attributes['lastupdatedby']);
+    }
+
+    if (isset($event_attributes['owner'])) {
+      $event->setOwner((string)$event_attributes['owner']);
+    }
+
+    if (isset($event_attributes['pctcomplete'])) {
+      $event->setPctComplete(floatval($event_attributes['pctcomplete']));
+    }
+
+    if (isset($event_attributes['published'])) {
+      $event->setPublished(filter_var((string)$event_attributes['published'], FILTER_VALIDATE_BOOLEAN));
+    }
+
+    if (isset($event_attributes['validator'])) {
+      $event->setValidator((string)$event_attributes['validator']);
+    }
+
+    if (isset($event_attributes['wfstatus'])) {
+      $event->setWfStatus((string)$event_attributes['wfstatus']);
     }
 
     if (!empty($xmlElement->agefrom)) {
