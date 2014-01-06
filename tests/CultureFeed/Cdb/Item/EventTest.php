@@ -161,6 +161,30 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
         $this->assertNULL($timestamp->getEndTime());
 
+      $categories = $event->getCategories();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_CategoryList', $categories);
+
+      $this->assertCount(3, $categories);
+      $this->assertContainsOnly('CultureFeed_Cdb_Data_Category', $categories);
+
+      /** @var CultureFeed_Cdb_Data_Category $category */
+      $categories->rewind();
+      $category = $categories->current();
+      $this->assertEquals('0.50.4.0.0', $category->getId());
+      $this->assertEquals('Concert', $category->getName());
+      $this->assertEquals('eventtype', $category->getType());
+
+      $categories->next();
+      $category = $categories->current();
+      $this->assertEquals('1.8.2.0.0', $category->getId());
+      $this->assertEquals('Jazz en blues', $category->getName());
+      $this->assertEquals('theme', $category->getType());
+
+      $categories->next();
+      $category = $categories->current();
+      $this->assertEquals('6.2.0.0.0', $category->getId());
+      $this->assertEquals('Regionaal', $category->getName());
+      $this->assertEquals('publicscope', $category->getType());
 
     }
 }
