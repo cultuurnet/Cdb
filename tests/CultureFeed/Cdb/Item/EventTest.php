@@ -221,5 +221,36 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('http://www.bonnefooi.be', $url->getUrl());
       $this->assertTrue($url->isMain());
       $this->assertFalse($url->isForReservations());
+
+      $event_detail_list = $event->getDetails();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_DetailList', $event_detail_list);
+      $this->assertCount(2, $event_detail_list);
+      $this->assertContainsOnly('CultureFeed_Cdb_Data_EventDetail', $event_detail_list);
+
+      /** @var CultureFeed_Cdb_Data_EventDetail $detail */
+      $event_detail_list->rewind();
+      $detail = $event_detail_list->current();
+      $this->assertEquals('nl', $detail->getLanguage());
+
+      $this->assertEquals('zo 01/08/10 om 21:00', $detail->getCalendarSummary());
+
+      $performers = $detail->getPerformers();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_PerformerList', $performers);
+      $this->assertCount(1, $performers);
+      $this->assertContainsOnly('CultureFeed_Cdb_Data_Performer', $performers);
+
+      $performers->rewind();
+      /** @var CultureFeed_Cdb_Data_Performer $performer */
+      $performer = $performers->current();
+
+      $this->assertEquals('Muzikant', $performer->getRole());
+      $this->assertEquals('Matt, the Englishman in Brussels', $performer->getLabel());
+
+      $this->assertEquals('Weggelaten voor leesbaarheid...', $detail->getLongDescription());
+
+      $media = $detail->getMedia();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_Media', $media);
+
+      $this->assertEquals('The Bonnefooi Acoustic Jam', $detail->getTitle());
     }
 }
