@@ -35,7 +35,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
   /**
    * Get the performers.
    *
-   * @return CultureFeed_Cdb_Data_PerformersList
+   * @return CultureFeed_Cdb_Data_PerformerList
    */
   public function getPerformers() {
     return $this->performers;

@@ -20,7 +20,7 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
 
   /**
    * List of mails.
-   * @var array
+   * @var CultureFeed_Cdb_Data_Mail[]
    */
   protected $mails = array();
 
@@ -46,6 +46,8 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
 
   /**
    * Get the list of mails.
+   *
+   * @return CultureFeed_Cdb_Data_Mail[]
    */
   public function getMails() {
     return $this->mails;
