@@ -186,5 +186,40 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('Regionaal', $category->getName());
       $this->assertEquals('publicscope', $category->getType());
 
+      $contact_info = $event->getContactInfo();
+      $mails = $contact_info->getMails();
+      $this->assertInternalType('array', $mails);
+      $this->assertCount(1, $mails);
+      $this->assertContainsOnly('CultureFeed_Cdb_Data_Mail', $mails);
+
+      /** @var CultureFeed_Cdb_Data_Mail $mail */
+      $mail = reset($mails);
+      $this->assertEquals('info@bonnefooi.be', $mail->getMailAddress());
+      $this->assertFalse($mail->isForReservations());
+      $this->assertFalse($mail->isMainMail());
+
+      $phones = $contact_info->getPhones();
+      $this->assertInternalType('array', $phones);
+      $this->assertCount(1, $phones);
+      $this->assertContainsOnly('CultureFeed_Cdb_Data_Phone', $phones);
+
+      /** @var CultureFeed_Cdb_Data_Phone $phone */
+      $phone = reset($phones);
+      $this->assertEquals('0487-62.22.31', $phone->getNumber());
+      $this->assertFalse($phone->isForReservations());
+      $this->assertFalse($phone->isMainPhone());
+      // @todo This might be unexpected, verify in the cdbxml spec.
+      $this->assertEquals('', $phone->getType());
+
+      $urls = $contact_info->getUrls();
+      $this->assertInternalType('array', $urls);
+      $this->assertCount(1, $urls);
+      $this->assertContainsOnly('CultureFeed_Cdb_Data_Url', $urls);
+
+      /** @var CultureFeed_Cdb_Data_Url $url */
+      $url = reset($urls);
+      $this->assertEquals('http://www.bonnefooi.be', $url->getUrl());
+      $this->assertTrue($url->isMain());
+      $this->assertFalse($url->isForReservations());
     }
 }
