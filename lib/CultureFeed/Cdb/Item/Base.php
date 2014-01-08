@@ -92,6 +92,8 @@ abstract class CultureFeed_Cdb_Item_Base {
 
   /**
    * Get the keywords from this item.
+   *
+   * @return array
    */
   public function getKeywords() {
     return $this->keywords;
