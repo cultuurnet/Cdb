@@ -298,5 +298,8 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       $keyword = next($keywords);
       $this->assertEquals('Acoustisch', $keyword);*/
 
+      // @todo Test languages.
+      //$languages = $event->getLanguages();
+
     }
 }
