@@ -269,5 +269,11 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       $this->assertNull($media_item->getRelationType());
 
       $this->assertEquals('The Bonnefooi Acoustic Jam', $detail->getTitle());
+
+      $price = $detail->getPrice();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_Price', $price);
+      $this->assertNull($price->getDescription());
+      $this->assertEquals('The Bonnefooi Acoustic Jam', $price->getTitle());
+      $this->assertEquals(0, $price->getValue());
     }
 }
