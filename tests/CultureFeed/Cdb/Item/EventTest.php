@@ -284,5 +284,19 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       // @todo Test headings.
 
 
+      // @todo According to the code in Cdb_Data_CultureFeed_Cdb_Item_Event,
+      // keywords are delimited by a semicolon, in our xml sample however they seem to be delimited
+      // by a comma.
+      /*$keywords = $event->getKeywords();
+      $this->assertInternalType('array', $keywords);
+      $this->assertCount(2, $keywords);
+      $this->assertContainsOnly('string', $keywords, TRUE);
+
+      $keyword = reset($keywords);
+      $this->assertEquals('Free Jazz', $keyword);
+
+      $keyword = next($keywords);
+      $this->assertEquals('Acoustisch', $keyword);*/
+
     }
 }
