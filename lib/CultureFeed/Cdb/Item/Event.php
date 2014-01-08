@@ -530,7 +530,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     if (isset($event_attributes['createdby'])) {
-      $event->setCreatedBy($event_attributes['createdby']);
+      $event->setCreatedBy((string)$event_attributes['createdby']);
     }
 
     if (isset($event_attributes['creationdate'])) {
