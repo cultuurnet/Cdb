@@ -320,5 +320,11 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('1000', $physical_address->getZip());
 
       $this->assertNull($address->getVirtualAddress());
+
+      $organiser = $event->getOrganiser();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_Organiser', $organiser);
+
+      $this->assertEquals('Café Bonnefooi', $organiser->getLabel());
+
     }
 }
