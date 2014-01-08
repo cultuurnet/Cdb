@@ -301,5 +301,24 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       // @todo Test languages.
       //$languages = $event->getLanguages();
 
+      $location = $event->getLocation();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_Location', $location);
+      $this->assertNull($location->getActor());
+      $this->assertEquals('920e9755-94a0-42c1-8c8c-9d17f693d0be', $location->getCdbid());
+      $this->assertEquals('Café Bonnefooi', $location->getLabel());
+
+      $address = $location->getAddress();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_Address', $address);
+      $this->assertNull($address->getLabel());
+      $physical_address = $address->getPhysicalAddress();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_Address_PhysicalAddress', $physical_address);
+      $this->assertEquals('Brussel', $physical_address->getCity());
+      $this->assertEquals('BE', $physical_address->getCountry());
+      $this->assertNull($physical_address->getGeoInformation());
+      $this->assertEquals('8', $physical_address->getHouseNumber());
+      $this->assertEquals('Steenstraat', $physical_address->getStreet());
+      $this->assertEquals('1000', $physical_address->getZip());
+
+      $this->assertNull($address->getVirtualAddress());
     }
 }
