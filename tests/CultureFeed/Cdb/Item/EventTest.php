@@ -250,6 +250,23 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
       $media = $detail->getMedia();
       $this->assertInstanceOf('CultureFeed_Cdb_Data_Media', $media);
+      $this->assertCount(1, $media);
+
+      $media->rewind();
+      /** @var CultureFeed_Cdb_Data_File $media_item */
+      $media_item = $media->current();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_File', $media_item);
+      $this->assertEquals('Bonnefooi', $media_item->getCopyright());
+      $this->assertEquals('http://www.bonnefooi.be/images/sized/site/images/uploads/Jeroen_Jamming-453x604.jpg', $media_item->getHLink());
+      $this->assertEquals('imageweb', $media_item->getMediaType());
+      $this->assertEquals('Jeroen Jamming', $media_item->getTitle());
+      $this->assertNull($media_item->getCdbid());
+      $this->assertNull($media_item->getChannel());
+      $this->assertNull($media_item->getCreationDate());
+      $this->assertNull($media_item->getFileName());
+      $this->assertNull($media_item->getFileType());
+      $this->assertNull($media_item->getPlainText());
+      $this->assertNull($media_item->getRelationType());
 
       $this->assertEquals('The Bonnefooi Acoustic Jam', $detail->getTitle());
     }
