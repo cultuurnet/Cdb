@@ -32,6 +32,8 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
 
   /**
    * Get the list of addresses.
+   *
+   * @return array
    */
   public function getAddresses() {
     return $this->addresses;
