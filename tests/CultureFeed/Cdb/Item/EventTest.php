@@ -327,4 +327,101 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('Café Bonnefooi', $organiser->getLabel());
 
     }
+
+  public function testParseEvent20140108() {
+    $xml = $this->loadSample('test-event-2014-01-08.xml');
+
+    $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
+
+    $this->assertEquals('d53c2bc9-8f0e-4c9a-8457-77e8b3cab3d1', $event->getCdbId());
+    $this->assertEquals('2014-01-08T00:00:00', $event->getAvailableFrom());
+    $this->assertEquals('2014-02-21T00:00:00', $event->getAvailableTo());
+    $this->assertEquals('jonas@cultuurnet.be', $event->getCreatedBy());
+    $this->assertEquals('2014-01-08T09:43:52', $event->getCreationDate());
+    $this->assertEquals('CDB:c2156058-9393-4c95-8821-7787170527c0', $event->getExternalId());
+    $this->assertEquals('2014-01-08T09:46:41', $event->getLastUpdated());
+    $this->assertEquals('jonas@cultuurnet.be', $event->getLastUpdatedBy());
+    $this->assertEquals('CultuurNet Validatoren', $event->getOwner());
+    $this->assertEquals(95, $event->getPctComplete());
+    $this->assertFalse($event->isPrivate());
+    $this->assertTrue($event->isPublished());
+    $this->assertEquals('UiTdatabank Validatoren', $event->getValidator());
+    $this->assertEquals('approved', $event->getWfStatus());
+    $this->assertFalse($event->isParent());
+
+    $this->assertEquals(5, $event->getAgeFrom());
+
+    $calendar = $event->getCalendar();
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_Calendar_TimestampList', $calendar);
+    $this->assertCount(2, $calendar);
+    $this->assertContainsOnly('CultureFeed_Cdb_Data_Calendar_Timestamp', $calendar);
+
+    $calendar->rewind();
+    /** @var CultureFeed_Cdb_Data_Calendar_Timestamp $timestamp */
+    $timestamp = $calendar->current();
+
+    $this->assertEquals('2014-01-31', $timestamp->getDate());
+    $this->assertEquals('12:00:00', $timestamp->getStartTime());
+    $this->assertEquals('15:00:00', $timestamp->getEndTime());
+
+    $calendar->next();
+    $timestamp = $calendar->current();
+
+    $this->assertEquals('2014-02-20', $timestamp->getDate());
+    $this->assertEquals('12:00:00', $timestamp->getStartTime());
+    $this->assertEquals('15:00:00', $timestamp->getEndTime());
+
+    $categories = $event->getCategories();
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_CategoryList', $categories);
+    $this->assertCount(6, $categories);
+
+    $categories->rewind();
+    /** @var CultureFeed_Cdb_Data_Category $category */
+    $category = $categories->current();
+
+    $this->assertEquals('1.7.6.0.0', $category->getId());
+    $this->assertEquals('Griezelfilm of horror', $category->getName());
+    $this->assertEquals('theme', $category->getType());
+
+    $categories->next();
+    $category = $categories->current();
+    $this->assertEquals('6.0.0.0.0', $category->getId());
+    $this->assertEquals('Wijk of buurt', $category->getName());
+    $this->assertEquals('publicscope', $category->getType());
+
+    $categories->next();
+    $category = $categories->current();
+    $this->assertEquals('2.2.1.0.0', $category->getId());
+    $this->assertEquals('Vanaf kleuterleeftijd (3+)', $category->getName());
+    $this->assertEquals('targetaudience', $category->getType());
+
+    $categories->next();
+    $category = $categories->current();
+    $this->assertEquals('0.50.6.0.0', $category->getId());
+    $this->assertEquals('Film', $category->getName());
+    $this->assertEquals('eventtype', $category->getType());
+
+    $categories->next();
+    $category = $categories->current();
+    $this->assertEquals('reg.1565', $category->getId());
+    $this->assertEquals('1000 Brussel', $category->getName());
+    $this->assertEquals('flandersregion', $category->getType());
+
+    $categories->next();
+    $category = $categories->current();
+    $this->assertEquals('umv.7', $category->getId());
+    $this->assertEquals('Film', $category->getName());
+    $this->assertEquals('umv', $category->getType());
+
+    $contact_info = $event->getContactInfo();
+
+    $addresses = $contact_info->getAddresses();
+    $this->assertInternalType('array', $addresses);
+    $this->assertCount(1, $addresses);
+
+    /** @var CultureFeed_Cdb_Data_Address $address */
+    $address = reset($addresses);
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_Address', $address);
+
+  }
 }
