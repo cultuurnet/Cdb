@@ -333,7 +333,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
 
       $coordinates = $addressElement->lat . '-' . $addressElement->lon;
       if ($coordinates != '0.0-0.0') {
-        $address->setGeoInformation(new CultureFeed_Cdb_Data_Address_GeoInformation((string) $addressElement->lat, (string) $addressElement->lon));
+        $address->setGeoInformation(new CultureFeed_Cdb_Data_Address_GeoInformation((string) $addressElement->lon, (string) $addressElement->lat));
         $has_address = TRUE;
       }
 

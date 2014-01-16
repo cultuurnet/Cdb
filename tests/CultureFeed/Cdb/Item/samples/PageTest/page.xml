@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<page>
+    <address>
+        <city>Hasselt</city>
+        <country>BE</country>
+        <lat>50.9216401</lat>
+        <lon>5.3537689</lon>
+        <street>Ilgatlaan</street>
+        <zip>3500</zip>
+    </address>
+    <categoryIds>
+        <categoryId>0.0.12.0</categoryId>
+        <categoryId>0.0.14.0</categoryId>
+    </categoryIds>
+    <contactInfo>
+        <email>info@tuintips.be</email>
+        <telephone>12345689</telephone>
+    </contactInfo>
+    <creationDate>2013-03-15T15:28:53.416+01:00</creationDate>
+    <description>Tuintips</description>
+    <links>
+        <linkBlog>blog.tuintips.be</linkBlog>
+        <linkFacebook>www.tuintips.be/facebook</linkFacebook>
+        <linkGooglePlus>www.tuintips.be/google+</linkGooglePlus>
+        <linkTicketing>www.tuintips.be/ticketing</linkTicketing>
+        <linkTwitter>www.tuintips.be/twitter</linkTwitter>
+        <linkWebsite>www.tuintips.be</linkWebsite>
+        <linkYouTube>www.tuintips.be/youtube</linkYouTube>
+    </links>
+    <name>Tuintips</name>
+    <officialPage>false</officialPage>
+    <permissions>
+        <allowActivities>true</allowActivities>
+        <allowComments>true</allowComments>
+        <allowFollowers>true</allowFollowers>
+        <allowLikes>true</allowLikes>
+        <allowMembers>true</allowMembers>
+        <allowMessages>true</allowMessages>
+        <allowRecommendations>true</allowRecommendations>
+    </permissions>
+    <tagline>tuintips tagline</tagline>
+    <uid>c2202c49-6882-456c-bfaa-84f2a1b91d8c</uid>
+    <visible>true</visible>
+</page>
