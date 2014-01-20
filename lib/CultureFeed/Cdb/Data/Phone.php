@@ -51,7 +51,7 @@ class CultureFeed_Cdb_Data_Phone implements CultureFeed_Cdb_IElement {
    * @param $bool $forReservations
    *   Usable for reservations or not
    */
-  public function __construct($number, $type, $isMain, $forReservations) {
+  public function __construct($number, $type = NULL, $isMain = NULL, $forReservations = NULL) {
     $this->number = $number;
     $this->type = $type;
     $this->main = $isMain;
