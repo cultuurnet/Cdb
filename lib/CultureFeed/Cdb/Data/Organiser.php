@@ -76,7 +76,8 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement {
     $organiserElement = $dom->createElement('organiser');
 
     if ($this->label) {
-      $labelElement = $dom->createElement('label', htmlentities($this->label));
+      $labelElement = $dom->createElement('label');
+      $labelElement->appendChild($dom->createTextNode($this->label));
       if ($this->cdbid) {
         $labelElement->setAttribute('cdbid', $this->cdbid);
       }
