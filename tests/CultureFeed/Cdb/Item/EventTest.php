@@ -214,8 +214,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('0487-62.22.31', $phone->getNumber());
       $this->assertFalse($phone->isForReservations());
       $this->assertFalse($phone->isMainPhone());
-      // @todo This might be unexpected, verify in the cdbxml spec.
-      $this->assertEquals('', $phone->getType());
+      $this->assertNULL($phone->getType());
 
       $urls = $contact_info->getUrls();
       $this->assertInternalType('array', $urls);
