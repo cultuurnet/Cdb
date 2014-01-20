@@ -85,14 +85,14 @@ abstract class CultureFeed_Cdb_Item_Base {
   }
 
   /**
-   * @return int
+   * @return string
    */
   public function getLastUpdated() {
     return $this->lastUpdated;
   }
 
   /**
-   * @param int $value
+   * @param string $value
    */
   public function setLastUpdated($value) {
     $this->lastUpdated = $value;
