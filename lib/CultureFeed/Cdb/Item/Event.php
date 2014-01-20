@@ -34,16 +34,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   /**
    * @var string
    */
-  protected $lastUpdated;
-
-  /**
-   * @var string
-   */
-  protected $lastUpdatedBy;
-
-  /**
-   * @var string
-   */
   protected $owner;
 
   /**
@@ -169,22 +159,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
    */
   public function setIsParent($value) {
     $this->isParent = $value;
-  }
-
-  public function getLastUpdated() {
-    return $this->lastUpdated;
-  }
-
-  public function setLastUpdated($value) {
-    $this->lastUpdated = $value;
-  }
-
-  public function getLastUpdatedBy() {
-    return $this->lastUpdatedBy;
-  }
-
-  public function setLastUpdatedBy($author) {
-    $this->lastUpdatedBy = $author;
   }
 
   public function getOwner() {

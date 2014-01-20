@@ -27,6 +27,16 @@ abstract class CultureFeed_Cdb_Item_Base {
   protected $private = FALSE;
 
   /**
+   * @var string
+   */
+  protected $lastUpdated;
+
+  /**
+   * @var string
+   */
+  protected $lastUpdatedBy;
+
+  /**
    * Categories from the item.
    * @var CultureFeed_Cdb_Data_CategoryList
    */
@@ -72,6 +82,34 @@ abstract class CultureFeed_Cdb_Item_Base {
    */
   public function isPrivate() {
     return $this->private;
+  }
+
+  /**
+   * @return int
+   */
+  public function getLastUpdated() {
+    return $this->lastUpdated;
+  }
+
+  /**
+   * @param int $value
+   */
+  public function setLastUpdated($value) {
+    $this->lastUpdated = $value;
+  }
+
+  /**
+   * @return string
+   */
+  public function getLastUpdatedBy() {
+    return $this->lastUpdatedBy;
+  }
+
+  /**
+   * @param string $author
+   */
+  public function setLastUpdatedBy($author) {
+    $this->lastUpdatedBy = $author;
   }
 
   /**
