@@ -57,20 +57,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   protected $wfStatus;
 
   /**
-   * Publication date for the event.
-   *
-   * @var string
-   */
-  protected $publicationDate;
-
-  /**
-   * Publication hour for the event.
-   *
-   * @var string
-   */
-  protected $publicationTime = '00:00:00';
-
-  /**
    * Minimum age for the event.
    * @var int
    */
@@ -108,6 +94,11 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
    * @var int
    */
   protected $maxParticipants;
+
+  /**
+   * @var CultureFeed_Cdb_Data_LanguageList
+   */
+  protected $languages;
 
   /**
    * Booking period for this event.
@@ -220,20 +211,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   }
 
   /**
-   * Get the publication date for this event.
-   */
-  public function getPublicationDate() {
-    return $this->publicationDate;
-  }
-
-  /**
-   * Get the publication time for this event.
-   */
-  public function getPublicationTime() {
-    return $this->publicationTime;
-  }
-
-  /**
    * Get the minimum age for this event.
    */
   public function getAgeFrom() {
@@ -282,22 +259,15 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     return $this->bookingPeriod;
   }
 
-  /**
-   * Set the publication date for this event.
-   * @param string $date
-   */
-  public function setPublicationDate($date) {
-    CultureFeed_Cdb_Data_Calendar::validateDate($date);
-    $this->publicationDate = $date;
+    /**
+     * @return CultureFeed_Cdb_Data_LanguageList
+     */
+    public function getLanguages() {
+      return $this->languages;
   }
 
-  /**
-   * Set the publication time for this event.
-   * @param string $time
-   */
-  public function setPublicationTime($time) {
-    CultureFeed_Cdb_Data_Calendar::validateTime($time);
-    $this->publicationTime = $time;
+  public function setLanguages(CultureFeed_Cdb_Data_LanguageList $languages) {
+      $this->languages = $languages;
   }
 
   /**
@@ -380,21 +350,65 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
       $eventElement->appendChild($dom->createElement('agefrom', $this->ageFrom));
     }
 
+    if ($this->availableFrom) {
+      $eventElement->setAttribute('availablefrom', $this->availableFrom);
+    }
+
+    if ($this->availableTo) {
+      $eventElement->setAttribute('availableto', $this->availableTo);
+    }
+
     if ($this->cdbId) {
       $eventElement->setAttribute('cdbid', $this->cdbId);
     }
-    
-    if ($this->private) {
-      $eventElement->setAttribute('private', ($this->private) ? 'true' : 'false');
+
+    if ($this->createdBy) {
+      $eventElement->setAttribute('createdby', $this->createdBy);
+    }
+
+    if ($this->creationDate) {
+      $eventElement->setAttribute('creationdate', $this->creationDate);
     }
 
     if ($this->externalId) {
       $eventElement->setAttribute('externalid', $this->externalId);
     }
 
-    /*if ($this->publicationDate) {
-      $eventElement->setAttribute('availablefrom', $this->publicationDate . $this->publicationTime);
-    }*/
+    if (isset($this->isParent)) {
+      $eventElement->setAttribute('isparent', $this->isParent ? 'true' : 'false');
+    }
+
+    if (isset($this->lastUpdated)) {
+      $eventElement->setAttribute('lastupdated', $this->lastUpdated);
+    }
+
+    if (isset($this->lastUpdatedBy)) {
+      $eventElement->setAttribute('lastupdatedby', $this->lastUpdatedBy);
+    }
+
+    if (isset($this->owner)) {
+      $eventElement->setAttribute('owner', $this->owner);
+    }
+
+    if (isset($this->pctComplete)) {
+      $eventElement->setAttribute('pctcomplete', $this->pctComplete);
+    }
+
+    if (isset($this->private)) {
+      $eventElement->setAttribute('private', $this->private ? 'true' : 'false');
+    }
+
+    if (isset($this->published)) {
+      $eventElement->setAttribute('published', $this->published ? 'true' : 'false');
+    }
+
+    if (isset($this->validator)) {
+      $eventElement->setAttribute('validator', $this->validator);
+    }
+
+    if (isset($this->wfStatus)) {
+      $eventElement->setAttribute('wfstatus', $this->wfStatus);
+    }
 
     if ($this->calendar) {
       $this->calendar->appendToDOM($eventElement);
@@ -416,6 +430,10 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
       $keywordElement = $dom->createElement('keywords');
       $keywordElement->appendChild($dom->createTextNode(implode(';', $this->keywords)));
       $eventElement->appendChild($keywordElement);
+    }
+
+    if (isset($this->languages)) {
+        $this->languages->appendToDOM($eventElement);
     }
 
     if ($this->location) {
@@ -616,6 +634,10 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
       foreach ($keywords as $keyword) {
         $event->addKeyword($keyword);
       }
+    }
+
+    if (!empty($xmlElement->languages)) {
+        $event->setLanguages(CultureFeed_Cdb_Data_LanguageList::parseFromCdbXml($xmlElement->languages));
     }
 
     return $event;
