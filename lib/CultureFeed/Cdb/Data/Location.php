@@ -113,7 +113,8 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement {
     }
 
     if ($this->label) {
-      $labelElement = $dom->createElement('label', htmlentities($this->label));
+      $labelElement = $dom->createElement('label');
+      $labelElement->appendChild($dom->createTextNode($this->label));
       if ($this->cdbid) {
         $labelElement->setAttribute('cdbid', $this->cdbid);
       }
