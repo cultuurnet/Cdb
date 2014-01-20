@@ -25,6 +25,13 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         return $xml;
     }
 
+  public function samplePath($fileName) {
+    $sampleDir = __DIR__ . '/samples/EventTest/';
+    $filePath = $sampleDir . $fileName;
+
+    return $filePath;
+  }
+
     public function testAppendsCdbidAttributeOnlyWhenCdbidIsSet()
     {
         $this->assertEquals(NULL, $this->event->getCdbId());
@@ -76,8 +83,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
      * @dataProvider privatePropertyValues
      */
     public function testAppendsBooleanPrivateProperty($value) {
-        $this->assertInternalType('boolean', $this->event->isPrivate());
-        $this->assertEquals(FALSE, $this->event->isPrivate());
+        $this->assertNULL($this->event->isPrivate());
 
         $dom = new DOMDocument();
         $eventsElement = $dom->createElement('events');
@@ -298,8 +304,19 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       $keyword = next($keywords);
       $this->assertEquals('Acoustisch', $keyword);*/
 
-      // @todo Test languages.
-      //$languages = $event->getLanguages();
+      $languages = $event->getLanguages();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_LanguageList', $languages);
+      $this->assertCount(2, $languages);
+      $languages->rewind();
+      /** @var CultureFeed_Cdb_Data_Language $language */
+      $language = $languages->current();
+      $this->assertEquals('spoken', $language->getType());
+      $this->assertEquals('Nederlands', $language->getLanguage());
+
+      $languages->next();
+      $language = $languages->current();
+      $this->assertEquals('spoken', $language->getType());
+      $this->assertEquals('Frans', $language->getLanguage());
 
       $location = $event->getLocation();
       $this->assertInstanceOf('CultureFeed_Cdb_Data_Location', $location);
@@ -423,5 +440,176 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
     $address = reset($addresses);
     $this->assertInstanceOf('CultureFeed_Cdb_Data_Address', $address);
 
+  }
+
+  public function testCreateCdbXMLGuideExample6Dot2() {
+    $event = new CultureFeed_Cdb_Item_Event();
+    $event->setAvailableFrom('2010-02-25T00:00:00');
+    $event->setAvailableTo('2010-08-09T00:00:00');
+    $event->setCdbId('ea37cae2-c91e-4810-89ab-e060432d2b78');
+    $event->setCreatedBy('mverdoodt');
+    $event->setCreationDate('2010-07-05T18:28:18');
+    $event->setExternalId('SKB Import:SKB00001_216413');
+    $event->setIsParent(FALSE);
+    $event->setLastUpdated('2010-07-28T13:58:55');
+    $event->setLastUpdatedBy('mverdoodt');
+    $event->setOwner('SKB Import');
+    $event->setPctComplete(80);
+    $event->setPublished(TRUE);
+    $event->setValidator('SKB');
+    $event->setWfStatus('approved');
+    $event->setAgeFrom(18);
+    $event->setPrivate(FALSE);
+
+    $calendar = new CultureFeed_Cdb_Data_Calendar_TimestampList();
+    $calendar->add(new CultureFeed_Cdb_Data_Calendar_Timestamp('2010-08-01', '21:00:00.0000000'));
+    $event->setCalendar($calendar);
+
+    $categories = new CultureFeed_Cdb_Data_CategoryList();
+    $categories->add(new CultureFeed_Cdb_Data_Category(CultureFeed_Cdb_Data_Category::CATEGORY_TYPE_EVENT_TYPE, '0.50.4.0.0', 'Concert'));
+    $categories->add(new CultureFeed_Cdb_Data_Category(CultureFeed_Cdb_Data_Category::CATEGORY_TYPE_THEME, '1.8.2.0.0', 'Jazz en blues'));
+    $categories->add(new CultureFeed_Cdb_Data_Category(CultureFeed_Cdb_Data_Category::CATEGORY_TYPE_PUBLICSCOPE, '6.2.0.0.0', 'Regionaal'));
+    $event->setCategories($categories);
+
+    $contactInfo = new CultureFeed_Cdb_Data_ContactInfo();
+    $contactInfo->addMail(new CultureFeed_Cdb_Data_Mail('info@bonnefooi.be', NULL, NULL));
+    $contactInfo->addPhone(new CultureFeed_Cdb_Data_Phone('0487-62.22.31'));
+    $url = new CultureFeed_Cdb_Data_Url('http://www.bonnefooi.be');
+    $url->setMain();
+    $contactInfo->addUrl($url);
+    $event->setContactInfo($contactInfo);
+
+    $details = new CultureFeed_Cdb_Data_EventDetailList();
+
+    $detailNl = new CultureFeed_Cdb_Data_EventDetail();
+    $detailNl->setLanguage('nl');
+    $detailNl->setTitle('The Bonnefooi Acoustic Jam');
+    $detailNl->setCalendarSummary('zo 01/08/10 om 21:00');
+
+    $performers = new CultureFeed_Cdb_Data_PerformerList();
+    $performers->add(new CultureFeed_Cdb_Data_Performer('Muzikant', 'Matt, the Englishman in Brussels'));
+    $detailNl->setPerformers($performers);
+
+    $detailNl->setLongDescription('Weggelaten voor leesbaarheid...');
+
+    $file = new CultureFeed_Cdb_Data_File();
+    $file->setMain();
+    $file->setCopyright('Bonnefooi');
+    $file->setHLink('http://www.bonnefooi.be/images/sized/site/images/uploads/Jeroen_Jamming-453x604.jpg');
+    $file->setMediaType(CultureFeed_Cdb_Data_File::MEDIA_TYPE_IMAGEWEB);
+    $file->setTitle('Jeroen Jamming');
+
+    $detailNl->getMedia()->add($file);
+
+    $price = new CultureFeed_Cdb_Data_Price(0);
+    $price->setTitle('The Bonnefooi Acoustic Jam');
+    $detailNl->setPrice($price);
+
+    $detailNl->setShortDescription('Korte omschrijving.');
+
+    $details->add($detailNl);
+
+    $detailEn = new CultureFeed_Cdb_Data_EventDetail();
+    $detailEn->setLanguage('en');
+    $detailEn->setShortDescription('Short description.');
+    $details->add($detailEn);
+
+    $event->setDetails($details);
+
+    // @todo Add headings.
+    //$headings = array();
+
+    $event->addKeyword('Free Jazz, Acoustisch');
+
+
+    $address = new CultureFeed_Cdb_Data_Address();
+    $physicalAddress = new CultureFeed_Cdb_Data_Address_PhysicalAddress();
+    $physicalAddress->setCity('Brussel');
+    $physicalAddress->setCountry('BE');
+    $physicalAddress->setHouseNumber(8);
+    $physicalAddress->setStreet('Steenstraat');
+    $physicalAddress->setZip(1000);
+    $address->setPhysicalAddress($physicalAddress);
+
+    $location = new CultureFeed_Cdb_Data_Location($address);
+
+    $location->setLabel('Café Bonnefooi');
+    $location->setCdbid('920e9755-94a0-42c1-8c8c-9d17f693d0be');
+    $event->setLocation($location);
+
+    $organiser = new CultureFeed_Cdb_Data_Organiser();
+    $organiser->setLabel('Café Bonnefooi');
+    $event->setOrganiser($organiser);
+
+    $languages = new CultureFeed_Cdb_Data_LanguageList();
+    $languages->add(new CultureFeed_Cdb_Data_Language('Nederlands', CultureFeed_Cdb_Data_Language::TYPE_SPOKEN));
+    $languages->add(new CultureFeed_Cdb_Data_Language('Frans', CultureFeed_Cdb_Data_Language::TYPE_SPOKEN));
+    $event->setLanguages($languages);
+
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $dom->preserveWhiteSpace = FALSE;
+    $dom->formatOutput = TRUE;
+    $dummy_element = $dom->createElementNS(CultureFeed_Cdb_Xml::namespaceUri(), 'cdbxml');
+
+    $dom->appendChild($dummy_element);
+
+    $event->appendToDOM($dummy_element);
+
+    $xpath = new DOMXPath($dom);
+
+    $items = $xpath->query('//event');
+    $this->assertEquals(1, $items->length);
+
+    $event_element = $items->item(0);
+
+    $dom->removeChild($dummy_element);
+    $dom->appendChild($event_element);
+    /*$namespaceAttribute = $dom->createAttribute('xmlns');
+    $namespaceAttribute->value = CultureFeed_Cdb_Xml::namespaceUri();
+    $event_element->appendChild($namespaceAttribute);*/
+
+    // @todo Put xmlns attribute first.
+
+    $xml = $dom->saveXML();
+
+    $sample_dom = new DOMDocument('1.0', 'UTF-8');
+    $contents = file_get_contents($this->samplePath('cdbxml-guide-example-6-2.xml'));
+    $contents = str_replace('xmlns="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL" ', '', $contents);
+    $sample_dom->preserveWhiteSpace = FALSE;
+    $sample_dom->formatOutput = TRUE;
+    $sample_dom->loadXML($contents);
+    $sample_dom->preserveWhiteSpace = FALSE;
+    $sample_dom->formatOutput = TRUE;
+
+    $expected_xml = $sample_dom->saveXML();
+    //$this->assertEquals($sample_dom->documentElement->C14N(), $dom->documentElement->C14N());
+    $this->assertEquals($expected_xml, $xml);
+  }
+
+  /**
+   * Asserts that two XML documents are equal.
+   *
+   * @param  string $expectedFile
+   * @param  string $actualXml
+   * @param  string $message
+   * @since  Method available since Release 3.3.0
+   */
+  public static function assertXmlStringEqualsXmlFile($expectedFile, $actualXml, $message = '')
+  {
+    self::assertFileExists($expectedFile);
+
+    $expected = new DOMDocument('1.0', 'utf-8');
+    $expected->preserveWhiteSpace = FALSE;
+    $expected->load($expectedFile);
+    $expected->preserveWhiteSpace = FALSE;
+    $expected->formatOutput = FALSE;
+
+    $actual = new DOMDocument('1.0', 'utf-8');
+    $actual->preserveWhiteSpace = FALSE;
+    $actual->loadXML($actualXml);
+    $actual->preserveWhiteSpace = FALSE;
+    $actual->formatOutput = FALSE;
+
+    self::assertEquals($expected, $actual, $message);
   }
 }

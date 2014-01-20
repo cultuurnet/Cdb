@@ -109,8 +109,8 @@ class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement {
 
     $categoryElement = $dom->createElement('category');
     $categoryElement->appendChild($dom->createTextNode($this->name));
-    $categoryElement->setAttribute('type', $this->type);
     $categoryElement->setAttribute('catid', $this->id);
+    $categoryElement->setAttribute('type', $this->type);
 
     $element->appendChild($categoryElement);
 

@@ -24,7 +24,7 @@ abstract class CultureFeed_Cdb_Item_Base {
    * Is item private
    * @var bool
    */
-  protected $private = FALSE;
+  protected $private = NULL;
 
   /**
    * @var string
@@ -163,9 +163,9 @@ abstract class CultureFeed_Cdb_Item_Base {
   
   /**
    * Set if item is private.
-   * @param bool $id
+   * @param bool $private
    */
-  public function setPrivate($private) {
+  public function setPrivate($private = TRUE) {
     $this->private = $private;
   }
 

@@ -74,6 +74,10 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
       $detailElement->appendChild($summaryElement);
     }
 
+    if (count($this->performers) > 0) {
+      $this->performers->appendToDOM($detailElement);
+    }
+
     if (!empty($this->longDescription)) {
       $descriptionElement = $dom->createElement('longdescription');
       $descriptionElement->appendChild($dom->createTextNode($this->longDescription));
@@ -82,10 +86,6 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
 
     if (count($this->media) > 0) {
       $this->media->appendToDOM($detailElement);
-    }
-
-    if (count($this->performers) > 0) {
-      $this->performers->appendToDOM($detailElement);
     }
 
     if (!empty($this->price)) {
@@ -98,9 +98,11 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
       $detailElement->appendChild($descriptionElement);
     }
 
-    $titleElement = $dom->createElement('title');
-    $titleElement->appendChild($dom->createTextNode($this->title));
-    $detailElement->appendChild($titleElement);
+    if ($this->title) {
+      $titleElement = $dom->createElement('title');
+      $titleElement->appendChild($dom->createTextNode($this->title));
+      $detailElement->appendChild($titleElement);
+    }
 
     $element->appendChild($detailElement);
 

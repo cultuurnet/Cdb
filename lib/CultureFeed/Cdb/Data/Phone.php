@@ -132,7 +132,9 @@ class CultureFeed_Cdb_Data_Phone implements CultureFeed_Cdb_IElement {
     $dom = $element->ownerDocument;
 
     $phoneElement = $dom->createElement('phone', $this->number);
-    $phoneElement->setAttribute('type', $this->type);
+    if ($this->type) {
+        $phoneElement->setAttribute('type', $this->type);
+    }
 
     if ($this->main) {
       $phoneElement->setAttribute('main', 'true');
