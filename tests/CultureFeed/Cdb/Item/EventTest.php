@@ -712,6 +712,26 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($expected_xml, $xml);
   }
 
+    public function testCreateTestEvent20140108() {
+        $event = new CultureFeed_Cdb_Item_Event();
+        $event->setAvailableFrom('2014-01-08T00:00:00');
+        $event->setAvailableTo('2014-02-21T00:00:00');
+        $event->setCdbId('d53c2bc9-8f0e-4c9a-8457-77e8b3cab3d1');
+        $event->setCreatedBy('jonas@cultuurnet.be');
+        $event->setCreationDate('2014-01-08T09:43:52');
+        $event->setExternalId('CDB:c2156058-9393-4c95-8821-7787170527c0');
+        $event->setIsParent(FALSE);
+        $event->setLastUpdated('2014-01-08T09:46:41');
+        $event->setLastUpdatedBy('jonas@cultuurnet.be');
+        $event->setOwner('CultuurNet Validatoren');
+        $event->setPctComplete(95);
+        $event->setPublished(TRUE);
+        $event->setValidator('CultuurNet Validatoren');
+        $event->setWfStatus('approved');
+        $event->setAgeFrom(18);
+        $event->setPrivate(FALSE);
+    }
+
   /**
    * Asserts that two XML documents are equal.
    *
