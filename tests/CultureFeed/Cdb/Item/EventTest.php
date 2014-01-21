@@ -551,9 +551,10 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
       $this->assertEquals('Brussel', $physical_address->getCity());
       $this->assertEquals('BE', $physical_address->getCountry());
-      $this->assertNull($physical_address->getGeoInformation());
-      $this->assertEquals('8', $physical_address->getHouseNumber());
-      $this->assertEquals('Steenstraat', $physical_address->getStreet());
+      $gis = $physicalAddress->getGeoInformation();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_Address_GeoInformation', $gis);
+      $this->assertEquals('62', $physical_address->getHouseNumber());
+      $this->assertEquals('Sint-Gislainstraat', $physical_address->getStreet());
       $this->assertEquals('1000', $physical_address->getZip());
   }
 
