@@ -156,6 +156,8 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
 
   /**
    * Return the creation date of this file.
+   *
+   * @return string
    */
   public function getCreationDate() {
     return $this->creationDate;
