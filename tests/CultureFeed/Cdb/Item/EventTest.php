@@ -553,9 +553,19 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('BE', $physical_address->getCountry());
       $gis = $physicalAddress->getGeoInformation();
       $this->assertInstanceOf('CultureFeed_Cdb_Data_Address_GeoInformation', $gis);
+      $this->assertEquals(4.350000, $gis->getXCoordinate());
+      $this->assertEquals(50.850000, $gis->getYCoordinate());
       $this->assertEquals('62', $physical_address->getHouseNumber());
       $this->assertEquals('Sint-Gislainstraat', $physical_address->getStreet());
       $this->assertEquals('1000', $physical_address->getZip());
+
+      $this->assertEquals('47B6FA21-ACB1-EA8F-2C231182C7DD0A19', $location->getCdbid());
+      $this->assertEquals('CultuurNet Vlaanderen', $location->getLabel());
+
+      $organiser = $event->getOrganiser();
+      $this->assertInstanceOf('CultureFeed_Cdb_Data_Organiser', $organiser);
+      $this->assertEquals('CultuurNet Vlaanderen', $organiser->getLabel());
+      $this->assertEquals('47B6FA21-ACB1-EA8F-2C231182C7DD0A19', $organiser->getCdbid());
   }
 
   public function testCreateCdbXMLGuideExample6Dot2() {
