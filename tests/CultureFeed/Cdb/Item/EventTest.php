@@ -432,7 +432,129 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
     /** @var CultureFeed_Cdb_Data_Address $address */
     $address = reset($addresses);
     $this->assertInstanceOf('CultureFeed_Cdb_Data_Address', $address);
+    $physicalAddress = $address->getPhysicalAddress();
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_Address_PhysicalAddress', $physicalAddress);
+    $this->assertEquals('Brussel', $physicalAddress->getCity());
+    $this->assertEquals('BE', $physicalAddress->getCountry());
+    $gis = $physicalAddress->getGeoInformation();
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_Address_GeoInformation', $gis);
+    $this->assertEquals(4.350000, $gis->getXCoordinate());
+    $this->assertEquals(50.850000, $gis->getYCoordinate());
+    $this->assertEquals('Sint-Gislainstraat', $physicalAddress->getStreet());
+    $this->assertEquals('62', $physicalAddress->getHouseNumber());
+    $phones = $contact_info->getPhones();
+    $this->assertInternalType('array', $phones);
+    $this->assertCount(1, $phones);
+    $this->assertContainsOnly('CultureFeed_Cdb_Data_Phone', $phones);
+    /** @var CultureFeed_Cdb_Data_Phone $phone */
+    $phone = reset($phones);
+    $this->assertEquals('123', $phone->getNumber());
+    $this->assertEquals('phone', $phone->getType());
 
+    $urls = $contact_info->getUrls();
+    $this->assertInternalType('array', $urls);
+    $this->assertCount(1, $urls);
+    $this->assertContainsOnly('CultureFeed_Cdb_Data_Url', $urls);
+
+    /** @var CultureFeed_Cdb_Data_Url $url */
+    $url = reset($urls);
+
+    $this->assertEquals('http://www.test.com', $url->getUrl());
+
+    $details = $event->getDetails();
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_EventDetailList', $details);
+    $this->assertCount(3, $details);
+    $this->assertContainsOnly('CultureFeed_Cdb_Data_EventDetail', $details);
+
+    $details->rewind();
+    /** @var CultureFeed_Cdb_Data_EventDetail $detail */
+    $detail = $details->current();
+    $this->assertEquals('nl', $detail->getLanguage());
+    $this->assertEquals('vrij 31/01/14 van 12:00 tot 15:00 do 20/02/14 van 12:00 tot 15:00', $detail->getCalendarSummary());
+
+    $performers = $detail->getPerformers();
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_PerformerList', $performers);
+    $this->assertCount(2, $performers);
+    $this->assertContainsOnly('CultureFeed_Cdb_Data_Performer', $performers);
+
+    $performers->rewind();
+    /** @var CultureFeed_Cdb_Data_Performer $performer */
+    $performer = $performers->current();
+    $this->assertEquals('Muzikant', $performer->getRole());
+    $this->assertEquals('Tim Vanhamel', $performer->getLabel());
+
+    $performers->next();
+    $performer = $performers->current();
+    $this->assertEquals('Director', $performer->getRole());
+    $this->assertEquals('Jon Dedonder', $performer->getLabel());
+
+    $media = $detail->getMedia();
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_Media', $media);
+    $this->assertCount(2, $media);
+    $this->assertContainsOnly('CultureFeed_Cdb_Data_File', $media);
+
+    $media->rewind();
+    /** @var CultureFeed_Cdb_Data_File $file */
+    $file = $media->current();
+    $this->assertTrue($file->isMain());
+    $this->assertEquals('webresource', $file->getMediaType());
+    $this->assertEquals('http://www.test.com', $file->getHLink());
+
+    $media->next();
+    $file = $media->current();
+    $this->assertFalse($file->isMain());
+    $this->assertEquals('8/01/2014 9:44:59', $file->getCreationDate());
+    $this->assertEquals('Zelf gemaakt', $file->getCopyright());
+    $this->assertEquals('9554d6f6-bed1-4303-8d42-3fcec4601e0e.jpg', $file->getFileName());
+    $this->assertEquals('http://85.255.197.172/images/20140108/9554d6f6-bed1-4303-8d42-3fcec4601e0e.jpg', $file->getHLink());
+    $this->assertEquals('jpeg', $file->getFileType());
+    $this->assertEquals('photo', $file->getMediaType());
+
+    $price = $detail->getPrice();
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_Price', $price);
+    $this->assertEquals(4.00, $price->getValue());
+    $this->assertEquals('Extra Korting voor vroegboekers', $price->getDescription());
+
+    $this->assertEquals('KB', $detail->getShortDescription());
+    $this->assertEquals('Ruime Activiteit', $detail->getTitle());
+
+    $details->next();
+    $detail = $details->current();
+    $this->assertEquals('fr', $detail->getLanguage());
+    $this->assertEquals('ven 31/01/14 de 12:00 à 15:00 jeu 20/02/14 de 12:00 à 15:00', $detail->getCalendarSummary());
+    $this->assertNULL($detail->getShortDescription());
+    $this->assertEquals('RB', $detail->getTitle());
+
+    $details->next();
+    $detail = $details->current();
+    $this->assertEquals('de', $detail->getLanguage());
+    $this->assertEquals('Fr 31/01/14 von 12:00 bis zum 15:00 Do 20/02/14 von 12:00 bis zum 15:00', $detail->getCalendarSummary());
+    $this->assertEquals('KB', $detail->getShortDescription());
+    $this->assertEquals('RB', $detail->getTitle());
+
+    $keywords = $event->getKeywords();
+    $this->assertInternalType('array', $keywords);
+    $this->assertCount(2, $keywords);
+
+    $keyword = reset($keywords);
+    $this->assertEquals('feest', $keyword);
+
+    $keyword = next($keywords);
+    $this->assertEquals('test', $keyword);
+
+    $location = $event->getLocation();
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_Location', $location);
+    $address = $location->getAddress();
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_Address', $address);
+    $physical_address = $address->getPhysicalAddress();
+    $this->assertInstanceOf('CultureFeed_Cdb_Data_Address_PhysicalAddress', $physical_address);
+
+      $this->assertEquals('Brussel', $physical_address->getCity());
+      $this->assertEquals('BE', $physical_address->getCountry());
+      $this->assertNull($physical_address->getGeoInformation());
+      $this->assertEquals('8', $physical_address->getHouseNumber());
+      $this->assertEquals('Steenstraat', $physical_address->getStreet());
+      $this->assertEquals('1000', $physical_address->getZip());
   }
 
   public function testCreateCdbXMLGuideExample6Dot2() {
