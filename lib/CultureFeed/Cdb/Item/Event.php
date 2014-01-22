@@ -178,7 +178,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   /**
    * @param bool $value
    */
-  public function setPublished($value) {
+  public function setPublished($value = TRUE) {
     $this->published = $value;
   }
 
