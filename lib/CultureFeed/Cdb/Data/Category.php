@@ -16,6 +16,10 @@ class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement {
   const CATEGORY_TYPE_EDUCATION_FIELD = 'educationfield';
   const CATEGORY_TYPE_EDUCATION_LEVEL = 'educationlevel';
   const CATEGORY_TYPE_FACILITY = 'facility';
+  const CATEGORY_TYPE_TARGET_AUDIENCE = 'targetaudience';
+  /**
+   * @deprecated use CATEGORY_TYPE_TARGET_AUDIENCE instead.
+   */
   const CATEGORY_TYPE_TARGET_AUDIANCE = 'targetaudience';
   const CATEGORY_TYPE_FLANDERS_REGION = 'flandersregion';
 
