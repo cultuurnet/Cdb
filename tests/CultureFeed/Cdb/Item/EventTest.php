@@ -725,11 +725,104 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $event->setLastUpdatedBy('jonas@cultuurnet.be');
         $event->setOwner('CultuurNet Validatoren');
         $event->setPctComplete(95);
-        $event->setPublished(TRUE);
+        $event->setPublished();
         $event->setValidator('CultuurNet Validatoren');
         $event->setWfStatus('approved');
-        $event->setAgeFrom(18);
+        $event->setAgeFrom(5);
         $event->setPrivate(FALSE);
+
+        $calender = new CultureFeed_Cdb_Data_Calendar_TimestampList();
+        $calender->add(new CultureFeed_Cdb_Data_Calendar_Timestamp('2014-01-31', '12:00:00', '15:00:00'));
+        $calender->add(new CultureFeed_Cdb_Data_Calendar_Timestamp('2014-02-20', '12:00:00', '15:00:00'));
+        $event->setCalendar($calender);
+
+        $categories = new CultureFeed_Cdb_Data_CategoryList();
+
+        $categories->add(new CultureFeed_Cdb_Data_Category(
+          CultureFeed_Cdb_Data_Category::CATEGORY_TYPE_THEME,
+          '1.7.6.0.0',
+          'Griezelfilm of horror'
+        ));
+
+        $categories->add(new CultureFeed_Cdb_Data_Category(
+            CultureFeed_Cdb_Data_Category::CATEGORY_TYPE_PUBLICSCOPE,
+            '6.0.0.0',
+            'Wijk of buurt'
+        ));
+
+        $categories->add(new CultureFeed_Cdb_Data_Category(
+            CultureFeed_Cdb_Data_Category::CATEGORY_TYPE_TARGET_AUDIENCE,
+            '2.2.1.0.0',
+            'Vanaf kleuterleeftijd (3+)'
+        ));
+
+        $categories->add(new CultureFeed_Cdb_Data_Category(
+            CultureFeed_Cdb_Data_Category::CATEGORY_TYPE_FLANDERS_REGION,
+            'reg.1565',
+            '1000 Brussel'
+        ));
+
+        $categories->add(new CultureFeed_Cdb_Data_Category(
+            'umv',
+            'umv.7',
+            'Film'
+        ));
+
+
+        $contactInfo = new CultureFeed_Cdb_Data_ContactInfo();
+        $event->setContactInfo($contactInfo);
+
+        $address = new CultureFeed_Cdb_Data_Address();
+        $physicalAddress = new CultureFeed_Cdb_Data_Address_PhysicalAddress();
+        $address->setPhysicalAddress($physicalAddress);
+        $physicalAddress->setCity('Brussel');
+        $physicalAddress->setCountry('BE');
+        $geo = new CultureFeed_Cdb_Data_Address_GeoInformation('4.350000', '50.850000');
+        $physicalAddress->setGeoInformation($geo);
+        $physicalAddress->setStreet('Sint-Gislainstraat');
+        $physicalAddress->setHouseNumber('62');
+        $physicalAddress->setZip(1000);
+        $contactInfo->addAddress($address);
+        $mail = new CultureFeed_Cdb_Data_Mail('jonas@cnet.be');
+        $contactInfo->addMail($mail);
+        $phone = new CultureFeed_Cdb_Data_Phone('123');
+        $contactInfo->addPhone($phone);
+        $url = new CultureFeed_Cdb_Data_Url('http://www.test.com');
+        $contactInfo->addUrl($url);
+
+        $details = new CultureFeed_Cdb_Data_EventDetailList();
+        $event->setDetails($details);
+
+        $detailNl = new CultureFeed_Cdb_Data_EventDetail();
+        $detailNl->setLanguage('nl');
+        $detailNl->setCalendarSummary('vrij 31/01/14 van 12:00 tot 15:00 do 20/02/14 van 12:00 tot 15:00');
+
+        $performers = new CultureFeed_Cdb_Data_PerformerList();
+        $performers->add(new CultureFeed_Cdb_Data_Performer('Muzikant', 'Tim Vanhamel'));
+        $performers->add(new CultureFeed_Cdb_Data_Performer('Director', 'Jon Dedonder'));
+        $detailNl->setPerformers($performers);
+        $details->add($detailNl);
+
+        $media = $detailNl->getMedia();
+
+        $media->rewind();
+        $file = new CultureFeed_Cdb_Data_File();
+        $file->setHLink('http://www.test.com');
+        $file->setMediaType(CultureFeed_Cdb_Data_File::MEDIA_TYPE_IMAGEWEB);
+        $file->setMain();
+        $media->add($file);
+
+        $file = new CultureFeed_Cdb_Data_File();
+        $file->setCopyright('Zelf gemaakt');
+        $file->setHLink('http://85.255.197.172/images/20140108/9554d6f6-bed1-4303-8d42-3fcec4601e0e.jpg');
+        $file->setMediaType('', CultureFeed_Cdb_Data_File::MEDIA_TYPE_PHOTO);
+        $file->setFileName('9554d6f6-bed1-4303-8d42-3fcec4601e0e.jpg');
+
+        $media->add($file);
+
+        $price = new CultureFeed_Cdb_Data_Price(4.00);
+        $price->setDescription('Extra Korting voor vroegboekers');
+        $detailNl->setPrice($price);
     }
 
   /**
