@@ -76,6 +76,8 @@ abstract class CultureFeed_Cdb_Data_Detail {
 
   /**
    * Get the list of media items from current detail.
+   * 
+   * @return CultureFeed_Cdb_Data_Media
    */
   public function getMedia() {
     return $this->media;
@@ -83,6 +85,8 @@ abstract class CultureFeed_Cdb_Data_Detail {
 
   /**
    * Get the price information from current detail.
+   *
+   * @return CultureFeed_Cdb_Data_Price
    */
   public function getPrice() {
     return $this->price;

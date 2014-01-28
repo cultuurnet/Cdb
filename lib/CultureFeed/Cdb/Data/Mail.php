@@ -33,7 +33,7 @@ class CultureFeed_Cdb_Data_Mail implements CultureFeed_Cdb_IElement {
    * @param $bool $forReservations
    *   Usable for reservations or not
    */
-  public function __construct($address, $isMain, $forReservations) {
+  public function __construct($address, $isMain = NULL, $forReservations = NULL) {
     $this->address = $address;
     $this->main = $isMain;
     $this->reservation = $forReservations;

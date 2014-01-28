@@ -51,7 +51,7 @@ class CultureFeed_Cdb_Data_Phone implements CultureFeed_Cdb_IElement {
    * @param $bool $forReservations
    *   Usable for reservations or not
    */
-  public function __construct($number, $type, $isMain, $forReservations) {
+  public function __construct($number, $type = NULL, $isMain = NULL, $forReservations = NULL) {
     $this->number = $number;
     $this->type = $type;
     $this->main = $isMain;
@@ -132,7 +132,9 @@ class CultureFeed_Cdb_Data_Phone implements CultureFeed_Cdb_IElement {
     $dom = $element->ownerDocument;
 
     $phoneElement = $dom->createElement('phone', $this->number);
-    $phoneElement->setAttribute('type', $this->type);
+    if ($this->type) {
+        $phoneElement->setAttribute('type', $this->type);
+    }
 
     if ($this->main) {
       $phoneElement->setAttribute('main', 'true');
@@ -155,8 +157,9 @@ class CultureFeed_Cdb_Data_Phone implements CultureFeed_Cdb_IElement {
     $attributes = $xmlElement->attributes();
     $is_main = isset($attributes['main']) && $attributes['main'] == 'true';
     $for_reservations = isset($attributes['reservation']) && $attributes['reservation'] == 'true';
+    $type = isset($attributes['type']) ? (string) $attributes['type'] : NULL;
 
-    return new CultureFeed_Cdb_Data_Phone((string)$xmlElement, (string)$attributes['type'], $is_main, $for_reservations);
+    return new CultureFeed_Cdb_Data_Phone((string)$xmlElement, $type, $is_main, $for_reservations);
 
   }
 

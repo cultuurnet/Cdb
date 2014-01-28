@@ -35,7 +35,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
   /**
    * Get the performers.
    *
-   * @return CultureFeed_Cdb_Data_PerformersList
+   * @return CultureFeed_Cdb_Data_PerformerList
    */
   public function getPerformers() {
     return $this->performers;
@@ -74,6 +74,10 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
       $detailElement->appendChild($summaryElement);
     }
 
+    if (count($this->performers) > 0) {
+      $this->performers->appendToDOM($detailElement);
+    }
+
     if (!empty($this->longDescription)) {
       $descriptionElement = $dom->createElement('longdescription');
       $descriptionElement->appendChild($dom->createTextNode($this->longDescription));
@@ -82,10 +86,6 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
 
     if (count($this->media) > 0) {
       $this->media->appendToDOM($detailElement);
-    }
-
-    if (count($this->performers) > 0) {
-      $this->performers->appendToDOM($detailElement);
     }
 
     if (!empty($this->price)) {
@@ -98,9 +98,11 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
       $detailElement->appendChild($descriptionElement);
     }
 
-    $titleElement = $dom->createElement('title');
-    $titleElement->appendChild($dom->createTextNode($this->title));
-    $detailElement->appendChild($titleElement);
+    if ($this->title) {
+      $titleElement = $dom->createElement('title');
+      $titleElement->appendChild($dom->createTextNode($this->title));
+      $detailElement->appendChild($titleElement);
+    }
 
     $element->appendChild($detailElement);
 
@@ -112,18 +114,18 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
-    if (empty($xmlElement->title)) {
-      throw new CultureFeed_Cdb_ParseException("Title missing for eventdetail element");
-    }
-
     $attributes = $xmlElement->attributes();
     if (empty($attributes['lang'])) {
       throw new CultureFeed_Cdb_ParseException("Lang missing for eventdetail element");
     }
 
     $eventDetail = new Culturefeed_Cdb_Data_EventDetail();
-    $eventDetail->setTitle((string)$xmlElement->title);
+
     $eventDetail->setLanguage((string)$attributes['lang']);
+
+    if (!empty($xmlElement->title)) {
+        $eventDetail->setTitle((string)$xmlElement->title);
+    }
 
     if (!empty($xmlElement->shortdescription)) {
       $eventDetail->setShortDescription((string)$xmlElement->shortdescription);
