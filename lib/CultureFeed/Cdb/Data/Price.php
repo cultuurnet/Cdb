@@ -19,6 +19,11 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
   protected $description;
 
   /**
+   * @var string
+   */
+  protected $title;
+
+  /**
    * Construct the proice object.
    * @param float $value
    *   The total value.
@@ -60,6 +65,20 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * @return string
+   */
+  public function getTitle() {
+    return $this->title;
+  }
+
+  /**
+   * @param string $title
+   */
+  public function setTitle($title) {
+    $this->title = $title;
+  }
+
+  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMELement $element) {
@@ -68,7 +87,14 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
 
     $priceElement = $dom->createElement('price');
 
-    if ($this->value) {
+
+    if (isset($this->title)) {
+        $titleElement = $dom->createElement('title');
+        $titleElement->appendChild($dom->createTextNode($this->title));
+        $priceElement->appendChild($titleElement);
+    }
+
+    if (isset($this->value)) {
       $valueElement = $dom->createElement('pricevalue');
       $valueElement->appendChild($dom->createTextNode($this->value));
       $priceElement->appendChild($valueElement);
@@ -98,6 +124,10 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
 
     if (!empty($xmlElement->pricedescription)) {
       $price->setDescription((string)$xmlElement->pricedescription);
+    }
+
+    if (!empty($xmlElement->title)) {
+      $price->setTitle((string)$xmlElement->title);
     }
 
     return $price;

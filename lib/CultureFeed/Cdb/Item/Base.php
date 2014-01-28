@@ -24,7 +24,17 @@ abstract class CultureFeed_Cdb_Item_Base {
    * Is item private
    * @var bool
    */
-  protected $private = FALSE;
+  protected $private = NULL;
+
+  /**
+   * @var string
+   */
+  protected $lastUpdated;
+
+  /**
+   * @var string
+   */
+  protected $lastUpdatedBy;
 
   /**
    * Categories from the item.
@@ -75,6 +85,34 @@ abstract class CultureFeed_Cdb_Item_Base {
   }
 
   /**
+   * @return string
+   */
+  public function getLastUpdated() {
+    return $this->lastUpdated;
+  }
+
+  /**
+   * @param string $value
+   */
+  public function setLastUpdated($value) {
+    $this->lastUpdated = $value;
+  }
+
+  /**
+   * @return string
+   */
+  public function getLastUpdatedBy() {
+    return $this->lastUpdatedBy;
+  }
+
+  /**
+   * @param string $author
+   */
+  public function setLastUpdatedBy($author) {
+    $this->lastUpdatedBy = $author;
+  }
+
+  /**
    * Get the categories from this item.
    */
   public function getCategories() {
@@ -92,6 +130,8 @@ abstract class CultureFeed_Cdb_Item_Base {
 
   /**
    * Get the keywords from this item.
+   *
+   * @return array
    */
   public function getKeywords() {
     return $this->keywords;
@@ -123,9 +163,9 @@ abstract class CultureFeed_Cdb_Item_Base {
   
   /**
    * Set if item is private.
-   * @param bool $id
+   * @param bool $private
    */
-  public function setPrivate($private) {
+  public function setPrivate($private = TRUE) {
     $this->private = $private;
   }
 

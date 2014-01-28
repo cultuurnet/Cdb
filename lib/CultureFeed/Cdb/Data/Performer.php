@@ -24,6 +24,11 @@ class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement {
    */
   protected $actor;
 
+  public function __construct($role = NULL, $label = NULL) {
+    $this->role = $role;
+    $this->label = $label;
+  }
+
   /**
    * Get the label of the performer.
    */

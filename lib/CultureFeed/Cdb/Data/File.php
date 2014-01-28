@@ -156,6 +156,8 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
 
   /**
    * Return the creation date of this file.
+   *
+   * @return string
    */
   public function getCreationDate() {
     return $this->creationDate;
@@ -236,7 +238,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
    * Set the main status of this file.
    * @param bool Main status to set.
    */
-  public function setMain($main) {
+  public function setMain($main = TRUE) {
     $this->main = $main;
   }
 

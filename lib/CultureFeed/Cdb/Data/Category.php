@@ -16,6 +16,10 @@ class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement {
   const CATEGORY_TYPE_EDUCATION_FIELD = 'educationfield';
   const CATEGORY_TYPE_EDUCATION_LEVEL = 'educationlevel';
   const CATEGORY_TYPE_FACILITY = 'facility';
+  const CATEGORY_TYPE_TARGET_AUDIENCE = 'targetaudience';
+  /**
+   * @deprecated use CATEGORY_TYPE_TARGET_AUDIENCE instead.
+   */
   const CATEGORY_TYPE_TARGET_AUDIANCE = 'targetaudience';
   const CATEGORY_TYPE_FLANDERS_REGION = 'flandersregion';
 
@@ -107,9 +111,10 @@ class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement {
 
     $dom = $element->ownerDocument;
 
-    $categoryElement = $dom->createElement('category', htmlentities($this->name));
-    $categoryElement->setAttribute('type', $this->type);
+    $categoryElement = $dom->createElement('category');
+    $categoryElement->appendChild($dom->createTextNode($this->name));
     $categoryElement->setAttribute('catid', $this->id);
+    $categoryElement->setAttribute('type', $this->type);
 
     $element->appendChild($categoryElement);
 
