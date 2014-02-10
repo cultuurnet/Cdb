@@ -104,6 +104,22 @@ class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator, 
 
     return $media;
   }
+  
+  
+  /**
+   * @return self
+   */
+  public function byMediaTypes($types) {
+    $media = new self();
+
+    foreach ($this->details as $file) {
+      if (in_array($file->getMediaType(), $types)) {
+        $media->add($file);
+      }
+    }
+
+    return $media;
+  }
 
   public function count() {
     return count($this->details);
