@@ -24,6 +24,12 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
    * @var string[]
    */
   protected $categories;
+  
+  /**
+   * Keywords of the page.
+   * @var string[]
+   */
+  protected $keywords;
 
   /**
    * Description of the page.
@@ -60,6 +66,12 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
    * @var String url
    */
   protected $image;
+  
+  /**
+   * Cover of this page.
+   * @var String url
+   */
+  protected $cover;
 
   /**
    * Indicates whether the page is visible.
@@ -71,6 +83,12 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
    * @var CultureFeed_Cdb_Data_PagePermissions
    */
   protected $permissions = NULL;
+  
+  /**
+   * Tagline of the page.
+   * @var string
+   */
+  protected $tagline;
 
   /**
    * Get the id of this page.
@@ -95,6 +113,14 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   public function getImage() {
     return $this->image;
   }
+  
+  /**
+   * Get the cover of this page.
+   * @return string
+   */
+  public function getCover() {
+    return $this->cover;
+  }
 
   /**
    * Get the categories of this page.
@@ -102,6 +128,14 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
    */
   public function getCategories() {
     return $this->categories;
+  }
+  
+  /**
+   * Get the keywords of this page.
+   * @return string[]
+   */
+  public function getKeywords() {
+    return $this->keywords;
   }
 
   /**
@@ -166,7 +200,15 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   public function isVisible() {
     return $this->getVisibility();
   }
-
+  
+  /**
+   * Get the tagline of this page.
+   * @return string
+   */
+  public function getTagline() {
+    return $this->tagline;
+  }
+  
   /**
    * Set the id.
    * @param string $id
@@ -190,6 +232,14 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   public function setImage($image) {
     $this->image = $image;
   }
+  
+  /**
+   * Set the cover of this page.
+   * @param string $cover
+   */
+  public function setCover($cover) {
+    $this->cover = $cover;
+  }
 
   /**
    * Set the categories of the page.
@@ -197,6 +247,14 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
    */
   public function setCategories($categories) {
     $this->categories = $categories;
+  }
+  
+  /**
+   * Set the keywords of the page.
+   * @param array $keywords
+   */
+  public function setKeywords($keywords) {
+    $this->keywords = $keywords;
   }
 
   /**
@@ -254,6 +312,14 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
   public function setPermissions($permissions) {
     $this->permissions = $permissions;
   }
+  
+  /**
+   * Set the name of this page.
+   * @param string $name
+   */
+  public function setTagline($tagline) {
+    $this->tagline = $tagline;
+  }
 
   /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
@@ -289,6 +355,15 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
       }
     }
     $page->setCategories($categories);
+    
+    // Set keywords
+    $keywords = array();
+    if (!empty($xmlElement->keywords->keyword)) {
+      foreach ($xmlElement->keywords->keyword as $keyword) {
+        $keywords[] = (string) $keyword;
+      }
+    }
+    $page->setKeywords($keywords);
 
     // Set description.
     if (!empty($xmlElement->description)) {
@@ -298,6 +373,11 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
     // Set the image.
     if (!empty($xmlElement->image)) {
       $page->setImage((string) $xmlElement->image);
+    }
+    
+    // Set the cover.
+    if (!empty($xmlElement->cover)) {
+      $page->setCover((string) $xmlElement->cover);
     }
 
     // Set the visibility.
@@ -373,6 +453,9 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement {
 
     // Set the permissions.
     $page->setPermissions(CultureFeed_Cdb_Data_PagePermissions::parseFromCdbXml($xmlElement->permissions));
+    
+    // Set tagline.
+    $page->setTagline((string) $xmlElement->tagline);
 
     return $page;
 
