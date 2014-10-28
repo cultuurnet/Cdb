@@ -569,7 +569,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
       $event->setWfStatus((string)$event_attributes['wfstatus']);
     }
 
-    if (!empty($xmlElement->agefrom)) {
+    if (isset($xmlElement->agefrom)) {
       $event->setAgeFrom((int)$xmlElement->agefrom);
     }
 
