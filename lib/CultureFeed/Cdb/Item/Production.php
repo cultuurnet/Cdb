@@ -228,12 +228,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
     }
 
     // Set the keywords.
-    if (!empty($xmlElement->keywords)) {
-      $keywords = explode(';', $xmlElement->keywords);
-      foreach ($keywords as $keyword) {
-        $production->addKeyword($keyword);
-      }
-    }
+    self::parseKeywords($xmlElement, $production);
 
     return $production;
 

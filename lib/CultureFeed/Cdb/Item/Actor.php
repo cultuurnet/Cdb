@@ -147,12 +147,7 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     // Set the keywords.
-    if (!empty($xmlElement->keywords)) {
-      $keywords = explode(';', $xmlElement->keywords);
-      foreach ($keywords as $keyword) {
-        $actor->addKeyword($keyword);
-      }
-    }
+    self::parseKeywords($xmlElement, $actor);
 
     // Set the weekscheme.
     if (!empty($xmlElement->weekscheme)) {

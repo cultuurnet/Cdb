@@ -53,7 +53,7 @@ abstract class CultureFeed_Cdb_Item_Base {
    * Keywords from the item
    * @var array List with keywords.
    */
-  protected $keywords;
+  protected $keywords = array();
 
   /**
    * Relations from the item.
@@ -233,4 +233,20 @@ abstract class CultureFeed_Cdb_Item_Base {
 
   }
 
+    /**
+     * Parses keywords from cdbxml.
+     * @param SimpleXMLElement $xmlElement
+     * @param CultureFeed_Cdb_Item_Base $event
+     */
+    protected static function parseKeywords(
+        SimpleXMLElement $xmlElement,
+        CultureFeed_Cdb_Item_Base $item
+    ) {
+        if (!empty($xmlElement->keywords)) {
+            $keywords = explode(';', trim($xmlElement->keywords));
+            foreach ($keywords as $keyword) {
+                $item->addKeyword(trim($keyword));
+            }
+        }
+    }
 }

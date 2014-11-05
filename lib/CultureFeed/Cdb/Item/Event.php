@@ -106,7 +106,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
    */
   protected $bookingPeriod;
 
-  public function setAvailableFrom($value) {
+    public function setAvailableFrom($value) {
     $this->availableFrom = $value;
   }
 
@@ -627,16 +627,9 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
       }
 
     }
+      self::parseKeywords($xmlElement, $event);
 
-    // Set the keywords.
-    if (!empty($xmlElement->keywords)) {
-      $keywords = explode(';', $xmlElement->keywords);
-      foreach ($keywords as $keyword) {
-        $event->addKeyword($keyword);
-      }
-    }
-
-    if (!empty($xmlElement->languages)) {
+      if (!empty($xmlElement->languages)) {
         $event->setLanguages(CultureFeed_Cdb_Data_LanguageList::parseFromCdbXml($xmlElement->languages));
     }
 
