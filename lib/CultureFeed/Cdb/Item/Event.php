@@ -106,7 +106,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
    */
   protected $bookingPeriod;
 
-    public function setAvailableFrom($value) {
+  public function setAvailableFrom($value) {
     $this->availableFrom = $value;
   }
 
