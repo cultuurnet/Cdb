@@ -377,10 +377,6 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
       $fileElement->appendChild($dom->createElement('filetype', $this->fileType));
     }
 
-    if (!empty($this->relationType)) {
-      $fileElement->appendChild($dom->createElement('reltype', $this->relationType));
-    }
-
     if (!empty($this->hLink)) {
       $hLinkElement = $dom->createElement('hlink');
       $hLinkElement->appendChild($dom->createTextNode($this->hLink));
@@ -393,6 +389,10 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
 
     if (!empty($this->mediaType)) {
       $fileElement->appendChild($dom->createElement('mediatype', $this->mediaType));
+    }
+
+    if (!empty($this->relationType)) {
+      $fileElement->appendChild($dom->createElement('reltype', $this->relationType));
     }
 
     if (!empty($this->plainText)) {
