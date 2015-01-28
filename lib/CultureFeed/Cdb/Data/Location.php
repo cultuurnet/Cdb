@@ -121,6 +121,10 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement {
       $locationElement->appendChild($labelElement);
     }
 
+    if ($this->actor) {
+      $this->actor->appendToDOM($locationElement);
+    }
+
     $element->appendChild($locationElement);
 
   }
