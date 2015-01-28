@@ -9,7 +9,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-release/2.x": "2.x-dev"
+            "develop": "2.x-dev"
         }
     },
     "require-dev": {
