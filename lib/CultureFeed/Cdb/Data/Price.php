@@ -8,7 +8,7 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
 
   /**
    * The total price.
-   * @var float
+   * @var float|NULL
    */
   protected $value;
 
@@ -24,16 +24,18 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
   protected $title;
 
   /**
-   * Construct the proice object.
-   * @param float $value
+   * Construct the price object.
+   * @param float|NULL $value
    *   The total value.
    */
-  public function __construct($value) {
+  public function __construct($value = NULL) {
     $this->value = $value;
   }
 
   /**
    * Get the price value.
+   *
+   * @return float|null
    */
   public function getValue() {
     return $this->value;
@@ -41,7 +43,7 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
 
   /**
    * Set the value.
-   * @param float $value
+   * @param float|null $value
    *   Value to set.
    */
   public function setValue($value) {
@@ -116,11 +118,8 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement {
    */
   public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
 
-    if (!isset($xmlElement->pricevalue) ) {
-      throw new CultureFeed_Cdb_ParseException("Value missing for price element");
-    }
-
-    $price = new CultureFeed_Cdb_Data_Price((string)$xmlElement->pricevalue);
+    $value = !empty($xmlElement->pricevalue) ? (string)$xmlElement->pricevalue : NULL;
+    $price = new CultureFeed_Cdb_Data_Price($value);
 
     if (!empty($xmlElement->pricedescription)) {
       $price->setDescription((string)$xmlElement->pricedescription);
