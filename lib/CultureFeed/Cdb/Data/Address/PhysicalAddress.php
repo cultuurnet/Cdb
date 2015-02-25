@@ -90,7 +90,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
    *   Street to set
    */
   public function setStreet($street) {
-    $this->street = $street;
+    $this->street = trim($street);
   }
 
   /**
@@ -99,7 +99,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
    *   Housenumber to set.
    */
   public function setHouseNumber($houseNumber) {
-    $this->houseNumber = $houseNumber;
+    $this->houseNumber = trim($houseNumber);
   }
 
   /**
@@ -108,7 +108,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
    *   City to set
    */
   public function setCity($city) {
-    $this->city = $city;
+    $this->city = trim($city);
   }
 
   /**
@@ -117,7 +117,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
    *   Zip code to set.
    */
   public function setZip($zip) {
-    $this->zip = $zip;
+    $this->zip = trim($zip);
   }
 
   /**
@@ -126,7 +126,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
    *   Country to set.
    */
   public function setCountry($country) {
-    $this->country = $country;
+    $this->country = trim($country);
   }
 
   /**
