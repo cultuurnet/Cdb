@@ -111,6 +111,13 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Delete all phones
+   */
+  public function deletePhones() {
+    $this->phones = array();
+  }
+
+  /**
    * Add a mail to the mail list.
    * @param CultureFeed_Cdb_Data_Mail $mail
    */
@@ -135,6 +142,13 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Delete all mails
+   */
+  public function deleteMails() {
+    $this->mails = array();
+  }
+
+  /**
    * Add an url to the url list.
    * @param CultureFeed_Cdb_Data_Url $url
    */
@@ -156,6 +170,13 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
 
     unset($this->urls[$index]);
 
+  }
+
+  /**
+   * Delete all urls
+   */
+  public function deleteUrls() {
+    $this->mails = array();
   }
 
   /**
