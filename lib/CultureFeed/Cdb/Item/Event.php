@@ -456,7 +456,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     if ($this->bookingPeriod) {
-      $this->bookingPeriod->appendToDOM($eventelement);
+      $this->bookingPeriod->appendToDOM($eventElement);
     }
 
     if (!empty($this->relations)) {
