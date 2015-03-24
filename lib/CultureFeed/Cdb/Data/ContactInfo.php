@@ -176,7 +176,7 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement {
    * Delete all urls
    */
   public function deleteUrls() {
-    $this->mails = array();
+    $this->urls = array();
   }
 
   /**
