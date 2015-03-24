@@ -28,6 +28,13 @@ class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElement, Ite
   }
 
   /**
+   * Delete a given category of the list.
+   */
+  public function delete($key) {
+    unset($this->categories[$key]);
+  }
+
+  /**
    * @see Iterator::rewind()
    */
   function rewind() {
