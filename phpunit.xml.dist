@@ -12,4 +12,16 @@
             <directory suffix=".php">lib/CultureFeed</directory>
         </whitelist>
     </filter>
+
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
+
+    <filter>
+        <blacklist>
+            <directory>./vendor</directory>
+            <directory>./tests</directory>
+        </blacklist>
+    </filter>
+
 </phpunit>
