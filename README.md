@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/cultuurnet/Cdb.svg?branch=master)](https://travis-ci.org/cultuurnet/Cdb)
+
 CultuurNet\Cdb aims to be a fluent PHP library for manipulating, serializing
 and deserializing data present in CultuurNet's [CdbXML][cdbxml] format. The library
 currently supports CdbXML 3.2.
