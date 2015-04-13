@@ -9,7 +9,7 @@ class CultureFeed_Cdb_Default {
   /**
    * Url to the cdb xml scheme.
    */
-  const CDB_SCHEME_URL = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL';
+  const CDB_SCHEME_URL = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.3/FINAL';
 
   /**
    * Name from the xml scheme.
