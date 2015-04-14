@@ -106,6 +106,18 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
    */
   protected $bookingPeriod;
 
+  /**
+   * Weight for this event.
+   * @var int
+   */
+  protected $weight;
+
+  /**
+   * Publisher of this event.
+   * @var int
+   */
+  protected $publisher;
+
   public function setAvailableFrom($value) {
     $this->availableFrom = $value;
   }
@@ -338,6 +350,46 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   }
 
   /**
+   * Set the weight.
+   *
+   * @param int $weight
+   *   The weight.
+   */
+  public function setWeight($weight) {
+    $this->weight = $weight;
+  }
+
+  /**
+   * Get the weight.
+   *
+   * @return int
+   *   The weight.
+   */
+  public function getWeight() {
+    return $this->weight;
+  }
+
+  /**
+   * Set the publisher.
+   *
+   * @param string $publisher
+   *   The publisher.
+   */
+  public function setPublisher($publisher) {
+    $this->publisher = $publisher;
+  }
+
+  /**
+   * Get the publisher.
+   *
+   * @return string
+   *   The publisher.
+   */
+  public function getPublisher() {
+    return $this->publisher;
+  }
+
+  /**
    * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
   public function appendToDOM(DOMElement $element) {
@@ -408,6 +460,10 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     if (isset($this->wfStatus)) {
       $eventElement->setAttribute('wfstatus', $this->wfStatus);
+    }
+
+    if ($this->publisher) {
+      $eventElement->setAttribute('publisher', $this->publisher);
     }
 
     if ($this->calendar) {
@@ -567,6 +623,14 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     if (isset($event_attributes['wfstatus'])) {
       $event->setWfStatus((string)$event_attributes['wfstatus']);
+    }
+
+    if (isset($event_attributes['weight'])) {
+      $event->setWeight((int) $event_attributes['weight']);
+    }
+
+    if (isset($event_attributes['publisher'])) {
+      $event->setPublisher((string) $event_attributes['publisher']);
     }
 
     if (isset($xmlElement->agefrom)) {
