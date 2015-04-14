@@ -1,11 +1,9 @@
 <?php
 
-namespace CultuurNet\Cdb;
-
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
 
-class CdbEventSubscriber implements EventSubscriberInterface {
+class EventSubscriber implements EventSubscriberInterface {
 
   /**
    * @var array of requests done to api.
