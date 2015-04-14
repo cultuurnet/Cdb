@@ -129,6 +129,19 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
    */
   protected $plainText;
 
+  /**
+   * Sub brand of the file.
+   *
+   * @var string
+   */
+  protected $subBrand;
+
+  /**
+   * Description of the file.
+   *
+   * @var string
+   */
+  protected $description;
 
   /**
    * Is the current file a main file.
@@ -235,6 +248,26 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Get the sub brand of this file.
+   *
+   * @return string
+   *   The sub brand.
+   */
+  public function getSubBrand() {
+    return $this->subBrand;
+  }
+
+  /**
+   * Get the description of this file.
+   *
+   * @return string
+   *   The description.
+   */
+  public function getDescription() {
+    return $this->description;
+  }
+
+  /**
    * Set the main status of this file.
    * @param bool Main status to set.
    */
@@ -338,6 +371,26 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Set the sub brand of this file.
+   *
+   * @param string $sub_brand
+   *   The sub brand.
+   */
+  public function setSubBrand($sub_brand) {
+    $this->subBrand = $sub_brand;
+  }
+
+  /**
+   * Set the description of this file.
+   *
+   * @param string $description.
+   *   The description.
+   */
+  public function setDescription($description) {
+    $this->description = $description;
+  }
+
+  /**
    * Appends the current object to the passed DOM tree.
    *
    * @param DOMElement $element
@@ -411,6 +464,18 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
       $fileElement->appendChild($titleElement);
     }
 
+    if (!empty($this->subBrand)) {
+      $sub_brand_element = $dom->createElement('subbrand');
+      $sub_brand_element->appendChild($dom->createTextNode($this->subBrand));
+      $fileElement->appendChild($sub_brand_element);
+    }
+
+    if (!empty($this->description)) {
+      $description_element = $dom->createElement('description');
+      $description_element->appendChild($dom->createTextNode($this->description));
+      $fileElement->appendChild($description_element);
+    }
+
     $element->appendChild($fileElement);
 
   }
@@ -476,6 +541,14 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
 
     if (!empty($xmlElement->title)) {
       $file->title = (string)$xmlElement->title;
+    }
+
+    if (!empty($xmlElement->subbrand)) {
+      $file->subBrand = (string)$xmlElement->subbrand;
+    }
+
+    if (!empty($xmlElement->description)) {
+      $file->description = (string)$xmlElement->description;
     }
 
     return $file;

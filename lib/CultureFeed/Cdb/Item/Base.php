@@ -242,11 +242,16 @@ abstract class CultureFeed_Cdb_Item_Base {
       SimpleXMLElement $xmlElement,
       CultureFeed_Cdb_Item_Base $item
   ) {
-      if (!empty($xmlElement->keywords)) {
-          $keywords = explode(';', trim($xmlElement->keywords));
-          foreach ($keywords as $keyword) {
-              $item->addKeyword(trim($keyword));
-          }
+
+    if (!empty($xmlElement->keywords)) {
+
+      foreach ($xmlElement->keywords as $keyword) {
+        $attributes = $keyword->attributes();
+        if (!isset($attributes['visible']) || $attributes['visible']) {
+          $item->addKeyword(trim((string) $keyword));
+        }
       }
+    }
   }
+
 }
