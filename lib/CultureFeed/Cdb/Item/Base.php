@@ -51,7 +51,8 @@ abstract class CultureFeed_Cdb_Item_Base {
 
   /**
    * Keywords from the item
-   * @var array List with keywords.
+   *
+   * @var CultureFeed_Cdb_Data_Keyword[] List with keywords.
    */
   protected $keywords = array();
 
@@ -131,10 +132,31 @@ abstract class CultureFeed_Cdb_Item_Base {
   /**
    * Get the keywords from this item.
    *
+   * @param bool $asObject
+   *   Return keywords as objects or values.
+   *
    * @return array
+   *   The keywords.
    */
-  public function getKeywords() {
-    return $this->keywords;
+  public function getKeywords($asObject = FALSE) {
+
+    if ($asObject) {
+      return $this->keywords;
+    }
+
+    else {
+
+      $keywords = array();
+      foreach ($this->keywords as $keyword) {
+        if ($keyword->getVisibility()) {
+          $keywords[] = $keyword->getValue();
+        }
+      }
+
+      return $keywords;
+
+    }
+
   }
 
   /**
@@ -189,25 +211,50 @@ abstract class CultureFeed_Cdb_Item_Base {
 
   /**
    * Add a keyword to this item.
+   *
    * @param string $keyword
    *   Add a keyword.
+   * @param bool $asObject
+   *   Add keyword as object or value.
    */
-  public function addKeyword($keyword) {
+  public function addKeyword($keyword, $asObject = FALSE) {
+
+    if (!$asObject) {
+      $keyword = new CultureFeed_Cdb_Data_Keyword($keyword, TRUE);
+    }
     $this->keywords[$keyword] = $keyword;
   }
 
   /**
    * Delete a keyword from this item.
+   *
    * @param string $keyword
    *   Keyword to remove.
+   * @param bool $asObject
+   *   Delete keyword as object or value.
+   *
+   * @throws Exception
    */
-  public function deleteKeyword($keyword) {
+  public function deleteKeyword($keyword, $asObject = FALSE) {
 
-    if (!isset($this->keywords[$keyword])) {
+    if (!$asObject) {
+      $keyword = new CultureFeed_Cdb_Data_Keyword($keyword, TRUE);
+    }
+
+    $remove = NULL;
+    foreach ($this->keywords as $key => $item) {
+
+      if ($item->getValue() == $keyword->getValue()) {
+        $remove = $key;
+      }
+
+    }
+
+    if (!isset($remove)) {
       throw new Exception('Trying to remove a non-existing keyword.');
     }
 
-    unset($this->keywords[$keyword]);
+    unset($this->keywords[$remove]);
 
   }
 
@@ -236,22 +283,20 @@ abstract class CultureFeed_Cdb_Item_Base {
   /**
    * Parses keywords from cdbxml.
    * @param SimpleXMLElement $xmlElement
-   * @param CultureFeed_Cdb_Item_Base $event
+   * @param CultureFeed_Cdb_Item_Base $item
    */
   protected static function parseKeywords(
-      SimpleXMLElement $xmlElement,
-      CultureFeed_Cdb_Item_Base $item
+    SimpleXMLElement $xmlElement,
+    CultureFeed_Cdb_Item_Base $item
   ) {
 
     if (!empty($xmlElement->keywords)) {
 
       foreach ($xmlElement->keywords as $keyword) {
-        $attributes = $keyword->attributes();
-        if (!isset($attributes['visible']) || $attributes['visible']) {
-          $item->addKeyword(trim((string) $keyword));
-        }
+        $item->addKeyword(CultureFeed_Cdb_Data_Keyword::parseFromCdbXml($keyword), TRUE);
       }
     }
+
   }
 
 }
