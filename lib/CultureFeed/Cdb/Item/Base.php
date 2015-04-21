@@ -139,24 +139,7 @@ abstract class CultureFeed_Cdb_Item_Base {
    *   The keywords.
    */
   public function getKeywords($asObject = FALSE) {
-
-    if ($asObject) {
       return $this->keywords;
-    }
-
-    else {
-
-      $keywords = array();
-      foreach ($this->keywords as $keyword) {
-        if ($keyword->getVisibility()) {
-          $keywords[] = $keyword->getValue();
-        }
-      }
-
-      return $keywords;
-
-    }
-
   }
 
   /**
@@ -214,14 +197,8 @@ abstract class CultureFeed_Cdb_Item_Base {
    *
    * @param string $keyword
    *   Add a keyword.
-   * @param bool $asObject
-   *   Add keyword as object or value.
    */
-  public function addKeyword($keyword, $asObject = FALSE) {
-
-    if (!$asObject) {
-      $keyword = new CultureFeed_Cdb_Data_Keyword($keyword, TRUE);
-    }
+  public function addKeyword($keyword) {
     $this->keywords[$keyword] = $keyword;
   }
 
@@ -289,14 +266,11 @@ abstract class CultureFeed_Cdb_Item_Base {
     SimpleXMLElement $xmlElement,
     CultureFeed_Cdb_Item_Base $item
   ) {
-
     if (!empty($xmlElement->keywords)) {
-
-      foreach ($xmlElement->keywords as $keyword) {
-        $item->addKeyword(CultureFeed_Cdb_Data_Keyword::parseFromCdbXml($keyword), TRUE);
+      $keywords = explode(';', trim($xmlElement->keywords));
+      foreach ($keywords as $keyword) {
+        $item->addKeyword(trim($keyword));
       }
     }
-
   }
-
 }

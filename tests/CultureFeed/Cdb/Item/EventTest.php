@@ -20,7 +20,12 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $sampleDir = __DIR__ . '/samples/EventTest/';
         $filePath = $sampleDir . $fileName;
 
-        $xml = simplexml_load_file($filePath, 'SimpleXMLElement', 0, \CultureFeed_Cdb_Default::CDB_SCHEME_URL);
+        $xml = simplexml_load_file(
+          $filePath,
+          'SimpleXMLElement',
+          0,
+          'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL'
+        );
 
         return $xml;
     }
