@@ -856,4 +856,17 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
     self::assertEquals($expected, $actual, $message);
   }
+
+  public function testGetKeywordsAsObjects() {
+    $this->event->addKeyword('foo');
+    $this->event->addKeyword('bar');
+
+    $this->assertEquals(,
+      array(
+        'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
+        'bar' => new CultureFeed_Cdb_Data_Keyword('bar'),
+      ),
+      $this->event->getKeywords(TRUE)
+    );
+  }
 }
