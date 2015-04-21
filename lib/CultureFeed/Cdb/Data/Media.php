@@ -26,36 +26,43 @@ class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator, 
   /**
    * @see Iterator::rewind()
    */
-  function rewind() {
+  public function rewind() {
     $this->position = 0;
   }
 
   /**
    * @see Iterator::current()
    */
-  function current() {
+  public function current() {
     return $this->details[$this->position];
   }
 
   /**
    * @see Iterator::key()
    */
-  function key() {
+  public function key() {
     return $this->position;
   }
 
   /**
    * @see Iterator::next()
    */
-  function next() {
+  public function next() {
     ++$this->position;
   }
 
   /**
    * @see Iterator::valid()
    */
-  function valid() {
+  public function valid() {
     return isset($this->details[$this->position]);
+  }
+
+  /**
+   * Remove the given position.
+   */
+  public function remove($position) {
+    unset($this->details[$position]);
   }
 
   /**
@@ -104,8 +111,8 @@ class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator, 
 
     return $media;
   }
-  
-  
+
+
   /**
    * @return self
    */

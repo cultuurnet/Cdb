@@ -336,6 +336,13 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   }
 
   /**
+   * Delete the organiser from this event.
+   */
+  public function deleteOrganiser() {
+    $this->organiser = NULL;
+  }
+
+  /**
    * Set the maximum amount of participants.
    */
   public function setMaxParticipants($maxParticipants) {
@@ -481,7 +488,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     if ($this->details) {
       $this->details->appendToDOM($eventElement);
     }
-    
+
     if (count($this->keywords) > 0) {
       $keywordElement = $dom->createElement('keywords');
       $keywordElement->appendChild($dom->createTextNode(implode(';', $this->keywords)));
@@ -505,7 +512,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     if ($this->bookingPeriod) {
-      $this->bookingPeriod->appendToDOM($eventelement);
+      $this->bookingPeriod->appendToDOM($eventElement);
     }
 
     if (!empty($this->relations)) {
