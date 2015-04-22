@@ -81,7 +81,9 @@ class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
 
         $keywordElement = $dom->createElement('keyword');
         $keywordElement->appendChild($dom->createTextNode($this->value));
-        $keywordElement->setAttribute('visible', $this->visible);
+        if (!$this->visible) {
+            $keywordElement->setAttribute('visible', 'false');
+        }
 
         $element->appendChild($keywordElement);
 
