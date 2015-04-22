@@ -274,9 +274,30 @@ abstract class CultureFeed_Cdb_Item_Base {
     CultureFeed_Cdb_Item_Base $item
   ) {
     if (!empty($xmlElement->keywords)) {
-      $keywords = explode(';', trim($xmlElement->keywords));
-      foreach ($keywords as $keyword) {
-        $item->addKeyword(trim($keyword));
+      $keywordsString = trim($xmlElement->keywords);
+
+      if ($keywordsString === '') {
+        /** @var SimpleXMLElement $keywordElement */
+        foreach ($xmlElement->keywords->keyword as $keywordElement) {
+          $attributes = $keywordElement->attributes();
+          $visible =
+            !isset($attributes['visible']) ||
+            $attributes['visible'] == 'true';
+
+          $item->addKeyword(
+            new CultureFeed_Cdb_Data_Keyword(
+              (string)$keywordElement,
+              $visible
+            )
+          );
+        }
+      }
+      else {
+        $keywords = explode(';', $keywordsString);
+
+        foreach ($keywords as $keyword) {
+          $item->addKeyword(trim($keyword));
+        }
       }
     }
   }
