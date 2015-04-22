@@ -969,7 +969,9 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $xpath = new DOMXPath($dom);
 
         $items = $xpath->query('/events/event/keywords');
-        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Data/samples/KeywordTest/keywords.xml', $items);
+        $xml = $dom->saveXML($items->item(0));
+
+        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Data/samples/KeywordTest/keywords.xml', $xml);
     }
 
     /**
@@ -989,6 +991,8 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $xpath = new DOMXPath($dom);
 
         $items = $xpath->query('/events/event/keywords');
-        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Data/samples/KeywordTest/keywords.xml', $items);
+
+        $xml = $dom->saveXML($items->item(0));
+        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Data/samples/KeywordTest/keywords.xml', $xml);
     }
 }
