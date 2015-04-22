@@ -220,38 +220,27 @@ abstract class CultureFeed_Cdb_Item_Base {
         }
     }
 
-  /**
-   * Delete a keyword from this item.
-   *
-   * @param string $keyword
-   *   Keyword to remove.
-   * @param bool $asObject
-   *   Delete keyword as object or value.
-   *
-   * @throws Exception
-   */
-  public function deleteKeyword($keyword, $asObject = FALSE) {
+    /**
+     * Delete a keyword from this item.
+     *
+     * @param string|CultureFeed_Cdb_Data_Keyword $keyword
+     *   Delete keyword as object or value.
+     *
+     * @throws Exception
+     */
+    public function deleteKeyword($keyword) {
 
-    if (!$asObject) {
-      $keyword = new CultureFeed_Cdb_Data_Keyword($keyword);
-    }
+        if (!is_string($keyword)) {
+           $keyword = $keyword->getValue();
+        }
 
-    $remove = NULL;
-    foreach ($this->keywords as $key => $item) {
+        if (!isset($this->keywords[$keyword])) {
+            throw new Exception('Trying to remove a non-existing keyword.');
+        }
 
-      if ($item->getValue() == $keyword->getValue()) {
-        $remove = $key;
-      }
+        unset($this->keywords[$keyword]);
 
     }
-
-    if (!isset($remove)) {
-      throw new Exception('Trying to remove a non-existing keyword.');
-    }
-
-    unset($this->keywords[$remove]);
-
-  }
 
   /**
    * Add a relation to the current item.

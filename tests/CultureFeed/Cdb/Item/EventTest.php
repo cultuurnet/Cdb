@@ -14,24 +14,30 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
     /**
      * @param $fileName
+     * @param $cdbScheme
      * @return SimpleXMLElement
      */
-    public function loadSample($fileName) {
-        $sampleDir = __DIR__ . '/samples/EventTest/';
+    public function loadSample($fileName, $cdbScheme = '3.2') {
+        $sampleDir = __DIR__ . '/samples/EventTest/cdbxml-' . $cdbScheme . '/';
         $filePath = $sampleDir . $fileName;
 
         $xml = simplexml_load_file(
           $filePath,
           'SimpleXMLElement',
           0,
-          'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL'
+          'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/' . $cdbScheme. '/FINAL'
         );
 
         return $xml;
     }
 
-  public function samplePath($fileName) {
-    $sampleDir = __DIR__ . '/samples/EventTest/';
+    /**
+     * @param $fileName
+     * @param $cdbScheme
+     * @return string
+     */
+  public function samplePath($fileName, $cdbScheme = '3.2') {
+    $sampleDir = __DIR__ . '/samples/EventTest/cdbxml-' . $cdbScheme . '/';
     $filePath = $sampleDir . $fileName;
 
     return $filePath;
@@ -891,4 +897,35 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
       $this->event->getKeywords(TRUE)
     );
   }
+
+    public function testDeleteKeywordObjects()
+    {
+        $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
+        $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar'));
+
+        $this->event->deleteKeyword(new CultureFeed_Cdb_Data_Keyword('bar'));
+
+        $this->assertEquals(
+            array(
+                'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
+            ),
+            $this->event->getKeywords(TRUE)
+        );
+    }
+
+    public function testParseKeywordsXml() {
+
+        $xml = $this->loadSample('test-event-2014-01-08.xml');
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
+
+        $this->assertEquals(
+            array(
+                'feest' => new CultureFeed_Cdb_Data_Keyword('feest'),
+                'test' => new CultureFeed_Cdb_Data_Keyword('test', false),
+            ),
+            $event->getKeywords(TRUE)
+        );
+
+    }
+
 }
