@@ -951,4 +951,44 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
             $this->event->getKeywords(TRUE)
         );
     }
+
+    /**
+     * Test keyword appendToDom for cdb 3.3
+     */
+    public function testKeywordAppendToDomAsValue() {
+
+        $event = new CultureFeed_Cdb_Item_Event();
+        $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
+        $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar', false));
+
+        $dom = new DOMDocument('1.0', 'utf-8');
+        $eventsElement = $dom->createElement('events');
+        $dom->appendChild($eventsElement);
+        $event->appendToDOM($eventsElement);
+
+        $xpath = new DOMXPath($dom);
+
+        $items = $xpath->query('/events/event/keywords');
+        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Data/samples/KeywordTest/keywords.xml', $items);
+    }
+
+    /**
+     * Test keyword appendToDom for cdb 3.3
+     */
+    public function testKeywordAppendToDomAsTag() {
+
+        $event = new CultureFeed_Cdb_Item_Event();
+        $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
+        $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar', false));
+
+        $dom = new DOMDocument('1.0', 'utf-8');
+        $eventsElement = $dom->createElement('events');
+        $dom->appendChild($eventsElement);
+        $event->appendToDOM($eventsElement, '3.3');
+
+        $xpath = new DOMXPath($dom);
+
+        $items = $xpath->query('/events/event/keywords');
+        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Data/samples/KeywordTest/keywords.xml', $items);
+    }
 }
