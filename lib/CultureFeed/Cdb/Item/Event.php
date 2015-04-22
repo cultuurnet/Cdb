@@ -490,9 +490,15 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     if (count($this->keywords) > 0) {
-      $keywordElement = $dom->createElement('keywords');
-      $keywordElement->appendChild($dom->createTextNode(implode(';', $this->keywords)));
-      $eventElement->appendChild($keywordElement);
+        $keywordsElement = $dom->createElement('keywords');
+        $keywords = array();
+        foreach ($this->keywords as $keyword) {
+            if ($keyword->isVisible()) {
+                $keywords[] = $keyword->getValue();
+            }
+        }
+        $keywordsElement->appendChild($dom->createTextNode(implode(';', $keywords)));
+        $eventElement->appendChild($keywordsElement);
     }
 
     if (isset($this->languages)) {
