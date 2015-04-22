@@ -396,10 +396,17 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     return $this->publisher;
   }
 
-  /**
-   * @see CultureFeed_Cdb_IElement::appendToDOM()
-   */
-  public function appendToDOM(DOMElement $element) {
+    /**
+     * Appends the current object to the passed DOM tree.
+     *
+     * @param DOMElement $element
+     *   The DOM tree to append to.
+     * @param string $cdbScheme
+     *   The cdb schema version.
+     *
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+  public function appendToDOM(DOMElement $element, $cdbScheme = '3.2') {
 
     $dom = $element->ownerDocument;
 
@@ -490,15 +497,26 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     if (count($this->keywords) > 0) {
+
         $keywordsElement = $dom->createElement('keywords');
-        $keywords = array();
-        foreach ($this->keywords as $keyword) {
-            if ($keyword->isVisible()) {
-                $keywords[] = $keyword->getValue();
+        if ($cdbScheme == '3.3') {
+
+            foreach ($this->keywords as $keyword) {
+                $keyword->appendToDOM($keywordsElement);
             }
+            $eventElement->appendChild($keywordsElement);
+
+        } else {
+
+            $keywords = array();
+            foreach ($this->keywords as $keyword) {
+                $keywords[$keyword->getValue()] = $keyword->getValue();
+            }
+            $keywordsElement->appendChild($dom->createTextNode(implode(';', $keywords)));
+            $eventElement->appendChild($keywordsElement);
+
         }
-        $keywordsElement->appendChild($dom->createTextNode(implode(';', $keywords)));
-        $eventElement->appendChild($keywordsElement);
+
     }
 
     if (isset($this->languages)) {

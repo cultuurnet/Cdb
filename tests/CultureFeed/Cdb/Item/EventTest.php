@@ -953,7 +953,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test keyword appendToDom for cdb 3.3
+     * Test keyword appendToDom for cdb < 3.3
      */
     public function testKeywordAppendToDomAsValue() {
 
@@ -971,7 +971,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $items = $xpath->query('/events/event/keywords');
         $xml = $dom->saveXML($items->item(0));
 
-        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Data/samples/KeywordTest/keywords.xml', $xml);
+        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/samples/EventTest/cdbxml-3.2/keyword_values.xml', $xml);
     }
 
     /**
@@ -993,6 +993,6 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $items = $xpath->query('/events/event/keywords');
 
         $xml = $dom->saveXML($items->item(0));
-        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Data/samples/KeywordTest/keywords.xml', $xml);
+        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/samples/EventTest/cdbxml-3.3/keyword_tags.xml', $xml);
     }
 }
