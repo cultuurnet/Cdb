@@ -928,4 +928,27 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
     }
 
+    public function testDeleteKeywordWithStringArgument() {
+        $this->event->addKeyword('foo');
+        $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar', FALSE));
+        $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('baz', FALSE));
+
+        $this->event->deleteKeyword('bar');
+
+        $this->assertEquals(
+            array(
+                'foo' => 'foo',
+                'baz' => 'baz',
+            ),
+            $this->event->getKeywords()
+        );
+
+        $this->assertEquals(
+            array(
+                'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
+                'baz' => new CultureFeed_Cdb_Data_Keyword('baz', FALSE),
+            ),
+            $this->event->getKeywords(TRUE)
+        );
+    }
 }
