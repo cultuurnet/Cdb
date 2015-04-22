@@ -493,7 +493,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         $keywordsElement = $dom->createElement('keywords');
         $keywords = array();
         foreach ($this->keywords as $keyword) {
-            if ($keyword->getVisibility()) {
+            if ($keyword->isVisible()) {
                 $keywords[] = $keyword->getValue();
             }
         }

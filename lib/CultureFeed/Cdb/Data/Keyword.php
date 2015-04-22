@@ -24,13 +24,13 @@ class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
      *
      * @param $value
      *   The keyword value.
-     * @param $visibility
+     * @param $visible
      *   The keyword visibility.
      */
-    public function __construct($value, $visibility = true)
+    public function __construct($value, $visible = true)
     {
         $this->value = $value;
-        $this->visibility = $visibility;
+        $this->visible = $visible;
     }
 
     /**
@@ -44,9 +44,9 @@ class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
     /**
      * Get the visibility of the keyword.
      */
-    public function getVisibility()
+    public function isVisible()
     {
-        return $this->visibility;
+        return $this->visible;
     }
 
     /**
@@ -63,12 +63,12 @@ class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
     /**
      * Set the visibility of the keyword.
      *
-     * @param bool $visibility
+     * @param bool $visible
      *   The keyword visibility.
      */
-    public function setVisibility($visibility)
+    public function setVisibility($visible)
     {
-        $this->visibility = $visibility;
+        $this->visible = $visible;
     }
 
     /**
@@ -81,7 +81,7 @@ class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
 
         $keywordElement = $dom->createElement('keyword');
         $keywordElement->appendChild($dom->createTextNode($this->value));
-        $keywordElement->setAttribute('visible', $this->visibility);
+        $keywordElement->setAttribute('visible', $this->visible);
 
         $element->appendChild($keywordElement);
 
