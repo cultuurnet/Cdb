@@ -129,18 +129,29 @@ abstract class CultureFeed_Cdb_Item_Base {
     return $this->details;
   }
 
-  /**
-   * Get the keywords from this item.
-   *
-   * @param bool $asObject
-   *   Return keywords as objects or values.
-   *
-   * @return array
-   *   The keywords.
-   */
-  public function getKeywords($asObject = FALSE) {
-      return $this->keywords;
-  }
+    /**
+     * Get the keywords from this item.
+     *
+     * @param bool $asObject
+     *   Return keywords as objects or values.
+     *
+     * @return array
+     *   The keywords.
+     */
+    public function getKeywords($asObject = false)
+    {
+
+        if ($asObject) {
+            return $this->keywords;
+        } else {
+            $keywords = array();
+            foreach ($this->keywords as $keyword) {
+                $keywords[] = $keyword->getValue();
+            }
+            return $keywords;
+        }
+
+    }
 
   /**
    * Get the relations from this item.
@@ -199,7 +210,7 @@ abstract class CultureFeed_Cdb_Item_Base {
    *   Add a keyword.
    */
   public function addKeyword($keyword) {
-    $this->keywords[$keyword] = $keyword;
+    $this->keywords[$keyword] = new CultureFeed_Cdb_Data_Keyword($keyword);
   }
 
   /**
@@ -215,7 +226,7 @@ abstract class CultureFeed_Cdb_Item_Base {
   public function deleteKeyword($keyword, $asObject = FALSE) {
 
     if (!$asObject) {
-      $keyword = new CultureFeed_Cdb_Data_Keyword($keyword, TRUE);
+      $keyword = new CultureFeed_Cdb_Data_Keyword($keyword);
     }
 
     $remove = NULL;
