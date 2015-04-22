@@ -915,7 +915,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
     public function testParseKeywordsXml() {
 
-        $xml = $this->loadSample('test-event-2014-01-08.xml');
+        $xml = $this->loadSample('test-event-2014-01-08.xml', '3.3');
         $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
 
         $this->assertEquals(
