@@ -87,4 +87,12 @@ class CultureFeed_Cdb_Data_FileTest extends PHPUnit_Framework_TestCase
         return new DOMXPath($dom);
     }
 
+    public function testGetDescription()
+    {
+        $description = 'Lorem Ipsum';
+        $this->file->setDescription($description);
+
+        $this->assertEquals($description, $this->file->getDescription());
+    }
+
 }
