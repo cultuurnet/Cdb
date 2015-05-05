@@ -995,4 +995,22 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $xml = $dom->saveXML($items->item(0));
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/samples/EventTest/cdbxml-3.3/keyword_tags.xml', $xml);
     }
+
+    public function testGetAndSetPublisher()
+    {
+        $event = new CultureFeed_Cdb_Item_Event();
+        $this->assertNull($event->getPublisher());
+
+        $event->setPublisher('xyz');
+        $this->assertSame('xyz', $event->getPublisher());
+    }
+
+    public function testGetAndSetWeight()
+    {
+        $event = new CultureFeed_Cdb_Item_Event();
+        $this->assertNull($event->getWeight());
+
+        $event->setWeight(1);
+        $this->assertSame(1, $event->getWeight());
+    }
 }
