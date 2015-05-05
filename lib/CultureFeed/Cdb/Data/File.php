@@ -544,11 +544,11 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
     }
 
     if (!empty($xmlElement->subbrand)) {
-      $file->subBrand = (string)$xmlElement->subbrand;
+      $file->subBrand = trim((string)$xmlElement->subbrand);
     }
 
     if (!empty($xmlElement->description)) {
-      $file->description = (string)$xmlElement->description;
+      $file->description = trim((string)$xmlElement->description);
     }
 
     return $file;

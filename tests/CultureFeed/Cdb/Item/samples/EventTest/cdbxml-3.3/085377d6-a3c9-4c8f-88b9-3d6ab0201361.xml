@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<event xsi:schemaLocation="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.3/FINAL http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.3/FINAL/CdbXSD.xsd"
+       xmlns="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.3/FINAL"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       availablefrom="2015-04-13T13:51:06" availableto="2020-12-13T00:00:00"
+       cdbid="085377d6-a3c9-4c8f-88b9-3d6ab0201361"
+       createdby="sven.houtmeyers+aanvrager@gmail.com"
+       creationdate="2015-04-21T15:50:27" externalid="testEventSven10"
+       lastupdated="2015-05-05T10:26:39"
+       lastupdatedby="sven.houtmeyers+aanvrager@gmail.com"
+       owner="Invoerders Algemeen " pctcomplete="75" private="false"
+       published="true" publisher="48fe254ceba710aec4609017d2e34d91"
+       validator="UiTdatabank Validatoren" wfstatus="readyforvalidation"
+       isparent="false">
+    <agefrom>12</agefrom>
+    <calendar>
+        <timestamps>
+            <timestamp>
+                <date>2020-12-12</date>
+                <timestart>18:00:00</timestart>
+                <timeend>20:00:00</timeend>
+            </timestamp>
+        </timestamps>
+    </calendar>
+    <categories>
+        <category type="theme" catid="1.8.3.1.0">Pop en rock</category>
+        <category type="targetaudience" catid="2.2.3.0.0">Jongeren vanaf 12
+            jaar (12+)
+        </category>
+        <category type="flanderstouristregion" catid="reg.357">Kunststad
+            Brussel
+        </category>
+        <category type="eventtype" catid="0.50.4.0.0">Concert</category>
+        <category type="flandersregion" catid="reg.1565">1000 Brussel
+        </category>
+    </categories>
+    <contactinfo>
+        <address>
+            <physical>
+                <city>Brussel</city>
+                <country>BE</country>
+                <gis>
+                    <xcoordinate>4.351550</xcoordinate>
+                    <ycoordinate>50.842750</ycoordinate>
+                </gis>
+                <zipcode>1000</zipcode>
+            </physical>
+        </address>
+        <phone type="phone">666</phone>
+        <url>http://www.moreinfo.info</url>
+    </contactinfo>
+    <eventdetails>
+        <eventdetail lang="nl">
+            <calendarsummary>za 12/12/20 van 18:00 tot 20:00
+            </calendarsummary>
+            <performers>
+                <performer>
+                    <label>Jan De Groot</label>
+                </performer>
+                <performer>
+                    <role>Regisseur</role>
+                    <label>Karel Nieuwenhuyze</label>
+                </performer>
+            </performers>
+            <media>
+                <file>
+                    <hlink>http://www.moreinfo.info</hlink>
+                    <mediatype>webresource</mediatype>
+                </file>
+                <file>
+                    <copyright>His master Jeroom</copyright>
+                    <description>
+{"keyword": "Culturefeed.be selectie",
+"text": "Hello World",
+"image": "https://www.facebook.com/23424317091/photos/a.200759332091.131532.23424317091/10153148846107092/?type=1",
+"article": "http://www.humo.be/jeroom/3973/"}
+                    </description>
+                    <plaintext>Hello World</plaintext>
+                    <mediatype>roadmap</mediatype>
+                    <title>This is a title of Hello World</title>
+                    <subbrand>2b88e17a-27fc-4310-9556-4df7188a051f
+                    </subbrand>
+                </file>
+            </media>
+            <shortdescription>Een beschrijving van maximaal 400 karakters.
+            </shortdescription>
+            <title>testevent sven</title>
+        </eventdetail>
+    </eventdetails>
+    <keywords>
+        <keyword>keyword2</keyword>
+        <keyword visible="false">Culturefeed.be selectie</keyword>
+    </keywords>
+    <location>
+        <address>
+            <physical>
+                <city>Brussel</city>
+                <country>BE</country>
+                <gis>
+                    <xcoordinate>4.351550</xcoordinate>
+                    <ycoordinate>50.842750</ycoordinate>
+                </gis>
+                <zipcode>1000</zipcode>
+            </physical>
+        </address>
+        <label>Naam locatie</label>
+    </location>
+</event>
