@@ -11,7 +11,8 @@
        owner="Invoerders Algemeen " pctcomplete="75" private="false"
        published="true" publisher="48fe254ceba710aec4609017d2e34d91"
        validator="UiTdatabank Validatoren" wfstatus="readyforvalidation"
-       isparent="false">
+       isparent="false"
+       weight="12">
     <agefrom>12</agefrom>
     <calendar>
         <timestamps>

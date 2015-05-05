@@ -1016,7 +1016,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
     /**
      * Integration test for parsing the following additions to cdbxml version 3.3:
-     *   - event publisher
+     *   - event publisher and weight
      *   - file subbrand and description
      */
     public function testParseCdbXml3Dot3SchemaAdditions() {
@@ -1026,6 +1026,8 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('085377d6-a3c9-4c8f-88b9-3d6ab0201361', $event->getCdbId());
 
         $this->assertEquals('48fe254ceba710aec4609017d2e34d91', $event->getPublisher());
+
+        $this->assertSame(12, $event->getWeight());
 
         $nlDetail = $event->getDetails()->getDetailByLanguage('nl');
         $media = $nlDetail->getMedia();
