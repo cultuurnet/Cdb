@@ -53,6 +53,14 @@ class CultureFeed_Cdb_Data_FileTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($title, $items->item(0)->textContent);
     }
 
+    public function testGetSubBrand()
+    {
+        $subBrand = '2b88e17a-27fc-4310-9556-4df7188a051f';
+        $this->file->setSubBrand($subBrand);
+
+        $this->assertEquals($subBrand, $this->file->getSubBrand());
+    }
+
     public function testAppendsSubBrand()
     {
         $subBrand = '2b88e17a-27fc-4310-9556-4df7188a051f';
