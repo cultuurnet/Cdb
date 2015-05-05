@@ -55,6 +55,8 @@ class CultureFeed_Cdb_Data_FileTest extends PHPUnit_Framework_TestCase
 
     public function testGetSubBrand()
     {
+        $this->assertNull($this->file->getSubBrand());
+
         $subBrand = '2b88e17a-27fc-4310-9556-4df7188a051f';
         $this->file->setSubBrand($subBrand);
 
@@ -89,6 +91,8 @@ class CultureFeed_Cdb_Data_FileTest extends PHPUnit_Framework_TestCase
 
     public function testGetDescription()
     {
+        $this->assertNull($this->file->getDescription());
+
         $description = 'Lorem Ipsum';
         $this->file->setDescription($description);
 
