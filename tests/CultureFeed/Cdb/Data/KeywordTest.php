@@ -19,6 +19,18 @@ class CultureFeed_Cdb_Data_KeywordTest extends PHPUnit_Framework_TestCase {
     $this->assertFalse($invisibleKeyword->isVisible());
   }
 
+  public function testChangeVisibility() {
+    $keyword = new CultureFeed_Cdb_Data_Keyword('foo');
+
+    $keyword->setVisibility(FALSE);
+
+    $this->assertFalse($keyword->isVisible());
+
+    $keyword->setVisibility(TRUE);
+
+    $this->assertTrue($keyword->isVisible());
+  }
+
   /**
    * Provider for valid keyword values.
    *

@@ -72,7 +72,7 @@ class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
     }
 
     /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     * @inheritdoc
      */
     public function appendToDOM(DOMElement $element)
     {
@@ -90,6 +90,7 @@ class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
     }
 
     /**
+     * @param SimpleXMLElement $xmlElement
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
      * @return CultureFeed_Cdb_Data_Keyword
      */

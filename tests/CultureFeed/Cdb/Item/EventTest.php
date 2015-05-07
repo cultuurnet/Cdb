@@ -995,4 +995,57 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $xml = $dom->saveXML($items->item(0));
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/samples/EventTest/cdbxml-3.3/keyword_tags.xml', $xml);
     }
+
+    public function testGetAndSetPublisher()
+    {
+        $event = new CultureFeed_Cdb_Item_Event();
+        $this->assertNull($event->getPublisher());
+
+        $event->setPublisher('xyz');
+        $this->assertSame('xyz', $event->getPublisher());
+    }
+
+    public function testGetAndSetWeight()
+    {
+        $event = new CultureFeed_Cdb_Item_Event();
+        $this->assertNull($event->getWeight());
+
+        $event->setWeight(1);
+        $this->assertSame(1, $event->getWeight());
+    }
+
+    /**
+     * Integration test for parsing the following additions to cdbxml version 3.3:
+     *   - event publisher and weight
+     *   - file subbrand and description
+     */
+    public function testParseCdbXml3Dot3SchemaAdditions() {
+        $xml = $this->loadSample('085377d6-a3c9-4c8f-88b9-3d6ab0201361.xml', '3.3');
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
+
+        $this->assertEquals('085377d6-a3c9-4c8f-88b9-3d6ab0201361', $event->getCdbId());
+
+        $this->assertEquals('48fe254ceba710aec4609017d2e34d91', $event->getPublisher());
+
+        $this->assertSame(12, $event->getWeight());
+
+        $nlDetail = $event->getDetails()->getDetailByLanguage('nl');
+        $media = $nlDetail->getMedia();
+        $media->next();
+        /** @var CultureFeed_Cdb_Data_File $secondFile */
+        $secondFile = $media->current();
+
+        $this->assertEquals(
+          '{"keyword": "Culturefeed.be selectie",
+"text": "Hello World",
+"image": "https://www.facebook.com/23424317091/photos/a.200759332091.131532.23424317091/10153148846107092/?type=1",
+"article": "http://www.humo.be/jeroom/3973/"}',
+           $secondFile->getDescription()
+        );
+
+        $this->assertEquals(
+            '2b88e17a-27fc-4310-9556-4df7188a051f',
+            $secondFile->getSubBrand()
+        );
+    }
 }
