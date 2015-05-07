@@ -7,9 +7,14 @@
 class CultureFeed_Cdb_Default {
 
   /**
-   * Url to the cdb xml scheme.
+   * Url to the latest cdb xml scheme.
    */
   const CDB_SCHEME_URL = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.3/FINAL';
+
+  /**
+   * Version of the latest cdb xml scheme.
+   */
+  const CDB_SCHEME_VERSION = '3.3';
 
   /**
    * Name from the xml scheme.
@@ -43,22 +48,18 @@ class CultureFeed_Cdb_Default {
      */
     public function __construct($cdb_schema_version = null) {
 
-        $pattern = '/(\d.\d)/';
-
         if (isset($cdb_schema_version)) {
-
             $this->cdb_schema_version = $cdb_schema_version;
-            $this->cdb_schema_url = preg_replace($pattern, $cdb_schema_version, self::CDB_SCHEME_URL);
+            $this->cdb_schema_url = str_replace(
+              self::CDB_SCHEME_VERSION,
+              $cdb_schema_version,
+              self::CDB_SCHEME_URL
+            );
 
         } else {
-
-            $matches = array();
-            preg_match($pattern, self::CDB_SCHEME_URL, $matches);
-            $this->cdb_schema_version = $matches[1];
+            $this->cdb_schema_version = self::CDB_SCHEME_VERSION;
             $this->cdb_schema_url = self::CDB_SCHEME_URL;
-
         }
-
     }
 
     /**
