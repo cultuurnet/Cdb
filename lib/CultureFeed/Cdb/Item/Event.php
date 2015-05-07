@@ -499,7 +499,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     if (count($this->keywords) > 0) {
 
         $keywordsElement = $dom->createElement('keywords');
-        if ($cdbScheme == '3.3') {
+        if (version_compare($cdbScheme, '3.3', '>=')) {
 
             foreach ($this->keywords as $keyword) {
                 $keyword->appendToDOM($keywordsElement);
