@@ -35,7 +35,7 @@ class CultureFeed_Cdb_Default {
     private $cdb_schema_url;
 
     /**
-     * The cdb schema versions.
+     * The cdb schema version.
      *
      * @var string
      */
