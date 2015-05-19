@@ -9,12 +9,12 @@ class CultureFeed_Cdb_Default {
   /**
    * Url to the latest cdb xml scheme.
    */
-  const CDB_SCHEME_URL = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.3/FINAL';
+  const CDB_SCHEME_URL = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL';
 
   /**
    * Version of the latest cdb xml scheme.
    */
-  const CDB_SCHEME_VERSION = '3.3';
+  const CDB_SCHEME_VERSION = '3.2';
 
   /**
    * Name from the xml scheme.
