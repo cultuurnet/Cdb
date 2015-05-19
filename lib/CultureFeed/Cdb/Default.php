@@ -7,14 +7,11 @@
 class CultureFeed_Cdb_Default {
 
   /**
-   * Url to the latest cdb xml scheme.
+   * Url to the 3.2 cdb xml scheme.
+   *
+   * @deprecated Use CultureFeed_Cdb_Xml::namespaceUriForVersion() instead.
    */
   const CDB_SCHEME_URL = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL';
-
-  /**
-   * Version of the latest cdb xml scheme.
-   */
-  const CDB_SCHEME_VERSION = '3.2';
 
   /**
    * Name from the xml scheme.
@@ -39,27 +36,19 @@ class CultureFeed_Cdb_Default {
      *
      * @var string
      */
-    private $cdb_schema_version;
+    private $cdb_schema_version = '3.2';
 
     /**
      * Creates a CultureFeed_Cdb_Default class.
      *
      * @param string $cdb_schema_version
      */
-    public function __construct($cdb_schema_version = null) {
+    public function __construct($cdb_schema_version = '3.2') {
+        $this->cdb_schema_version = $cdb_schema_version;
 
-        if (isset($cdb_schema_version)) {
-            $this->cdb_schema_version = $cdb_schema_version;
-            $this->cdb_schema_url = str_replace(
-              self::CDB_SCHEME_VERSION,
-              $cdb_schema_version,
-              self::CDB_SCHEME_URL
-            );
-
-        } else {
-            $this->cdb_schema_version = self::CDB_SCHEME_VERSION;
-            $this->cdb_schema_url = self::CDB_SCHEME_URL;
-        }
+        $this->cdb_schema_url = CultureFeed_Cdb_Xml::namespaceUriForVersion(
+          $this->cdb_schema_version
+        );
     }
 
     /**
