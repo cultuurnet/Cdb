@@ -51,7 +51,8 @@ abstract class CultureFeed_Cdb_Item_Base {
 
   /**
    * Keywords from the item
-   * @var array List with keywords.
+   *
+   * @var CultureFeed_Cdb_Data_Keyword[] List with keywords.
    */
   protected $keywords = array();
 
@@ -128,14 +129,29 @@ abstract class CultureFeed_Cdb_Item_Base {
     return $this->details;
   }
 
-  /**
-   * Get the keywords from this item.
-   *
-   * @return array
-   */
-  public function getKeywords() {
-    return $this->keywords;
-  }
+    /**
+     * Get the keywords from this item.
+     *
+     * @param bool $asObject
+     *   Return keywords as objects or values.
+     *
+     * @return array
+     *   The keywords.
+     */
+    public function getKeywords($asObject = false)
+    {
+
+        if ($asObject) {
+            return $this->keywords;
+        } else {
+            $keywords = array();
+            foreach ($this->keywords as $keyword) {
+                $keywords[$keyword->getValue()] = $keyword->getValue();
+            }
+            return $keywords;
+        }
+
+    }
 
   /**
    * Get the relations from this item.
@@ -187,29 +203,44 @@ abstract class CultureFeed_Cdb_Item_Base {
     $this->details = $details;
   }
 
-  /**
-   * Add a keyword to this item.
-   * @param string $keyword
-   *   Add a keyword.
-   */
-  public function addKeyword($keyword) {
-    $this->keywords[$keyword] = $keyword;
-  }
+    /**
+     * Add a keyword to this item.
+     *
+     * @param string|CultureFeed_Cdb_Data_Keyword $keyword
+     *   Add a keyword.
+     */
+    public function addKeyword($keyword) {
 
-  /**
-   * Delete a keyword from this item.
-   * @param string $keyword
-   *   Keyword to remove.
-   */
-  public function deleteKeyword($keyword) {
-
-    if (!isset($this->keywords[$keyword])) {
-      throw new Exception('Trying to remove a non-existing keyword.');
+        // Keyword can be object (cdb 3.3) or string (< 3.3).
+        if (!is_string($keyword)) {
+            $this->keywords[$keyword->getValue()] = $keyword;
+        }
+        else {
+            $this->keywords[$keyword] = new CultureFeed_Cdb_Data_Keyword($keyword);
+        }
     }
 
-    unset($this->keywords[$keyword]);
+    /**
+     * Delete a keyword from this item.
+     *
+     * @param string|CultureFeed_Cdb_Data_Keyword $keyword
+     *   Delete keyword as object or value.
+     *
+     * @throws Exception
+     */
+    public function deleteKeyword($keyword) {
 
-  }
+        if (!is_string($keyword)) {
+           $keyword = $keyword->getValue();
+        }
+
+        if (!isset($this->keywords[$keyword])) {
+            throw new Exception('Trying to remove a non-existing keyword.');
+        }
+
+        unset($this->keywords[$keyword]);
+
+    }
 
   /**
    * Add a relation to the current item.
@@ -236,17 +267,38 @@ abstract class CultureFeed_Cdb_Item_Base {
   /**
    * Parses keywords from cdbxml.
    * @param SimpleXMLElement $xmlElement
-   * @param CultureFeed_Cdb_Item_Base $event
+   * @param CultureFeed_Cdb_Item_Base $item
    */
   protected static function parseKeywords(
-      SimpleXMLElement $xmlElement,
-      CultureFeed_Cdb_Item_Base $item
+    SimpleXMLElement $xmlElement,
+    CultureFeed_Cdb_Item_Base $item
   ) {
-      if (!empty($xmlElement->keywords)) {
-          $keywords = explode(';', trim($xmlElement->keywords));
-          foreach ($keywords as $keyword) {
-              $item->addKeyword(trim($keyword));
-          }
+    if (!empty($xmlElement->keywords)) {
+      $keywordsString = trim($xmlElement->keywords);
+
+      if ($keywordsString === '') {
+        /** @var SimpleXMLElement $keywordElement */
+        foreach ($xmlElement->keywords->keyword as $keywordElement) {
+          $attributes = $keywordElement->attributes();
+          $visible =
+            !isset($attributes['visible']) ||
+            $attributes['visible'] == 'true';
+
+          $item->addKeyword(
+            new CultureFeed_Cdb_Data_Keyword(
+              (string)$keywordElement,
+              $visible
+            )
+          );
+        }
       }
+      else {
+        $keywords = explode(';', $keywordsString);
+
+        foreach ($keywords as $keyword) {
+          $item->addKeyword(trim($keyword));
+        }
+      }
+    }
   }
 }

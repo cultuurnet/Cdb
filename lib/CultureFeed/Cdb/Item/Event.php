@@ -106,6 +106,18 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
    */
   protected $bookingPeriod;
 
+  /**
+   * Weight for this event.
+   * @var int
+   */
+  protected $weight;
+
+  /**
+   * Publisher of this event.
+   * @var int
+   */
+  protected $publisher;
+
   public function setAvailableFrom($value) {
     $this->availableFrom = $value;
   }
@@ -345,9 +357,56 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   }
 
   /**
-   * @see CultureFeed_Cdb_IElement::appendToDOM()
+   * Set the weight.
+   *
+   * @param int $weight
+   *   The weight.
    */
-  public function appendToDOM(DOMElement $element) {
+  public function setWeight($weight) {
+    $this->weight = $weight;
+  }
+
+  /**
+   * Get the weight.
+   *
+   * @return int
+   *   The weight.
+   */
+  public function getWeight() {
+    return $this->weight;
+  }
+
+  /**
+   * Set the publisher.
+   *
+   * @param string $publisher
+   *   The publisher.
+   */
+  public function setPublisher($publisher) {
+    $this->publisher = $publisher;
+  }
+
+  /**
+   * Get the publisher.
+   *
+   * @return string
+   *   The publisher.
+   */
+  public function getPublisher() {
+    return $this->publisher;
+  }
+
+    /**
+     * Appends the current object to the passed DOM tree.
+     *
+     * @param DOMElement $element
+     *   The DOM tree to append to.
+     * @param string $cdbScheme
+     *   The cdb schema version.
+     *
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+  public function appendToDOM(DOMElement $element, $cdbScheme = '3.2') {
 
     $dom = $element->ownerDocument;
 
@@ -417,6 +476,10 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
       $eventElement->setAttribute('wfstatus', $this->wfStatus);
     }
 
+    if ($this->publisher) {
+      $eventElement->setAttribute('publisher', $this->publisher);
+    }
+
     if ($this->calendar) {
       $this->calendar->appendToDOM($eventElement);
     }
@@ -434,9 +497,26 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     if (count($this->keywords) > 0) {
-      $keywordElement = $dom->createElement('keywords');
-      $keywordElement->appendChild($dom->createTextNode(implode(';', $this->keywords)));
-      $eventElement->appendChild($keywordElement);
+
+        $keywordsElement = $dom->createElement('keywords');
+        if (version_compare($cdbScheme, '3.3', '>=')) {
+
+            foreach ($this->keywords as $keyword) {
+                $keyword->appendToDOM($keywordsElement);
+            }
+            $eventElement->appendChild($keywordsElement);
+
+        } else {
+
+            $keywords = array();
+            foreach ($this->keywords as $keyword) {
+                $keywords[$keyword->getValue()] = $keyword->getValue();
+            }
+            $keywordsElement->appendChild($dom->createTextNode(implode(';', $keywords)));
+            $eventElement->appendChild($keywordsElement);
+
+        }
+
     }
 
     if (isset($this->languages)) {
@@ -574,6 +654,14 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     if (isset($event_attributes['wfstatus'])) {
       $event->setWfStatus((string)$event_attributes['wfstatus']);
+    }
+
+    if (isset($event_attributes['weight'])) {
+      $event->setWeight((int) $event_attributes['weight']);
+    }
+
+    if (isset($event_attributes['publisher'])) {
+      $event->setPublisher((string) $event_attributes['publisher']);
     }
 
     if (isset($xmlElement->agefrom)) {

@@ -52,4 +52,51 @@ class CultureFeed_Cdb_Data_FileTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($title, $items->item(0)->textContent);
     }
+
+    public function testGetSubBrand()
+    {
+        $this->assertNull($this->file->getSubBrand());
+
+        $subBrand = '2b88e17a-27fc-4310-9556-4df7188a051f';
+        $this->file->setSubBrand($subBrand);
+
+        $this->assertEquals($subBrand, $this->file->getSubBrand());
+    }
+
+    public function testAppendsSubBrand()
+    {
+        $subBrand = '2b88e17a-27fc-4310-9556-4df7188a051f';
+        $this->file->setSubBrand($subBrand);
+
+        $xpath = $this->xpathOnMediaWithFileAppended($this->file);
+        $items = $xpath->query('/media/file/subbrand');
+        $this->assertEquals(1, $items->length);
+
+        $this->assertEquals($subBrand, $items->item(0)->textContent);
+    }
+
+    /**
+    * @return DOMXPath
+    */
+    private function xpathOnMediaWithFileAppended(CultureFeed_Cdb_Data_File $file)
+    {
+        $dom = new DOMDocument();
+        $mediaElement = $dom->createElement('media');
+        $dom->appendChild($mediaElement);
+
+        $file->appendToDOM($mediaElement);
+
+        return new DOMXPath($dom);
+    }
+
+    public function testGetDescription()
+    {
+        $this->assertNull($this->file->getDescription());
+
+        $description = 'Lorem Ipsum';
+        $this->file->setDescription($description);
+
+        $this->assertEquals($description, $this->file->getDescription());
+    }
+
 }

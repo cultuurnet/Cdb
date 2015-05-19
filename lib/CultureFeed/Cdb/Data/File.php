@@ -129,6 +129,19 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
    */
   protected $plainText;
 
+  /**
+   * Sub brand of the file.
+   *
+   * @var string
+   */
+  protected $subBrand;
+
+  /**
+   * Description of the file.
+   *
+   * @var string
+   */
+  protected $description;
 
   /**
    * Is the current file a main file.
@@ -235,6 +248,26 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Get the sub brand of this file.
+   *
+   * @return string
+   *   The sub brand.
+   */
+  public function getSubBrand() {
+    return $this->subBrand;
+  }
+
+  /**
+   * Get the description of this file.
+   *
+   * @return string
+   *   The description.
+   */
+  public function getDescription() {
+    return $this->description;
+  }
+
+  /**
    * Set the main status of this file.
    * @param bool Main status to set.
    */
@@ -338,6 +371,26 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   }
 
   /**
+   * Set the sub brand of this file.
+   *
+   * @param string $sub_brand
+   *   The sub brand.
+   */
+  public function setSubBrand($sub_brand) {
+    $this->subBrand = $sub_brand;
+  }
+
+  /**
+   * Set the description of this file.
+   *
+   * @param string $description.
+   *   The description.
+   */
+  public function setDescription($description) {
+    $this->description = $description;
+  }
+
+  /**
    * Appends the current object to the passed DOM tree.
    *
    * @param DOMElement $element
@@ -357,14 +410,28 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
       $fileElement->setAttribute('channel', $this->channel);
     }
 
+    if (!empty($this->creationDate)) {
+      $fileElement->setAttribute('creationdate', $this->creationDate);
+    }
+
+    if ($this->main) {
+      $fileElement->setAttribute('main', 'true');
+    }
+
+    if ($this->private) {
+      $fileElement->setAttribute('private', 'true');
+    }
+
     if (!empty($this->copyright)) {
       $copyrightElement = $dom->createElement('copyright');
       $copyrightElement->appendChild($dom->createTextNode($this->copyright));
       $fileElement->appendChild($copyrightElement);
     }
 
-    if (!empty($this->creationDate)) {
-      $fileElement->setAttribute('creationdate', $this->creationDate);
+    if (!empty($this->description)) {
+      $description_element = $dom->createElement('description');
+      $description_element->appendChild($dom->createTextNode($this->description));
+      $fileElement->appendChild($description_element);
     }
 
     if (!empty($this->fileName)) {
@@ -382,33 +449,30 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
       $hLinkElement->appendChild($dom->createTextNode($this->hLink));
       $fileElement->appendChild($hLinkElement);
     }
-
-    if ($this->main) {
-      $fileElement->setAttribute('main', 'true');
+    elseif (!empty($this->plainText)) {
+      $plainTextElement = $dom->createElement('plaintext');
+      $plainTextElement->appendChild($dom->createTextNode($this->plainText));
+      $fileElement->appendChild($plainTextElement);
     }
 
     if (!empty($this->mediaType)) {
       $fileElement->appendChild($dom->createElement('mediatype', $this->mediaType));
     }
 
-    if (!empty($this->relationType)) {
-      $fileElement->appendChild($dom->createElement('reltype', $this->relationType));
-    }
-
-    if (!empty($this->plainText)) {
-      $plainTextElement = $dom->createElement('plaintext');
-      $plainTextElement->appendChild($dom->createTextNode($this->plainText));
-      $fileElement->appendChild($plainTextElement);
-    }
-
-    if ($this->private) {
-      $fileElement->setAttribute('private', 'true');
-    }
-
     if (!empty($this->title)) {
       $titleElement = $dom->createElement('title');
       $titleElement->appendChild($dom->createTextNode($this->title));
       $fileElement->appendChild($titleElement);
+    }
+
+    if (!empty($this->relationType)) {
+      $fileElement->appendChild($dom->createElement('reltype', $this->relationType));
+    }
+
+    if (!empty($this->subBrand)) {
+      $sub_brand_element = $dom->createElement('subbrand');
+      $sub_brand_element->appendChild($dom->createTextNode($this->subBrand));
+      $fileElement->appendChild($sub_brand_element);
     }
 
     $element->appendChild($fileElement);
@@ -476,6 +540,14 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
 
     if (!empty($xmlElement->title)) {
       $file->title = (string)$xmlElement->title;
+    }
+
+    if (!empty($xmlElement->subbrand)) {
+      $file->subBrand = trim((string)$xmlElement->subbrand);
+    }
+
+    if (!empty($xmlElement->description)) {
+      $file->description = trim((string)$xmlElement->description);
     }
 
     return $file;

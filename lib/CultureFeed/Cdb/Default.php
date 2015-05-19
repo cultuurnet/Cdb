@@ -7,7 +7,9 @@
 class CultureFeed_Cdb_Default {
 
   /**
-   * Url to the cdb xml scheme.
+   * Url to the 3.2 cdb xml scheme.
+   *
+   * @deprecated Use CultureFeed_Cdb_Xml::namespaceUriForVersion() instead.
    */
   const CDB_SCHEME_URL = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL';
 
@@ -21,6 +23,53 @@ class CultureFeed_Cdb_Default {
    * @var array
    */
   private $items = array();
+
+    /**
+     * The cdb schema url.
+     *
+     * @var string
+     */
+    private $cdb_schema_url;
+
+    /**
+     * The cdb schema version.
+     *
+     * @var string
+     */
+    private $cdb_schema_version = '3.2';
+
+    /**
+     * Creates a CultureFeed_Cdb_Default class.
+     *
+     * @param string $cdb_schema_version
+     */
+    public function __construct($cdb_schema_version = '3.2') {
+        $this->cdb_schema_version = $cdb_schema_version;
+
+        $this->cdb_schema_url = CultureFeed_Cdb_Xml::namespaceUriForVersion(
+          $this->cdb_schema_version
+        );
+    }
+
+    /**
+     * Get the cdb schema url.
+     *
+     * @return string
+     *   The schema url.
+     */
+    public function getSchemaUrl() {
+        return $this->cdb_schema_url;
+    }
+
+    /**
+     * Get the cdb schema url.
+     *
+     * @return string
+     *   The schema url.
+     */
+    public function getSchemaVersion() {
+        return $this->cdb_schema_version;
+    }
 
   /**
    * Add an item from a  to the items list.
@@ -86,8 +135,8 @@ class CultureFeed_Cdb_Default {
     $dom->formatOutput = true;
     $dom->preserveWhiteSpace = false;
 
-    $cdbElement = $dom->createElementNS(self::CDB_SCHEME_URL, self::CDB_SCHEME_NAME);
-    $cdbElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', self::CDB_SCHEME_URL .' ' . self::CDB_SCHEME_URL . '/CdbXSD.xsd');
+    $cdbElement = $dom->createElementNS($this->getSchemaUrl(), self::CDB_SCHEME_NAME);
+    $cdbElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $this->getSchemaUrl() .' ' . $this->getSchemaUrl() . '/CdbXSD.xsd');
     $dom->appendChild($cdbElement);
 
     foreach ($this->items as $type => $itemsFromType) {
@@ -95,7 +144,7 @@ class CultureFeed_Cdb_Default {
       if ($itemsFromType) {
 
         foreach ($itemsFromType as $item) {
-          $item->appendToDOM($cdbElement);
+          $item->appendToDOM($cdbElement, $this->getSchemaVersion());
         }
 
       }

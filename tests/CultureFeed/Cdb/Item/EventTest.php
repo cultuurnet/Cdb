@@ -14,19 +14,30 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
     /**
      * @param $fileName
+     * @param $cdbScheme
      * @return SimpleXMLElement
      */
-    public function loadSample($fileName) {
-        $sampleDir = __DIR__ . '/samples/EventTest/';
+    public function loadSample($fileName, $cdbScheme = '3.2') {
+        $sampleDir = __DIR__ . '/samples/EventTest/cdbxml-' . $cdbScheme . '/';
         $filePath = $sampleDir . $fileName;
 
-        $xml = simplexml_load_file($filePath, 'SimpleXMLElement', 0, \CultureFeed_Cdb_Default::CDB_SCHEME_URL);
+        $xml = simplexml_load_file(
+          $filePath,
+          'SimpleXMLElement',
+          0,
+          'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/' . $cdbScheme. '/FINAL'
+        );
 
         return $xml;
     }
 
-  public function samplePath($fileName) {
-    $sampleDir = __DIR__ . '/samples/EventTest/';
+    /**
+     * @param $fileName
+     * @param $cdbScheme
+     * @return string
+     */
+  public function samplePath($fileName, $cdbScheme = '3.2') {
+    $sampleDir = __DIR__ . '/samples/EventTest/cdbxml-' . $cdbScheme . '/';
     $filePath = $sampleDir . $fileName;
 
     return $filePath;
@@ -851,4 +862,190 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
     self::assertEquals($expected, $actual, $message);
   }
+
+  public function testGetKeywordsAsObjects() {
+    $this->event->addKeyword('foo');
+    $this->event->addKeyword('bar');
+
+    $this->assertEquals(
+      array(
+        'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
+        'bar' => new CultureFeed_Cdb_Data_Keyword('bar'),
+      ),
+      $this->event->getKeywords(TRUE)
+    );
+  }
+
+  public function testAddKeywordObjects()
+  {
+    $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
+    $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar', FALSE));
+
+    $this->assertEquals(
+      array(
+        'foo' => 'foo',
+        'bar' => 'bar',
+      ),
+      $this->event->getKeywords()
+    );
+
+    $this->assertEquals(
+      array(
+        'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
+        'bar' => new CultureFeed_Cdb_Data_Keyword('bar', FALSE),
+      ),
+      $this->event->getKeywords(TRUE)
+    );
+  }
+
+    public function testDeleteKeywordObjects()
+    {
+        $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
+        $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar'));
+
+        $this->event->deleteKeyword(new CultureFeed_Cdb_Data_Keyword('bar'));
+
+        $this->assertEquals(
+            array(
+                'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
+            ),
+            $this->event->getKeywords(TRUE)
+        );
+    }
+
+    public function testParseKeywordsXml() {
+
+        $xml = $this->loadSample('test-event-2014-01-08.xml', '3.3');
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
+
+        $this->assertEquals(
+            array(
+                'feest' => new CultureFeed_Cdb_Data_Keyword('feest'),
+                'test' => new CultureFeed_Cdb_Data_Keyword('test', false),
+            ),
+            $event->getKeywords(TRUE)
+        );
+
+    }
+
+    public function testDeleteKeywordWithStringArgument() {
+        $this->event->addKeyword('foo');
+        $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar', FALSE));
+        $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('baz', FALSE));
+
+        $this->event->deleteKeyword('bar');
+
+        $this->assertEquals(
+            array(
+                'foo' => 'foo',
+                'baz' => 'baz',
+            ),
+            $this->event->getKeywords()
+        );
+
+        $this->assertEquals(
+            array(
+                'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
+                'baz' => new CultureFeed_Cdb_Data_Keyword('baz', FALSE),
+            ),
+            $this->event->getKeywords(TRUE)
+        );
+    }
+
+    /**
+     * Test keyword appendToDom for cdb < 3.3
+     */
+    public function testKeywordAppendToDomAsValue() {
+
+        $event = new CultureFeed_Cdb_Item_Event();
+        $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
+        $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar', false));
+
+        $dom = new DOMDocument('1.0', 'utf-8');
+        $eventsElement = $dom->createElement('events');
+        $dom->appendChild($eventsElement);
+        $event->appendToDOM($eventsElement);
+
+        $xpath = new DOMXPath($dom);
+
+        $items = $xpath->query('/events/event/keywords');
+        $xml = $dom->saveXML($items->item(0));
+
+        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/samples/EventTest/cdbxml-3.2/keyword_values.xml', $xml);
+    }
+
+    /**
+     * Test keyword appendToDom for cdb 3.3
+     */
+    public function testKeywordAppendToDomAsTag() {
+
+        $event = new CultureFeed_Cdb_Item_Event();
+        $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
+        $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar', false));
+
+        $dom = new DOMDocument('1.0', 'utf-8');
+        $eventsElement = $dom->createElement('events');
+        $dom->appendChild($eventsElement);
+        $event->appendToDOM($eventsElement, '3.3');
+
+        $xpath = new DOMXPath($dom);
+
+        $items = $xpath->query('/events/event/keywords');
+
+        $xml = $dom->saveXML($items->item(0));
+        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/samples/EventTest/cdbxml-3.3/keyword_tags.xml', $xml);
+    }
+
+    public function testGetAndSetPublisher()
+    {
+        $event = new CultureFeed_Cdb_Item_Event();
+        $this->assertNull($event->getPublisher());
+
+        $event->setPublisher('xyz');
+        $this->assertSame('xyz', $event->getPublisher());
+    }
+
+    public function testGetAndSetWeight()
+    {
+        $event = new CultureFeed_Cdb_Item_Event();
+        $this->assertNull($event->getWeight());
+
+        $event->setWeight(1);
+        $this->assertSame(1, $event->getWeight());
+    }
+
+    /**
+     * Integration test for parsing the following additions to cdbxml version 3.3:
+     *   - event publisher and weight
+     *   - file subbrand and description
+     */
+    public function testParseCdbXml3Dot3SchemaAdditions() {
+        $xml = $this->loadSample('085377d6-a3c9-4c8f-88b9-3d6ab0201361.xml', '3.3');
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
+
+        $this->assertEquals('085377d6-a3c9-4c8f-88b9-3d6ab0201361', $event->getCdbId());
+
+        $this->assertEquals('48fe254ceba710aec4609017d2e34d91', $event->getPublisher());
+
+        $this->assertSame(12, $event->getWeight());
+
+        $nlDetail = $event->getDetails()->getDetailByLanguage('nl');
+        $media = $nlDetail->getMedia();
+        $media->next();
+        /** @var CultureFeed_Cdb_Data_File $secondFile */
+        $secondFile = $media->current();
+
+        $this->assertEquals(
+          '{"keyword": "Culturefeed.be selectie",
+"text": "Hello World",
+"image": "https://www.facebook.com/23424317091/photos/a.200759332091.131532.23424317091/10153148846107092/?type=1",
+"article": "http://www.humo.be/jeroom/3973/"}',
+           $secondFile->getDescription()
+        );
+
+        $this->assertEquals(
+            '2b88e17a-27fc-4310-9556-4df7188a051f',
+            $secondFile->getSubBrand()
+        );
+    }
 }
