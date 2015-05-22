@@ -101,8 +101,12 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
    *
    * @param DOMElement $element
    *   The DOM tree to append to.
+   * @param string $cdbScheme
+   *   The cdb schema version.
+   *
+   * @see CultureFeed_Cdb_IElement::appendToDOM()
    */
-  public function appendToDOM(DOMElement $element) {
+  public function appendToDOM(DOMElement $element, $cdbScheme = '3.2') {
 
     $dom = $element->ownerDocument;
 
