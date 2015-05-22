@@ -45,6 +45,7 @@ class CultureFeed_Cdb_Data_File  implements CultureFeed_Cdb_IElement {
   const MEDIA_TYPE_TWITTER = 'twitter';
   const MEDIA_TYPE_FACEBOOK = 'facebook';
   const MEDIA_TYPE_TAGLINE = 'tagline';
+  const MEDIA_TYPE_COLLABORATION = 'collaboration';
 
   /**
    * Constants for relation types.
