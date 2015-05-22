@@ -133,9 +133,16 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     /**
+     * Appends the current object to the passed DOM tree.
+     *
+     * @param DOMElement $element
+     *   The DOM tree to append to.
+     * @param string $cdbScheme
+     *   The cdb schema version.
+     *
      * @see CultureFeed_Cdb_IElement::appendToDOM()
      */
-    public function appendToDOM(DOMElement $element) {
+    public function appendToDOM(DOMElement $element, $cdbScheme = '3.2') {
 
         $dom = $element->ownerDocument;
 
