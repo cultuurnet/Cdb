@@ -273,7 +273,7 @@ abstract class CultureFeed_Cdb_Item_Base {
     SimpleXMLElement $xmlElement,
     CultureFeed_Cdb_Item_Base $item
   ) {
-    if (!empty($xmlElement->keywords)) {
+    if (@count($xmlElement->keywords)) {
       $keywordsString = trim($xmlElement->keywords);
 
       if ($keywordsString === '') {
