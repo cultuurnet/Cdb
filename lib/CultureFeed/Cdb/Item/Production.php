@@ -4,6 +4,58 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
         implements CultureFeed_Cdb_IElement {
 
   /**
+   * @var string
+   */
+  protected $availableFrom;
+
+  /**
+   * @var string
+   */
+  protected $availableTo;
+
+  /**
+   * @var string
+   */
+  protected $createdBy;
+
+  /**
+   * @var string
+   */
+  protected $creationDate;
+
+  public function setAvailableFrom($value) {
+    $this->availableFrom = $value;
+  }
+
+  public function getAvailableFrom() {
+    return $this->availableFrom;
+  }
+
+  public function setAvailableTo($value) {
+    $this->availableTo = $value;
+  }
+
+  public function getAvailableTo() {
+    return $this->availableTo;
+  }
+
+  public function setCreatedBy($author) {
+    $this->createdBy = $author;
+  }
+
+  public function getCreatedBy() {
+    return $this->createdBy;
+  }
+
+  public function setCreationDate($value) {
+    $this->creationDate = $value;
+  }
+
+  public function getCreationDate() {
+    return $this->creationDate;
+  }
+
+  /**
    * Minimum age for the production.
    * @var int
    */
@@ -112,6 +164,22 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
     $productionElement = $dom->createElement('production');
 
+    if ($this->availableFrom) {
+      $productionElement->setAttribute('availablefrom', $this->availableFrom);
+    }
+
+    if ($this->availableTo) {
+      $productionElement->setAttribute('availableto', $this->availableTo);
+    }
+
+    if ($this->createdBy) {
+      $productionElement->setAttribute('createdby', $this->createdBy);
+    }
+
+    if ($this->creationDate) {
+      $productionElement->setAttribute('creationdate', $this->creationDate);
+    }
+
     if ($this->ageFrom) {
       $productionElement->appendChild($dom->createElement('agefrom', $this->ageFrom));
     }
@@ -190,6 +258,22 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
     if (isset($attributes['externalid'])) {
       $production->setExternalId((string)$attributes['externalid']);
+    }
+
+    if (isset($event_attributes['availablefrom'])) {
+      $production->setAvailableFrom((string)$event_attributes['availablefrom']);
+    }
+
+    if (isset($event_attributes['availableto'])) {
+      $production->setAvailableTo((string)$event_attributes['availableto']);
+    }
+
+    if (isset($event_attributes['createdby'])) {
+      $production->setCreatedBy((string)$event_attributes['createdby']);
+    }
+
+    if (isset($event_attributes['creationdate'])) {
+      $production->setCreationDate((string)$event_attributes['creationdate']);
     }
 
     if (!empty($xmlElement->agefrom)) {
