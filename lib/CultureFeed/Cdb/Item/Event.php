@@ -113,6 +113,11 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
   protected $weight;
 
   /**
+   * @var string
+   */
+  private $source;
+
+  /**
    * Publisher of this event.
    * @var int
    */
@@ -394,6 +399,22 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
    */
   public function getPublisher() {
     return $this->publisher;
+  }
+
+  /**
+   * @return SimpleXMLElement
+   */
+  public function getSource()
+  {
+    return $this->source;
+  }
+
+  /**
+   * @param string $source
+   */
+  public function setSource($source)
+  {
+    $this->source = $source;
   }
 
     /**
