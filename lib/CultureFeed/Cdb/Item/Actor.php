@@ -58,44 +58,6 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
 
         CultureFeed_Cdb_Item_Base::parseCommonAttributes($actor, $xmlElement);
 
-        $actor_attributes = $xmlElement->attributes();
-
-        if (isset($actor_attributes['cdbid'])) {
-            $actor->setCdbId((string)$actor_attributes['cdbid']);
-        }
-
-        if (isset($actor_attributes['externalid'])) {
-            $actor->setExternalId((string)$actor_attributes['externalid']);
-        }
-
-        if (isset($actor_attributes['availablefrom'])) {
-            $actor->setAvailableFrom((string)$actor_attributes['availablefrom']);
-        }
-
-        if (isset($actor_attributes['availableto'])) {
-            $actor->setAvailableTo((string)$actor_attributes['availableto']);
-        }
-
-        if (isset($actor_attributes['createdby'])) {
-            $actor->setCreatedBy((string)$actor_attributes['createdby']);
-        }
-
-        if (isset($actor_attributes['creationdate'])) {
-            $actor->setCreationDate((string)$actor_attributes['creationdate']);
-        }
-
-        if (isset($actor_attributes['lastupdated'])) {
-            $actor->setLastUpdated((string)$actor_attributes['lastupdated']);
-        }
-
-        if (isset($actor_attributes['lastupdatedby'])) {
-            $actor->setLastUpdatedBy((string)$actor_attributes['lastupdatedby']);
-        }
-
-        if (isset($actor_attributes['owner'])) {
-            $actor->setOwner((string)$actor_attributes['owner']);
-        }
-
         $actor->setDetails(CultureFeed_Cdb_Data_ActorDetailList::parseFromCdbXml($xmlElement->actordetails));
 
         // Set categories
