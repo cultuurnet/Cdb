@@ -7,9 +7,59 @@
 class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
 {
     /**
+     * Minimum age for the event.
+     * @var int
+     */
+    protected $ageFrom;
+
+    /**
+     * Booking period for this event.
+     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
+     */
+    protected $bookingPeriod;
+
+    /**
+     * Calendar information for the event.
+     * @var CultureFeed_Cdb_Data_Calendar
+     */
+    protected $calendar;
+
+    /**
+     * Contact info for an event.
+     *
+     * @var CultureFeed_Cdb_Data_ContactInfo
+     */
+    protected $contactInfo;
+
+    /**
      * @var bool
      */
     protected $isParent;
+
+    /**
+     * @var CultureFeed_Cdb_Data_LanguageList
+     */
+    protected $languages;
+
+    /**
+     * Location of an event.
+     *
+     * @var CultureFeed_Cdb_Data_Location
+     */
+    protected $location;
+
+    /**
+     * Maximum participants
+     * @var int
+     */
+    protected $maxParticipants;
+
+    /**
+     * Organiser of an event.
+     *
+     * @var CultureFeed_Cdb_Data_Organiser
+     */
+    protected $organiser;
 
     /**
      * @var float
@@ -27,482 +77,10 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     protected $validator;
 
     /**
-     * Minimum age for the event.
-     * @var int
-     */
-    protected $ageFrom;
-
-    /**
-     * Calendar information for the event.
-     * @var CultureFeed_Cdb_Data_Calendar
-     */
-    protected $calendar;
-
-    /**
-     * Contact info for an event.
-     *
-     * @var CultureFeed_Cdb_Data_ContactInfo
-     */
-    protected $contactInfo;
-
-    /**
-     * Location of an event.
-     *
-     * @var CultureFeed_Cdb_Data_Location
-     */
-    protected $location;
-
-    /**
-     * Organiser of an event.
-     *
-     * @var CultureFeed_Cdb_Data_Organiser
-     */
-    protected $organiser;
-
-    /**
-     * Maximum participants
-     * @var int
-     */
-    protected $maxParticipants;
-
-    /**
-     * @var CultureFeed_Cdb_Data_LanguageList
-     */
-    protected $languages;
-
-    /**
-     * Booking period for this event.
-     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
-     */
-    protected $bookingPeriod;
-
-    /**
      * Weight for this event.
      * @var int
      */
     protected $weight;
-
-    /**
-     * @return bool
-     */
-    public function isParent()
-    {
-        return $this->isParent;
-    }
-
-    /**
-     * @param bool $value
-     */
-    public function setIsParent($value)
-    {
-        $this->isParent = $value;
-    }
-
-    public function getPctComplete()
-    {
-        return $this->pctComplete;
-    }
-
-    public function setPctComplete($pct)
-    {
-        $this->pctComplete = $pct;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPublished()
-    {
-        return $this->published;
-    }
-
-    /**
-     * @param bool $value
-     */
-    public function setPublished($value = true)
-    {
-        $this->published = $value;
-    }
-
-    /**
-     * @return string
-     */
-    public function getValidator()
-    {
-        return $this->validator;
-    }
-
-    /**
-     * @param string $value
-     */
-    public function setValidator($value)
-    {
-        $this->validator = $value;
-    }
-
-    /**
-     * Get the minimum age for this event.
-     */
-    public function getAgeFrom()
-    {
-        return $this->ageFrom;
-    }
-
-    /**
-     * Get the calendar from this event.
-     */
-    public function getCalendar()
-    {
-        return $this->calendar;
-    }
-
-    /**
-     * Get the location from this event.
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    /**
-     * Get the organiser from this event.
-     */
-    public function getOrganiser()
-    {
-        return $this->organiser;
-    }
-
-    /**
-     * Get the contact info from this event.
-     */
-    public function getContactInfo()
-    {
-        return $this->contactInfo;
-    }
-
-    /**
-     * Get the maximum amount of participants.
-     */
-    public function getMaxParticipants()
-    {
-        return $this->maxParticipants;
-    }
-
-    /**
-     * Get the booking period.
-     */
-    public function getBookingPeriod()
-    {
-        return $this->bookingPeriod;
-    }
-
-    /**
-     * @return CultureFeed_Cdb_Data_LanguageList
-     */
-    public function getLanguages()
-    {
-        return $this->languages;
-    }
-
-    public function setLanguages(CultureFeed_Cdb_Data_LanguageList $languages)
-    {
-        $this->languages = $languages;
-    }
-
-    /**
-     * Set the minimum age for this event.
-     * @param int $age
-     *   Minimum age.
-     *
-     * @throws UnexpectedValueException
-     */
-    public function setAgeFrom($age)
-    {
-
-        if (!is_numeric($age)) {
-            throw new UnexpectedValueException('Invalid age: ' . $age);
-        }
-
-        $this->ageFrom = $age;
-
-    }
-
-    /**
-     * Set the calendar data for the event.
-     * @param CultureFeed_Cdb_Data_Calendar $calendar
-     *   Calendar data.
-     */
-    public function setCalendar(CultureFeed_Cdb_Data_Calendar $calendar)
-    {
-        $this->calendar = $calendar;
-    }
-
-    /**
-     * Set the contact info from this event.
-     * @param CultureFeed_Cdb_Data_Calendar $contactInfo
-     *   Contact info to set.
-     */
-    public function setContactInfo(CultureFeed_Cdb_Data_ContactInfo $contactInfo)
-    {
-        $this->contactInfo = $contactInfo;
-    }
-
-    /**
-     * Set the location from this event.
-     * @param CultureFeed_Cdb_Data_Location $location
-     *   Location to set.
-     */
-    public function setLocation(CultureFeed_Cdb_Data_Location $location)
-    {
-        $this->location = $location;
-    }
-
-    /**
-     * Set the organiser from this event.
-     * @param CultureFeed_Cdb_Data_Organiser $organiser
-     *   Organiser to set.
-     */
-    public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser)
-    {
-        $this->organiser = $organiser;
-    }
-
-    /**
-     * Delete the organiser from this event.
-     */
-    public function deleteOrganiser()
-    {
-        $this->organiser = null;
-    }
-
-    /**
-     * Set the maximum amount of participants.
-     */
-    public function setMaxParticipants($maxParticipants)
-    {
-        $this->maxParticipants = $maxParticipants;
-    }
-
-    /**
-     * Set the booking period.
-     */
-    public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod)
-    {
-        $this->bookingPeriod = $bookingPeriod;
-    }
-
-    /**
-     * Set the weight.
-     *
-     * @param int $weight
-     *   The weight.
-     */
-    public function setWeight($weight)
-    {
-        $this->weight = $weight;
-    }
-
-    /**
-     * Get the weight.
-     *
-     * @return int
-     *   The weight.
-     */
-    public function getWeight()
-    {
-        return $this->weight;
-    }
-
-    /**
-     * Appends the current object to the passed DOM tree.
-     *
-     * @param DOMElement $element
-     *   The DOM tree to append to.
-     * @param string $cdbScheme
-     *   The cdb schema version.
-     *
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element, $cdbScheme = '3.2')
-    {
-
-        $dom = $element->ownerDocument;
-
-        $eventElement = $dom->createElement('event');
-
-        if ($this->ageFrom) {
-            $eventElement->appendChild(
-                $dom->createElement('agefrom', $this->ageFrom)
-            );
-        }
-
-        if ($this->availableFrom) {
-            $eventElement->setAttribute('availablefrom', $this->availableFrom);
-        }
-
-        if ($this->availableTo) {
-            $eventElement->setAttribute('availableto', $this->availableTo);
-        }
-
-        if ($this->cdbId) {
-            $eventElement->setAttribute('cdbid', $this->cdbId);
-        }
-
-        if ($this->createdBy) {
-            $eventElement->setAttribute('createdby', $this->createdBy);
-        }
-
-        if ($this->creationDate) {
-            $eventElement->setAttribute('creationdate', $this->creationDate);
-        }
-
-        if ($this->externalId) {
-            $eventElement->setAttribute('externalid', $this->externalId);
-        }
-
-        if (isset($this->isParent)) {
-            $eventElement->setAttribute(
-                'isparent',
-                $this->isParent ? 'true' : 'false'
-            );
-        }
-
-        if (isset($this->lastUpdated)) {
-            $eventElement->setAttribute('lastupdated', $this->lastUpdated);
-        }
-
-        if (isset($this->lastUpdatedBy)) {
-            $eventElement->setAttribute('lastupdatedby', $this->lastUpdatedBy);
-        }
-
-        if (isset($this->owner)) {
-            $eventElement->setAttribute('owner', $this->owner);
-        }
-
-        if (isset($this->pctComplete)) {
-            $eventElement->setAttribute('pctcomplete', $this->pctComplete);
-        }
-
-        if (isset($this->private)) {
-            $eventElement->setAttribute(
-                'private',
-                $this->private ? 'true' : 'false'
-            );
-        }
-
-        if (isset($this->published)) {
-            $eventElement->setAttribute(
-                'published',
-                $this->published ? 'true' : 'false'
-            );
-        }
-
-        if (isset($this->validator)) {
-            $eventElement->setAttribute('validator', $this->validator);
-        }
-
-        if (isset($this->wfStatus)) {
-            $eventElement->setAttribute('wfstatus', $this->wfStatus);
-        }
-
-        if ($this->publisher) {
-            $eventElement->setAttribute('publisher', $this->publisher);
-        }
-
-        if ($this->calendar) {
-            $this->calendar->appendToDOM($eventElement);
-        }
-
-        if ($this->categories) {
-            $this->categories->appendToDOM($eventElement);
-        }
-
-        if ($this->contactInfo) {
-            $this->contactInfo->appendToDOM($eventElement);
-        }
-
-        if ($this->details) {
-            $this->details->appendToDOM($eventElement);
-        }
-
-        if (count($this->keywords) > 0) {
-
-            $keywordsElement = $dom->createElement('keywords');
-            if (version_compare($cdbScheme, '3.3', '>=')) {
-
-                foreach ($this->keywords as $keyword) {
-                    $keyword->appendToDOM($keywordsElement);
-                }
-                $eventElement->appendChild($keywordsElement);
-
-            } else {
-
-                $keywords = array();
-                foreach ($this->keywords as $keyword) {
-                    $keywords[$keyword->getValue()] = $keyword->getValue();
-                }
-                $keywordsElement->appendChild(
-                    $dom->createTextNode(implode(';', $keywords))
-                );
-                $eventElement->appendChild($keywordsElement);
-
-            }
-
-        }
-
-        if (isset($this->languages)) {
-            $this->languages->appendToDOM($eventElement);
-        }
-
-        if ($this->location) {
-            $this->location->appendToDOM($eventElement);
-        }
-
-        if ($this->organiser) {
-            $this->organiser->appendToDOM($eventElement);
-        }
-
-        if ($this->maxParticipants) {
-            $eventElement->appendChild(
-                $dom->createElement('maxparticipants', $this->maxParticipants)
-            );
-        }
-
-        if ($this->bookingPeriod) {
-            $this->bookingPeriod->appendToDOM($eventElement);
-        }
-
-        if (!empty($this->relations)) {
-
-            $relationsElement = $dom->createElement('eventrelations');
-
-            foreach ($this->relations as $relation) {
-
-                $relationElement = $dom->createElement('relatedproduction');
-                $relationElement->appendChild(
-                    $dom->createTextNode($relation->getTitle())
-                );
-                $relationElement->setAttribute('cdbid', $relation->getCdbid());
-
-                $externalId = $relation->getExternalId();
-                if ($externalId) {
-                    $relationElement->setAttribute(
-                        'externalid',
-                        $relation->getExternalId()
-                    );
-                }
-
-                $relationsElement->appendChild($relationElement);
-
-            }
-
-            $eventElement->appendChild($relationsElement);
-
-        }
-
-        $element->appendChild($eventElement);
-
-    }
 
     /**
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
@@ -663,9 +241,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
         // Set relations.
         if (!empty($xmlElement->eventrelations) && !empty($xmlElement->eventrelations->relatedproduction)) {
-
             foreach ($xmlElement->eventrelations->relatedproduction as $relatedProduction) {
-
                 $attributes = $relatedProduction->attributes();
 
                 $event->addRelation(
@@ -693,4 +269,415 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     }
 
+    /**
+     * @param bool $value
+     */
+    public function setIsParent($value)
+    {
+        $this->isParent = $value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isParent()
+    {
+        return $this->isParent;
+    }
+
+    public function getPctComplete()
+    {
+        return $this->pctComplete;
+    }
+
+    public function setPctComplete($pct)
+    {
+        $this->pctComplete = $pct;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * @param bool $value
+     */
+    public function setPublished($value = true)
+    {
+        $this->published = $value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValidator()
+    {
+        return $this->validator;
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setValidator($value)
+    {
+        $this->validator = $value;
+    }
+
+    /**
+     * Get the minimum age for this event.
+     */
+    public function getAgeFrom()
+    {
+        return $this->ageFrom;
+    }
+
+    /**
+     * Set the minimum age for this event.
+     * @param int $age
+     *   Minimum age.
+     *
+     * @throws UnexpectedValueException
+     */
+    public function setAgeFrom($age)
+    {
+
+        if (!is_numeric($age)) {
+            throw new UnexpectedValueException('Invalid age: ' . $age);
+        }
+
+        $this->ageFrom = $age;
+
+    }
+
+    /**
+     * Get the calendar from this event.
+     */
+    public function getCalendar()
+    {
+        return $this->calendar;
+    }
+
+    /**
+     * Set the calendar data for the event.
+     * @param CultureFeed_Cdb_Data_Calendar $calendar
+     *   Calendar data.
+     */
+    public function setCalendar(CultureFeed_Cdb_Data_Calendar $calendar)
+    {
+        $this->calendar = $calendar;
+    }
+
+    /**
+     * Get the location from this event.
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Set the location from this event.
+     * @param CultureFeed_Cdb_Data_Location $location
+     *   Location to set.
+     */
+    public function setLocation(CultureFeed_Cdb_Data_Location $location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * Get the organiser from this event.
+     */
+    public function getOrganiser()
+    {
+        return $this->organiser;
+    }
+
+    /**
+     * Set the organiser from this event.
+     * @param CultureFeed_Cdb_Data_Organiser $organiser
+     *   Organiser to set.
+     */
+    public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser)
+    {
+        $this->organiser = $organiser;
+    }
+
+    /**
+     * Get the contact info from this event.
+     */
+    public function getContactInfo()
+    {
+        return $this->contactInfo;
+    }
+
+    /**
+     * Set the contact info from this event.
+     * @param CultureFeed_Cdb_Data_Calendar $contactInfo
+     *   Contact info to set.
+     */
+    public function setContactInfo(CultureFeed_Cdb_Data_ContactInfo $contactInfo)
+    {
+        $this->contactInfo = $contactInfo;
+    }
+
+    /**
+     * Get the maximum amount of participants.
+     */
+    public function getMaxParticipants()
+    {
+        return $this->maxParticipants;
+    }
+
+    /**
+     * Set the maximum amount of participants.
+     */
+    public function setMaxParticipants($maxParticipants)
+    {
+        $this->maxParticipants = $maxParticipants;
+    }
+
+    /**
+     * Get the booking period.
+     */
+    public function getBookingPeriod()
+    {
+        return $this->bookingPeriod;
+    }
+
+    /**
+     * Set the booking period.
+     */
+    public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod)
+    {
+        $this->bookingPeriod = $bookingPeriod;
+    }
+
+    /**
+     * @return CultureFeed_Cdb_Data_LanguageList
+     */
+    public function getLanguages()
+    {
+        return $this->languages;
+    }
+
+    public function setLanguages(CultureFeed_Cdb_Data_LanguageList $languages)
+    {
+        $this->languages = $languages;
+    }
+
+    /**
+     * Delete the organiser from this event.
+     */
+    public function deleteOrganiser()
+    {
+        $this->organiser = null;
+    }
+
+    /**
+     * Get the weight.
+     *
+     * @return int
+     *   The weight.
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * Set the weight.
+     *
+     * @param int $weight
+     *   The weight.
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    }
+
+    /**
+     * Appends the current object to the passed DOM tree.
+     *
+     * @param DOMElement $element
+     *   The DOM tree to append to.
+     * @param string $cdbScheme
+     *   The cdb schema version.
+     *
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element, $cdbScheme = '3.2')
+    {
+
+        $dom = $element->ownerDocument;
+
+        $eventElement = $dom->createElement('event');
+
+        if ($this->ageFrom) {
+            $eventElement->appendChild(
+                $dom->createElement('agefrom', $this->ageFrom)
+            );
+        }
+
+        if ($this->availableFrom) {
+            $eventElement->setAttribute('availablefrom', $this->availableFrom);
+        }
+
+        if ($this->availableTo) {
+            $eventElement->setAttribute('availableto', $this->availableTo);
+        }
+
+        if ($this->cdbId) {
+            $eventElement->setAttribute('cdbid', $this->cdbId);
+        }
+
+        if ($this->createdBy) {
+            $eventElement->setAttribute('createdby', $this->createdBy);
+        }
+
+        if ($this->creationDate) {
+            $eventElement->setAttribute('creationdate', $this->creationDate);
+        }
+
+        if ($this->externalId) {
+            $eventElement->setAttribute('externalid', $this->externalId);
+        }
+
+        if (isset($this->isParent)) {
+            $eventElement->setAttribute(
+                'isparent',
+                $this->isParent ? 'true' : 'false'
+            );
+        }
+
+        if (isset($this->lastUpdated)) {
+            $eventElement->setAttribute('lastupdated', $this->lastUpdated);
+        }
+
+        if (isset($this->lastUpdatedBy)) {
+            $eventElement->setAttribute('lastupdatedby', $this->lastUpdatedBy);
+        }
+
+        if (isset($this->owner)) {
+            $eventElement->setAttribute('owner', $this->owner);
+        }
+
+        if (isset($this->pctComplete)) {
+            $eventElement->setAttribute('pctcomplete', $this->pctComplete);
+        }
+
+        if (isset($this->private)) {
+            $eventElement->setAttribute(
+                'private',
+                $this->private ? 'true' : 'false'
+            );
+        }
+
+        if (isset($this->published)) {
+            $eventElement->setAttribute(
+                'published',
+                $this->published ? 'true' : 'false'
+            );
+        }
+
+        if (isset($this->validator)) {
+            $eventElement->setAttribute('validator', $this->validator);
+        }
+
+        if (isset($this->wfStatus)) {
+            $eventElement->setAttribute('wfstatus', $this->wfStatus);
+        }
+
+        if ($this->publisher) {
+            $eventElement->setAttribute('publisher', $this->publisher);
+        }
+
+        if ($this->calendar) {
+            $this->calendar->appendToDOM($eventElement);
+        }
+
+        if ($this->categories) {
+            $this->categories->appendToDOM($eventElement);
+        }
+
+        if ($this->contactInfo) {
+            $this->contactInfo->appendToDOM($eventElement);
+        }
+
+        if ($this->details) {
+            $this->details->appendToDOM($eventElement);
+        }
+
+        if (count($this->keywords) > 0) {
+            $keywordsElement = $dom->createElement('keywords');
+            if (version_compare($cdbScheme, '3.3', '>=')) {
+                foreach ($this->keywords as $keyword) {
+                    $keyword->appendToDOM($keywordsElement);
+                }
+                $eventElement->appendChild($keywordsElement);
+            } else {
+                $keywords = array();
+                foreach ($this->keywords as $keyword) {
+                    $keywords[$keyword->getValue()] = $keyword->getValue();
+                }
+                $keywordsElement->appendChild(
+                    $dom->createTextNode(implode(';', $keywords))
+                );
+                $eventElement->appendChild($keywordsElement);
+            }
+
+        }
+
+        if (isset($this->languages)) {
+            $this->languages->appendToDOM($eventElement);
+        }
+
+        if ($this->location) {
+            $this->location->appendToDOM($eventElement);
+        }
+
+        if ($this->organiser) {
+            $this->organiser->appendToDOM($eventElement);
+        }
+
+        if ($this->maxParticipants) {
+            $eventElement->appendChild(
+                $dom->createElement('maxparticipants', $this->maxParticipants)
+            );
+        }
+
+        if ($this->bookingPeriod) {
+            $this->bookingPeriod->appendToDOM($eventElement);
+        }
+
+        if (!empty($this->relations)) {
+            $relationsElement = $dom->createElement('eventrelations');
+
+            foreach ($this->relations as $relation) {
+                $relationElement = $dom->createElement('relatedproduction');
+                $relationElement->appendChild(
+                    $dom->createTextNode($relation->getTitle())
+                );
+                $relationElement->setAttribute('cdbid', $relation->getCdbid());
+
+                $externalId = $relation->getExternalId();
+                if ($externalId) {
+                    $relationElement->setAttribute(
+                        'externalid',
+                        $relation->getExternalId()
+                    );
+                }
+
+                $relationsElement->appendChild($relationElement);
+            }
+
+            $eventElement->appendChild($relationsElement);
+        }
+
+        $element->appendChild($eventElement);
+    }
 }
