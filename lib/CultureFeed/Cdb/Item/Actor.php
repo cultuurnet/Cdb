@@ -31,31 +31,6 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
     protected $weekScheme;
 
     /**
-     * @var string
-     */
-    protected $availableFrom;
-
-    /**
-     * @var string
-     */
-    protected $availableTo;
-
-    /**
-     * @var string
-     */
-    protected $createdBy;
-
-    /**
-     * @var string
-     */
-    protected $creationDate;
-
-    /**
-     * @var string
-     */
-    protected $owner;
-
-    /**
      * Construct the actor.
      */
     public function __construct() {
@@ -90,46 +65,6 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
      */
     public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $weekScheme) {
         $this->weekScheme = $weekScheme;
-    }
-
-    public function setAvailableFrom($value) {
-        $this->availableFrom = $value;
-    }
-
-    public function getAvailableFrom() {
-        return $this->availableFrom;
-    }
-
-    public function setAvailableTo($value) {
-        $this->availableTo = $value;
-    }
-
-    public function getAvailableTo() {
-        return $this->availableTo;
-    }
-
-    public function setCreatedBy($author) {
-        $this->createdBy = $author;
-    }
-
-    public function getCreatedBy() {
-        return $this->createdBy;
-    }
-
-    public function setCreationDate($value) {
-        $this->creationDate = $value;
-    }
-
-    public function getCreationDate() {
-        return $this->creationDate;
-    }
-
-    public function getOwner() {
-        return $this->owner;
-    }
-
-    public function setOwner($owner) {
-        $this->owner = $owner;
     }
 
     /**
@@ -197,6 +132,8 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
         }
 
         $actor = new self();
+
+        CultureFeed_Cdb_Item_Base::parseCommonAttributes($actor, $xmlElement);
 
         $actor_attributes = $xmlElement->attributes();
 
