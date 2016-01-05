@@ -293,51 +293,81 @@ abstract class CultureFeed_Cdb_Item_Base
         $this->lastUpdatedBy = $author;
     }
 
+    /**
+     * @return string
+     */
     public function getAvailableFrom()
     {
         return $this->availableFrom;
     }
 
+    /**
+     * @param string $value
+     */
     public function setAvailableFrom($value)
     {
         $this->availableFrom = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getAvailableTo()
     {
         return $this->availableTo;
     }
 
+    /**
+     * @param string $value
+     */
     public function setAvailableTo($value)
     {
         $this->availableTo = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getCreatedBy()
     {
         return $this->createdBy;
     }
 
+    /**
+     * @param string $author
+     */
     public function setCreatedBy($author)
     {
         $this->createdBy = $author;
     }
 
+    /**
+     * @return string
+     */
     public function getCreationDate()
     {
         return $this->creationDate;
     }
 
+    /**
+     * @param string $value
+     */
     public function setCreationDate($value)
     {
         $this->creationDate = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getOwner()
     {
         return $this->owner;
     }
 
+    /**
+     * @param string $owner
+     */
     public function setOwner($owner)
     {
         $this->owner = $owner;

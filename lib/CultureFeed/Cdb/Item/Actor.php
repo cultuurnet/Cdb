@@ -41,6 +41,7 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
 
     /**
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
+     * @throws CultureFeed_Cdb_ParseException
      * @return CultureFeed_Cdb_Item_Actor
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)

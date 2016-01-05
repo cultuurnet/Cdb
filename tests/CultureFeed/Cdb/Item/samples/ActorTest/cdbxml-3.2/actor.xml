@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actor xmlns:cdb="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL" asset="true" availablefrom="2011-01-03T10:39:18" availableto="2100-01-01T00:00:00" createdby="admin ferranti" creationdate="2010-01-19T04:59:14" cdbid="a761b5d6-0349-4dd4-a39f-c471b0fb64e8" externalid="SKB Import:Organisation_488" lastupdated="2011-01-03T10:39:18" lastupdatedby="soetkin.vanassche@cultuurnet.be" owner="Invoerders Algemeen ">
+    <actordetails>
+        <actordetail lang="nl">
+            <media>
+                <file creationdate="3/01/2011 10:38:42" main="true">
+                    <copyright>KMSKB - MRBAB 2001</copyright>
+                    <filename>35a1c617-0685-49a1-af8f-17b93bbe749d.jpg</filename>
+                    <filetype>jpeg</filetype>
+                    <hlink>
+                        //test-media.uitdatabank.be/images/20100119/35a1c617-0685-49a1-af8f-17b93bbe749d.jpg
+                    </hlink>
+                </file>
+            </media>
+            <shortdescription>
+                In de Koninklijke Musea voor Schone Kunsten van België, die twee eeuwen oud zijn, worden ongeveer twintigduizend schilderijen, sculpturen en tekeningen bewaard. Ze zijn gevestigd in Brussel en bestaan uit het Museum voor Oude Kunst (15de-18de eeuw), het Museum voor Moderne Kunst (19de-20ste eeuw), het Wiertzmuseum, het Meuniermuseum en het Musée Magritte Museum.
+            </shortdescription>
+            <title>
+                Koninklijke Musea voor Schone Kunsten van België (KMSKB)
+            </title>
+        </actordetail>
+    </actordetails>
+    <categories>
+        <category catid="8.15.0.0.0" type="actortype">Locatie</category>
+        <category catid="8.11.0.0.0" type="actortype">Organisator(en)</category>
+        <category catid="6.4.0.0.0" type="publicscope">Internationaal</category>
+        <category catid="8.3.0.0.0" type="actortype">Museum</category>
+    </categories>
+    <contactinfo>
+        <address>
+            <physical>
+                <city>Brussel</city>
+                <country>BE</country>
+                <gis>
+                    <xcoordinate>4.358241</xcoordinate>
+                    <ycoordinate>50.841680</ycoordinate>
+                </gis>
+                <housenr>3</housenr>
+                <street>Regentschapsstr.</street>
+                <zipcode>1000</zipcode>
+            </physical>
+        </address>
+        <mail>info@fine-arts-museum.be</mail>
+        <phone type="phone">02-508.32.11</phone>
+        <phone type="fax">02-508.32.32</phone>
+        <url main="true">http://www.fine-arts-museum.be</url>
+    </contactinfo>
+</actor>
