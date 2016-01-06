@@ -1,325 +1,328 @@
 <?php
 
 class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
-        implements CultureFeed_Cdb_IElement {
+    implements CultureFeed_Cdb_IElement
+{
 
-  /**
-   * @var string
-   */
-  protected $availableFrom;
+    /**
+     * Minimum age for the production.
+     * @var int
+     */
+    protected $ageFrom;
 
-  /**
-   * @var string
-   */
-  protected $availableTo;
+    /**
+     * Booking period for this event.
+     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
+     */
+    protected $bookingPeriod;
 
-  /**
-   * @var string
-   */
-  protected $createdBy;
+    /**
+     * Maximum participants
+     * @var int
+     */
+    protected $maxParticipants;
 
-  /**
-   * @var string
-   */
-  protected $creationDate;
+    /**
+     * organiser
+     * @var CultureFeed_Cdb_Data_Organiser
+     */
+    protected $organiser;
 
-  public function setAvailableFrom($value) {
-    $this->availableFrom = $value;
-  }
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
+     *
+     * @return CultureFeed_Cdb_Item_Production
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    {
+        if (empty($xmlElement->categories)) {
+            throw new CultureFeed_ParseException(
+                'Categories are required for production element'
+            );
+        }
 
-  public function getAvailableFrom() {
-    return $this->availableFrom;
-  }
+        if (empty($xmlElement->productiondetails)) {
+            throw new CultureFeed_ParseException(
+                'Production details are required for production element'
+            );
+        }
 
-  public function setAvailableTo($value) {
-    $this->availableTo = $value;
-  }
+        $attributes = $xmlElement->attributes();
+        $production = new CultureFeed_Cdb_Item_Production();
 
-  public function getAvailableTo() {
-    return $this->availableTo;
-  }
+        // Set ID.
+        if (isset($attributes['cdbid'])) {
+            $production->setCdbId((string)$attributes['cdbid']);
+        }
 
-  public function setCreatedBy($author) {
-    $this->createdBy = $author;
-  }
+        if (isset($attributes['externalid'])) {
+            $production->setExternalId((string)$attributes['externalid']);
+        }
 
-  public function getCreatedBy() {
-    return $this->createdBy;
-  }
+        if (isset($event_attributes['availablefrom'])) {
+            $production->setAvailableFrom(
+                (string)$event_attributes['availablefrom']
+            );
+        }
 
-  public function setCreationDate($value) {
-    $this->creationDate = $value;
-  }
+        if (isset($event_attributes['availableto'])) {
+            $production->setAvailableTo(
+                (string)$event_attributes['availableto']
+            );
+        }
 
-  public function getCreationDate() {
-    return $this->creationDate;
-  }
+        if (isset($event_attributes['createdby'])) {
+            $production->setCreatedBy((string)$event_attributes['createdby']);
+        }
 
-  /**
-   * Minimum age for the production.
-   * @var int
-   */
-  protected $ageFrom;
+        if (isset($event_attributes['creationdate'])) {
+            $production->setCreationDate(
+                (string)$event_attributes['creationdate']
+            );
+        }
 
-  /**
-   * Maximum participants
-   * @var int
-   */
-  protected $maxParticipants;
+        if (!empty($xmlElement->agefrom)) {
+            $production->setAgeFrom((int)$xmlElement->agefrom);
+        }
 
-  /**
-   * Booking period for this event.
-   * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
-   */
-  protected $bookingPeriod;
+        // Set organiser.
+        if (!empty($xmlElement->organiser)) {
+            $production->setOrganiser(
+                CultureFeed_Cdb_Data_Organiser::parseFromCdbXml(
+                    $xmlElement->organiser
+                )
+            );
+        }
 
-  /**
-   * organiser
-   * @var CultureFeed_Cdb_Data_Organiser
-   */
-  protected $organiser;
+        // Set categories
+        $production->setCategories(
+            CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml(
+                $xmlElement->categories
+            )
+        );
 
-  /**
-   * Get the minimum age for this production.
-   */
-  public function getAgeFrom() {
-    return $this->ageFrom;
-  }
+        // Set production details.
+        $production->setDetails(
+            CultureFeed_Cdb_Data_ProductionDetailList::parseFromCdbXml(
+                $xmlElement->productiondetails
+            )
+        );
 
-  /**
-   * Get the maximum amount of participants.
-   */
-  public function getMaxParticipants() {
-    return $this->maxParticipants;
-  }
+        // Set max participants.
+        if (!empty($xmlElement->maxparticipants)) {
+            $production->setMaxParticipants((int)$xmlElement->maxparticipants);
+        }
 
-  /**
-   * Get the booking period.
-   */
-  public function getBookingPeriod() {
-    return $this->bookingPeriod;
-  }
+        // Set booking period.
+        if (!empty($xmlElement->bookingperiod)) {
+            $production->setBookingPeriod(
+                CultureFeed_Cdb_Data_Calendar_BookingPeriod::parseFromCdbXml(
+                    $xmlElement->bookingperiod
+                )
+            );
+        }
 
-  /**
-   * Get the organiser from this event.
-   */
-  public function getOrganiser() {
-    return $this->organiser;
-  }
+        // Set the related events for this production.
+        if (!empty($xmlElement->relatedevents) && isset($xmlElement->relatedevents->id)) {
 
-  /**
-   * Set the minimum age for this production.
-   * @param int $age
-   *   Minimum age.
-   *
-   * @throws UnexpectedValueException
-   */
-  public function setAgeFrom($age) {
+            foreach ($xmlElement->relatedevents->id as $relatedItem) {
 
-    if (!is_numeric($age)) {
-      throw new UnexpectedValueException('Invalid age: ' . $age);
-    }
+                $attributes = $relatedItem->attributes();
 
-    $this->ageFrom = $age;
+                $production->addRelation(
+                    new CultureFeed_Cdb_Item_Reference(
+                        (string)$attributes['cdbid']
+                    )
+                );
 
-  }
+            }
 
-  /**
-   * Set an organiser.
-   *
-   * @param CultureFeed_Cdb_Data_Organiser $organiser
-   */
-  public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser) {
-    $this->organiser = $organiser;
-  }
+        }
 
+        // Set the keywords.
+        self::parseKeywords($xmlElement, $production);
 
-  /**
-   * Set the maximum amount of participants.
-   */
-  public function setMaxParticipants($maxParticipants) {
-    $this->maxParticipants = $maxParticipants;
-  }
-
-  /**
-   * Set the booking period.
-   */
-  public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod) {
-    $this->bookingPeriod = $bookingPeriod;
-  }
-
-  /**
-   * Appends the current object to the passed DOM tree.
-   *
-   * @param DOMElement $element
-   *   The DOM tree to append to.
-   * @param string $cdbScheme
-   *   The cdb schema version.
-   *
-   * @see CultureFeed_Cdb_IElement::appendToDOM()
-   */
-  public function appendToDOM(DOMElement $element, $cdbScheme = '3.2') {
-
-    $dom = $element->ownerDocument;
-
-    $productionElement = $dom->createElement('production');
-
-    if ($this->availableFrom) {
-      $productionElement->setAttribute('availablefrom', $this->availableFrom);
-    }
-
-    if ($this->availableTo) {
-      $productionElement->setAttribute('availableto', $this->availableTo);
-    }
-
-    if ($this->createdBy) {
-      $productionElement->setAttribute('createdby', $this->createdBy);
-    }
-
-    if ($this->creationDate) {
-      $productionElement->setAttribute('creationdate', $this->creationDate);
-    }
-
-    if ($this->ageFrom) {
-      $productionElement->appendChild($dom->createElement('agefrom', $this->ageFrom));
-    }
-
-    if ($this->maxParticipants) {
-      $productionElement->appendChild($dom->createElement('maxparticipants', $this->maxParticipants));
-    }
-
-    if ($this->bookingPeriod) {
-      $this->bookingPeriod->appendToDOM($productionElement);
-    }
-
-    if ($this->cdbId) {
-      $productionElement->setAttribute('cdbid', $this->cdbId);
-    }
-
-    if ($this->externalId) {
-      $productionElement->setAttribute('externalid', $this->externalId);
-    }
-
-    if ($this->categories) {
-      $this->categories->appendToDOM($productionElement);
-    }
-
-    if ($this->details) {
-      $this->details->appendToDOM($productionElement);
-    }
-    
-    if (count($this->keywords) > 0) {
-      $keywordElement = $dom->createElement('keywords');
-      $keywordElement->appendChild($dom->createTextNode(implode(';', $this->keywords)));
-      $productionElement->appendChild($keywordElement);
-    }
-
-    if (!empty($this->relations)) {
-
-      $relationsElement = $dom->createElement('eventrelations');
-
-      foreach ($this->relations as $relation) {
-        $relationElement = $dom->createElement('relatedproduction');
-        $relationElement->appendChild($dom->createTextNode($relation->getTitle()));
-        $relationElement->setAttribute('cdbid', $relation->getCdbid());
-        $relationElement->setAttribute('externalid', $relation->getExternalId());
-        $relationsElement->appendChild($relationElement);
-      }
-
-      $productionElement->appendChild($relationsElement);
+        return $production;
 
     }
 
-    $element->appendChild($productionElement);
-  }
-
-  /**
-   * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
-   *
-   * @return CultureFeed_Cdb_Item_Production
-   */
-  public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
-
-    if (empty($xmlElement->categories)) {
-      throw new CultureFeed_ParseException('Categories are required for production element');
+    /**
+     * Get the minimum age for this production.
+     */
+    public function getAgeFrom()
+    {
+        return $this->ageFrom;
     }
 
-    if (empty($xmlElement->productiondetails)) {
-      throw new CultureFeed_ParseException('Production details are required for production element');
-    }
+    /**
+     * Set the minimum age for this production.
+     * @param int $age
+     *   Minimum age.
+     *
+     * @throws UnexpectedValueException
+     */
+    public function setAgeFrom($age)
+    {
 
-    $attributes = $xmlElement->attributes();
-    $production = new CultureFeed_Cdb_Item_Production();
+        if (!is_numeric($age)) {
+            throw new UnexpectedValueException('Invalid age: ' . $age);
+        }
 
-    // Set ID.
-    if (isset($attributes['cdbid'])) {
-      $production->setCdbId((string)$attributes['cdbid']);
-    }
-
-    if (isset($attributes['externalid'])) {
-      $production->setExternalId((string)$attributes['externalid']);
-    }
-
-    if (isset($event_attributes['availablefrom'])) {
-      $production->setAvailableFrom((string)$event_attributes['availablefrom']);
-    }
-
-    if (isset($event_attributes['availableto'])) {
-      $production->setAvailableTo((string)$event_attributes['availableto']);
-    }
-
-    if (isset($event_attributes['createdby'])) {
-      $production->setCreatedBy((string)$event_attributes['createdby']);
-    }
-
-    if (isset($event_attributes['creationdate'])) {
-      $production->setCreationDate((string)$event_attributes['creationdate']);
-    }
-
-    if (!empty($xmlElement->agefrom)) {
-      $production->setAgeFrom((int)$xmlElement->agefrom);
-    }
-
-    // Set organiser.
-    if (!empty($xmlElement->organiser)) {
-      $production->setOrganiser(CultureFeed_Cdb_Data_Organiser::parseFromCdbXml($xmlElement->organiser));
-    }
-
-    // Set categories
-    $production->setCategories(CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml($xmlElement->categories));
-
-    // Set production details.
-    $production->setDetails(CultureFeed_Cdb_Data_ProductionDetailList::parseFromCdbXml($xmlElement->productiondetails));
-
-      // Set max participants.
-    if (!empty($xmlElement->maxparticipants)) {
-      $production->setMaxParticipants((int)$xmlElement->maxparticipants);
-    }
-
-    // Set booking period.
-    if (!empty($xmlElement->bookingperiod)) {
-      $production->setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod::parseFromCdbXml($xmlElement->bookingperiod));
-    }
-
-    // Set the related events for this production.
-    if (!empty($xmlElement->relatedevents) && isset($xmlElement->relatedevents->id)) {
-
-      foreach ($xmlElement->relatedevents->id as $relatedItem) {
-
-        $attributes = $relatedItem->attributes();
-
-        $production->addRelation(new CultureFeed_Cdb_Item_Reference(
-        	  (string)$attributes['cdbid']));
-
-      }
+        $this->ageFrom = $age;
 
     }
 
-    // Set the keywords.
-    self::parseKeywords($xmlElement, $production);
+    /**
+     * Get the maximum amount of participants.
+     */
+    public function getMaxParticipants()
+    {
+        return $this->maxParticipants;
+    }
 
-    return $production;
+    /**
+     * Set the maximum amount of participants.
+     */
+    public function setMaxParticipants($maxParticipants)
+    {
+        $this->maxParticipants = $maxParticipants;
+    }
 
-  }
+    /**
+     * Get the booking period.
+     */
+    public function getBookingPeriod()
+    {
+        return $this->bookingPeriod;
+    }
+
+    /**
+     * Set the booking period.
+     */
+    public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod)
+    {
+        $this->bookingPeriod = $bookingPeriod;
+    }
+
+    /**
+     * Get the organiser from this event.
+     */
+    public function getOrganiser()
+    {
+        return $this->organiser;
+    }
+
+    /**
+     * Set an organiser.
+     *
+     * @param CultureFeed_Cdb_Data_Organiser $organiser
+     */
+    public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser)
+    {
+        $this->organiser = $organiser;
+    }
+
+    /**
+     * Appends the current object to the passed DOM tree.
+     *
+     * @param DOMElement $element
+     *   The DOM tree to append to.
+     * @param string     $cdbScheme
+     *   The cdb schema version.
+     *
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element, $cdbScheme = '3.2')
+    {
+
+        $dom = $element->ownerDocument;
+
+        $productionElement = $dom->createElement('production');
+
+        if ($this->availableFrom) {
+            $productionElement->setAttribute(
+                'availablefrom',
+                $this->availableFrom
+            );
+        }
+
+        if ($this->availableTo) {
+            $productionElement->setAttribute('availableto', $this->availableTo);
+        }
+
+        if ($this->createdBy) {
+            $productionElement->setAttribute('createdby', $this->createdBy);
+        }
+
+        if ($this->creationDate) {
+            $productionElement->setAttribute(
+                'creationdate',
+                $this->creationDate
+            );
+        }
+
+        if ($this->ageFrom) {
+            $productionElement->appendChild(
+                $dom->createElement('agefrom', $this->ageFrom)
+            );
+        }
+
+        if ($this->maxParticipants) {
+            $productionElement->appendChild(
+                $dom->createElement('maxparticipants', $this->maxParticipants)
+            );
+        }
+
+        if ($this->bookingPeriod) {
+            $this->bookingPeriod->appendToDOM($productionElement);
+        }
+
+        if ($this->cdbId) {
+            $productionElement->setAttribute('cdbid', $this->cdbId);
+        }
+
+        if ($this->externalId) {
+            $productionElement->setAttribute('externalid', $this->externalId);
+        }
+
+        if ($this->categories) {
+            $this->categories->appendToDOM($productionElement);
+        }
+
+        if ($this->details) {
+            $this->details->appendToDOM($productionElement);
+        }
+
+        if (count($this->keywords) > 0) {
+            $keywordElement = $dom->createElement('keywords');
+            $keywordElement->appendChild(
+                $dom->createTextNode(implode(';', $this->keywords))
+            );
+            $productionElement->appendChild($keywordElement);
+        }
+
+        if (!empty($this->relations)) {
+
+            $relationsElement = $dom->createElement('eventrelations');
+
+            foreach ($this->relations as $relation) {
+                $relationElement = $dom->createElement('relatedproduction');
+                $relationElement->appendChild(
+                    $dom->createTextNode($relation->getTitle())
+                );
+                $relationElement->setAttribute('cdbid', $relation->getCdbid());
+                $relationElement->setAttribute(
+                    'externalid',
+                    $relation->getExternalId()
+                );
+                $relationsElement->appendChild($relationElement);
+            }
+
+            $productionElement->appendChild($relationsElement);
+
+        }
+
+        $element->appendChild($productionElement);
+    }
 
 }

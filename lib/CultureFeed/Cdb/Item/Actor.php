@@ -4,18 +4,14 @@
  * @class
  * Representation of an actor on the culturefeed.
  */
-class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement {
+class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
+{
 
     /**
      * Is the actor object centrally guarded for uniqueness
      * @var bool
      */
     protected $asset;
-
-    /**
-     * @var CultureFeed_Cdb_Data_ActorDetailList
-     */
-    protected $details;
 
     /**
      * Contact info for an actor.
@@ -25,55 +21,70 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
     protected $contactInfo;
 
     /**
+     * @var CultureFeed_Cdb_Data_ActorDetailList
+     */
+    protected $details;
+
+    /**
      * Week scheme for the opening times from the actor.
      * @var CultureFeed_Cdb_Data_Calendar_WeekScheme
      */
     protected $weekScheme;
 
     /**
-     * @var string
-     */
-    protected $availableFrom;
-
-    /**
-     * @var string
-     */
-    protected $availableTo;
-
-    /**
-     * @var string
-     */
-    protected $createdBy;
-
-    /**
-     * @var string
-     */
-    protected $creationDate;
-
-    /**
-     * @var string
-     */
-    protected $owner;
-
-    /**
      * Construct the actor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->details = new CultureFeed_Cdb_Data_ActorDetailList();
+    }
+
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
+     * @throws CultureFeed_Cdb_ParseException
+     * @return CultureFeed_Cdb_Item_Actor
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    {
+        if (empty($xmlElement->categories)) {
+            throw new CultureFeed_Cdb_ParseException('Categories missing for actor element');
+        }
+
+        if (empty($xmlElement->actordetails)) {
+            throw new CultureFeed_Cdb_ParseException('Actordetails missing for actor element');
+        }
+
+        $actor = new self();
+
+        CultureFeed_Cdb_Item_Base::parseCommonAttributes($actor, $xmlElement);
+
+        $actor->setDetails(CultureFeed_Cdb_Data_ActorDetailList::parseFromCdbXml($xmlElement->actordetails));
+
+        // Set categories
+        $actor->setCategories(CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml($xmlElement->categories));
+
+        // Set contact information.
+        if (!empty($xmlElement->contactinfo)) {
+            $actor->setContactInfo(CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml($xmlElement->contactinfo));
+        }
+
+        // Set the keywords.
+        self::parseKeywords($xmlElement, $actor);
+
+        // Set the weekscheme.
+        if (!empty($xmlElement->weekscheme)) {
+            $actor->setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme::parseFromCdbXml($xmlElement->weekscheme));
+        }
+
+        return $actor;
     }
 
     /**
      * Get the contact info of this actor.
      */
-    public function getContactInfo() {
+    public function getContactInfo()
+    {
         return $this->contactInfo;
-    }
-
-    /**
-     * Get the weekscheme of this actor.
-     */
-    public function getWeekScheme() {
-        return $this->weekScheme;
     }
 
     /**
@@ -81,55 +92,25 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
      * @param CultureFeed_Cdb_Data_Calendar $contactInfo
      *   Contact info to set.
      */
-    public function setContactInfo(CultureFeed_Cdb_Data_ContactInfo $contactInfo) {
+    public function setContactInfo(CultureFeed_Cdb_Data_ContactInfo $contactInfo)
+    {
         $this->contactInfo = $contactInfo;
     }
 
     /**
      * Get the weekscheme of this actor.
      */
-    public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $weekScheme) {
+    public function getWeekScheme()
+    {
+        return $this->weekScheme;
+    }
+
+    /**
+     * Get the weekscheme of this actor.
+     */
+    public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $weekScheme)
+    {
         $this->weekScheme = $weekScheme;
-    }
-
-    public function setAvailableFrom($value) {
-        $this->availableFrom = $value;
-    }
-
-    public function getAvailableFrom() {
-        return $this->availableFrom;
-    }
-
-    public function setAvailableTo($value) {
-        $this->availableTo = $value;
-    }
-
-    public function getAvailableTo() {
-        return $this->availableTo;
-    }
-
-    public function setCreatedBy($author) {
-        $this->createdBy = $author;
-    }
-
-    public function getCreatedBy() {
-        return $this->createdBy;
-    }
-
-    public function setCreationDate($value) {
-        $this->creationDate = $value;
-    }
-
-    public function getCreationDate() {
-        return $this->creationDate;
-    }
-
-    public function getOwner() {
-        return $this->owner;
-    }
-
-    public function setOwner($owner) {
-        $this->owner = $owner;
     }
 
     /**
@@ -137,12 +118,13 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
      *
      * @param DOMElement $element
      *   The DOM tree to append to.
-     * @param string $cdbScheme
+     * @param string     $cdbScheme
      *   The cdb schema version.
      *
      * @see CultureFeed_Cdb_IElement::appendToDOM()
      */
-    public function appendToDOM(DOMElement $element, $cdbScheme = '3.2') {
+    public function appendToDOM(DOMElement $element, $cdbScheme = '3.2')
+    {
 
         $dom = $element->ownerDocument;
 
@@ -180,80 +162,5 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
 
         $element->appendChild($actorElement);
 
-    }
-
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
-     * @return CultureFeed_Cdb_Item_Actor
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
-
-        if (empty($xmlElement->categories)) {
-            throw new CultureFeed_Cdb_ParseException('Categories missing for actor element');
-        }
-
-        if (empty($xmlElement->actordetails)) {
-            throw new CultureFeed_Cdb_ParseException('Actordetails missing for actor element');
-        }
-
-        $actor = new self();
-
-        $actor_attributes = $xmlElement->attributes();
-
-        if (isset($actor_attributes['cdbid'])) {
-            $actor->setCdbId((string)$actor_attributes['cdbid']);
-        }
-
-        if (isset($actor_attributes['externalid'])) {
-            $actor->setExternalId((string)$actor_attributes['externalid']);
-        }
-
-        if (isset($actor_attributes['availablefrom'])) {
-            $actor->setAvailableFrom((string)$actor_attributes['availablefrom']);
-        }
-
-        if (isset($actor_attributes['availableto'])) {
-            $actor->setAvailableTo((string)$actor_attributes['availableto']);
-        }
-
-        if (isset($actor_attributes['createdby'])) {
-            $actor->setCreatedBy((string)$actor_attributes['createdby']);
-        }
-
-        if (isset($actor_attributes['creationdate'])) {
-            $actor->setCreationDate((string)$actor_attributes['creationdate']);
-        }
-
-        if (isset($actor_attributes['lastupdated'])) {
-            $actor->setLastUpdated((string)$actor_attributes['lastupdated']);
-        }
-
-        if (isset($actor_attributes['lastupdatedby'])) {
-            $actor->setLastUpdatedBy((string)$actor_attributes['lastupdatedby']);
-        }
-
-        if (isset($actor_attributes['owner'])) {
-            $actor->setOwner((string)$actor_attributes['owner']);
-        }
-
-        $actor->setDetails(CultureFeed_Cdb_Data_ActorDetailList::parseFromCdbXml($xmlElement->actordetails));
-
-        // Set categories
-        $actor->setCategories(CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml($xmlElement->categories));
-
-        // Set contact information.
-        if (!empty($xmlElement->contactinfo)) {
-            $actor->setContactInfo(CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml($xmlElement->contactinfo));
-        }
-
-        // Set the keywords.
-        self::parseKeywords($xmlElement, $actor);
-
-        // Set the weekscheme.
-        if (!empty($xmlElement->weekscheme)) {
-            $actor->setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme::parseFromCdbXml($xmlElement->weekscheme));
-        }
-
-        return $actor;
     }
 }
