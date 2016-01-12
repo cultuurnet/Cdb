@@ -19,5 +19,10 @@
       "satooshi/php-coveralls": "~0.7"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+      "platform": {
+        "php": "5.3.3"
+      }
+    }
 }
