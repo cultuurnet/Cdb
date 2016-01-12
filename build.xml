@@ -7,11 +7,22 @@
 
     <target name="coding-standards">
         <phpcodesniffer
-                standard="PSR2"
+                standard="phpcs-ruleset.xml"
                 format="full"
                 allowedFileExtensions="php"
                 haltonerror="true"
                 showWarnings="false">
+            <fileset refid="php"/>
+        </phpcodesniffer>
+    </target>
+
+    <target name="coding-standards-strict">
+        <phpcodesniffer
+                standard="phpcs-ruleset.xml"
+                format="full"
+                allowedFileExtensions="php"
+                haltonerror="true"
+                haltonwarning="true">
             <fileset refid="php"/>
         </phpcodesniffer>
     </target>
