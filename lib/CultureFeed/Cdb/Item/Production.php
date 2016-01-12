@@ -1,9 +1,7 @@
 <?php
 
-class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
-    implements CultureFeed_Cdb_IElement
+class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
 {
-
     /**
      * Minimum age for the production.
      * @var int
@@ -29,7 +27,8 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
     protected $organiser;
 
     /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
      *
      * @return CultureFeed_Cdb_Item_Production
      */
@@ -52,37 +51,37 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
         // Set ID.
         if (isset($attributes['cdbid'])) {
-            $production->setCdbId((string)$attributes['cdbid']);
+            $production->setCdbId((string) $attributes['cdbid']);
         }
 
         if (isset($attributes['externalid'])) {
-            $production->setExternalId((string)$attributes['externalid']);
+            $production->setExternalId((string) $attributes['externalid']);
         }
 
         if (isset($event_attributes['availablefrom'])) {
             $production->setAvailableFrom(
-                (string)$event_attributes['availablefrom']
+                (string) $event_attributes['availablefrom']
             );
         }
 
         if (isset($event_attributes['availableto'])) {
             $production->setAvailableTo(
-                (string)$event_attributes['availableto']
+                (string) $event_attributes['availableto']
             );
         }
 
         if (isset($event_attributes['createdby'])) {
-            $production->setCreatedBy((string)$event_attributes['createdby']);
+            $production->setCreatedBy((string) $event_attributes['createdby']);
         }
 
         if (isset($event_attributes['creationdate'])) {
             $production->setCreationDate(
-                (string)$event_attributes['creationdate']
+                (string) $event_attributes['creationdate']
             );
         }
 
         if (!empty($xmlElement->agefrom)) {
-            $production->setAgeFrom((int)$xmlElement->agefrom);
+            $production->setAgeFrom((int) $xmlElement->agefrom);
         }
 
         // Set organiser.
@@ -110,7 +109,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
         // Set max participants.
         if (!empty($xmlElement->maxparticipants)) {
-            $production->setMaxParticipants((int)$xmlElement->maxparticipants);
+            $production->setMaxParticipants((int) $xmlElement->maxparticipants);
         }
 
         // Set booking period.
@@ -131,19 +130,16 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
                 $production->addRelation(
                     new CultureFeed_Cdb_Item_Reference(
-                        (string)$attributes['cdbid']
+                        (string) $attributes['cdbid']
                     )
                 );
-
             }
-
         }
 
         // Set the keywords.
         self::parseKeywords($xmlElement, $production);
 
         return $production;
-
     }
 
     /**
@@ -156,6 +152,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
 
     /**
      * Set the minimum age for this production.
+     *
      * @param int $age
      *   Minimum age.
      *
@@ -169,7 +166,6 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
         }
 
         $this->ageFrom = $age;
-
     }
 
     /**
@@ -227,7 +223,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
      *
      * @param DOMElement $element
      *   The DOM tree to append to.
-     * @param string     $cdbScheme
+     * @param string $cdbScheme
      *   The cdb schema version.
      *
      * @see CultureFeed_Cdb_IElement::appendToDOM()
@@ -319,10 +315,8 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base
             }
 
             $productionElement->appendChild($relationsElement);
-
         }
 
         $element->appendChild($productionElement);
     }
-
 }
