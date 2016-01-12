@@ -4,9 +4,11 @@ class CultureFeed_Cdb_Data_PerformerTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @param $fileName
+     *
      * @return DOMDocument
      */
-    public function loadSample($fileName) {
+    public function loadSample($fileName)
+    {
         $sampleDir = __DIR__ . '/samples/PerformerTest/';
         $filePath = $sampleDir . $fileName;
 
@@ -16,7 +18,8 @@ class CultureFeed_Cdb_Data_PerformerTest extends PHPUnit_Framework_TestCase
         return $dom;
     }
 
-    public function testAppendsLabelElementContainingLabel() {
+    public function testAppendsLabelElementContainingLabel()
+    {
         $performer = new CultureFeed_Cdb_Data_Performer();
         $performer->setLabel('Simon & Garfunkel');
 
@@ -37,7 +40,8 @@ class CultureFeed_Cdb_Data_PerformerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Simon & Garfunkel', $labelElement->textContent);
     }
 
-    public function testAppendsRoleBeforeLabel() {
+    public function testAppendsRoleBeforeLabel()
+    {
         $sample = $this->loadSample('full_with_label.xml');
 
         $performer = new CultureFeed_Cdb_Data_Performer();
@@ -53,10 +57,14 @@ class CultureFeed_Cdb_Data_PerformerTest extends PHPUnit_Framework_TestCase
         $items = $xpath->query('/performers/performer');
         $this->assertEquals(1, $items->length);
 
-        $this->assertEqualXMLStructure($sample->documentElement, $items->item(0));
+        $this->assertEqualXMLStructure(
+            $sample->documentElement,
+            $items->item(0)
+        );
     }
 
-    public function testDoesNotGenerateEmptyRoleElementWhenNoRoleWasSet() {
+    public function testDoesNotGenerateEmptyRoleElementWhenNoRoleWasSet()
+    {
         $sample = $this->loadSample('without_role.xml');
 
         $performer = new CultureFeed_Cdb_Data_Performer();
@@ -71,6 +79,9 @@ class CultureFeed_Cdb_Data_PerformerTest extends PHPUnit_Framework_TestCase
         $items = $xpath->query('/performers/performer');
         $this->assertEquals(1, $items->length);
 
-        $this->assertEqualXMLStructure($sample->documentElement, $items->item(0));
+        $this->assertEqualXMLStructure(
+            $sample->documentElement,
+            $items->item(0)
+        );
     }
 }
