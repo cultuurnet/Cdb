@@ -10,6 +10,7 @@ class CultureFeed_Cdb_Item_ActorTest extends PHPUnit_Framework_TestCase
     /**
      * @param $fileName
      * @param $cdbScheme
+     *
      * @return SimpleXMLElement
      */
     public function loadSample($fileName, $cdbScheme = '3.2')
@@ -37,14 +38,23 @@ class CultureFeed_Cdb_Item_ActorTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('CultureFeed_Cdb_Item_Actor', $actor);
 
-        $this->assertEquals('a761b5d6-0349-4dd4-a39f-c471b0fb64e8', $actor->getCdbId());
-        $this->assertEquals('SKB Import:Organisation_488', $actor->getExternalId());
+        $this->assertEquals(
+            'a761b5d6-0349-4dd4-a39f-c471b0fb64e8',
+            $actor->getCdbId()
+        );
+        $this->assertEquals(
+            'SKB Import:Organisation_488',
+            $actor->getExternalId()
+        );
         $this->assertEquals('2011-01-03T10:39:18', $actor->getAvailableFrom());
         $this->assertEquals('2100-01-01T00:00:00', $actor->getAvailableTo());
         $this->assertEquals('admin ferranti', $actor->getCreatedBy());
         $this->assertEquals('2010-01-19T04:59:14', $actor->getCreationDate());
         $this->assertEquals('2011-01-03T10:39:18', $actor->getLastUpdated());
-        $this->assertEquals('soetkin.vanassche@cultuurnet.be', $actor->getLastUpdatedBy());
+        $this->assertEquals(
+            'soetkin.vanassche@cultuurnet.be',
+            $actor->getLastUpdatedBy()
+        );
         $this->assertEquals('Invoerders Algemeen ', $actor->getOwner());
     }
 

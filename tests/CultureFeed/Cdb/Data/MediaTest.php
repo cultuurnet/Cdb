@@ -9,13 +9,13 @@ class CultureFeed_Cdb_Data_MediaTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-      $this->media = new CultureFeed_Cdb_Data_Media();
+        $this->media = new CultureFeed_Cdb_Data_Media();
     }
 
     public function testImplementsCountable()
     {
 
-      $this->assertInstanceOf('\Countable', $this->media);
+        $this->assertInstanceOf('\Countable', $this->media);
     }
 
     public function testCountIs0OnNewInstance()
@@ -31,11 +31,11 @@ class CultureFeed_Cdb_Data_MediaTest extends PHPUnit_Framework_TestCase
         $expectedCountAfterAdding = count($this->media);
 
         foreach ($toAdd as $i) {
-          $expectedCountAfterAdding++;
-          $file = $this->randomPhotoFile();
-          $this->media->add($file);
+            $expectedCountAfterAdding++;
+            $file = $this->randomPhotoFile();
+            $this->media->add($file);
 
-          $this->assertCount($expectedCountAfterAdding, $this->media);
+            $this->assertCount($expectedCountAfterAdding, $this->media);
         }
     }
 
@@ -80,7 +80,8 @@ class CultureFeed_Cdb_Data_MediaTest extends PHPUnit_Framework_TestCase
         return $url;
     }
 
-    public function testCanFilterByMediaType() {
+    public function testCanFilterByMediaType()
+    {
         $picture1 = $this->randomPhotoFile();
         $picture2 = $this->randomPhotoFile();
         $picture3 = $this->randomPhotoFile();
@@ -94,7 +95,9 @@ class CultureFeed_Cdb_Data_MediaTest extends PHPUnit_Framework_TestCase
         $this->media->add($picture1);
         $this->media->add($uri2);
 
-        $pictures = $this->media->byMediaType(CultureFeed_Cdb_Data_File::MEDIA_TYPE_PHOTO);
+        $pictures = $this->media->byMediaType(
+            CultureFeed_Cdb_Data_File::MEDIA_TYPE_PHOTO
+        );
         $this->assertInstanceOf('\CultureFeed_Cdb_Data_Media', $pictures);
         $this->assertContainsOnly('\CultureFeed_Cdb_Data_File', $pictures);
         $this->assertCount(3, $pictures);
@@ -106,7 +109,9 @@ class CultureFeed_Cdb_Data_MediaTest extends PHPUnit_Framework_TestCase
         $pictures->next();
         $this->assertEquals($picture1, $pictures->current());
 
-        $uris = $this->media->byMediaType(CultureFeed_Cdb_Data_File::MEDIA_TYPE_WEBRESOURCE);
+        $uris = $this->media->byMediaType(
+            CultureFeed_Cdb_Data_File::MEDIA_TYPE_WEBRESOURCE
+        );
         $this->assertInstanceOf('\CultureFeed_Cdb_Data_Media', $uris);
         $this->assertContainsOnly('\CultureFeed_Cdb_Data_File', $uris);
         $this->assertCount(2, $uris);

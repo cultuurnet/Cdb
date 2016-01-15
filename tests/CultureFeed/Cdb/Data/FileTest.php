@@ -76,8 +76,8 @@ class CultureFeed_Cdb_Data_FileTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-    * @return DOMXPath
-    */
+     * @return DOMXPath
+     */
     private function xpathOnMediaWithFileAppended(CultureFeed_Cdb_Data_File $file)
     {
         $dom = new DOMDocument();
@@ -98,5 +98,4 @@ class CultureFeed_Cdb_Data_FileTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($description, $this->file->getDescription());
     }
-
 }

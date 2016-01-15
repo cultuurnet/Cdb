@@ -83,7 +83,8 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     protected $weight;
 
     /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
      * @return CultureFeed_Cdb_Item_Event
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
@@ -126,7 +127,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         if (isset($event_attributes['private'])) {
             $event->setPrivate(
                 filter_var(
-                    (string)$event_attributes['private'],
+                    (string) $event_attributes['private'],
                     FILTER_VALIDATE_BOOLEAN
                 )
             );
@@ -135,7 +136,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         if (isset($event_attributes['isparent'])) {
             $event->setIsParent(
                 filter_var(
-                    (string)$event_attributes['isparent'],
+                    (string) $event_attributes['isparent'],
                     FILTER_VALIDATE_BOOLEAN
                 )
             );
@@ -148,22 +149,22 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         if (isset($event_attributes['published'])) {
             $event->setPublished(
                 filter_var(
-                    (string)$event_attributes['published'],
+                    (string) $event_attributes['published'],
                     FILTER_VALIDATE_BOOLEAN
                 )
             );
         }
 
         if (isset($event_attributes['validator'])) {
-            $event->setValidator((string)$event_attributes['validator']);
+            $event->setValidator((string) $event_attributes['validator']);
         }
 
         if (isset($event_attributes['weight'])) {
-            $event->setWeight((int)$event_attributes['weight']);
+            $event->setWeight((int) $event_attributes['weight']);
         }
 
         if (isset($xmlElement->agefrom)) {
-            $event->setAgeFrom((int)$xmlElement->agefrom);
+            $event->setAgeFrom((int) $xmlElement->agefrom);
         }
 
         // Set calendar information.
@@ -227,7 +228,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
         // Set max participants.
         if (!empty($xmlElement->maxparticipants)) {
-            $event->setMaxParticipants((int)$xmlElement->maxparticipants);
+            $event->setMaxParticipants((int) $xmlElement->maxparticipants);
         }
 
         // Set booking period.
@@ -246,14 +247,12 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
                 $event->addRelation(
                     new CultureFeed_Cdb_Item_Reference(
-                        (string)$attributes['cdbid'],
-                        (string)$relatedProduction,
-                        (string)$attributes['externalid']
+                        (string) $attributes['cdbid'],
+                        (string) $relatedProduction,
+                        (string) $attributes['externalid']
                     )
                 );
-
             }
-
         }
         self::parseKeywords($xmlElement, $event);
 
@@ -266,7 +265,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         }
 
         return $event;
-
     }
 
     /**
@@ -337,6 +335,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     /**
      * Set the minimum age for this event.
+     *
      * @param int $age
      *   Minimum age.
      *
@@ -350,7 +349,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         }
 
         $this->ageFrom = $age;
-
     }
 
     /**
@@ -363,6 +361,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     /**
      * Set the calendar data for the event.
+     *
      * @param CultureFeed_Cdb_Data_Calendar $calendar
      *   Calendar data.
      */
@@ -381,6 +380,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     /**
      * Set the location from this event.
+     *
      * @param CultureFeed_Cdb_Data_Location $location
      *   Location to set.
      */
@@ -399,6 +399,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     /**
      * Set the organiser from this event.
+     *
      * @param CultureFeed_Cdb_Data_Organiser $organiser
      *   Organiser to set.
      */
@@ -417,6 +418,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     /**
      * Set the contact info from this event.
+     *
      * @param CultureFeed_Cdb_Data_Calendar $contactInfo
      *   Contact info to set.
      */
@@ -629,7 +631,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
                 );
                 $eventElement->appendChild($keywordsElement);
             }
-
         }
 
         if (isset($this->languages)) {

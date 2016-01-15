@@ -100,7 +100,8 @@ abstract class CultureFeed_Cdb_Item_Base
 
     /**
      * Parses keywords from cdbxml.
-     * @param SimpleXMLElement          $xmlElement
+     *
+     * @param SimpleXMLElement $xmlElement
      * @param CultureFeed_Cdb_Item_Base $item
      */
     protected static function parseKeywords(
@@ -111,7 +112,9 @@ abstract class CultureFeed_Cdb_Item_Base
             $keywordsString = trim($xmlElement->keywords);
 
             if ($keywordsString === '') {
-                /** @var SimpleXMLElement $keywordElement */
+                /**
+                 * @var SimpleXMLElement $keywordElement
+                 */
                 foreach ($xmlElement->keywords->keyword as $keywordElement) {
                     $attributes = $keywordElement->attributes();
                     $visible =
@@ -120,7 +123,7 @@ abstract class CultureFeed_Cdb_Item_Base
 
                     $item->addKeyword(
                         new CultureFeed_Cdb_Data_Keyword(
-                            (string)$keywordElement,
+                            (string) $keywordElement,
                             $visible
                         )
                     );
@@ -156,50 +159,50 @@ abstract class CultureFeed_Cdb_Item_Base
 
     /**
      * @param CultureFeed_Cdb_Item_Base $item
-     * @param SimpleXMLElement          $xmlElement
+     * @param SimpleXMLElement $xmlElement
      */
     protected static function parseCommonAttributes(CultureFeed_Cdb_Item_Base $item, SimpleXMLElement $xmlElement)
     {
         $attributes = $xmlElement->attributes();
 
         if (isset($attributes['cdbid'])) {
-            $item->setCdbId((string)$attributes['cdbid']);
+            $item->setCdbId((string) $attributes['cdbid']);
         }
 
         if (isset($attributes['externalid'])) {
-            $item->setExternalId((string)$attributes['externalid']);
+            $item->setExternalId((string) $attributes['externalid']);
         }
 
         if (isset($attributes['availablefrom'])) {
-            $item->setAvailableFrom((string)$attributes['availablefrom']);
+            $item->setAvailableFrom((string) $attributes['availablefrom']);
         }
 
         if (isset($attributes['availableto'])) {
-            $item->setAvailableTo((string)$attributes['availableto']);
+            $item->setAvailableTo((string) $attributes['availableto']);
         }
 
         if (isset($attributes['createdby'])) {
-            $item->setCreatedBy((string)$attributes['createdby']);
+            $item->setCreatedBy((string) $attributes['createdby']);
         }
 
         if (isset($attributes['creationdate'])) {
-            $item->setCreationDate((string)$attributes['creationdate']);
+            $item->setCreationDate((string) $attributes['creationdate']);
         }
 
         if (isset($attributes['lastupdated'])) {
-            $item->setLastUpdated((string)$attributes['lastupdated']);
+            $item->setLastUpdated((string) $attributes['lastupdated']);
         }
 
         if (isset($attributes['lastupdatedby'])) {
-            $item->setLastUpdatedBy((string)$attributes['lastupdatedby']);
+            $item->setLastUpdatedBy((string) $attributes['lastupdatedby']);
         }
 
         if (isset($attributes['owner'])) {
-            $item->setOwner((string)$attributes['owner']);
+            $item->setOwner((string) $attributes['owner']);
         }
 
         if (isset($attributes['publisher'])) {
-            $item->setPublisher((string)$attributes['publisher']);
+            $item->setPublisher((string) $attributes['publisher']);
         }
 
         if (isset($attributes['wfstatus'])) {
@@ -217,6 +220,7 @@ abstract class CultureFeed_Cdb_Item_Base
 
     /**
      * Set the external id from this item.
+     *
      * @param string $id
      *   ID to set.
      */
@@ -236,6 +240,7 @@ abstract class CultureFeed_Cdb_Item_Base
 
     /**
      * Set the cdbid from this item.
+     *
      * @param string $id
      */
     public function setCdbId($id)
@@ -254,6 +259,7 @@ abstract class CultureFeed_Cdb_Item_Base
 
     /**
      * Set if item is private.
+     *
      * @param bool $private
      */
     public function setPrivate($private = true)
@@ -421,6 +427,7 @@ abstract class CultureFeed_Cdb_Item_Base
 
     /**
      * Set the categories from this item.
+     *
      * @param CultureFeed_Cdb_Data_CategoryList $categories
      *   Categories to set.
      */
@@ -441,6 +448,7 @@ abstract class CultureFeed_Cdb_Item_Base
 
     /**
      * Set the details from this item.
+     *
      * @param CultureFeed_Cdb_Data_DetailList $details
      *   Detail information from the current item.
      */
@@ -470,7 +478,6 @@ abstract class CultureFeed_Cdb_Item_Base
             }
             return $keywords;
         }
-
     }
 
     /**
@@ -501,11 +508,11 @@ abstract class CultureFeed_Cdb_Item_Base
         }
 
         unset($this->keywords[$keyword]);
-
     }
 
     /**
      * Add a relation to the current item.
+     *
      * @param CultureFeed_Cdb_Item_Reference $item
      */
     public function addRelation(CultureFeed_Cdb_Item_Reference $item)
@@ -515,6 +522,7 @@ abstract class CultureFeed_Cdb_Item_Base
 
     /**
      * Delete a relation from the item.
+     *
      * @param string $cdbid Cdbid to delete
      */
     public function deleteRelation($cdbid)
@@ -525,6 +533,5 @@ abstract class CultureFeed_Cdb_Item_Base
         }
 
         unset($this->relations[$cdbid]);
-
     }
 }

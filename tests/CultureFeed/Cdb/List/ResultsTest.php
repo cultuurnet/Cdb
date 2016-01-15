@@ -1,22 +1,25 @@
 <?php
+
 /**
  * @file
- */ 
-
-class CultureFeed_Cdb_List_ResultsTest extends PHPUnit_Framework_TestCase {
-
+ */
+class CultureFeed_Cdb_List_ResultsTest extends PHPUnit_Framework_TestCase
+{
     /**
      * @param $fileName
+     *
      * @return SimpleXMLElement
      */
-    protected function loadSample($fileName) {
+    protected function loadSample($fileName)
+    {
         $sampleDir = __DIR__ . '/samples/ResultsTest/';
         $filePath = $sampleDir . $fileName;
 
         return simplexml_load_file($filePath);
     }
 
-    public function testParseFromCdbXml() {
+    public function testParseFromCdbXml()
+    {
         $xml = $this->loadSample('eventlist.xml');
 
         $list = CultureFeed_Cdb_List_Results::parseFromCdbXml($xml);
@@ -34,18 +37,30 @@ class CultureFeed_Cdb_List_ResultsTest extends PHPUnit_Framework_TestCase {
         /* @var CultureFeed_Cdb_List_Item $item */
         $item = $list->current();
 
-        $this->assertEquals('f00539b9-bace-44ac-8a55-9688f4155c1f', $item->getCdbId());
+        $this->assertEquals(
+            'f00539b9-bace-44ac-8a55-9688f4155c1f',
+            $item->getCdbId()
+        );
         $this->assertEquals('test_images_1', $item->getExternalId());
-        $this->assertEquals('Event met meerdere afbeeldingen', $item->getTitle());
+        $this->assertEquals(
+            'Event met meerdere afbeeldingen',
+            $item->getTitle()
+        );
         $this->assertEquals('short description', $item->getShortDescription());
 
         $list->next();
 
         $item = $list->current();
 
-        $this->assertEquals('c4948d7f-ed24-4b3d-b872-17277cd83a9d', $item->getCdbId());
+        $this->assertEquals(
+            'c4948d7f-ed24-4b3d-b872-17277cd83a9d',
+            $item->getCdbId()
+        );
         $this->assertEquals('lve_eng_test2', $item->getExternalId());
         $this->assertEquals('Event title', $item->getTitle());
-        $this->assertEquals('English short description', $item->getShortDescription());
+        $this->assertEquals(
+            'English short description',
+            $item->getShortDescription()
+        );
     }
 }
