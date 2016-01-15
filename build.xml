@@ -11,7 +11,7 @@
                 format="full"
                 allowedFileExtensions="php"
                 haltonerror="true"
-                showWarnings="false">
+                showWarnings="true">
             <fileset refid="php"/>
         </phpcodesniffer>
     </target>
