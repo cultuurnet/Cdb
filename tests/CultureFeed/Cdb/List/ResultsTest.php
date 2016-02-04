@@ -62,7 +62,8 @@ class CultureFeed_Cdb_List_ResultsTest extends PHPUnit_Framework_TestCase {
     public function testParseFromCdbXmlWithoutListNameAndItemNameWithSource() {
         $xml = $this->loadSample('eventlist_v2.xml');
 
-        $eventXmlSource = $xml->xpath('event')[0];
+        $eventsXml = $xml->xpath('event');
+        $eventXmlSource = $eventsXml[0];
 
         $list = CultureFeed_Cdb_List_Results::parseFromCdbXml($xml);
 
