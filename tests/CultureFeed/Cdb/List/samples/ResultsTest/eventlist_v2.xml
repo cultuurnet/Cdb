@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cdbxml xmlns:cdb="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL">
+    <nofrecords xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:long">2</nofrecords>
+    <event availablefrom="2015-07-31T00:00:00" availableto="2016-03-19T00:00:00" cdbid="ca2feddc-3bb1-4106-920e-f5ca01155d01" createdby="christophe.saerens@pandora.be" creationdate="2015-07-31T11:47:46" externalid="5bcd460c-31e9-4300-9710-2b88034955d0" isparent="false" lastupdated="2015-08-03T09:26:22" lastupdatedby="cultuurdienstmelle" pctcomplete="75" published="true" owner="Invoerders Algemeen " private="false" validator="Melle Validatoren" wfstatus="approved">
+        <activities>
+            <activity count="0" type="like"/>
+            <activity count="0" type="attend"/>
+            <activity count="0" type="comment"/>
+            <activity count="0" type="recommend"/>
+            <activity count="0" type="facebook_share"/>
+            <activity count="0" type="review"/>
+        </activities>
+        <calendar>
+            <timestamps>
+                <timestamp>
+                    <date>2015-10-23</date>
+                    <timestart>19:30:00</timestart>
+                </timestamp>
+                <timestamp>
+                    <date>2015-12-04</date>
+                    <timestart>19:30:00</timestart>
+                </timestamp>
+                <timestamp>
+                    <date>2016-01-22</date>
+                    <timestart>19:30:00</timestart>
+                </timestamp>
+                <timestamp>
+                    <date>2016-02-19</date>
+                    <timestart>19:30:00</timestart>
+                </timestamp>
+                <timestamp>
+                    <date>2016-03-18</date>
+                    <timestart>19:30:00</timestart>
+                </timestamp>
+            </timestamps>
+        </calendar>
+        <categories>
+            <category catid="1.65.0.0.0" type="theme">Voeding</category>
+            <category catid="reg.366" type="flanderstouristregion">Scheldeland</category>
+            <category catid="0.3.1.0.0" type="eventtype">Cursus of workshop</category>
+            <category catid="reg.1280" type="flandersregion">9090 Gontrode (Melle)</category>
+        </categories>
+        <comments/>
+        <contactinfo>
+            <address>
+                <physical>
+                    <city>Gontrode</city>
+                    <country>BE</country>
+                    <gis>
+                        <xcoordinate>3.797705</xcoordinate>
+                        <ycoordinate>50.984549</ycoordinate>
+                    </gis>
+                    <housenr>94</housenr>
+                    <street>Geraardsbergsesteenweg </street>
+                    <zipcode>9090</zipcode>
+                </physical>
+            </address>
+            <mail reservation="true">info@kwbgontrode.be</mail>
+            <url>http://www.kwbgontrode.be</url>
+        </contactinfo>
+        <eventdetails>
+            <eventdetail lang="nl">
+                <calendarsummary>vrij 23/10/15 om 19:30  vrij 04/12/15 om 19:30  vrij 22/01/16 om 19:30  vrij 19/02/16 om 19:30  vrij 18/03/16 om 19:30 </calendarsummary>
+                <media>
+                    <file>
+                        <hlink>http://www.kwbgontrode.be</hlink>
+                        <mediatype>webresource</mediatype>
+                    </file>
+                    <file creationdate="31/07/2015 11:48:28" main="true">
+                        <copyright>KWB ROO kookt - jaargang 44</copyright>
+                        <filename>2b7c49fe-4986-49f3-b18c-8e1416cc6b12.jpg</filename>
+                        <filetype>jpeg</filetype>
+                        <hlink>//media.uitdatabank.be/20150731/2b7c49fe-4986-49f3-b18c-8e1416cc6b12.jpg</hlink>
+                        <mediatype>photo</mediatype>
+                    </file>
+                </media>
+                <price>
+                    <pricevalue>25.0</pricevalue>
+                    <pricedescription>€ 25 voor de kookreeks (ledenprijs) + € 20 per avond (all in - eten en drinken)
+                        € 35 voor de kookreeks (niet-ledenprijs) + € 25 per avond (all-in - eten en drinken)
+                        De laatste avond is met partner.</pricedescription>
+                </price>
+                <shortdescription>KWB Gontrode gaat opnieuw achter de kookpotten staan.Voor de 44ste keer samen nieuwe culinaire ervaringen opdoen. Met een 20-tal mannen gaan we de menu's te lijf, opgesteld door een ervaren chef ! Voor een avondje culinair genot -als alles lukt- schrijf snel in!</shortdescription>
+                <title>KWB ROO kookt - jaargang 44</title>
+            </eventdetail>
+        </eventdetails>
+        <location>
+            <address>
+                <physical>
+                    <city>Gontrode</city>
+                    <country>BE</country>
+                    <gis>
+                        <xcoordinate>3.797705</xcoordinate>
+                        <ycoordinate>50.984549</ycoordinate>
+                    </gis>
+                    <housenr>94</housenr>
+                    <street>Geraardsbergsesteenweg </street>
+                    <zipcode>9090</zipcode>
+                </physical>
+            </address>
+            <label>GOC Gontrode</label>
+        </location>
+        <organiser>
+            <label>,</label>
+        </organiser>
+    </event>
+    <event availablefrom="2015-07-31T00:00:00" availableto="2016-03-19T00:00:00" cdbid="ca2feddc-3bb1-4106-920e-f5ca01155d01" createdby="christophe.saerens@pandora.be" creationdate="2015-07-31T11:47:46" externalid="5bcd460c-31e9-4300-9710-2b88034955d0" isparent="false" lastupdated="2015-08-03T09:26:22" lastupdatedby="cultuurdienstmelle" pctcomplete="75" published="true" owner="Invoerders Algemeen " private="false" validator="Melle Validatoren" wfstatus="approved">
+        <activities>
+            <activity count="0" type="like"/>
+            <activity count="0" type="attend"/>
+            <activity count="0" type="comment"/>
+            <activity count="0" type="recommend"/>
+            <activity count="0" type="facebook_share"/>
+            <activity count="0" type="review"/>
+        </activities>
+        <calendar>
+            <timestamps>
+                <timestamp>
+                    <date>2015-10-23</date>
+                    <timestart>19:30:00</timestart>
+                </timestamp>
+                <timestamp>
+                    <date>2015-12-04</date>
+                    <timestart>19:30:00</timestart>
+                </timestamp>
+                <timestamp>
+                    <date>2016-01-22</date>
+                    <timestart>19:30:00</timestart>
+                </timestamp>
+                <timestamp>
+                    <date>2016-02-19</date>
+                    <timestart>19:30:00</timestart>
+                </timestamp>
+                <timestamp>
+                    <date>2016-03-18</date>
+                    <timestart>19:30:00</timestart>
+                </timestamp>
+            </timestamps>
+        </calendar>
+        <categories>
+            <category catid="1.65.0.0.0" type="theme">Voeding</category>
+            <category catid="reg.366" type="flanderstouristregion">Scheldeland</category>
+            <category catid="0.3.1.0.0" type="eventtype">Cursus of workshop</category>
+            <category catid="reg.1280" type="flandersregion">9090 Gontrode (Melle)</category>
+        </categories>
+        <comments/>
+        <contactinfo>
+            <address>
+                <physical>
+                    <city>Gontrode</city>
+                    <country>BE</country>
+                    <gis>
+                        <xcoordinate>3.797705</xcoordinate>
+                        <ycoordinate>50.984549</ycoordinate>
+                    </gis>
+                    <housenr>94</housenr>
+                    <street>Geraardsbergsesteenweg </street>
+                    <zipcode>9090</zipcode>
+                </physical>
+            </address>
+            <mail reservation="true">info@kwbgontrode.be</mail>
+            <url>http://www.kwbgontrode.be</url>
+        </contactinfo>
+        <eventdetails>
+            <eventdetail lang="nl">
+                <calendarsummary>vrij 23/10/15 om 19:30  vrij 04/12/15 om 19:30  vrij 22/01/16 om 19:30  vrij 19/02/16 om 19:30  vrij 18/03/16 om 19:30 </calendarsummary>
+                <media>
+                    <file>
+                        <hlink>http://www.kwbgontrode.be</hlink>
+                        <mediatype>webresource</mediatype>
+                    </file>
+                    <file creationdate="31/07/2015 11:48:28" main="true">
+                        <copyright>KWB ROO kookt - jaargang 44</copyright>
+                        <filename>2b7c49fe-4986-49f3-b18c-8e1416cc6b12.jpg</filename>
+                        <filetype>jpeg</filetype>
+                        <hlink>//media.uitdatabank.be/20150731/2b7c49fe-4986-49f3-b18c-8e1416cc6b12.jpg</hlink>
+                        <mediatype>photo</mediatype>
+                    </file>
+                </media>
+                <price>
+                    <pricevalue>25.0</pricevalue>
+                    <pricedescription>€ 25 voor de kookreeks (ledenprijs) + € 20 per avond (all in - eten en drinken)
+                        € 35 voor de kookreeks (niet-ledenprijs) + € 25 per avond (all-in - eten en drinken)
+                        De laatste avond is met partner.</pricedescription>
+                </price>
+                <shortdescription>KWB Gontrode gaat opnieuw achter de kookpotten staan.Voor de 44ste keer samen nieuwe culinaire ervaringen opdoen. Met een 20-tal mannen gaan we de menu's te lijf, opgesteld door een ervaren chef ! Voor een avondje culinair genot -als alles lukt- schrijf snel in!</shortdescription>
+                <title>KWB ROO kookt - jaargang 44</title>
+            </eventdetail>
+        </eventdetails>
+        <location>
+            <address>
+                <physical>
+                    <city>Gontrode</city>
+                    <country>BE</country>
+                    <gis>
+                        <xcoordinate>3.797705</xcoordinate>
+                        <ycoordinate>50.984549</ycoordinate>
+                    </gis>
+                    <housenr>94</housenr>
+                    <street>Geraardsbergsesteenweg </street>
+                    <zipcode>9090</zipcode>
+                </physical>
+            </address>
+            <label>GOC Gontrode</label>
+        </location>
+        <organiser>
+            <label>,</label>
+        </organiser>
+    </event>
+</cdbxml>
