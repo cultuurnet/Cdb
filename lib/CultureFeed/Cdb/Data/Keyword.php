@@ -6,7 +6,6 @@
  */
 class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
 {
-
     /**
      * Keyword value.
      * @var string
@@ -86,12 +85,13 @@ class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
         }
 
         $element->appendChild($keywordElement);
-
     }
 
     /**
      * @param SimpleXMLElement $xmlElement
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
+     *
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
      * @return CultureFeed_Cdb_Data_Keyword
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
@@ -102,7 +102,9 @@ class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
             $attributes['visible'] = true;
         }
 
-        return new CultureFeed_Cdb_Data_Keyword((string) $xmlElement, $attributes['visible']);
-
+        return new CultureFeed_Cdb_Data_Keyword(
+            (string) $xmlElement,
+            $attributes['visible']
+        );
     }
 }

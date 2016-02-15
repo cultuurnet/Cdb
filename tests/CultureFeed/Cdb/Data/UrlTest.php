@@ -4,9 +4,11 @@ class CultureFeed_Cdb_Data_UrlTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @param $fileName
+     *
      * @return DOMDocument
      */
-    public function loadSample($fileName) {
+    public function loadSample($fileName)
+    {
         $sampleDir = __DIR__ . '/samples/UrlTest/';
         $filePath = $sampleDir . $fileName;
 
@@ -16,11 +18,12 @@ class CultureFeed_Cdb_Data_UrlTest extends PHPUnit_Framework_TestCase
         return $dom;
     }
 
-    public function testAppendsUrlAsTextNode() {
+    public function testAppendsUrlAsTextNode()
+    {
         $sample = $this->loadSample('minimal.xml');
 
         $urlString = 'http://example.com/?foo=1&bar=2';
-        $url = new CultureFeed_Cdb_Data_Url($urlString, FALSE, FALSE);
+        $url = new CultureFeed_Cdb_Data_Url($urlString, false, false);
 
         $dom = new DOMDocument();
         $contactInfoNode = $dom->createElement('contactinfo');
@@ -31,12 +34,16 @@ class CultureFeed_Cdb_Data_UrlTest extends PHPUnit_Framework_TestCase
         $items = $xpath->query('/contactinfo/url');
         $this->assertEquals(1, $items->length);
 
-        $this->assertEqualXMLStructure($sample->documentElement, $items->item(0));
+        $this->assertEqualXMLStructure(
+            $sample->documentElement,
+            $items->item(0)
+        );
     }
 
-    public function testGetUrlReturnsUrlSetBefore() {
+    public function testGetUrlReturnsUrlSetBefore()
+    {
         $urlString = 'http://example.com/?foo=1&bar=2';
-        $url = new CultureFeed_Cdb_Data_Url($urlString, FALSE, FALSE);
+        $url = new CultureFeed_Cdb_Data_Url($urlString, false, false);
         $this->assertEquals($urlString, $url->getUrl());
 
         $newUrlString = 'http://example.com';
@@ -44,19 +51,20 @@ class CultureFeed_Cdb_Data_UrlTest extends PHPUnit_Framework_TestCase
         $url->setUrl($newUrlString, $url->getUrl());
     }
 
-    public function testIsMainReturnMainSetBefore() {
+    public function testIsMainReturnMainSetBefore()
+    {
         $urlString = 'http://example.com/?foo=1&bar=2';
 
-        $url = new CultureFeed_Cdb_Data_Url($urlString, FALSE, FALSE);
-        $this->assertEquals(FALSE, $url->isMain());
+        $url = new CultureFeed_Cdb_Data_Url($urlString, false, false);
+        $this->assertEquals(false, $url->isMain());
 
-        $url->setMain(TRUE);
-        $this->assertEquals(TRUE, $url->isMain());
+        $url->setMain(true);
+        $this->assertEquals(true, $url->isMain());
 
-        $url = new CultureFeed_Cdb_Data_Url($urlString, TRUE, FALSE);
-        $this->assertEquals(TRUE, $url->isMain());
+        $url = new CultureFeed_Cdb_Data_Url($urlString, true, false);
+        $this->assertEquals(true, $url->isMain());
 
-        $url->setMain(FALSE);
-        $this->assertEquals(FALSE, $url->isMain());
+        $url->setMain(false);
+        $this->assertEquals(false, $url->isMain());
     }
 }
