@@ -22,6 +22,7 @@ class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
      */
     const CATEGORY_TYPE_TARGET_AUDIANCE = 'targetaudience';
     const CATEGORY_TYPE_FLANDERS_REGION = 'flandersregion';
+    const CATEGORY_TYPE_UMV = 'umv';
 
     /**
      * Type of category.
