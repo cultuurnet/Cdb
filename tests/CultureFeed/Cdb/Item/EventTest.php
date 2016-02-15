@@ -165,13 +165,19 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
             $event->getExternalId()
         );
         $this->assertFalse($event->isParent());
+        $this->assertInternalType('string', $event->getLastUpdated());
         $this->assertEquals('2010-07-28T13:58:55', $event->getLastUpdated());
+        $this->assertInternalType('string', $event->getLastUpdatedBy());
         $this->assertEquals('mverdoodt', $event->getLastUpdatedBy());
+        $this->assertInternalType('string', $event->getOwner());
         $this->assertEquals('SKB Import', $event->getOwner());
+        $this->assertInternalType('float', $event->getPctComplete());
         $this->assertEquals(80, $event->getPctComplete());
         $this->assertFalse($event->isPrivate());
         $this->assertTrue($event->isPublished());
+        $this->assertInternalType('string', $event->getValidator());
         $this->assertEquals('SKB', $event->getValidator());
+        $this->assertInternalType('string', $event->getWfStatus());
         $this->assertEquals('approved', $event->getWfStatus());
 
         $this->assertEquals(18, $event->getAgeFrom());
