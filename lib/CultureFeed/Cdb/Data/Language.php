@@ -1,14 +1,12 @@
 <?php
+
 /**
  * @file
- */ 
-
-class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement {
-
+ */
+class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement
+{
     const TYPE_DUBBED = 'dubbed';
-
     const TYPE_SPOKEN = 'spoken';
-
     const TYPE_SUBTITLES = 'subtitles';
 
     /**
@@ -18,31 +16,37 @@ class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement {
 
     protected $language;
 
-    public function __construct($language = NULL, $type = NULL) {
+    public function __construct($language = null, $type = null)
+    {
         $this->language = $language;
         $this->type = $type;
     }
 
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
     }
 
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
-    public function getLanguage() {
+    public function getLanguage()
+    {
         return $this->language;
     }
 
-    public function setLanguage() {
+    public function setLanguage()
+    {
         return $this->language;
     }
 
     /**
      * @see CultureFeed_Cdb_IElement::appendToDOM()
      */
-    public function appendToDOM(DOMElement $element) {
+    public function appendToDOM(DOMElement $element)
+    {
 
         $dom = $element->ownerDocument;
 
@@ -57,10 +61,12 @@ class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement {
     }
 
     /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement $xmlElement)
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
      * @return CultureFeed_Cdb_Data_Category
      */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement) {
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    {
 
         $language = new self((string) $xmlElement);
 
@@ -72,5 +78,4 @@ class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement {
 
         return $language;
     }
-
 }

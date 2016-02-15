@@ -2,14 +2,16 @@
 
 class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends PHPUnit_Framework_TestCase
 {
-    public function loadSample($fileName) {
+    public function loadSample($fileName)
+    {
         $sampleDir = __DIR__ . '/samples/PhysicalAddressTest/';
         $filePath = $sampleDir . $fileName;
 
         return simplexml_load_file($filePath);
     }
 
-    public function missingElementSamples() {
+    public function missingElementSamples()
+    {
         return array(
             array('missing_city.xml'),
             array('missing_country.xml'),
@@ -17,10 +19,13 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends PHPUnit_Framework
         );
     }
 
-    public function testParseFull() {
+    public function testParseFull()
+    {
         $sample = $this->loadSample('full.xml');
 
-        $address = CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml($sample);
+        $address = CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml(
+            $sample
+        );
 
         $this->assertEquals('Brussel', $address->getCity());
         $this->assertEquals('BE', $address->getCountry());
@@ -30,15 +35,21 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends PHPUnit_Framework
         $this->assertEquals('Sint-Gisleinstraat', $address->getStreet());
         $geo = $address->getGeoInformation();
 
-        $this->assertInstanceOf('CultureFeed_Cdb_Data_Address_GeoInformation', $geo);
+        $this->assertInstanceOf(
+            'CultureFeed_Cdb_Data_Address_GeoInformation',
+            $geo
+        );
         $this->assertEquals('4,3488', $geo->getXCoordinate());
         $this->assertEquals('50,8391', $geo->getYCoordinate());
     }
 
-    public function testParseMinimal() {
+    public function testParseMinimal()
+    {
         $sample = $this->loadSample('minimal.xml');
 
-        $address = CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml($sample);
+        $address = CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml(
+            $sample
+        );
 
         $this->assertEquals('Brussel', $address->getCity());
         $this->assertEquals('BE', $address->getCountry());
@@ -56,6 +67,8 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends PHPUnit_Framework
     public function testParseXMLWithMissingElementThrowsException($sampleName)
     {
         $sample = $this->loadSample($sampleName);
-        $address = CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml($sample);
+        $address = CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml(
+            $sample
+        );
     }
 }

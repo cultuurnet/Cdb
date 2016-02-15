@@ -2,7 +2,8 @@
 
 class CultureFeed_Cdb_Data_Address_GeoInformationTest extends PHPUnit_Framework_TestCase
 {
-    public function sampleCoordinates() {
+    public function sampleCoordinates()
+    {
         return array(
             array('4,34890', '50,84740'),
             array('4,3488', '50,8391'),
@@ -15,7 +16,8 @@ class CultureFeed_Cdb_Data_Address_GeoInformationTest extends PHPUnit_Framework_
      * @param string $x
      * @param string $y
      */
-    public function testXYGettersReturnConstructorInjectedValues($x, $y) {
+    public function testXYGettersReturnConstructorInjectedValues($x, $y)
+    {
         $geo = new CultureFeed_Cdb_Data_Address_GeoInformation($x, $y);
 
         $this->assertEquals($x, $geo->getXCoordinate());
@@ -28,8 +30,12 @@ class CultureFeed_Cdb_Data_Address_GeoInformationTest extends PHPUnit_Framework_
      * @param string $x
      * @param string $y
      */
-    public function testXYGettersReturnSetterInjectedValues($x, $y) {
-        $geo = new CultureFeed_Cdb_Data_Address_GeoInformation('4,7139', '50,88162');
+    public function testXYGettersReturnSetterInjectedValues($x, $y)
+    {
+        $geo = new CultureFeed_Cdb_Data_Address_GeoInformation(
+            '4,7139',
+            '50,88162'
+        );
 
         $geo->setXCoordinate($x);
         $geo->setYCoordinate($y);

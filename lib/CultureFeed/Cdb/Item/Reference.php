@@ -5,79 +5,91 @@
  *
  * Holds references between different Cdb Items.
  */
-Class CultureFeed_Cdb_Item_Reference {
+class CultureFeed_Cdb_Item_Reference
+{
+    private $title = '';
 
-	private $title = '';
-	private $cdbId = '';
-	private $externalId = '';
+    private $cdbId = '';
 
-	/**
-	 * Constructor.
-	 *
-	 * @param string $cdbId
-	 * @param string $title
-	 * @param string $externalId
-	 */
-	public function __construct($cdbId, $title = '', $externalId = '') {
-		$this->cdbId = $cdbId;
-		$this->title = $title;
-		$this->externalId = $externalId;
-	}
+    private $externalId = '';
 
-	/**
-	 * getCdbId().
-	 * 
-	 * @return string $cdbId
-	 */
-	public function getCdbId() {
-		return $this->cdbId;
-	}
+    /**
+     * Constructor.
+     *
+     * @param string $cdbId
+     * @param string $title
+     * @param string $externalId
+     */
+    public function __construct($cdbId, $title = '', $externalId = '')
+    {
+        $this->cdbId = $cdbId;
+        $this->title = $title;
+        $this->externalId = $externalId;
+    }
 
-	/**
-	 * setCdbId().
-	 * 
-	 * @param string $cdbId
-	 * @return string
-	 */
-	public function setCdbId($cdbId) {
-		$this->cdbId = $cdbId;
-	}
+    /**
+     * getCdbId().
+     *
+     * @return string $cdbId
+     */
+    public function getCdbId()
+    {
+        return $this->cdbId;
+    }
 
-	/**
-	 * getExternalId().
-	 * 
-	 * @return string
-	 */
-	public function getExternalId() {
-		return $this->externalId;
-	}
+    /**
+     * setCdbId().
+     *
+     * @param  string $cdbId
+     *
+     * @return string
+     */
+    public function setCdbId($cdbId)
+    {
+        $this->cdbId = $cdbId;
+    }
 
-	/**
-	 * setExternalId().
-	 * 
-	 * @param string $externalId
-	 * @return string
-	 */
-	public function setExternalId($externalId) {
-		$this->externalId = $externalId;
-	}
+    /**
+     * getExternalId().
+     *
+     * @return string
+     */
+    public function getExternalId()
+    {
+        return $this->externalId;
+    }
 
-	/**
-	 * getTitle().
-	 * 
-	 * @return string
-	 */
-	public function getTitle() {
-		return $this->title;
-	}
+    /**
+     * setExternalId().
+     *
+     * @param  string $externalId
+     *
+     * @return string
+     */
+    public function setExternalId($externalId)
+    {
+        $this->externalId = $externalId;
+    }
 
-	/**
-	 * getTitle().
-	 * @param string $title
-	 * @return string
-	 */
-	public function setTitle($title) {
-		$this->title = $title;
-	}
+    /**
+     * getTitle().
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
+    /**
+     * getTitle().
+     *
+     * @param string $title
+     *
+     * @return string
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
 }
