@@ -172,11 +172,22 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
         }
 
         if (count($this->keywords) > 0) {
-            $keywordElement = $dom->createElement('keywords');
-            $keywordElement->appendChild(
-                $dom->createTextNode(implode(';', $this->keywords))
-            );
-            $actorElement->appendChild($keywordElement);
+            $keywordsElement = $dom->createElement('keywords');
+            if (version_compare($cdbScheme, '3.3', '>=')) {
+                foreach ($this->keywords as $keyword) {
+                    $keyword->appendToDOM($keywordsElement);
+                }
+                $actorElement->appendChild($keywordsElement);
+            } else {
+                $keywords = array();
+                foreach ($this->keywords as $keyword) {
+                    $keywords[$keyword->getValue()] = $keyword->getValue();
+                }
+                $keywordsElement->appendChild(
+                    $dom->createTextNode(implode(';', $keywords))
+                );
+                $actorElement->appendChild($keywordsElement);
+            }
         }
 
         if ($this->weekScheme) {
