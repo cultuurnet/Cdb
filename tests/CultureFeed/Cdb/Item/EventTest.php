@@ -152,27 +152,28 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('CultureFeed_Cdb_Item_Event', $event);
 
-        $this->assertEquals(
+        $this->assertSame(
             'ea37cae2-c91e-4810-89ab-e060432d2b78',
             $event->getCdbId()
         );
-        $this->assertEquals('2010-02-25T00:00:00', $event->getAvailableFrom());
-        $this->assertEquals('2010-08-09T00:00:00', $event->getAvailableTo());
-        $this->assertEquals('mverdoodt', $event->getCreatedBy());
-        $this->assertEquals('2010-07-05T18:28:18', $event->getCreationDate());
-        $this->assertEquals(
+        $this->assertSame('2010-02-25T00:00:00', $event->getAvailableFrom());
+        $this->assertSame('2010-08-09T00:00:00', $event->getAvailableTo());
+        $this->assertSame('mverdoodt', $event->getCreatedBy());
+        $this->assertSame('2010-07-05T18:28:18', $event->getCreationDate());
+        $this->assertSame(
             'SKB Import:SKB00001_216413',
             $event->getExternalId()
         );
         $this->assertFalse($event->isParent());
-        $this->assertEquals('2010-07-28T13:58:55', $event->getLastUpdated());
-        $this->assertEquals('mverdoodt', $event->getLastUpdatedBy());
-        $this->assertEquals('SKB Import', $event->getOwner());
+        $this->assertSame('2010-07-28T13:58:55', $event->getLastUpdated());
+        $this->assertSame('mverdoodt', $event->getLastUpdatedBy());
+        $this->assertSame('SKB Import', $event->getOwner());
+        $this->assertInternalType('float', $event->getPctComplete());
         $this->assertEquals(80, $event->getPctComplete());
         $this->assertFalse($event->isPrivate());
         $this->assertTrue($event->isPublished());
-        $this->assertEquals('SKB', $event->getValidator());
-        $this->assertEquals('approved', $event->getWfStatus());
+        $this->assertSame('SKB', $event->getValidator());
+        $this->assertSame('approved', $event->getWfStatus());
 
         $this->assertEquals(18, $event->getAgeFrom());
 

@@ -206,7 +206,7 @@ abstract class CultureFeed_Cdb_Item_Base
         }
 
         if (isset($attributes['wfstatus'])) {
-            $item->setWfStatus($attributes['wfstatus']);
+            $item->setWfStatus((string) $attributes['wfstatus']);
         }
     }
 
