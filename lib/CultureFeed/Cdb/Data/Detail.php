@@ -142,4 +142,12 @@ abstract class CultureFeed_Cdb_Data_Detail
     {
         $this->price = $price;
     }
+
+    /**
+     * @param CultureFeed_Cdb_Data_Media $media
+     */
+    public function setMedia(CultureFeed_Cdb_Data_Media $media)
+    {
+        $this->media = $media;
+    }
 }
