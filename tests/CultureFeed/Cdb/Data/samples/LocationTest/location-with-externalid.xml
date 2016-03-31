@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<location>
+    <address>
+        <physical>
+            <city>Herent</city>
+            <country>BE</country>
+            <gis>
+                <xcoordinate>4.702200</xcoordinate>
+                <ycoordinate>50.946560</ycoordinate>
+            </gis>
+            <housenr>666</housenr>
+            <street>Somewhere far away</street>
+            <zipcode>3020</zipcode>
+        </physical>
+    </address>
+    <label externalid="https://beta.uitdatabank.be/place/af58cf0f-0887-4265-8966-0f7cf4d6be84">2dotstwice headquarters</label>
+</location>

@@ -30,6 +30,11 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
     protected $actor;
 
     /**
+     * Cdbid from location place.
+     */
+    protected $externalid;
+
+    /**
      * Construct a new location.
      *
      * @param CultureFeed_Cdb_Data_Address $address
@@ -54,6 +59,14 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
     public function getCdbid()
     {
         return $this->cdbid;
+    }
+
+    /**
+     * Get the externalid for this location.
+     */
+    public function getExternalid()
+    {
+        return $this->externalid;
     }
 
     /**
@@ -102,6 +115,16 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
     }
 
     /**
+     * Set the externalid for this location.
+     *
+     * @param string $externalid
+     */
+    public function setExternalid($externalid)
+    {
+        $this->externalid = $externalid;
+    }
+
+    /**
      * Set the label
      *
      * @param string $label
@@ -131,6 +154,9 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
             $labelElement->appendChild($dom->createTextNode($this->label));
             if ($this->cdbid) {
                 $labelElement->setAttribute('cdbid', $this->cdbid);
+            }
+            if ($this->externalid) {
+                $labelElement->setAttribute('externalid', $this->externalid);
             }
             $locationElement->appendChild($labelElement);
         }
@@ -166,6 +192,8 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
             $location->setLabel((string) $xmlElement->label);
             if (isset($attributes['cdbid'])) {
                 $location->setCdbid((string) $attributes['cdbid']);
+            } elseif (isset($attributes['externalid'])) {
+                $location->setExternalid((string) $attributes['externalid']);
             }
         }
 
