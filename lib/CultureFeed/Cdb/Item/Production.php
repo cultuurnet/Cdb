@@ -34,12 +34,6 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
-        if (empty($xmlElement->categories)) {
-            throw new CultureFeed_ParseException(
-                'Categories are required for production element'
-            );
-        }
-
         if (empty($xmlElement->productiondetails)) {
             throw new CultureFeed_ParseException(
                 'Production details are required for production element'
@@ -49,36 +43,9 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
         $attributes = $xmlElement->attributes();
         $production = new CultureFeed_Cdb_Item_Production();
 
-        // Set ID.
-        if (isset($attributes['cdbid'])) {
-            $production->setCdbId((string) $attributes['cdbid']);
-        }
-
-        if (isset($attributes['externalid'])) {
-            $production->setExternalId((string) $attributes['externalid']);
-        }
-
-        if (isset($event_attributes['availablefrom'])) {
-            $production->setAvailableFrom(
-                (string) $event_attributes['availablefrom']
-            );
-        }
-
-        if (isset($event_attributes['availableto'])) {
-            $production->setAvailableTo(
-                (string) $event_attributes['availableto']
-            );
-        }
-
-        if (isset($event_attributes['createdby'])) {
-            $production->setCreatedBy((string) $event_attributes['createdby']);
-        }
-
-        if (isset($event_attributes['creationdate'])) {
-            $production->setCreationDate(
-                (string) $event_attributes['creationdate']
-            );
-        }
+        self::parseCommonAttributes($production, $xmlElement);
+        self::parseCategories($production, $xmlElement);
+        self::parseKeywords($production, $xmlElement);
 
         if (!empty($xmlElement->agefrom)) {
             $production->setAgeFrom((int) $xmlElement->agefrom);
@@ -92,13 +59,6 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
                 )
             );
         }
-
-        // Set categories
-        $production->setCategories(
-            CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml(
-                $xmlElement->categories
-            )
-        );
 
         // Set production details.
         $production->setDetails(
@@ -135,9 +95,6 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
                 );
             }
         }
-
-        // Set the keywords.
-        self::parseKeywords($xmlElement, $production);
 
         return $production;
     }
@@ -230,32 +187,13 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
      */
     public function appendToDOM(DOMElement $element, $cdbScheme = '3.2')
     {
-
         $dom = $element->ownerDocument;
 
         $productionElement = $dom->createElement('production');
 
-        if ($this->availableFrom) {
-            $productionElement->setAttribute(
-                'availablefrom',
-                $this->availableFrom
-            );
-        }
-
-        if ($this->availableTo) {
-            $productionElement->setAttribute('availableto', $this->availableTo);
-        }
-
-        if ($this->createdBy) {
-            $productionElement->setAttribute('createdby', $this->createdBy);
-        }
-
-        if ($this->creationDate) {
-            $productionElement->setAttribute(
-                'creationdate',
-                $this->creationDate
-            );
-        }
+        $this->appendCommonAttributesToDOM($productionElement, $cdbScheme);
+        $this->appendCategoriesToDOM($productionElement, $cdbScheme);
+        $this->appendKeywordsToDOM($productionElement, $cdbScheme);
 
         if ($this->ageFrom) {
             $productionElement->appendChild(
@@ -273,28 +211,8 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
             $this->bookingPeriod->appendToDOM($productionElement);
         }
 
-        if ($this->cdbId) {
-            $productionElement->setAttribute('cdbid', $this->cdbId);
-        }
-
-        if ($this->externalId) {
-            $productionElement->setAttribute('externalid', $this->externalId);
-        }
-
-        if ($this->categories) {
-            $this->categories->appendToDOM($productionElement);
-        }
-
         if ($this->details) {
             $this->details->appendToDOM($productionElement);
-        }
-
-        if (count($this->keywords) > 0) {
-            $keywordElement = $dom->createElement('keywords');
-            $keywordElement->appendChild(
-                $dom->createTextNode(implode(';', $this->keywords))
-            );
-            $productionElement->appendChild($keywordElement);
         }
 
         if (!empty($this->relations)) {
