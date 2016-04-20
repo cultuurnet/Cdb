@@ -95,12 +95,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
             );
         }
 
-        if (empty($xmlElement->categories)) {
-            throw new CultureFeed_Cdb_ParseException(
-                'Categories missing for event element'
-            );
-        }
-
         if (empty($xmlElement->contactinfo)) {
             throw new CultureFeed_Cdb_ParseException(
                 'Contact info missing for event element'
@@ -197,11 +191,13 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         );
 
         // Set contact information.
-        $event->setContactInfo(
-            CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml(
-                $xmlElement->contactinfo
-            )
-        );
+        if (!empty($xmlElement->contactInfo)) {
+            $event->setContactInfo(
+                CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml(
+                    $xmlElement->contactinfo
+                )
+            );
+        }
 
         // Set event details.
         $event->setDetails(
