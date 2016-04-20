@@ -191,7 +191,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         );
 
         // Set contact information.
-        if (!empty($xmlElement->contactInfo)) {
+        if (!is_null($xmlElement->contactInfo)) {
             $event->setContactInfo(
                 CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml(
                     $xmlElement->contactinfo
