@@ -95,9 +95,9 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
             );
         }
 
-        if (empty($xmlElement->contactinfo)) {
+        if (empty($xmlElement->categories)) {
             throw new CultureFeed_Cdb_ParseException(
-                'Contact info missing for event element'
+                'Categories missing for event element'
             );
         }
 
