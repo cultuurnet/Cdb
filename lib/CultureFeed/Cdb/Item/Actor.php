@@ -171,6 +171,22 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
             $this->contactInfo->appendToDOM($actorElement);
         }
 
+        if ($this->createdBy) {
+            $actorElement->setAttribute('createdby', $this->createdBy);
+        }
+
+        if ($this->creationDate) {
+            $actorElement->setAttribute('creationdate', $this->creationDate);
+        }
+
+        if (isset($this->lastUpdated)) {
+            $actorElement->setAttribute('lastupdated', $this->lastUpdated);
+        }
+
+        if (isset($this->lastUpdatedBy)) {
+            $actorElement->setAttribute('lastupdatedby', $this->lastUpdatedBy);
+        }
+
         if (count($this->keywords) > 0) {
             $keywordsElement = $dom->createElement('keywords');
             if (version_compare($cdbScheme, '3.3', '>=')) {
