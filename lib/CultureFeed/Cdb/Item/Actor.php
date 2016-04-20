@@ -46,12 +46,6 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
-        if (empty($xmlElement->categories)) {
-            throw new CultureFeed_Cdb_ParseException(
-                'Categories missing for actor element'
-            );
-        }
-
         if (empty($xmlElement->actordetails)) {
             throw new CultureFeed_Cdb_ParseException(
                 'Actordetails missing for actor element'
@@ -60,18 +54,13 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
 
         $actor = new self();
 
-        CultureFeed_Cdb_Item_Base::parseCommonAttributes($actor, $xmlElement);
+        self::parseCommonAttributes($actor, $xmlElement);
+        self::parseKeywords($actor, $xmlElement);
+        self::parseCategories($actor, $xmlElement);
 
         $actor->setDetails(
             CultureFeed_Cdb_Data_ActorDetailList::parseFromCdbXml(
                 $xmlElement->actordetails
-            )
-        );
-
-        // Set categories
-        $actor->setCategories(
-            CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml(
-                $xmlElement->categories
             )
         );
 
@@ -83,9 +72,6 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
                 )
             );
         }
-
-        // Set the keywords.
-        self::parseKeywords($xmlElement, $actor);
 
         // Set the weekscheme.
         if (!empty($xmlElement->weekscheme)) {
@@ -146,64 +132,24 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
      */
     public function appendToDOM(DOMElement $element, $cdbScheme = '3.2')
     {
-
         $dom = $element->ownerDocument;
 
         $actorElement = $dom->createElement('actor');
 
-        if ($this->cdbId) {
-            $actorElement->setAttribute('cdbid', $this->cdbId);
-        }
+        $this->appendCommonAttributesToDOM($actorElement, $cdbScheme);
+        $this->appendKeywordsToDOM($actorElement, $cdbScheme);
+        $this->appendCategoriesToDOM($actorElement, $cdbScheme);
 
-        if ($this->externalId) {
-            $actorElement->setAttribute('externalid', $this->externalId);
+        if ($this->asset == true) {
+            $actorElement->setAttribute('asset', true);
         }
 
         if ($this->details) {
             $this->details->appendToDOM($actorElement);
         }
 
-        if ($this->categories) {
-            $this->categories->appendToDOM($actorElement);
-        }
-
         if ($this->contactInfo) {
             $this->contactInfo->appendToDOM($actorElement);
-        }
-
-        if ($this->createdBy) {
-            $actorElement->setAttribute('createdby', $this->createdBy);
-        }
-
-        if ($this->creationDate) {
-            $actorElement->setAttribute('creationdate', $this->creationDate);
-        }
-
-        if (isset($this->lastUpdated)) {
-            $actorElement->setAttribute('lastupdated', $this->lastUpdated);
-        }
-
-        if (isset($this->lastUpdatedBy)) {
-            $actorElement->setAttribute('lastupdatedby', $this->lastUpdatedBy);
-        }
-
-        if (count($this->keywords) > 0) {
-            $keywordsElement = $dom->createElement('keywords');
-            if (version_compare($cdbScheme, '3.3', '>=')) {
-                foreach ($this->keywords as $keyword) {
-                    $keyword->appendToDOM($keywordsElement);
-                }
-                $actorElement->appendChild($keywordsElement);
-            } else {
-                $keywords = array();
-                foreach ($this->keywords as $keyword) {
-                    $keywords[$keyword->getValue()] = $keyword->getValue();
-                }
-                $keywordsElement->appendChild(
-                    $dom->createTextNode(implode(';', $keywords))
-                );
-                $actorElement->appendChild($keywordsElement);
-            }
         }
 
         if ($this->weekScheme) {
