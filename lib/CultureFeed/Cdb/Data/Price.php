@@ -131,7 +131,7 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
 
-        $value = ($xmlElement->pricevalue != null) ? (string) $xmlElement->pricevalue : null;
+        $value = !empty($xmlElement->pricevalue) ? (string) $xmlElement->pricevalue : null;
         $price = new CultureFeed_Cdb_Data_Price($value);
 
         if (!empty($xmlElement->pricedescription)) {

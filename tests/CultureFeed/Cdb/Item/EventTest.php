@@ -1329,7 +1329,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
      */
     public function testDoNotAppendExtraUrlAttributeIn3Dot2()
     {
-        $cdbXml = $this->loadSample('cdbxml-guide-example-6-2.xml', '3.2');
+        $cdbXml = $this->loadSample('cdbxml-guide-example-6-2-without-external-url.xml', '3.2');
 
         $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($cdbXml);
         $event->setExternalUrl('http://uitdatabank.be/event/ea37cae2-c91e-4810-89ab-e060432d2b78');
@@ -1341,7 +1341,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertXmlStringEqualsXmlFile(
-            __DIR__ . '/samples/EventTest/cdbxml-3.2/cdbxml-guide-example-6-2.xml',
+            __DIR__ . '/samples/EventTest/cdbxml-3.2/cdbxml-guide-example-6-2-without-external-url.xml',
             $generatedCdbXml
         );
     }
