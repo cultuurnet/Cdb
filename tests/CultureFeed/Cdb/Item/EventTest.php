@@ -1376,7 +1376,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $eventElements = $dom->getElementsByTagName('event');
 
         /* @var DOMElement $eventElement */
-        $eventElement = $eventElements[0];
+        $eventElement = $eventElements->item(0);
         $eventElement->setAttribute(
             'xmlns',
             CultureFeed_Cdb_Xml::namespaceUriForVersion($nsVersion)
