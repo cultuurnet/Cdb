@@ -76,7 +76,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends PHPUnit_Framework
     {
         $physicalAddress = new \CultureFeed_Cdb_Data_Address_PhysicalAddress();
         $physicalAddress->setStreet('Sint & Gisleinstraat');
-        $physicalAddress->setHouseNumber('62');
+        $physicalAddress->setHouseNumber('61 & 62');
         $physicalAddress->setZip('1000');
         $physicalAddress->setCity('Brussel');
         $physicalAddress->setCountry('BE');
