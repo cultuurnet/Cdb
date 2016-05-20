@@ -179,7 +179,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
         }
         if ($this->street) {
             $physicalElement->appendChild(
-                $dom->createElement('street', $this->street)
+                $dom->createElement('street', htmlspecialchars($this->street))
             );
         }
         $physicalElement->appendChild(
