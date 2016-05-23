@@ -36,12 +36,14 @@ class CultureFeed_Cdb_Item_EventFactory
                     foreach ($actorDetailList as $actorDetail) {
                         /* @var \CultureFeed_Cdb_Data_EventDetail $eventDetail */
                         // http://stackoverflow.com/questions/3243900/convert-cast-an-stdclass-object-to-another-class
-                        $eventDetail = unserialize(sprintf(
-                            'O:%d:"%s"%s',
-                            strlen(CultureFeed_Cdb_Data_EventDetail::class),
-                            CultureFeed_Cdb_Data_EventDetail::class,
-                            strstr(strstr(serialize($actorDetail), '"'), ':')
-                        ));
+                        $eventDetail = unserialize(
+                            sprintf(
+                                'O:%d:"%s"%s',
+                                strlen(CultureFeed_Cdb_Data_EventDetail::class),
+                                CultureFeed_Cdb_Data_EventDetail::class,
+                                strstr(strstr(serialize($actorDetail), '"'), ':')
+                            )
+                        );
 
                         if ($locationLabel == null) {
                             $locationLabel = $eventDetail->getTitle();
