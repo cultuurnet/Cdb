@@ -82,6 +82,7 @@ class CultureFeed_Cdb_Item_EventFactory
 
                 if (!is_null($locationLabel)) {
                     $location->setLabel($locationLabel);
+                    $location->setCdbid($actor->getCdbId());
                 }
 
                 $event->setLocation($location);
