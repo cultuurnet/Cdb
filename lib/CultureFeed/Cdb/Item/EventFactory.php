@@ -39,8 +39,8 @@ class CultureFeed_Cdb_Item_EventFactory
                         $eventDetail = unserialize(
                             sprintf(
                                 'O:%d:"%s"%s',
-                                strlen(CultureFeed_Cdb_Data_EventDetail::class),
-                                CultureFeed_Cdb_Data_EventDetail::class,
+                                strlen('CultureFeed_Cdb_Data_EventDetail'),
+                                'CultureFeed_Cdb_Data_EventDetail',
                                 strstr(strstr(serialize($actorDetail), '"'), ':')
                             )
                         );
