@@ -4,9 +4,10 @@ class CultureFeed_Cdb_Item_EventFactory
 {
     /**
      * @param CultureFeed_Cdb_Item_Actor $actor
+     * @param string $unknownLocationLabel
      * @return CultureFeed_Cdb_Item_Event
      */
-    public static function fromActor(\CultureFeed_Cdb_Item_Actor $actor)
+    public static function fromActor(\CultureFeed_Cdb_Item_Actor $actor, $unknownLocationLabel = 'Onbekend')
     {
         $event = new \CultureFeed_Cdb_Item_Event();
 
@@ -82,10 +83,10 @@ class CultureFeed_Cdb_Item_EventFactory
                 $locationAddress = $addresses[0];
                 $location = new \CultureFeed_Cdb_Data_Location($locationAddress);
 
-                if (!is_null($locationLabel)) {
-                    $location->setLabel($locationLabel);
-                    $location->setCdbid($actor->getCdbId());
-                }
+                $locationLabel = $locationLabel ? $locationLabel : $unknownLocationLabel;
+
+                $location->setLabel($locationLabel);
+                $location->setCdbid($actor->getCdbId());
 
                 $event->setLocation($location);
             }
