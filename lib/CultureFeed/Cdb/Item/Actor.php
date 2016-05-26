@@ -138,7 +138,6 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
 
         $this->appendCommonAttributesToDOM($actorElement, $cdbScheme);
         $this->appendKeywordsToDOM($actorElement, $cdbScheme);
-        $this->appendCategoriesToDOM($actorElement, $cdbScheme);
 
         if ($this->asset == true) {
             $actorElement->setAttribute('asset', true);
@@ -148,6 +147,8 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
             $this->details->appendToDOM($actorElement);
         }
 
+        $this->appendCategoriesToDOM($actorElement, $cdbScheme);
+        
         if ($this->contactInfo) {
             $this->contactInfo->appendToDOM($actorElement);
         }
