@@ -56,7 +56,7 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
                 $dom->createTextNode($this->calendarSummary)
             );
             $detailElement->appendChild(
-                $dom->createTextNode($this->calendarSummary)
+                $summaryElement
             );
         }
 
