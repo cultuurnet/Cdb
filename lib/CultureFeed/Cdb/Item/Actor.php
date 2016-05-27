@@ -137,7 +137,6 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
         $actorElement = $dom->createElement('actor');
 
         $this->appendCommonAttributesToDOM($actorElement, $cdbScheme);
-        $this->appendKeywordsToDOM($actorElement, $cdbScheme);
 
         if ($this->asset == true) {
             $actorElement->setAttribute('asset', true);
@@ -152,6 +151,8 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
         if ($this->contactInfo) {
             $this->contactInfo->appendToDOM($actorElement);
         }
+
+        $this->appendKeywordsToDOM($actorElement, $cdbScheme);
 
         if ($this->weekScheme) {
             $this->weekScheme->appendToDOM($actorElement);
