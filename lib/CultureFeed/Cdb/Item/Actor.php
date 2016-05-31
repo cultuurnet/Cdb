@@ -121,6 +121,15 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     /**
+     * Set the asset attribute.
+     * @param bool $asset
+     */
+    public function setAsset($asset = true)
+    {
+        $this->asset = $asset;
+    }
+
+    /**
      * Appends the current object to the passed DOM tree.
      *
      * @param DOMElement $element
