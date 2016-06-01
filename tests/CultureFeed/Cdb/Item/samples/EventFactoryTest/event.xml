@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<cdb:event xmlns:cdb="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.3/FINAL" asset="true"
+<cdb:event xmlns:cdb="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.3/FINAL"
            availablefrom="2012-12-03T12:09:28" availableto="2100-01-01T00:00:00" createdby="sarahducha"
            creationdate="2010-01-06T13:11:46" cdbid="061C13AC-A15F-F419-D8993D68C9E94548"
            externalid="061C13AC-A15F-F419-D8993D68C9E94548" lastupdated="2012-12-03T12:09:28"
