@@ -22,25 +22,7 @@
         <cdb:category catid="6.3.0.0.0" type="publicscope">Nationaal</cdb:category>
         <cdb:category catid="8.48.0.0.0" type="actortype">Concertzaal</cdb:category>
     </cdb:categories>
-    <cdb:contactinfo>
-        <cdb:address>
-            <cdb:physical>
-                <cdb:city>Leuven</cdb:city>
-                <cdb:country>BE</cdb:country>
-                <cdb:gis>
-                    <cdb:xcoordinate>50.881350</cdb:xcoordinate>
-                    <cdb:ycoordinate>4.714561</cdb:ycoordinate>
-                </cdb:gis>
-                <cdb:housenr>12</cdb:housenr>
-                <cdb:street>Martelarenplein</cdb:street>
-                <cdb:zipcode>3000</cdb:zipcode>
-            </cdb:physical>
-        </cdb:address>
-        <cdb:mail>info@hetdepot.be</cdb:mail>
-        <cdb:phone type="phone">+32
-            16 220603
-        </cdb:phone>
-    </cdb:contactinfo>
+    <cdb:contactinfo />
     <cdb:calendar>
         <cdb:permanentopeningtimes>
             <cdb:permanent />
