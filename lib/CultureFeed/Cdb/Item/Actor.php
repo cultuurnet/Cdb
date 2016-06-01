@@ -54,6 +54,11 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
 
         $actor = new self();
 
+        $attributes = $xmlElement->attributes();
+        if (isset($attributes['asset'])) {
+            $actor->setAsset((bool) $attributes['asset']);
+        }
+
         self::parseCommonAttributes($actor, $xmlElement);
         self::parseKeywords($actor, $xmlElement);
         self::parseCategories($actor, $xmlElement);
