@@ -61,6 +61,21 @@ class CultureFeed_Cdb_Item_ActorFactory
                     }
                     break;
 
+                case 'categories':
+                    /* @var CultureFeed_Cdb_Data_CategoryList $value */
+                    $categories = $value;
+                    if (!$categories->hasCategory('8.15.0.0.0')) {
+                        $locationCategory = new \CultureFeed_Cdb_Data_Category(
+                            'actortype',
+                            '8.15.0.0.0',
+                            'Locatie'
+                        );
+                        $categories->add($locationCategory);
+                    }
+
+                    $actor->setCategories($categories);
+                    break;
+
                 default:
                     $actorProperty = $actorReflection->getProperty($property->getName());
                     $actorProperty->setAccessible(true);
