@@ -42,7 +42,14 @@ class CultureFeed_Cdb_Item_ActorFactory
                     break;
 
                 case 'location':
-                    // Do nothing.
+                    /* @var CultureFeed_Cdb_Data_Location $value */
+                    $location = $value;
+                    if (empty($actor->getContactInfo()->getAddresses())) {
+                        $address = $location->getAddress();
+                        $contactInfo = new \CultureFeed_Cdb_Data_ContactInfo();
+                        $contactInfo->addAddress($address);
+                        $actor->setContactInfo($contactInfo);
+                    }
                     break;
 
                 case 'weekScheme':

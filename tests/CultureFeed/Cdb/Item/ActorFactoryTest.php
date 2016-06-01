@@ -35,6 +35,14 @@ class CultureFeed_Cdb_Item_Actor_FactoryTest extends \PHPUnit_Framework_TestCase
                     $this->loadSample('actor-with-weekscheme.xml')
                 ),
             ],
+            [
+                \CultureFeed_Cdb_Item_Event::parseFromCdbXml(
+                    $this->loadSample('event-without-contact-info.xml')
+                ),
+                \CultureFeed_Cdb_Item_Actor::parseFromCdbXml(
+                    $this->loadSample('actor-without-contact-info.xml')
+                ),
+            ],
         ];
     }
 
