@@ -61,11 +61,12 @@ class CultureFeed_Cdb_Item_ActorFactory
                     break;
 
                 case 'calendar':
-                    /* @var CultureFeed_Cdb_Data_Calendar_Permanent $value */
                     $calendar = $value;
-                    $weekScheme = $calendar->getWeekScheme();
-                    if (!empty($weekScheme)) {
-                        $actor->setWeekScheme($weekScheme);
+                    if ($calendar instanceof CultureFeed_Cdb_Data_Calendar_Permanent) {
+                        $weekScheme = $calendar->getWeekScheme();
+                        if (!empty($weekScheme)) {
+                            $actor->setWeekScheme($weekScheme);
+                        }
                     }
                     break;
 
