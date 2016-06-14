@@ -44,7 +44,8 @@ class CultureFeed_Cdb_Item_ActorFactory
                 case 'location':
                     /* @var CultureFeed_Cdb_Data_Location $value */
                     $location = $value;
-                    if (empty($actor->getContactInfo()->getAddresses())) {
+                    $addresses = $actor->getContactInfo()->getAddresses();
+                    if (empty($addresses)) {
                         $address = $location->getAddress();
                         $contactInfo = new \CultureFeed_Cdb_Data_ContactInfo();
                         $contactInfo->addAddress($address);
