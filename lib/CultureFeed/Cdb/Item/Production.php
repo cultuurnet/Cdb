@@ -83,9 +83,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
 
         // Set the related events for this production.
         if (!empty($xmlElement->relatedevents) && isset($xmlElement->relatedevents->id)) {
-
             foreach ($xmlElement->relatedevents->id as $relatedItem) {
-
                 $attributes = $relatedItem->attributes();
 
                 $production->addRelation(
@@ -216,7 +214,6 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
         }
 
         if (!empty($this->relations)) {
-
             $relationsElement = $dom->createElement('eventrelations');
 
             foreach ($this->relations as $relation) {

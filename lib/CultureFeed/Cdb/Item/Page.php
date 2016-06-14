@@ -488,7 +488,6 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         }
 
         if (!empty($addressElement->lat) && !empty($addressElement->lon)) {
-
             $coordinates = $addressElement->lat . '-' . $addressElement->lon;
             if ($coordinates != '0.0-0.0') {
                 $address->setGeoInformation(
@@ -517,7 +516,6 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         $links = array();
         if (!empty($xmlElement->links)) {
             foreach ($xmlElement->links->children() as $link) {
-
                 $url = (string) $link;
                 if (empty($url)) {
                     continue;
