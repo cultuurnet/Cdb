@@ -10,6 +10,14 @@ class CultureFeed_Cdb_Item_ActorFactory
         $eventReflection = new \ReflectionClass($event);
         $actorReflection = new \ReflectionClass($actor);
 
+        $actorProperties = $actorReflection->getProperties();
+        $actorPropertyNames = array_map(
+            function (ReflectionProperty $property) {
+                return $property->getName();
+            },
+            $actorProperties
+        );
+
         foreach ($eventReflection->getProperties() as $property) {
             $property->setAccessible(true);
             $value = $property->getValue($event);
@@ -86,9 +94,11 @@ class CultureFeed_Cdb_Item_ActorFactory
                     break;
 
                 default:
-                    $actorProperty = $actorReflection->getProperty($property->getName());
-                    $actorProperty->setAccessible(true);
-                    $actorProperty->setValue($actor, $value);
+                    if (in_array($property->getName(), $actorPropertyNames)) {
+                        $actorProperty = $actorReflection->getProperty($property->getName());
+                        $actorProperty->setAccessible(true);
+                        $actorProperty->setValue($actor, $value);
+                    }
                     break;
             }
         }
