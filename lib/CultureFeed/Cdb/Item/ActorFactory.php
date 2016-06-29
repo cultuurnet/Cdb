@@ -12,7 +12,7 @@ class CultureFeed_Cdb_Item_ActorFactory
 
         $actorProperties = $actorReflection->getProperties();
         $actorPropertyNames = array_map(
-            function(ReflectionProperty $property) {
+            function (ReflectionProperty $property) {
                 return $property->getName();
             },
             $actorProperties
@@ -96,7 +96,7 @@ class CultureFeed_Cdb_Item_ActorFactory
                 default:
                     if (in_array($property->getName(), $actorPropertyNames)) {
                         $actorProperty = $actorReflection->getProperty($property->getName());
-                        $actorProperty->setAccessible(TRUE);
+                        $actorProperty->setAccessible(true);
                         $actorProperty->setValue($actor, $value);
                     }
                     break;
