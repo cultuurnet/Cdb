@@ -3,7 +3,7 @@
            availablefrom="2012-12-03T12:09:28" availableto="2100-01-01T00:00:00" createdby="sarahducha"
            creationdate="2010-01-06T13:11:46" cdbid="061C13AC-A15F-F419-D8993D68C9E94548"
            externalid="061C13AC-A15F-F419-D8993D68C9E94548" lastupdated="2012-12-03T12:09:28"
-           lastupdatedby="bart.luyckx@cultuurnet.be" owner="Invoerders Algemeen " relevancy="15.564092636108398">
+           lastupdatedby="bart.luyckx@cultuurnet.be" owner="Invoerders Algemeen " relevancy="15.564092636108398" isparent="true">
     <cdb:eventdetails>
         <cdb:eventdetail lang="nl">
             <cdb:calendarsummary>ma tot zo</cdb:calendarsummary>
