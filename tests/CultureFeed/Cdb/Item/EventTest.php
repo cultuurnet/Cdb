@@ -379,6 +379,10 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
             '920e9755-94a0-42c1-8c8c-9d17f693d0be',
             $location->getCdbid()
         );
+        $this->assertEquals(
+            'external-id-1',
+            $location->getExternalId()
+        );
         $this->assertEquals('Café Bonnefooi', $location->getLabel());
 
         $address = $location->getAddress();
@@ -400,6 +404,10 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
         $organiser = $event->getOrganiser();
         $this->assertInstanceOf('CultureFeed_Cdb_Data_Organiser', $organiser);
+        $this->assertEquals(
+            'external-id-2',
+            $organiser->getExternalId()
+        );
 
         $this->assertEquals('Café Bonnefooi', $organiser->getLabel());
     }
@@ -826,10 +834,12 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
         $location->setLabel('Café Bonnefooi');
         $location->setCdbid('920e9755-94a0-42c1-8c8c-9d17f693d0be');
+        $location->setExternalId('external-id-1');
         $event->setLocation($location);
 
         $organiser = new CultureFeed_Cdb_Data_Organiser();
         $organiser->setLabel('Café Bonnefooi');
+        $organiser->setExternalId('external-id-2');
         $event->setOrganiser($organiser);
 
         $languages = new CultureFeed_Cdb_Data_LanguageList();

@@ -67,9 +67,9 @@
         <zipcode>1000</zipcode>
       </physical>
     </address>
-    <label cdbid="920e9755-94a0-42c1-8c8c-9d17f693d0be">Café Bonnefooi</label>
+    <label cdbid="920e9755-94a0-42c1-8c8c-9d17f693d0be" externalid="external-id-1">Café Bonnefooi</label>
   </location>
   <organiser>
-    <label>Café Bonnefooi</label>
+    <label externalid="external-id-2">Café Bonnefooi</label>
   </organiser>
 </event>

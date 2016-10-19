@@ -24,6 +24,11 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
     protected $cdbid;
 
     /**
+     * @var string
+     */
+    protected $externalid;
+
+    /**
      * Location actor.
      * @var CultureFeed_Cdb_Item_Actor
      */
@@ -54,6 +59,14 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
     public function getCdbid()
     {
         return $this->cdbid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExternalId()
+    {
+        return $this->externalid;
     }
 
     /**
@@ -102,6 +115,14 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
     }
 
     /**
+     * @param string $externalid
+     */
+    public function setExternalId($externalid)
+    {
+        $this->externalid = (string) $externalid;
+    }
+
+    /**
      * Set the label
      *
      * @param string $label
@@ -129,9 +150,15 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
         if ($this->label) {
             $labelElement = $dom->createElement('label');
             $labelElement->appendChild($dom->createTextNode($this->label));
+
             if ($this->cdbid) {
                 $labelElement->setAttribute('cdbid', $this->cdbid);
             }
+
+            if ($this->externalid) {
+                $labelElement->setAttribute('externalid', $this->externalid);
+            }
+
             $locationElement->appendChild($labelElement);
         }
 
@@ -164,8 +191,13 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
         if (!empty($xmlElement->label)) {
             $attributes = $xmlElement->label->attributes();
             $location->setLabel((string) $xmlElement->label);
+
             if (isset($attributes['cdbid'])) {
                 $location->setCdbid((string) $attributes['cdbid']);
+            }
+
+            if (isset($attributes['externalid'])) {
+                $location->setExternalId((string) $attributes['externalid']);
             }
         }
 
