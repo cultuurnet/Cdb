@@ -101,7 +101,7 @@ class CultureFeed_Cdb_Data_Calendar_OpeningTime implements CultureFeed_Cdb_IElem
     {
 
         $attributes = $xmlElement->attributes();
-        if (!isset($attributes['from'])) {
+        if (!isset($attributes['from']) || empty($attributes['from'])) {
             $openFrom = '00:00:00';
         } else {
             $openFrom = (string) $attributes['from'];
