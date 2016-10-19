@@ -1292,4 +1292,106 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
             $secondFile->getSubBrand()
         );
     }
+
+    /**
+     * Test for parsing the externalurl attribute.
+     */
+    public function testParseExternalUrl()
+    {
+        $cdbxml33 = $this->loadSample('cdbxml-guide-example-6-2-externalurl.xml', '3.3');
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($cdbxml33);
+
+        $this->assertEquals(
+            'http://uitdatabank.be/event/ea37cae2-c91e-4810-89ab-e060432d2b78',
+            $event->getExternalUrl()
+        );
+
+        $cdbxml32 = $this->loadSample('cdbxml-guide-example-6-2.xml', '3.2');
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($cdbxml32);
+
+        $this->assertEmpty($event->getExternalUrl());
+    }
+
+    /**
+     * Test for appending the externalurl attribute.
+     */
+    public function testAppendExternalUrlAttributeIn3Dot3()
+    {
+        $cdbXmlWithoutExternalUrl = $this->loadSample('cdbxml-guide-example-6-2.xml', '3.3');
+
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($cdbXmlWithoutExternalUrl);
+        $event->setExternalUrl('http://uitdatabank.be/event/ea37cae2-c91e-4810-89ab-e060432d2b78');
+
+        // We need to do some funky stuff to generate the XML as it is in the sample file.
+        $generatedCdbXml = $this->generateXmlWithNoCdbXmlRootElementButWithNSOnRootElement(
+            $event,
+            '3.3'
+        );
+
+        $this->assertXmlStringEqualsXmlFile(
+            __DIR__ . '/samples/EventTest/cdbxml-3.3/cdbxml-guide-example-6-2.xml',
+            $generatedCdbXml
+        );
+    }
+
+    /**
+     * Test for not appending the externalurl attribute in lower versions.
+     */
+    public function testDoNotAppendExtraUrlAttributeIn3Dot2()
+    {
+        $cdbXml = $this->loadSample('cdbxml-guide-example-6-2-without-external-url.xml', '3.2');
+
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($cdbXml);
+        $event->setExternalUrl('http://uitdatabank.be/event/ea37cae2-c91e-4810-89ab-e060432d2b78');
+
+        // We need to do some funky stuff to generate the XML as it is in the sample file.
+        $generatedCdbXml = $this->generateXmlWithNoCdbXmlRootElementButWithNSOnRootElement(
+            $event,
+            '3.2'
+        );
+
+        $this->assertXmlStringEqualsXmlFile(
+            __DIR__ . '/samples/EventTest/cdbxml-3.2/cdbxml-guide-example-6-2-without-external-url.xml',
+            $generatedCdbXml
+        );
+    }
+
+    /**
+     * @param CultureFeed_Cdb_Item_Event $event
+     * @param string $nsVersion
+     * @return string
+     */
+    private function generateXmlWithNoCdbXmlRootElementButWithNSOnRootElement(
+        CultureFeed_Cdb_Item_Event $event,
+        $nsVersion
+    ) {
+        // Taken from other test methods in this file and adapted where necessary.
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = true;
+
+        $dummy_element = $dom->createElement('dummy');
+        $dom->appendChild($dummy_element);
+
+        $event->appendToDOM($dummy_element);
+
+        $xpath = new DOMXPath($dom);
+        $items = $xpath->query('//event');
+        $this->assertEquals(1, $items->length);
+        $event_element = $items->item(0);
+
+        $dom->removeChild($dummy_element);
+        $dom->appendChild($event_element);
+
+        $eventElements = $dom->getElementsByTagName('event');
+
+        /* @var DOMElement $eventElement */
+        $eventElement = $eventElements->item(0);
+        $eventElement->setAttribute(
+            'xmlns',
+            CultureFeed_Cdb_Xml::namespaceUriForVersion($nsVersion)
+        );
+
+        return $dom->saveXML();
+    }
 }
