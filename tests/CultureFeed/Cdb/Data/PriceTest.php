@@ -21,7 +21,8 @@ class CultureFeed_Cdb_Data_PriceTest extends PHPUnit_Framework_TestCase
         return $dom;
     }
 
-    public function testParseNoPriceValue() {
+    public function testParseNoPriceValue()
+    {
         $sample = $this->loadSample('no_pricevalue.xml');
 
         $price = CultureFeed_Cdb_Data_Price::parseFromCdbXml(simplexml_import_dom($sample));
@@ -30,7 +31,8 @@ class CultureFeed_Cdb_Data_PriceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Basistarief: 0,00 €', $price->getDescription());
     }
 
-    public function testParseFreeEntrance() {
+    public function testParseFreeEntrance()
+    {
         $sample = $this->loadSample('free.xml');
 
         $price = CultureFeed_Cdb_Data_Price::parseFromCdbXml(simplexml_import_dom($sample));
