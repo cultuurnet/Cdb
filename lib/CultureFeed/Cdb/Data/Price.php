@@ -95,7 +95,6 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
      */
     public function appendToDOM(DOMELement $element)
     {
-
         $dom = $element->ownerDocument;
 
         $priceElement = $dom->createElement('price');
@@ -130,8 +129,7 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
-
-        $value = !empty($xmlElement->pricevalue) ? (string) $xmlElement->pricevalue : null;
+        $value = $xmlElement->pricevalue->count() ? (string) $xmlElement->pricevalue : null;
         $price = new CultureFeed_Cdb_Data_Price($value);
 
         if (!empty($xmlElement->pricedescription)) {
