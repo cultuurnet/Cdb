@@ -1122,6 +1122,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
     {
         $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
         $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar'));
+        $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('BAR'));
 
         $this->event->deleteKeyword(new CultureFeed_Cdb_Data_Keyword('bar'));
 
