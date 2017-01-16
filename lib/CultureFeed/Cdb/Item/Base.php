@@ -675,11 +675,12 @@ abstract class CultureFeed_Cdb_Item_Base
             $keyword = $keyword->getValue();
         }
 
-        if (!isset($this->keywords[$keyword])) {
-            throw new Exception('Trying to remove a non-existing keyword.');
-        }
-
-        unset($this->keywords[$keyword]);
+        $this->keywords = array_filter(
+            $this->keywords,
+            function (CultureFeed_Cdb_Data_Keyword $itemKeyword) use ($keyword) {
+                return strcmp(mb_strtolower($itemKeyword->getValue(), 'UTF-8'), mb_strtolower($keyword, 'UTF-8')) !== 0;
+            }
+        );
     }
 
     /**
