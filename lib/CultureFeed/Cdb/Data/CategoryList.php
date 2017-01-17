@@ -31,6 +31,8 @@ class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElement, Ite
 
     /**
      * Delete a given category of the list.
+     * @deprecated Using the delete method will result in an issue when iterating,
+     * because the index aka position gets a gap and the iteration stops on the gap.
      */
     public function delete($key)
     {
