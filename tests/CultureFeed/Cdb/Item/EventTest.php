@@ -1395,4 +1395,22 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
         return $dom->saveXML();
     }
+
+    public function testBookingPeriodCanBeRemoved()
+    {
+        $event = new CultureFeed_Cdb_Item_Event();
+
+        $event->setBookingPeriod(
+            new CultureFeed_Cdb_Data_Calendar_BookingPeriod(0, 1483228800)
+        );
+
+        $this->assertEquals(
+            new CultureFeed_Cdb_Data_Calendar_BookingPeriod(0, 1483228800),
+            $event->getBookingPeriod()
+        );
+
+        $event->setBookingPeriod(null);
+
+        $this->assertNull($event->getBookingPeriod());
+    }
 }
