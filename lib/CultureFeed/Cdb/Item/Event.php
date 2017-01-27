@@ -8,7 +8,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 {
     /**
      * Minimum age for the event.
-     * @var int
+     * @var int|null
      */
     protected $ageFrom;
 
@@ -304,6 +304,8 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     /**
      * Get the minimum age for this event.
+     *
+     * @return int|null
      */
     public function getAgeFrom()
     {
@@ -313,15 +315,14 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     /**
      * Set the minimum age for this event.
      *
-     * @param int $age
+     * @param int|null $age
      *   Minimum age.
      *
      * @throws UnexpectedValueException
      */
-    public function setAgeFrom($age)
+    public function setAgeFrom($age = null)
     {
-
-        if (!is_numeric($age)) {
+        if (!is_numeric($age) && !is_null($age)) {
             throw new UnexpectedValueException('Invalid age: ' . $age);
         }
 
@@ -499,7 +500,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         $this->appendKeywordsToDOM($eventElement, $cdbScheme);
         $this->appendCategoriesToDOM($eventElement, $cdbScheme);
 
-        if ($this->ageFrom) {
+        if (isset($this->ageFrom)) {
             $eventElement->appendChild(
                 $dom->createElement('agefrom', $this->ageFrom)
             );
