@@ -154,7 +154,6 @@ class CultureFeed_Cdb_Default
 
         foreach ($this->items as $type => $itemsFromType) {
             if ($itemsFromType) {
-
                 foreach ($itemsFromType as $item) {
                     $item->appendToDOM($cdbElement, $this->getSchemaVersion());
                 }
