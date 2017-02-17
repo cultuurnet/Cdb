@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<actor xmlns:cdb="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL" asset="true" availablefrom="2011-01-03T10:39:18" availableto="2100-01-01T00:00:00" createdby="admin ferranti" creationdate="2010-01-19T04:59:14" cdbid="a761b5d6-0349-4dd4-a39f-c471b0fb64e8" externalid="SKB Import:Organisation_488" lastupdated="2011-01-03T10:39:18" lastupdatedby="soetkin.vanassche@cultuurnet.be" owner="Invoerders Algemeen ">
+<actor cdb="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL" asset="true" availablefrom="2011-01-03T10:39:18" availableto="2100-01-01T00:00:00" createdby="admin ferranti" creationdate="2010-01-19T04:59:14" cdbid="a761b5d6-0349-4dd4-a39f-c471b0fb64e8" externalid="SKB Import:Organisation_488" lastupdated="2011-01-03T10:39:18" lastupdatedby="soetkin.vanassche@cultuurnet.be" owner="Invoerders Algemeen ">
     <actordetails>
         <actordetail lang="nl">
             <media>
