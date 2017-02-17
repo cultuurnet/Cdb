@@ -86,7 +86,6 @@ class CultureFeed_Cdb_Default
         $type = get_class($item);
 
         switch ($type) {
-
             case 'CultureFeed_Cdb_Item_Actor':
                 $this->items['actors'][] = $item;
                 break;
@@ -117,7 +116,6 @@ class CultureFeed_Cdb_Default
 
         // Return the correct cdb item.
         switch ($xmlElement->getName()) {
-
             case 'event':
                 return CultureFeed_Cdb_Item_Event::parseFromCdbXml($xmlElement);
 
@@ -139,7 +137,6 @@ class CultureFeed_Cdb_Default
      */
     public function __toString()
     {
-
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
         $dom->preserveWhiteSpace = false;
@@ -156,7 +153,6 @@ class CultureFeed_Cdb_Default
         $dom->appendChild($cdbElement);
 
         foreach ($this->items as $type => $itemsFromType) {
-
             if ($itemsFromType) {
 
                 foreach ($itemsFromType as $item) {
