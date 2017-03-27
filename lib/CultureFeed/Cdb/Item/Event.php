@@ -323,6 +323,16 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     /**
+     * Get the maximum age for this event.
+     *
+     * @return int|null
+     */
+    public function getAgeTo()
+    {
+        return $this->ageTo;
+    }
+
+    /**
      * Set the minimum age for this event.
      *
      * @param int|null $age
