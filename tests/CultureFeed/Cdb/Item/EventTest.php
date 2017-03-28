@@ -1149,6 +1149,54 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testAgeRange()
+    {
+        $xml = $this->loadSample('test-event-2014-01-08-age-range.xml', '3.3');
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
+
+        $dom = new DOMDocument('1.0', 'utf-8');
+        $eventsElement = $dom->createElement('events');
+        $dom->appendChild($eventsElement);
+        $event->appendToDOM($eventsElement);
+        $xpath = new DOMXPath($dom);
+        $ageFromItems = $xpath->query('/events/event/agefrom');
+        $ageToItems = $xpath->query('/events/event/ageto');
+
+        $this->assertEquals(
+            5,
+            $event->getAgeFrom()
+        );
+
+        $this->assertEquals(
+            10,
+            $event->getAgeTo()
+        );
+
+        $this->assertEquals(
+            5,
+            $ageFromItems->item(0)->nodeValue
+        );
+
+        $this->assertEquals(
+            10,
+            $ageToItems->item(0)->nodeValue
+        );
+    }
+
+    public function testInvalidAgeFrom()
+    {
+        $this->setExpectedException(UnexpectedValueException::class, 'Invalid minimum age: bla');
+        $xml = $this->loadSample('test-event-2014-01-08-invalid-age-from.xml', '3.3');
+        CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
+    }
+
+    public function testInvalidAgeTo()
+    {
+        $this->setExpectedException(UnexpectedValueException::class, 'Invalid maximum age: bla');
+        $xml = $this->loadSample('test-event-2014-01-08-invalid-age-to.xml', '3.3');
+        CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
+    }
+
     public function testDeleteKeywordWithStringArgument()
     {
         $this->event->addKeyword('foo');
