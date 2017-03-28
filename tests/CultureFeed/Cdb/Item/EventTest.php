@@ -1185,14 +1185,14 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
     public function testInvalidAgeFrom()
     {
-        $this->setExpectedException(UnexpectedValueException::class, 'Invalid minimum age: bla');
+        $this->setExpectedException('UnexpectedValueException', 'Invalid minimum age: bla');
         $xml = $this->loadSample('test-event-2014-01-08-invalid-age-from.xml', '3.3');
         CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
     }
 
     public function testInvalidAgeTo()
     {
-        $this->setExpectedException(UnexpectedValueException::class, 'Invalid maximum age: bla');
+        $this->setExpectedException('UnexpectedValueException', 'Invalid maximum age: bla');
         $xml = $this->loadSample('test-event-2014-01-08-invalid-age-to.xml', '3.3');
         CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
     }
