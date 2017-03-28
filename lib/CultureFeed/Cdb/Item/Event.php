@@ -13,6 +13,12 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     protected $ageFrom;
 
     /**
+     * Maximum age for the event.
+     * @var int|null
+     */
+    protected $ageTo;
+
+    /**
      * Booking period for this event.
      * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
      */
@@ -147,7 +153,11 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         }
 
         if (isset($xmlElement->agefrom)) {
-            $event->setAgeFrom((int) $xmlElement->agefrom);
+            $event->setAgeFrom((string) $xmlElement->agefrom);
+        }
+
+        if (isset($xmlElement->ageto)) {
+            $event->setAgeTo((string) $xmlElement->ageto);
         }
 
         // Set calendar information.
@@ -313,20 +323,55 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     /**
+     * Get the maximum age for this event.
+     *
+     * @return int|null
+     */
+    public function getAgeTo()
+    {
+        return $this->ageTo;
+    }
+
+    /**
      * Set the minimum age for this event.
      *
-     * @param int|null $age
+     * @param string|int|null $age
      *   Minimum age.
      *
      * @throws UnexpectedValueException
      */
     public function setAgeFrom($age = null)
     {
-        if (!is_numeric($age) && !is_null($age)) {
-            throw new UnexpectedValueException('Invalid age: ' . $age);
+        if (!is_null($age)) {
+            if (!is_int($age) && !is_numeric($age)) {
+                throw new UnexpectedValueException('Invalid minimum age: ' . $age);
+            }
+
+            $age = (int) $age;
         }
 
         $this->ageFrom = $age;
+    }
+
+    /**
+     * Set the maximum age for this event.
+     *
+     * @param string|int|null $age
+     *   Maximum age.
+     *
+     * @throws UnexpectedValueException
+     */
+    public function setAgeTo($age = null)
+    {
+        if (!is_null($age)) {
+            if (!is_int($age) && !is_numeric($age)) {
+                throw new UnexpectedValueException('Invalid maximum age: ' . $age);
+            }
+
+            $age = (int) $age;
+        }
+
+        $this->ageTo = $age;
     }
 
     /**
@@ -503,6 +548,12 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         if (isset($this->ageFrom)) {
             $eventElement->appendChild(
                 $dom->createElement('agefrom', $this->ageFrom)
+            );
+        }
+
+        if (isset($this->ageTo)) {
+            $eventElement->appendChild(
+                $dom->createElement('ageto', $this->ageTo)
             );
         }
 
