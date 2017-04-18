@@ -152,8 +152,19 @@ class CultureFeed_Cdb_List_Results implements Iterator
             $itemName = 'production';
         }
 
-        foreach ($xmlElement->$listName->$itemName as $item) {
-            $items[] = CultureFeed_Cdb_Default::parseItem($item);
+        if (isset($listName) && isset($itemName)) {
+            foreach ($xmlElement->$listName->$itemName as $item) {
+                $listItem = CultureFeed_Cdb_Default::parseItem($item);
+                $listItem->setSource($item);
+                $items[] = $listItem;
+            }
+        } else {
+            foreach ($xmlElement as $item) {
+                if ($listItem = CultureFeed_Cdb_Default::parseItem($item)) {
+                    $listItem->setSource($item);
+                    $items[] = $listItem;
+                }
+            }
         }
 
         return $items;

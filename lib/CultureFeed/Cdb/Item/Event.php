@@ -83,6 +83,11 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     protected $weight;
 
     /**
+     * @var string
+     */
+    protected $source;
+
+    /**
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
      *     $xmlElement)
      * @return CultureFeed_Cdb_Item_Event
@@ -500,6 +505,22 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     public function setWeight($weight)
     {
         $this->weight = $weight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * @param string $source
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
     }
 
     /**

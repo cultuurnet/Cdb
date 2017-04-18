@@ -63,4 +63,32 @@ class CultureFeed_Cdb_List_ResultsTest extends PHPUnit_Framework_TestCase
             $item->getShortDescription()
         );
     }
+
+    public function testParseFromCdbXmlWithoutListNameAndItemName()
+    {
+        $xml = $this->loadSample('eventlist_v2.xml');
+
+        $list = CultureFeed_Cdb_List_Results::parseFromCdbXml($xml);
+
+        $this->assertInstanceOf('CultureFeed_Cdb_List_Results', $list);
+        $this->assertCount(2, $list);
+        $this->assertEquals(2, $list->getTotalResultsfound());
+    }
+
+    public function testParseFromCdbXmlWithoutListNameAndItemNameWithSource()
+    {
+        $xml = $this->loadSample('eventlist_v2.xml');
+
+        $eventsXml = $xml->xpath('event');
+        $eventXmlSource = $eventsXml[0];
+
+        $list = CultureFeed_Cdb_List_Results::parseFromCdbXml($xml);
+
+        /** @var CultureFeed_Cdb_Item_Event $item */
+        $item = $list->current();
+
+        $this->assertNotNull($item->getSource());
+        $this->assertInstanceOf('SimpleXMLElement', $item->getSource());
+        $this->assertEquals($eventXmlSource, $item->getSource());
+    }
 }
