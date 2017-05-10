@@ -67,10 +67,10 @@ class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_IElemen
      * CDBXML only keeps track of one date and a set of start and end times.
      * When the end time is smaller than the start time we assume it's past midnight.
      * If this happens the end date is pushed to the next day to keep it chronological.
+     * When start time and/or end time are missing the date is returned as is.
      *
-     * @return string|null
+     * @return string
      *  The end date as a string in the Y-m-d format. e.g.: 2017-05-25
-     *  Null is returned if no end time is set.
      */
     public function getEndDate()
     {
@@ -80,7 +80,7 @@ class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_IElemen
         $endTime = $this->getEndTime();
 
         if (empty($startTime) || empty($endTime)) {
-            return null;
+            return $this->getDate();
         }
 
         $startDateTime = DateTime::createFromFormat($dateTimeFormat, $this->getDate() . ' ' . $startTime);
