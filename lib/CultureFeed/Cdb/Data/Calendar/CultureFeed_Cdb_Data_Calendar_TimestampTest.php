@@ -3,14 +3,13 @@
 class CultureFeed_Cdb_Data_Calendar_TimestampTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @test
      * @dataProvider endDateDataProvider
      * @param string $date
      * @param string $startTime
      * @param string $endTime
      * @param string $expectedEndDate
      */
-    public function it_gets_end_date(
+    public function testGetEndDate(
         $date,
         $startTime,
         $endTime,
