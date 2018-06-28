@@ -9,7 +9,7 @@ class CultureFeed_Cdb_Data_DetailListTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->details = $this->getMockForAbstractClass(CultureFeed_Cdb_Data_DetailList::class);
+        $this->details = $this->getMockForAbstractClass('\CultureFeed_Cdb_Data_DetailList');
     }
 
     public function testGetFirstWithOneDetail()
