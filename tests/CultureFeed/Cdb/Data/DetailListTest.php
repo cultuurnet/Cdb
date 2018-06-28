@@ -51,7 +51,7 @@ class CultureFeed_Cdb_Data_DetailListTest extends PHPUnit_Framework_TestCase
     private function createDetail()
     {
         /* @var CultureFeed_Cdb_Data_Detail $mock */
-        $mock = $this->getMockForAbstractClass(CultureFeed_Cdb_Data_Detail::class);
+        $mock = $this->getMockForAbstractClass('\CultureFeed_Cdb_Data_Detail');
         return $mock;
     }
 }
