@@ -401,7 +401,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
      */
     public function setExternalId($externalId)
     {
-      $this->externalId = $externalId;
+        $this->externalId = $externalId;
     }
 
     /**
@@ -410,7 +410,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
      */
     public function getExternalId()
     {
-      return $this->externalId;
+        return $this->externalId;
     }
 
 
@@ -576,6 +576,6 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         // Set external id.
         $page->setExternalId((string) $xmlElement->externalid);
 
-      return $page;
+        return $page;
     }
 }
