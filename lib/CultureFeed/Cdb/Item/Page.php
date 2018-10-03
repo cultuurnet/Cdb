@@ -97,6 +97,14 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
     protected $tagline;
 
     /**
+     * The external Id of the page.
+     *
+     * @var string
+     */
+    protected $externalId;
+
+
+  /**
      * Get the id of this page.
      * @return string
      */
@@ -386,7 +394,27 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         $this->tagline = $tagline;
     }
 
+
     /**
+     * Set the external id of this page.
+     * @param string $externalId
+     */
+    public function setExternalId($externalId)
+    {
+      $this->externalId = $externalId;
+    }
+
+    /**
+     * Get the external id of this page.
+     * @return string
+     */
+    public function getExternalId()
+    {
+      return $this->externalId;
+    }
+
+
+  /**
      * @see CultureFeed_Cdb_IElement::appendToDOM()
      */
     public function appendToDOM(DOMElement $element)
@@ -545,6 +573,9 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         // Set tagline.
         $page->setTagline((string) $xmlElement->tagline);
 
-        return $page;
+        // Set external id.
+        $page->setExternalId((string) $xmlElement->externalid);
+
+      return $page;
     }
 }
