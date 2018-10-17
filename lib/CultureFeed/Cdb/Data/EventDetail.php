@@ -83,7 +83,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
             $detailElement->appendChild($summaryElement);
         }
 
-        if (count($this->performers) > 0) {
+        if ($this->performers && count($this->performers) > 0) {
             $this->performers->appendToDOM($detailElement);
         }
 
