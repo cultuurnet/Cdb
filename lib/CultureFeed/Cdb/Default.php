@@ -86,7 +86,6 @@ class CultureFeed_Cdb_Default
         $type = get_class($item);
 
         switch ($type) {
-
             case 'CultureFeed_Cdb_Item_Actor':
                 $this->items['actors'][] = $item;
                 break;
@@ -111,13 +110,14 @@ class CultureFeed_Cdb_Default
      *
      * @param SimpleXMLElement $xmlElement
      *   XML element from the item to parse.
+     * @return CultureFeed_Cdb_Item_Actor|CultureFeed_Cdb_Item_Event|CultureFeed_Cdb_Item_Production|null
+     * @throws CultureFeed_Cdb_ParseException
      */
     public static function parseItem(SimpleXMLElement $xmlElement)
     {
 
         // Return the correct cdb item.
         switch ($xmlElement->getName()) {
-
             case 'event':
                 return CultureFeed_Cdb_Item_Event::parseFromCdbXml($xmlElement);
 
@@ -156,9 +156,7 @@ class CultureFeed_Cdb_Default
         $dom->appendChild($cdbElement);
 
         foreach ($this->items as $type => $itemsFromType) {
-
             if ($itemsFromType) {
-
                 foreach ($itemsFromType as $item) {
                     $item->appendToDOM($cdbElement, $this->getSchemaVersion());
                 }
