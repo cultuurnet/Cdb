@@ -37,7 +37,7 @@ class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail 
     /**
      * Get the performers.
      *
-     * @return CultureFeed_Cdb_Data_PerformersList
+     * @return CultureFeed_Cdb_Data_PerformerList
      */
     public function getPerformers()
     {
@@ -57,7 +57,7 @@ class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail 
     /**
      * Set the performers.
      *
-     * @param CultureFeed_Cdb_Data_PerformersList $performers
+     * @param CultureFeed_Cdb_Data_PerformerList $performers
      */
     public function setPerformers(CultureFeed_Cdb_Data_PerformerList $performers)
     {

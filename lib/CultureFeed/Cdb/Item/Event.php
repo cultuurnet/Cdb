@@ -419,7 +419,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     /**
      * Set the contact info from this event.
      *
-     * @param CultureFeed_Cdb_Data_Calendar $contactInfo
+     * @param CultureFeed_Cdb_Data_ContactInfo $contactInfo
      *   Contact info to set.
      */
     public function setContactInfo(CultureFeed_Cdb_Data_ContactInfo $contactInfo)

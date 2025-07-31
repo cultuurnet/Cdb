@@ -26,7 +26,7 @@ class CultureFeed_Cdb_Data_Calendar_Period implements CultureFeed_Cdb_IElement
 
     /**
      * Week scheme for this period.
-     * @var CultureFeed_Cdb_Data_Calendar_WeekScheme
+     * @var CultureFeed_Cdb_Data_Calendar_Weekscheme
      */
     protected $weekScheme;
 
@@ -114,10 +114,10 @@ class CultureFeed_Cdb_Data_Calendar_Period implements CultureFeed_Cdb_IElement
     /**
      * Set the week scheme for this period.
      *
-     * @param CultureFeed_Cdb_Data_Calendar_WeekScheme $scheme
+     * @param CultureFeed_Cdb_Data_Calendar_Weekscheme $scheme
      *   Week scheme to set.
      */
-    public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_WeekScheme $scheme)
+    public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $scheme)
     {
         $this->weekScheme = $scheme;
     }

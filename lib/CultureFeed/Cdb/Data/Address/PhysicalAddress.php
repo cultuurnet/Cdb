@@ -104,7 +104,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
     /**
      * Set the housenumber.
      *
-     * @param string $housenumber
+     * @param string $houseNumber
      *   Housenumber to set.
      */
     public function setHouseNumber($houseNumber)

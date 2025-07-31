@@ -319,7 +319,7 @@ class CultureFeed_Cdb_List_Item
     /**
      * Set the thumbnail image from current item.
      *
-     * @param string $id
+     * @param string $thumbnail
      */
     public function setThumbnail($thumbnail)
     {

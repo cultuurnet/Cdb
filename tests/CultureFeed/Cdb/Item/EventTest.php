@@ -209,8 +209,8 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertCount(3, $categories);
         $this->assertContainsOnly('CultureFeed_Cdb_Data_Category', $categories);
 
-        /** @var CultureFeed_Cdb_Data_Category $category */
         $categories->rewind();
+        /** @var CultureFeed_Cdb_Data_Category $category */
         $category = $categories->current();
         $this->assertEquals('0.50.4.0.0', $category->getId());
         $this->assertEquals('Concert', $category->getName());
@@ -274,8 +274,8 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
             $event_detail_list
         );
 
-        /** @var CultureFeed_Cdb_Data_EventDetail $detail */
         $event_detail_list->rewind();
+        /** @var CultureFeed_Cdb_Data_EventDetail $detail */
         $detail = $event_detail_list->current();
         $this->assertEquals('nl', $detail->getLanguage());
 
@@ -1034,7 +1034,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $file->setHLink(
             'http://85.255.197.172/images/20140108/9554d6f6-bed1-4303-8d42-3fcec4601e0e.jpg'
         );
-        $file->setMediaType('', CultureFeed_Cdb_Data_File::MEDIA_TYPE_PHOTO);
+        $file->setMediaType(CultureFeed_Cdb_Data_File::MEDIA_TYPE_PHOTO);
         $file->setFileName('9554d6f6-bed1-4303-8d42-3fcec4601e0e.jpg');
 
         $media->add($file);

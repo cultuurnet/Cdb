@@ -51,7 +51,7 @@ class CultureFeed_Cdb_Data_Calendar_BookingPeriod implements CultureFeed_Cdb_IEl
     /**
      * Set the from date.
      *
-     * @param int
+     * @param int $dateFrom
      *   Timestamp from the date.
      */
     public function setDateFrom($dateFrom)

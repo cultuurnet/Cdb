@@ -149,7 +149,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Is the current file a main file.
-     * @return $bool
+     * @return bool
      */
     public function isMain()
     {
@@ -158,7 +158,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Is the current file private.
-     * @return $bool
+     * @return bool
      */
     public function isPrivate()
     {
@@ -289,7 +289,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
     /**
      * Set the main status of this file.
      *
-     * @param bool Main status to set.
+     * @param bool $main status to set.
      */
     public function setMain($main = true)
     {
@@ -299,7 +299,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
     /**
      * Set the private status of this file.
      *
-     * @param bool Private status to set.
+     * @param bool $private status to set.
      */
     public function setPrivate($private)
     {

@@ -21,7 +21,7 @@ class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IElement, It
     /**
      * Add a new performer to the list.
      *
-     * @param CultureFeed_Cdb_Data_performer $performer
+     * @param CultureFeed_Cdb_Data_Performer $performer
      *   performer to add.
      */
     public function add(CultureFeed_Cdb_Data_Performer $performer)

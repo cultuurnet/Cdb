@@ -27,7 +27,7 @@ class CultureFeed_Cdb_List_Results implements Iterator
     /**
      * Add a new category to the list.
      *
-     * @param CultureFeed_Cdb_Data_Category $category
+     * @param CultureFeed_Cdb_List_Item $item
      *   Category to add.
      */
     public function add(CultureFeed_Cdb_List_Item $item)

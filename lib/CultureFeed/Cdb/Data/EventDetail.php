@@ -56,8 +56,6 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
 
     /**
      * Set the performers.
-     *
-     * @param CultureFeed_Cdb_Data_PerformersList $performers
      */
     public function setPerformers(CultureFeed_Cdb_Data_PerformerList $performers)
     {

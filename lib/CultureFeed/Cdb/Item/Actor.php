@@ -26,7 +26,7 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
 
     /**
      * Week scheme for the opening times from the actor.
-     * @var CultureFeed_Cdb_Data_Calendar_WeekScheme
+     * @var CultureFeed_Cdb_Data_Calendar_Weekscheme
      */
     protected $weekScheme;
 
@@ -110,7 +110,7 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
     /**
      * Set the contact info of this contact.
      *
-     * @param CultureFeed_Cdb_Data_Calendar $contactInfo
+     * @param CultureFeed_Cdb_Data_ContactInfo $contactInfo
      *   Contact info to set.
      */
     public function setContactInfo(CultureFeed_Cdb_Data_ContactInfo $contactInfo)
