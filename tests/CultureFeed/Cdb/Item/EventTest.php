@@ -9,7 +9,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
      */
     protected $event;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->event = new CultureFeed_Cdb_Item_Event();
     }

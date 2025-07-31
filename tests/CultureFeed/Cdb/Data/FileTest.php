@@ -9,7 +9,7 @@ class CultureFeed_Cdb_Data_FileTest extends TestCase
      */
     protected $file;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->file = new CultureFeed_Cdb_Data_File();
     }

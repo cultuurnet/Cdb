@@ -9,7 +9,7 @@ class CultureFeed_Cdb_Data_MediaTest extends TestCase
      */
     protected $media;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->media = new CultureFeed_Cdb_Data_Media();
     }

@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 
 class CultureFeed_Cdb_Item_ActorTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->actor = new CultureFeed_Cdb_Item_Actor();
     }
