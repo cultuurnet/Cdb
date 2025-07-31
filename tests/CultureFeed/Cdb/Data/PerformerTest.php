@@ -4,6 +4,8 @@ use PHPUnit\Framework\TestCase;
 
 class CultureFeed_Cdb_Data_PerformerTest extends TestCase
 {
+    use CultureFeed_Cdb_DOMElementAssertionsTrait;
+
     /**
      * @param $fileName
      *
@@ -59,7 +61,7 @@ class CultureFeed_Cdb_Data_PerformerTest extends TestCase
         $items = $xpath->query('/performers/performer');
         $this->assertEquals(1, $items->length);
 
-        $this->assertEqualXMLStructure(
+        $this->assertEqualDOMElement(
             $sample->documentElement,
             $items->item(0)
         );
@@ -81,7 +83,7 @@ class CultureFeed_Cdb_Data_PerformerTest extends TestCase
         $items = $xpath->query('/performers/performer');
         $this->assertEquals(1, $items->length);
 
-        $this->assertEqualXMLStructure(
+        $this->assertEqualDOMElement(
             $sample->documentElement,
             $items->item(0)
         );

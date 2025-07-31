@@ -1053,7 +1053,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
      *
      * @since  Method available since Release 3.3.0
      */
-    public static function assertXmlStringEqualsXmlFile($expectedFile, $actualXml, $message = '')
+    public static function assertXmlStringEqualsXmlFile(string $expectedFile, $actualXml, string $message = ''): void
     {
         self::assertFileExists($expectedFile);
 
