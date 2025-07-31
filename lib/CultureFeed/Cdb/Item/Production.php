@@ -36,13 +36,13 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
         if (empty($xmlElement->categories)) {
-            throw new CultureFeed_ParseException(
+            throw new CultureFeed_Cdb_ParseException(
                 'Categories are required for production element'
             );
         }
 
         if (empty($xmlElement->productiondetails)) {
-            throw new CultureFeed_ParseException(
+            throw new CultureFeed_Cdb_ParseException(
                 'Production details are required for production element'
             );
         }
@@ -59,25 +59,25 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
             $production->setExternalId((string) $attributes['externalid']);
         }
 
-        if (isset($event_attributes['availablefrom'])) {
+        if (isset($attributes['availablefrom'])) {
             $production->setAvailableFrom(
-                (string) $event_attributes['availablefrom']
+                (string) $attributes['availablefrom']
             );
         }
 
-        if (isset($event_attributes['availableto'])) {
+        if (isset($attributes['availableto'])) {
             $production->setAvailableTo(
-                (string) $event_attributes['availableto']
+                (string) $attributes['availableto']
             );
         }
 
-        if (isset($event_attributes['createdby'])) {
-            $production->setCreatedBy((string) $event_attributes['createdby']);
+        if (isset($attributes['createdby'])) {
+            $production->setCreatedBy((string) $attributes['createdby']);
         }
 
-        if (isset($event_attributes['creationdate'])) {
+        if (isset($attributes['creationdate'])) {
             $production->setCreationDate(
-                (string) $event_attributes['creationdate']
+                (string) $attributes['creationdate']
             );
         }
 

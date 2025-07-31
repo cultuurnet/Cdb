@@ -119,19 +119,19 @@ class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail 
     {
 
         if (empty($xmlElement->title)) {
-            throw new CultureFeed_ParseException(
+            throw new CultureFeed_Cdb_ParseException(
                 "Title missing for productiondetail element"
             );
         }
 
         $attributes = $xmlElement->attributes();
         if (empty($attributes['lang'])) {
-            throw new CultureFeed_ParseException(
+            throw new CultureFeed_Cdb_ParseException(
                 "Language (lang) missing for productiondetail element"
             );
         }
 
-        $productionDetail = new Culturefeed_Cdb_Data_ProductionDetail();
+        $productionDetail = new CultureFeed_Cdb_Data_ProductionDetail();
         $productionDetail->setTitle((string) $xmlElement->title);
         $productionDetail->setLanguage((string) $attributes['lang']);
 

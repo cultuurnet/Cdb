@@ -81,6 +81,11 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
     protected $private = false;
 
     /**
+     * @var string
+     */
+    protected $date;
+
+    /**
      * Media type from the file.
      * @var string
      */

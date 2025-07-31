@@ -135,7 +135,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
             );
         }
 
-        $eventDetail = new Culturefeed_Cdb_Data_EventDetail();
+        $eventDetail = new CultureFeed_Cdb_Data_EventDetail();
 
         $eventDetail->setLanguage((string) $attributes['lang']);
 

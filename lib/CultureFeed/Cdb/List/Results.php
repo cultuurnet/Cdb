@@ -152,7 +152,7 @@ class CultureFeed_Cdb_List_Results implements Iterator
             $itemName = 'production';
         }
 
-        foreach ($xmlElement->$listName->$itemName as $item) {
+        foreach ($xmlElement->listName->itemName as $item) {
             $items[] = CultureFeed_Cdb_Default::parseItem($item);
         }
 
