@@ -1042,6 +1042,8 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $price = new CultureFeed_Cdb_Data_Price(4.00);
         $price->setDescription('Extra Korting voor vroegboekers');
         $detailNl->setPrice($price);
+
+        $this->expectNotToPerformAssertions();
     }
 
     /**
