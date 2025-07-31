@@ -121,7 +121,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
     /**
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
      *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_EventDetailList
+     * @return CultureFeed_Cdb_Data_EventDetail
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {

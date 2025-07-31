@@ -20,7 +20,7 @@ class CultureFeed_Cdb_List_Results implements Iterator
 
     /**
      * Array with the found items for current search.
-     * @var string
+     * @var CultureFeed_Cdb_List_Item[]
      */
     protected $items;
 
@@ -85,7 +85,7 @@ class CultureFeed_Cdb_List_Results implements Iterator
 
     /**
      * Get the total number of results found
-     * @return number
+     * @return string
      */
     public function getTotalResultsfound()
     {

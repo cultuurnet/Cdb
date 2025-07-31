@@ -57,7 +57,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     /**
      * Organiser of an event.
      *
-     * @var CultureFeed_Cdb_Data_Organiser
+     * @var CultureFeed_Cdb_Data_Organiser|null
      */
     protected $organiser;
 

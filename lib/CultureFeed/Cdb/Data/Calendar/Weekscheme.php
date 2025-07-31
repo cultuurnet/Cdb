@@ -16,7 +16,7 @@ class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IEleme
 {
     /**
      * Opening information for all days.
-     * @var CultureFeed_Cdb_Data_Calendar_SchemeDay[]
+     * @var CultureFeed_Cdb_Data_Calendar_SchemeDay[]|null[]
      */
     protected $days = array(
         'monday' => null,

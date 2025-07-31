@@ -69,7 +69,7 @@ class CultureFeed_Cdb_Data_Calendar_BookingPeriod implements CultureFeed_Cdb_IEl
     /**
      * Set the till date.
      *
-     * @param string $dateTill
+     * @param int $dateTill
      *   Till date to set.
      */
     public function setDateTill($dateTill)

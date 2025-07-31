@@ -24,7 +24,7 @@ class CultureFeed_Cdb_Data_ActorDetailList extends CultureFeed_Cdb_Data_DetailLi
     /**
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
      *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_EventDetailList
+     * @return CultureFeed_Cdb_Data_ActorDetailList
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
