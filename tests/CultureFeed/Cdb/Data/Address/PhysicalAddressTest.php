@@ -1,6 +1,8 @@
 <?php
 
-class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
 {
     public function loadSample($fileName)
     {

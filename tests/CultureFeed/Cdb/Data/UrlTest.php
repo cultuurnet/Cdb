@@ -1,6 +1,8 @@
 <?php
 
-class CultureFeed_Cdb_Data_UrlTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CultureFeed_Cdb_Data_UrlTest extends TestCase
 {
     /**
      * @param $fileName

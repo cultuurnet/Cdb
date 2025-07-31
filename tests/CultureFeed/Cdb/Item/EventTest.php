@@ -1,6 +1,8 @@
 <?php
 
-class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CultureFeed_Cdb_Item_EventTest extends TestCase
 {
     /**
      * @var CultureFeed_Cdb_Item_Event

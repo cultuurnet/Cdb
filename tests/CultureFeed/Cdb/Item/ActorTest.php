@@ -1,6 +1,8 @@
 <?php
 
-class CultureFeed_Cdb_Item_ActorTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CultureFeed_Cdb_Item_ActorTest extends TestCase
 {
     public function setUp()
     {
