@@ -8,13 +8,13 @@ class CultureFeed_Cdb_Data_Calendar_Permanent extends CultureFeed_Cdb_Data_Calen
 {
     /**
      * Exceptions for the opening times.
-     * @var CultureFeed_Cdb_Data_Calendar_Exceptions
+     * @var CultureFeed_Cdb_Data_Calendar_Exceptions|null
      */
     protected $exceptions;
 
     /**
      * Week scheme for the permanent opening times.
-     * @var CultureFeed_Cdb_Data_Calendar_Weekscheme
+     * @var CultureFeed_Cdb_Data_Calendar_Weekscheme|null
      */
     protected $weekScheme;
 

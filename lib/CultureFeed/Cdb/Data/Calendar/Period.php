@@ -20,13 +20,13 @@ class CultureFeed_Cdb_Data_Calendar_Period implements CultureFeed_Cdb_IElement
 
     /**
      * Exceptions for this period.
-     * @var CultureFeed_Cdb_Data_Calendar_Exceptions
+     * @var CultureFeed_Cdb_Data_Calendar_Exceptions|null
      */
     protected $exceptions;
 
     /**
      * Week scheme for this period.
-     * @var CultureFeed_Cdb_Data_Calendar_Weekscheme
+     * @var CultureFeed_Cdb_Data_Calendar_Weekscheme|null
      */
     protected $weekScheme;
 

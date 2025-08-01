@@ -48,39 +48,13 @@ class CultureFeed_Cdb_Data_Calendar_BookingPeriod implements CultureFeed_Cdb_IEl
         return $this->dateTill;
     }
 
-    /**
-     * Set the from date.
-     *
-     * @param int $dateFrom
-     *   Timestamp from the date.
-     */
-    public function setDateFrom($dateFrom)
+    public function setDateFrom(int $dateFrom)
     {
-
-        if (!is_numeric($dateFrom)) {
-            throw new UnexpectedValueException(
-                'Invalid from date: ' . $dateFrom . ', value should be a timestamp'
-            );
-        }
-
         $this->dateFrom = $dateFrom;
     }
 
-    /**
-     * Set the till date.
-     *
-     * @param int $dateTill
-     *   Till date to set.
-     */
-    public function setDateTill($dateTill)
+    public function setDateTill(int $dateTill)
     {
-
-        if (!is_numeric($dateTill)) {
-            throw new UnexpectedValueException(
-                'Invalid from date: ' . $dateTill . ', value should be a timestamp'
-            );
-        }
-
         $this->dateTill = $dateTill;
     }
 

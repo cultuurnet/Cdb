@@ -19,7 +19,7 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
     protected $description;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $title;
 

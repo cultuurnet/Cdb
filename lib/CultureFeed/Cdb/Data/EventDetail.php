@@ -13,7 +13,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
     protected $calendarSummary;
 
     /**
-     * @var CultureFeed_Cdb_Data_PerformerList
+     * @var CultureFeed_Cdb_Data_PerformerList|null
      */
     protected $performers;
 

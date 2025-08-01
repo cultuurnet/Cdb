@@ -350,7 +350,6 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         // keywords are delimited by a semicolon, in our xml sample however they seem to be delimited
         // by a comma.
         $keywords = $event->getKeywords();
-        $this->assertIsArray($keywords);
         $this->assertCount(1, $keywords);
         $this->assertContainsOnly('string', $keywords, true);
 
@@ -653,7 +652,6 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals('RB', $detail->getTitle());
 
         $keywords = $event->getKeywords();
-        $this->assertIsArray($keywords);
         $this->assertCount(2, $keywords);
 
         $keyword = reset($keywords);

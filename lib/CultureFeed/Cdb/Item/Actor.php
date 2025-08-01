@@ -15,18 +15,13 @@ class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements Cu
     /**
      * Contact info for an actor.
      *
-     * @var CultureFeed_Cdb_Data_ContactInfo
+     * @var CultureFeed_Cdb_Data_ContactInfo|null
      */
     protected $contactInfo;
 
     /**
-     * @var CultureFeed_Cdb_Data_ActorDetailList
-     */
-    protected $details;
-
-    /**
      * Week scheme for the opening times from the actor.
-     * @var CultureFeed_Cdb_Data_Calendar_Weekscheme
+     * @var CultureFeed_Cdb_Data_Calendar_Weekscheme|null
      */
     protected $weekScheme;
 

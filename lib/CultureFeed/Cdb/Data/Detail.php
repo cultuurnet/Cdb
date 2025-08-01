@@ -38,7 +38,7 @@ abstract class CultureFeed_Cdb_Data_Detail
 
     /**
      * Price information from the item.
-     * @var CultureFeed_Cdb_Data_Price
+     * @var CultureFeed_Cdb_Data_Price|null
      */
     protected $price;
 

@@ -14,37 +14,37 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     /**
      * Booking period for this event.
-     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
+     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod|null
      */
     protected $bookingPeriod;
 
     /**
      * Calendar information for the event.
-     * @var CultureFeed_Cdb_Data_Calendar
+     * @var CultureFeed_Cdb_Data_Calendar|null
      */
     protected $calendar;
 
     /**
      * Contact info for an event.
      *
-     * @var CultureFeed_Cdb_Data_ContactInfo
+     * @var CultureFeed_Cdb_Data_ContactInfo|null
      */
     protected $contactInfo;
 
     /**
-     * @var bool
+     * @var bool|null
      */
     protected $isParent;
 
     /**
-     * @var CultureFeed_Cdb_Data_LanguageList
+     * @var CultureFeed_Cdb_Data_LanguageList|null
      */
     protected $languages;
 
     /**
      * Location of an event.
      *
-     * @var CultureFeed_Cdb_Data_Location
+     * @var CultureFeed_Cdb_Data_Location|null
      */
     protected $location;
 
@@ -62,23 +62,23 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     protected $organiser;
 
     /**
-     * @var float
+     * @var float|null
      */
     protected $pctComplete;
 
     /**
-     * @var bool
+     * @var bool|null
      */
     protected $published;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $validator;
 
     /**
      * Weight for this event.
-     * @var int
+     * @var int|null
      */
     protected $weight;
 
@@ -333,21 +333,8 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         return $this->ageFrom;
     }
 
-    /**
-     * Set the minimum age for this event.
-     *
-     * @param int $age
-     *   Minimum age.
-     *
-     * @throws UnexpectedValueException
-     */
-    public function setAgeFrom($age)
+    public function setAgeFrom(int $age)
     {
-
-        if (!is_numeric($age)) {
-            throw new UnexpectedValueException('Invalid age: ' . $age);
-        }
-
         $this->ageFrom = $age;
     }
 
@@ -483,7 +470,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     /**
      * Get the weight.
      *
-     * @return int
+     * @return int|null
      *   The weight.
      */
     public function getWeight()

@@ -10,7 +10,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
 
     /**
      * Booking period for this event.
-     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
+     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod|null
      */
     protected $bookingPeriod;
 
@@ -149,21 +149,8 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
         return $this->ageFrom;
     }
 
-    /**
-     * Set the minimum age for this production.
-     *
-     * @param int $age
-     *   Minimum age.
-     *
-     * @throws UnexpectedValueException
-     */
-    public function setAgeFrom($age)
+    public function setAgeFrom(int $age)
     {
-
-        if (!is_numeric($age)) {
-            throw new UnexpectedValueException('Invalid age: ' . $age);
-        }
-
         $this->ageFrom = $age;
     }
 
