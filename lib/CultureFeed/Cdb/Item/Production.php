@@ -245,13 +245,13 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
 
         if ($this->ageFrom) {
             $productionElement->appendChild(
-                $dom->createElement('agefrom', $this->ageFrom)
+                $dom->createElement('agefrom', (string) $this->ageFrom)
             );
         }
 
         if ($this->maxParticipants) {
             $productionElement->appendChild(
-                $dom->createElement('maxparticipants', $this->maxParticipants)
+                $dom->createElement('maxparticipants', (string) $this->maxParticipants)
             );
         }
 
@@ -278,7 +278,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
         if (count($this->keywords) > 0) {
             $keywordElement = $dom->createElement('keywords');
             $keywordElement->appendChild(
-                $dom->createTextNode(implode(';', $this->keywords))
+                $dom->createTextNode(implode(';', array_map(fn ($keyword) => $keyword->getValue(), $this->keywords)))
             );
             $productionElement->appendChild($keywordElement);
         }

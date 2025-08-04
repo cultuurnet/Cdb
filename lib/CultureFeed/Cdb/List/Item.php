@@ -529,7 +529,7 @@ class CultureFeed_Cdb_List_Item
         }
 
         if (!empty($attributes['agefrom'])) {
-            $item->setAgeFrom((string) $attributes['agefrom']);
+            $item->setAgeFrom((int) $attributes['agefrom']);
         }
 
         if (!empty($attributes['performers'])) {

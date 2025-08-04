@@ -817,9 +817,9 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $physicalAddress = new CultureFeed_Cdb_Data_Address_PhysicalAddress();
         $physicalAddress->setCity('Brussel');
         $physicalAddress->setCountry('BE');
-        $physicalAddress->setHouseNumber(8);
+        $physicalAddress->setHouseNumber('8');
         $physicalAddress->setStreet('Steenstraat');
-        $physicalAddress->setZip(1000);
+        $physicalAddress->setZip('1000');
         $address->setPhysicalAddress($physicalAddress);
 
         $location = new CultureFeed_Cdb_Data_Location($address);
@@ -990,7 +990,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $physicalAddress->setGeoInformation($geo);
         $physicalAddress->setStreet('Sint-Gislainstraat');
         $physicalAddress->setHouseNumber('62');
-        $physicalAddress->setZip(1000);
+        $physicalAddress->setZip('1000');
         $contactInfo->addAddress($address);
         $mail = new CultureFeed_Cdb_Data_Mail('jonas@cnet.be');
         $contactInfo->addMail($mail);

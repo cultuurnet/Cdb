@@ -508,7 +508,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
         if ($this->ageFrom) {
             $eventElement->appendChild(
-                $dom->createElement('agefrom', $this->ageFrom)
+                $dom->createElement('agefrom', (string) $this->ageFrom)
             );
         }
 
@@ -556,7 +556,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         }
 
         if (isset($this->pctComplete)) {
-            $eventElement->setAttribute('pctcomplete', $this->pctComplete);
+            $eventElement->setAttribute('pctcomplete', (string) $this->pctComplete);
         }
 
         if (isset($this->private)) {
@@ -634,7 +634,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
         if ($this->maxParticipants) {
             $eventElement->appendChild(
-                $dom->createElement('maxparticipants', $this->maxParticipants)
+                $dom->createElement('maxparticipants', (string) $this->maxParticipants)
             );
         }
 

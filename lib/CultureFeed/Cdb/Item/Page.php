@@ -489,7 +489,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
 
         // Set the visibility.
         if (!empty($xmlElement->visible)) {
-            $page->setVisibility((string) $xmlElement->visible);
+            $page->setVisibility((bool) $xmlElement->visible);
         }
 
         // Set address.
