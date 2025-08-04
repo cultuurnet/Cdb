@@ -2,9 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-class CultureFeed_Cdb_Data_Address_GeoInformationTest extends TestCase
+final class CultureFeed_Cdb_Data_Address_GeoInformationTest extends TestCase
 {
-    public function sampleCoordinates()
+    public function sampleCoordinates(): array
     {
         return array(
             array('4,34890', '50,84740'),
@@ -14,11 +14,8 @@ class CultureFeed_Cdb_Data_Address_GeoInformationTest extends TestCase
 
     /**
      * @dataProvider sampleCoordinates
-     *
-     * @param string $x
-     * @param string $y
      */
-    public function testXYGettersReturnConstructorInjectedValues($x, $y)
+    public function testXYGettersReturnConstructorInjectedValues(string $x, string $y): void
     {
         $geo = new CultureFeed_Cdb_Data_Address_GeoInformation($x, $y);
 
@@ -28,11 +25,8 @@ class CultureFeed_Cdb_Data_Address_GeoInformationTest extends TestCase
 
     /**
      * @dataProvider sampleCoordinates
-     *
-     * @param string $x
-     * @param string $y
      */
-    public function testXYGettersReturnSetterInjectedValues($x, $y)
+    public function testXYGettersReturnSetterInjectedValues(string $x, string $y): void
     {
         $geo = new CultureFeed_Cdb_Data_Address_GeoInformation(
             '4,7139',

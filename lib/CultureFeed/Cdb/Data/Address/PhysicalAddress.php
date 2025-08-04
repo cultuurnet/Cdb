@@ -1,167 +1,76 @@
 <?php
 
-/**
- * @class
- * Representation of a physical address element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Street from the address.
-     * @var string
-     */
-    protected $street;
+    private ?string $street = null;
+    private ?string $houseNumber = null;
+    private string $city;
+    private string $zip;
+    private string $country;
+    private ?CultureFeed_Cdb_Data_Address_GeoInformation $gis = null;
 
-    /**
-     * House number from the address.
-     * @var string
-     */
-    protected $houseNumber;
-
-    /**
-     * City from the address.
-     * @var string
-     */
-    protected $city;
-
-    /**
-     * Zipcode from the address.
-     * @var string
-     */
-    protected $zip;
-
-    /**
-     * Country from the address.
-     * @var string
-     */
-    protected $country;
-
-    /**
-     * Geo information from the address.
-     * @var CultureFeed_Cdb_Data_Address_GeoInformation|null
-     */
-    protected $gis;
-
-    /**
-     * Get the street.
-     */
-    public function getStreet()
+    public function getStreet(): ?string
     {
         return $this->street;
     }
 
-    /**
-     * Get the housenumber.
-     */
-    public function getHouseNumber()
+    public function getHouseNumber(): ?string
     {
         return $this->houseNumber;
     }
 
-    /**
-     * Get the city.
-     */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    /**
-     * Get the zip code.
-     */
-    public function getZip()
+    public function getZip(): string
     {
         return $this->zip;
     }
 
-    /**
-     * Get the country.
-     */
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->country;
     }
 
-    /**
-     * Get the geo information.
-     */
-    public function getGeoInformation()
+    public function getGeoInformation(): ?CultureFeed_Cdb_Data_Address_GeoInformation
     {
         return $this->gis;
     }
 
-    /**
-     * Set the street.
-     *
-     * @param string $street
-     *   Street to set
-     */
-    public function setStreet($street)
+    public function setStreet(string $street): void
     {
         $this->street = trim($street);
     }
 
-    /**
-     * Set the housenumber.
-     *
-     * @param string $houseNumber
-     *   Housenumber to set.
-     */
-    public function setHouseNumber($houseNumber)
+    public function setHouseNumber(string $houseNumber): void
     {
         $this->houseNumber = trim($houseNumber);
     }
 
-    /**
-     * Set the city
-     *
-     * @param string $city
-     *   City to set
-     */
-    public function setCity($city)
+    public function setCity(string $city): void
     {
         $this->city = trim($city);
     }
 
-    /**
-     * Set the zip code.
-     *
-     * @param string $zip
-     *   Zip code to set.
-     */
-    public function setZip($zip)
+    public function setZip(string $zip): void
     {
         $this->zip = trim($zip);
     }
 
-    /**
-     * Set the country.
-     *
-     * @param string $country
-     *   Country to set.
-     */
-    public function setCountry($country)
+    public function setCountry(string $country): void
     {
         $this->country = trim($country);
     }
 
-    /**
-     * Set the geo information.
-     *
-     * @param CultureFeed_Cdb_Data_Address_GeoInformation $gis
-     *   Geo information to set.
-     */
-    public function setGeoInformation(CultureFeed_Cdb_Data_Address_GeoInformation $gis)
+    public function setGeoInformation(CultureFeed_Cdb_Data_Address_GeoInformation $gis): void
     {
         $this->gis = $gis;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $physicalElement = $dom->createElement('physical');
@@ -189,14 +98,8 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
         $element->appendChild($physicalElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Address_PhysicalAddress
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Address_PhysicalAddress
     {
-
         if (empty($xmlElement->city)) {
             throw new CultureFeed_Cdb_ParseException(
                 "City is missing for physical address"
@@ -219,6 +122,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
 
         $physicalAddress->setCity((string) $xmlElement->city);
         $physicalAddress->setZip((string) $xmlElement->zipcode);
+        $physicalAddress->setCountry((string) $xmlElement->country);
 
         if (!empty($xmlElement->street)) {
             $physicalAddress->setStreet((string) $xmlElement->street);
@@ -226,10 +130,6 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
 
         if (!empty($xmlElement->housenr)) {
             $physicalAddress->setHouseNumber((string) $xmlElement->housenr);
-        }
-
-        if (!empty($xmlElement->country)) {
-            $physicalAddress->setCountry((string) $xmlElement->country);
         }
 
         if (!empty($xmlElement->gis)) {

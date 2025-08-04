@@ -1,53 +1,26 @@
 <?php
 
-/**
- * @class
- * Representation of a virtual address element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Address_VirtualAddress implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Address_VirtualAddress implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Title from the virtual address.
-     * @var string
-     */
-    protected $title;
+    private string $title;
 
-    /**
-     * Construct the virtual address.
-     *
-     * @param string $title
-     *   Title from the address.
-     */
-    public function __construct($title)
+    public function __construct(string $title)
     {
         $this->title = $title;
     }
 
-    /**
-     * Set the title.
-     *
-     * @param string $title
-     *   Title to set.
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Get the title.
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $virtualElement = $dom->createElement('virtual');
@@ -58,14 +31,8 @@ class CultureFeed_Cdb_Data_Address_VirtualAddress implements CultureFeed_Cdb_IEl
         $element->appendChild($virtualElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Address_VirtualAddress
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Address_VirtualAddress
     {
-
         if (empty($xmlElement->title)) {
             throw new CultureFeed_Cdb_ParseException(
                 "Title is missing for virtual address"
