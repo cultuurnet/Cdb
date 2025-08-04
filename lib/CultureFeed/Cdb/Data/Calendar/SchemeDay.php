@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @class
- * Representation of a scheme day element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElement
 {
     const MONDAY = 'monday';
     const TUESDAY = 'tuesday';
@@ -14,7 +10,7 @@ class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElemen
     const SATURDAY = 'saturday';
     const SUNDAY = 'sunday';
 
-    public static $allowedDays = array(
+    public static array $allowedDays = array(
         'monday',
         'tuesday',
         'wednesday',
@@ -24,96 +20,43 @@ class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElemen
         'sunday',
     );
 
-    /**
-     * Scheme open type: open
-     * @var string
-     */
     const SCHEMEDAY_OPEN_TYPE_OPEN = 'open';
-    /**
-     * Scheme open type: closed
-     * @var string
-     */
     const SCHEMEDAY_OPEN_TYPE_CLOSED = 'closed';
-    /**
-     * Scheme open type: byappointment
-     * @var string
-     */
     const SCHEMEDAY_OPEN_TYPE_BY_APPOINTMENT = 'byappointment';
 
-    /**
-     * Name of the week day
-     * @var string
-     */
-    protected $dayName;
+    private string $dayName;
+    private string $openType;
+    private array $openingTimes = [];
 
-    /**
-     * Open type for the day.
-     * @var string
-     */
-    protected $openType;
-
-    /**
-     * Opening hours for that day.
-     * @var array
-     */
-    protected $openingTimes = array();
-
-    /**
-     * Construct the scheme day.
-     *
-     * @param string $dayName
-     *   Name of the day.
-     * @param string $openType
-     *   Open type for the day.
-     */
-    public function __construct($dayName, $openType = null)
+    public function __construct(string $dayName, string $openType = null)
     {
-
         $this->setDayName($dayName);
         if ($openType) {
             $this->openType = $openType;
         }
     }
 
-    /**
-     * Get the name from the day.
-     */
-    public function getDayName()
+    public function getDayName(): string
     {
         return $this->dayName;
     }
 
-    /**
-     * Get the opening type for this day.
-     */
-    public function getOpenType()
+    public function getOpenType(): string
     {
         return $this->openType;
     }
 
-    /**
-     * Get the opening times.
-     */
-    public function getOpeningTimes()
+    public function getOpeningTimes(): array
     {
         return $this->openingTimes;
     }
 
-    /**
-     * Check if the current day is open or not.
-     */
-    public function isOpen()
+    public function isOpen(): bool
     {
         return $this->openType == self::SCHEMEDAY_OPEN_TYPE_OPEN;
     }
 
-    /**
-     * Set the day name.
-     *
-     * @param string $dayName
-     *   Name of the day to set.
-     */
-    public function setDayName($dayName)
+    public function setDayName(string $dayName): void
     {
 
         if (!in_array($dayName, self::$allowedDays)) {
@@ -123,75 +66,43 @@ class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElemen
         $this->dayName = $dayName;
     }
 
-    /**
-     * Set the opening type.
-     *
-     * @param string $type
-     *   Opening type to set.
-     *
-     * @return $this
-     */
-    public function setOpenType($type)
+    public function setOpenType(string $type): CultureFeed_Cdb_Data_Calendar_SchemeDay
     {
         $this->openType = $type;
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function setClosed()
+    public function setClosed(): CultureFeed_Cdb_Data_Calendar_SchemeDay
     {
         $this->setOpenType(self::SCHEMEDAY_OPEN_TYPE_CLOSED);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function setOpen()
+    public function setOpen(): CultureFeed_Cdb_Data_Calendar_SchemeDay
     {
         $this->setOpenType(self::SCHEMEDAY_OPEN_TYPE_OPEN);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function setOpenByAppointment()
+    public function setOpenByAppointment(): CultureFeed_Cdb_Data_Calendar_SchemeDay
     {
         $this->setOpenType(self::SCHEMEDAY_OPEN_TYPE_BY_APPOINTMENT);
 
         return $this;
     }
 
-    /**
-     * Add an opening time.
-     *
-     * @param CultureFeed_Cdb_Data_Calendar_OpeningTime $openingTime
-     *   Opening time to add.
-     *
-     * @return $this
-     */
-    public function addOpeningTime(CultureFeed_Cdb_Data_Calendar_OpeningTime $openingTime)
+    public function addOpeningTime(CultureFeed_Cdb_Data_Calendar_OpeningTime $openingTime): CultureFeed_Cdb_Data_Calendar_SchemeDay
     {
         $this->openingTimes[] = $openingTime;
 
         return $this;
     }
 
-    /**
-     * Remove an opening time.
-     *
-     * @param int $i
-     *   Index to remove.
-     */
-    public function removeOpeningTime($i)
+    public function removeOpeningTime(int $i): void
     {
-
         if (!isset($this->openingTimes[$i])) {
             throw new Exception(
                 'Trying to remove a non-existing opening time.'
@@ -201,12 +112,8 @@ class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElemen
         unset($this->openingTimes[$i]);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $dayElement = $dom->createElement($this->dayName);
@@ -221,14 +128,8 @@ class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElemen
         $element->appendChild($dayElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Calendar_SchemeDay
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Calendar_SchemeDay
     {
-
         $attributes = $xmlElement->attributes();
         if (!isset($attributes['opentype'])) {
             throw new CultureFeed_Cdb_ParseException(
