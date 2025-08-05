@@ -51,7 +51,7 @@ final class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElemen
      */
     public function getCategoriesByType(string $type): array
     {
-        $categories = array();
+        $categories = [];
         foreach ($this->categories as $category) {
             if ($category->getType() == $type) {
                 $categories[] = $category;

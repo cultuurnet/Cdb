@@ -132,7 +132,7 @@ final class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base impleme
                 }
                 $actorElement->appendChild($keywordsElement);
             } else {
-                $keywords = array();
+                $keywords = [];
                 foreach ($this->keywords as $keyword) {
                     $keywords[$keyword->getValue()] = $keyword->getValue();
                 }

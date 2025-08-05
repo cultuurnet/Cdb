@@ -11,7 +11,7 @@ final class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_I
     const SUNDAY = 'sunday';
 
     /** @var array<string> */
-    public static array $allowedDays = array(
+    public static array $allowedDays = [
         'monday',
         'tuesday',
         'wednesday',
@@ -19,7 +19,7 @@ final class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_I
         'friday',
         'saturday',
         'sunday',
-    );
+    ];
 
     const SCHEMEDAY_OPEN_TYPE_OPEN = 'open';
     const SCHEMEDAY_OPEN_TYPE_CLOSED = 'closed';

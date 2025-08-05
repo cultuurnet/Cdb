@@ -9,10 +9,10 @@ final class CultureFeed_Cdb_Data_Address_GeoInformationTest extends TestCase
      */
     public function sampleCoordinates(): array
     {
-        return array(
-            array('4,34890', '50,84740'),
-            array('4,3488', '50,8391'),
-        );
+        return [
+            ['4,34890', '50,84740'],
+            ['4,3488', '50,8391'],
+        ];
     }
 
     /**

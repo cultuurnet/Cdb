@@ -267,7 +267,7 @@ abstract class CultureFeed_Cdb_Item_Base
         if ($asObject) {
             return $this->keywords;
         } else {
-            $keywords = array();
+            $keywords = [];
             foreach ($this->keywords as $keyword) {
                 $keywords[$keyword->getValue()] = $keyword->getValue();
             }

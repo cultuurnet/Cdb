@@ -70,7 +70,7 @@ final class CultureFeed_Cdb_List_Results implements Iterator
      */
     public static function parseFromCdbXmlList(SimpleXMLElement $xmlElement): array
     {
-        $items = array();
+        $items = [];
 
         foreach ($xmlElement->list->item as $item) {
             $items[] = CultureFeed_Cdb_List_Item::parseFromCdbXml($item);
@@ -84,7 +84,7 @@ final class CultureFeed_Cdb_List_Results implements Iterator
      */
     protected static function parseFromCdbXmlXmlview(SimpleXMLElement $xmlElement): array
     {
-        $items = array();
+        $items = [];
 
         foreach ($xmlElement->listName->itemName as $item) {
             $items[] = CultureFeed_Cdb_Default::parseItem($item);

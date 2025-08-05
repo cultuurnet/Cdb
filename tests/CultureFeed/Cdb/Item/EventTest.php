@@ -76,10 +76,10 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
      */
     public function privatePropertyValues(): array
     {
-        return array(
-            array(true),
-            array(false),
-        );
+        return [
+            [true],
+            [false],
+        ];
     }
 
     /**
@@ -113,10 +113,10 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
      */
     public function privatePropertySamples(): array
     {
-        return array(
-            array('private.xml', true),
-            array('non-private.xml', false),
-        );
+        return [
+            ['private.xml', true],
+            ['non-private.xml', false],
+        ];
     }
 
     /**
@@ -1050,10 +1050,10 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->event->addKeyword('bar');
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
                 'bar' => new CultureFeed_Cdb_Data_Keyword('bar'),
-            ),
+            ],
             $this->event->getKeywords(true)
         );
     }
@@ -1066,18 +1066,18 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
         );
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => 'foo',
                 'bar' => 'bar',
-            ),
+            ],
             $this->event->getKeywords()
         );
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
                 'bar' => new CultureFeed_Cdb_Data_Keyword('bar', false),
-            ),
+            ],
             $this->event->getKeywords(true)
         );
     }
@@ -1090,9 +1090,9 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->event->deleteKeyword(new CultureFeed_Cdb_Data_Keyword('bar'));
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
-            ),
+            ],
             $this->event->getKeywords(true)
         );
     }
@@ -1104,10 +1104,10 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
         $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
 
         $this->assertEquals(
-            array(
+            [
                 'feest' => new CultureFeed_Cdb_Data_Keyword('feest'),
                 'test' => new CultureFeed_Cdb_Data_Keyword('test', false),
-            ),
+            ],
             $event->getKeywords(true)
         );
     }
@@ -1125,18 +1125,18 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->event->deleteKeyword('bar');
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => 'foo',
                 'baz' => 'baz',
-            ),
+            ],
             $this->event->getKeywords()
         );
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
                 'baz' => new CultureFeed_Cdb_Data_Keyword('baz', false),
-            ),
+            ],
             $this->event->getKeywords(true)
         );
     }

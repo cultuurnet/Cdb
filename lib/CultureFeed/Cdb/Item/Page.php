@@ -234,7 +234,7 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
             )
         );
 
-        $categories = array();
+        $categories = [];
         if (!empty($xmlElement->categoryIds->categoryId)) {
             foreach ($xmlElement->categoryIds->categoryId as $category) {
                 $categories[] = (string) $category;
@@ -242,7 +242,7 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         }
         $page->setCategories($categories);
 
-        $keywords = array();
+        $keywords = [];
         if (!empty($xmlElement->keywords->keyword)) {
             foreach ($xmlElement->keywords->keyword as $keyword) {
                 $keywords[] = (string) $keyword;
@@ -313,7 +313,7 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
             $page->setTelephone((string) $xmlElement->contactInfo->telephone);
         }
 
-        $links = array();
+        $links = [];
         if (!empty($xmlElement->links)) {
             foreach ($xmlElement->links->children() as $link) {
                 $url = (string) $link;

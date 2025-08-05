@@ -440,7 +440,7 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
                 }
                 $eventElement->appendChild($keywordsElement);
             } else {
-                $keywords = array();
+                $keywords = [];
                 foreach ($this->keywords as $keyword) {
                     $keywords[$keyword->getValue()] = $keyword->getValue();
                 }

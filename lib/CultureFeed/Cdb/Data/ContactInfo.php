@@ -84,7 +84,7 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
 
     public function deletePhones(): void
     {
-        $this->phones = array();
+        $this->phones = [];
     }
 
     public function addMail(CultureFeed_Cdb_Data_Mail $mail): void
@@ -103,7 +103,7 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
 
     public function deleteMails(): void
     {
-        $this->mails = array();
+        $this->mails = [];
     }
 
     public function addUrl(CultureFeed_Cdb_Data_Url $url): void
@@ -122,7 +122,7 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
 
     public function deleteUrls(): void
     {
-        $this->urls = array();
+        $this->urls = [];
     }
 
     /**
@@ -130,7 +130,7 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
      */
     public function getReservationInfo(): array
     {
-        $info = array();
+        $info = [];
 
         foreach ($this->urls as $url) {
             if ($url->isForReservations()) {
@@ -158,7 +158,7 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
      */
     public function getMainInfo(): array
     {
-        $info = array();
+        $info = [];
 
         foreach ($this->urls as $url) {
             if ($url->isMain()) {

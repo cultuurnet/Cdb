@@ -12,7 +12,7 @@ final class CultureFeed_Cdb_Data_Calendar_WeekschemeTest extends TestCase
         $ws = new CultureFeed_Cdb_Data_Calendar_Weekscheme();
 
         /** @var CultureFeed_Cdb_Data_Calendar_SchemeDay[] $days */
-        $days = array();
+        $days = [];
         $days[] = new CultureFeed_Cdb_Data_Calendar_SchemeDay(
             CultureFeed_Cdb_Data_Calendar_SchemeDay::MONDAY,
             $closed

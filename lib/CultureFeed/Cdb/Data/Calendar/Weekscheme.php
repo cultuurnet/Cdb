@@ -14,7 +14,7 @@ final class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_
     /**
      * @var CultureFeed_Cdb_Data_Calendar_SchemeDay[]|null[]
      */
-    private array $days = array(
+    private array $days = [
         'monday' => null,
         'tuesday' => null,
         'wednesday' => null,
@@ -22,7 +22,7 @@ final class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_
         'friday' => null,
         'saturday' => null,
         'sunday' => null,
-    );
+    ];
 
     public function setDay(string $dayName, CultureFeed_Cdb_Data_Calendar_SchemeDay $openingInfo): void
     {
