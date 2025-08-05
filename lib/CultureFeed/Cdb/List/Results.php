@@ -84,7 +84,7 @@ final class CultureFeed_Cdb_List_Results implements Iterator
     /**
      * @return array<CultureFeed_Cdb_Item_Base|null>
      */
-    protected static function parseFromCdbXmlXmlview(SimpleXMLElement $xmlElement): array
+    private static function parseFromCdbXmlXmlview(SimpleXMLElement $xmlElement): array
     {
         $items = [];
 

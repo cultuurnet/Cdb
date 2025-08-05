@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 final class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
 {
-    const CATEGORY_TYPE_EVENT_TYPE = 'eventtype';
-    const CATEGORY_TYPE_ACTOR_TYPE = 'actortype';
-    const CATEGORY_TYPE_THEME = 'theme';
-    const CATEGORY_TYPE_PUBLICSCOPE = 'publicscope';
-    const CATEGORY_TYPE_EDUCATION_FIELD = 'educationfield';
-    const CATEGORY_TYPE_EDUCATION_LEVEL = 'educationlevel';
-    const CATEGORY_TYPE_FACILITY = 'facility';
-    const CATEGORY_TYPE_TARGET_AUDIENCE = 'targetaudience';
+    public const CATEGORY_TYPE_EVENT_TYPE = 'eventtype';
+    public const CATEGORY_TYPE_ACTOR_TYPE = 'actortype';
+    public const CATEGORY_TYPE_THEME = 'theme';
+    public const CATEGORY_TYPE_PUBLICSCOPE = 'publicscope';
+    public const CATEGORY_TYPE_EDUCATION_FIELD = 'educationfield';
+    public const CATEGORY_TYPE_EDUCATION_LEVEL = 'educationlevel';
+    public const CATEGORY_TYPE_FACILITY = 'facility';
+    public const CATEGORY_TYPE_TARGET_AUDIENCE = 'targetaudience';
     /** @deprecated use CATEGORY_TYPE_TARGET_AUDIENCE instead. */
-    const CATEGORY_TYPE_TARGET_AUDIANCE = 'targetaudience';
-    const CATEGORY_TYPE_FLANDERS_REGION = 'flandersregion';
-    const CATEGORY_TYPE_UMV = 'umv';
+    public const CATEGORY_TYPE_TARGET_AUDIANCE = 'targetaudience';
+    public const CATEGORY_TYPE_FLANDERS_REGION = 'flandersregion';
+    public const CATEGORY_TYPE_UMV = 'umv';
 
     private string $type;
     private string $id;

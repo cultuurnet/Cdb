@@ -7,7 +7,7 @@ final class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_I
     private string $date;
     private ?string $startTime = null;
     private ?string $endTime = null;
-    private ?string $openType= null;
+    private ?string $openType = null;
 
     public function __construct(string $date, string $startTime = null, string $endTime = null)
     {

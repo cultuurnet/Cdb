@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 final class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement
 {
-    const TYPE_DUBBED = 'dubbed';
-    const TYPE_SPOKEN = 'spoken';
-    const TYPE_SUBTITLES = 'subtitles';
+    public const TYPE_DUBBED = 'dubbed';
+    public const TYPE_SPOKEN = 'spoken';
+    public const TYPE_SUBTITLES = 'subtitles';
 
     private ?string $language;
     private ?string $type;

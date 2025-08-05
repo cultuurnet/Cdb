@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 final class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_IElement
 {
-    const MONDAY = 'monday';
-    const TUESDAY = 'tuesday';
-    const WEDNESDAY = 'wednesday';
-    const THURSDAY = 'thursday';
-    const FRIDAY = 'friday';
-    const SATURDAY = 'saturday';
-    const SUNDAY = 'sunday';
+    public const MONDAY = 'monday';
+    public const TUESDAY = 'tuesday';
+    public const WEDNESDAY = 'wednesday';
+    public const THURSDAY = 'thursday';
+    public const FRIDAY = 'friday';
+    public const SATURDAY = 'saturday';
+    public const SUNDAY = 'sunday';
 
     /** @var array<string> */
     public static array $allowedDays = [
@@ -23,9 +23,9 @@ final class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_I
         'sunday',
     ];
 
-    const SCHEMEDAY_OPEN_TYPE_OPEN = 'open';
-    const SCHEMEDAY_OPEN_TYPE_CLOSED = 'closed';
-    const SCHEMEDAY_OPEN_TYPE_BY_APPOINTMENT = 'byappointment';
+    public const SCHEMEDAY_OPEN_TYPE_OPEN = 'open';
+    public const SCHEMEDAY_OPEN_TYPE_CLOSED = 'closed';
+    public const SCHEMEDAY_OPEN_TYPE_BY_APPOINTMENT = 'byappointment';
 
     private string $dayName;
     private string $openType;

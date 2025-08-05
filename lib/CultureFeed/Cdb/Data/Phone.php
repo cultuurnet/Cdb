@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 final class CultureFeed_Cdb_Data_Phone implements CultureFeed_Cdb_IElement
 {
-    const PHONE_TYPE_PHONE = 'phone';
-    const PHONE_TYPE_FAX = 'fax';
+    public const PHONE_TYPE_PHONE = 'phone';
+    public const PHONE_TYPE_FAX = 'fax';
 
     private ?bool $main;
     private ?bool $reservation;
