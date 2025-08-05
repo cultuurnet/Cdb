@@ -26,7 +26,7 @@ abstract class CultureFeed_Cdb_Item_Base
         CultureFeed_Cdb_Item_Base $item
     ): void {
         if (@count($xmlElement->keywords)) {
-            $keywordsString = trim($xmlElement->keywords);
+            $keywordsString = trim((string) $xmlElement->keywords);
 
             if ($keywordsString === '') {
                 /**

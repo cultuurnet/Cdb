@@ -72,7 +72,7 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
         }
 
         if (isset($event_attributes['pctcomplete'])) {
-            $event->setPctComplete(floatval($event_attributes['pctcomplete']));
+            $event->setPctComplete((float) $event_attributes['pctcomplete']);
         }
 
         if (isset($event_attributes['published'])) {

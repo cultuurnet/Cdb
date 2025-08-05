@@ -35,7 +35,10 @@ final class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail
         $dom = $element->ownerDocument;
 
         $detailElement = $dom->createElement('eventdetail');
-        $detailElement->setAttribute('lang', $this->language);
+
+        if (!empty($this->language)) {
+            $detailElement->setAttribute('lang', $this->language);
+        }
 
         if (!empty($this->calendarSummary)) {
             $summaryElement = $dom->createElement('calendarsummary');
