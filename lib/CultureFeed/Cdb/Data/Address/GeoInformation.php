@@ -50,7 +50,7 @@ final class CultureFeed_Cdb_Data_Address_GeoInformation implements CultureFeed_C
     {
         if (empty($xmlElement->xcoordinate) || empty($xmlElement->ycoordinate)) {
             throw new CultureFeed_Cdb_ParseException(
-                "Coördinates are missing on gis element"
+                'Coördinates are missing on gis element'
             );
         }
 

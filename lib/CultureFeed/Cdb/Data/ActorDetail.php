@@ -67,14 +67,14 @@ final class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail
     {
         if (empty($xmlElement->title)) {
             throw new CultureFeed_Cdb_ParseException(
-                "Title missing for actordetail element"
+                'Title missing for actordetail element'
             );
         }
 
         $attributes = $xmlElement->attributes();
         if (empty($attributes['lang'])) {
             throw new CultureFeed_Cdb_ParseException(
-                "Lang missing for actordetail element"
+                'Lang missing for actordetail element'
             );
         }
 

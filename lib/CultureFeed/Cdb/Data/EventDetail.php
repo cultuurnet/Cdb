@@ -87,7 +87,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
         $attributes = $xmlElement->attributes();
         if (empty($attributes['lang'])) {
             throw new CultureFeed_Cdb_ParseException(
-                "Lang missing for eventdetail element"
+                'Lang missing for eventdetail element'
             );
         }
 

@@ -138,7 +138,7 @@ final class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_I
         $attributes = $xmlElement->attributes();
         if (!isset($attributes['opentype'])) {
             throw new CultureFeed_Cdb_ParseException(
-                "Opentype is missing for day information"
+                'Opentype is missing for day information'
             );
         }
 

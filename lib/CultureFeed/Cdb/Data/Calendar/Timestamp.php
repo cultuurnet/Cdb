@@ -97,7 +97,7 @@ final class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_I
     {
         if (empty($xmlElement->date)) {
             throw new CultureFeed_Cdb_ParseException(
-                "Date is missing for timestamp"
+                'Date is missing for timestamp'
             );
         }
 

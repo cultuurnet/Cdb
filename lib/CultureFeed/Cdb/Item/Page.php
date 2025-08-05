@@ -93,7 +93,7 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
 
     public function getVisibility(): bool
     {
-        return $this->visible == "true";
+        return $this->visible == 'true';
     }
 
     public function getPermissions(): ?CultureFeed_Cdb_Data_PagePermissions

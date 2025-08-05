@@ -35,7 +35,7 @@ final class CultureFeed_Cdb_Data_Address_VirtualAddress implements CultureFeed_C
     {
         if (empty($xmlElement->title)) {
             throw new CultureFeed_Cdb_ParseException(
-                "Title is missing for virtual address"
+                'Title is missing for virtual address'
             );
         }
 
