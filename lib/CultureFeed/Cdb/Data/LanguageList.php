@@ -1,11 +1,12 @@
 <?php
 
+/**
+ * @implements Iterator<CultureFeed_Cdb_Data_Language>
+ */
 final class CultureFeed_Cdb_Data_LanguageList implements CultureFeed_Cdb_IElement, Iterator, Countable
 {
     private int $position = 0;
-    /**
-     * @var CultureFeed_Cdb_Data_Language[]
-     */
+    /** @var array<CultureFeed_Cdb_Data_Language> */
     private array $languages = [];
 
     public function add(CultureFeed_Cdb_Data_Language $language): void

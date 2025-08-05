@@ -10,6 +10,7 @@ final class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_I
     const SATURDAY = 'saturday';
     const SUNDAY = 'sunday';
 
+    /** @var array<string> */
     public static array $allowedDays = array(
         'monday',
         'tuesday',
@@ -26,6 +27,7 @@ final class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_I
 
     private string $dayName;
     private string $openType;
+    /** @var array<CultureFeed_Cdb_Data_Calendar_OpeningTime> */
     private array $openingTimes = [];
 
     public function __construct(string $dayName, string $openType = null)
@@ -46,6 +48,9 @@ final class CultureFeed_Cdb_Data_Calendar_SchemeDay implements CultureFeed_Cdb_I
         return $this->openType;
     }
 
+    /**
+     * @return array<CultureFeed_Cdb_Data_Calendar_OpeningTime>
+     */
     public function getOpeningTimes(): array
     {
         return $this->openingTimes;

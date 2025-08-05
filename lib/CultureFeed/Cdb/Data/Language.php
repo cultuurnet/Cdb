@@ -9,7 +9,7 @@ final class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement
     private ?string $language;
     private ?string $type;
 
-    public function __construct($language = null, $type = null)
+    public function __construct(string $language = null, string $type = null)
     {
         $this->language = $language;
         $this->type = $type;

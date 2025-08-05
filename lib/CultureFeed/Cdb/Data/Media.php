@@ -1,12 +1,12 @@
 <?php
 
+/**
+ * @implements Iterator<CultureFeed_Cdb_Data_File>
+ */
 final class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator, Countable
 {
     private int $position = 0;
-
-    /**
-     * @var CultureFeed_Cdb_Data_File[]
-     */
+    /** @var array<CultureFeed_Cdb_Data_File> */
     private array $details = [];
 
     public function add(CultureFeed_Cdb_Data_File $file): void
@@ -39,7 +39,7 @@ final class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iter
         return isset($this->details[$this->position]);
     }
 
-    public function remove($position): void
+    public function remove(int $position): void
     {
         unset($this->details[$position]);
     }

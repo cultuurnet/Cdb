@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @class
- * Representation of a price element in the cdb xml.
- */
 final class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
 {
     private ?float $value;
@@ -40,7 +36,7 @@ final class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
         return $this->title;
     }
 
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }

@@ -8,6 +8,7 @@ final class CultureFeed_Cdb_Default
     const CDB_SCHEME_URL = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL';
     const CDB_SCHEME_NAME = 'cdbxml';
 
+    /** @var array<string, array<CultureFeed_Cdb_IElement>> */
     private array $items = [];
     private string $cdb_schema_url;
     private string $cdb_schema_version = '3.2';
@@ -56,7 +57,7 @@ final class CultureFeed_Cdb_Default
     }
 
     /**
-     * @return CultureFeed_Cdb_Item_Actor|CultureFeed_Cdb_Item_Event|CultureFeed_Cdb_Item_Production|null
+     * @return CultureFeed_Cdb_Item_Base|null
      */
     public static function parseItem(SimpleXMLElement $xmlElement)
     {
@@ -97,7 +98,7 @@ final class CultureFeed_Cdb_Default
         foreach ($this->items as $type => $itemsFromType) {
             if ($itemsFromType) {
                 foreach ($itemsFromType as $item) {
-                    $item->appendToDOM($cdbElement, $this->getSchemaVersion());
+                    $item->appendToDOM($cdbElement);
                 }
             }
         }

@@ -71,6 +71,9 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals($uuid, $items->item(0)->textContent);
     }
 
+    /**
+     * @return array<array<bool>>
+     */
     public function privatePropertyValues(): array
     {
         return array(
@@ -82,7 +85,7 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
     /**
      * @dataProvider privatePropertyValues
      */
-    public function testAppendsBooleanPrivateProperty($value): void
+    public function testAppendsBooleanPrivateProperty(bool $value): void
     {
         $this->assertNULL($this->event->isPrivate());
 
@@ -105,6 +108,9 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals($value, $this->event->isPrivate());
     }
 
+    /**
+     * @return array<array<string|bool>>
+     */
     public function privatePropertySamples(): array
     {
         return array(
@@ -116,10 +122,9 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
     /**
      * @dataProvider privatePropertySamples
      */
-    public function testCreateFromXmlParsesPrivateAttribute(string $sampleName, bool $value)
+    public function testCreateFromXmlParsesPrivateAttribute(string $sampleName, bool $value): void
     {
         $xml = $this->loadSample($sampleName);
-        //var_dump($xml->asXML());
         $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
 
         $this->assertEquals($value, $event->isPrivate());
@@ -431,6 +436,7 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals('15:00:00', $timestamp->getEndTime());
 
         $calendar->next();
+        /** @var CultureFeed_Cdb_Data_Calendar_Timestamp $timestamp */
         $timestamp = $calendar->current();
 
         $this->assertEquals('2014-02-20', $timestamp->getDate());
@@ -605,6 +611,7 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals('Ruime Activiteit', $detail->getTitle());
 
         $details->next();
+        /** @var CultureFeed_Cdb_Data_EventDetail $detail */
         $detail = $details->current();
         $this->assertEquals('fr', $detail->getLanguage());
         $this->assertEquals(
@@ -615,6 +622,7 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals('RB', $detail->getTitle());
 
         $details->next();
+        /** @var CultureFeed_Cdb_Data_EventDetail $detail */
         $detail = $details->current();
         $this->assertEquals('de', $detail->getLanguage());
         $this->assertEquals(

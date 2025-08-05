@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 
 final class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
 {
-    public function loadSample($fileName): SimpleXMLElement
+    public function loadSample(string $fileName): SimpleXMLElement
     {
         $sampleDir = __DIR__ . '/samples/PhysicalAddressTest/';
         $filePath = $sampleDir . $fileName;
@@ -64,6 +64,9 @@ final class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
         CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml($sample);
     }
 
+    /**
+     * @return array<array<string>>
+     */
     public function missingElementSamples(): array
     {
         return array(

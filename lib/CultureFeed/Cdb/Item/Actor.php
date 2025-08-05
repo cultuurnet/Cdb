@@ -82,7 +82,7 @@ final class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base impleme
         $this->weekScheme = $weekScheme;
     }
 
-    public function appendToDOM(DOMElement $element, $cdbScheme = '3.2'): void
+    public function appendToDOM(DOMElement $element, string $cdbScheme = '3.2'): void
     {
         $dom = $element->ownerDocument;
 

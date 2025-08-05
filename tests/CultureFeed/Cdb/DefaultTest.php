@@ -4,6 +4,9 @@ use PHPUnit\Framework\TestCase;
 
 final class CultureFeed_Cdb_Default_DefaultTest extends TestCase
 {
+    /**
+     * @return array<array<string>>
+     */
     public function versionProvider(): array
     {
         return array(

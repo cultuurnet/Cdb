@@ -6,7 +6,9 @@ final class CultureFeed_Cdb_Data_EventDetailList extends CultureFeed_Cdb_Data_De
     {
         $dom = $element->ownerDocument;
 
+        /** @var DOMElement $detailsElement */
         $detailsElement = $dom->createElement('eventdetails');
+        /** @var CultureFeed_Cdb_Data_EventDetail $detail */
         foreach ($this as $detail) {
             $detail->appendToDom($detailsElement);
         }
