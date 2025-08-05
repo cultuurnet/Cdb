@@ -59,7 +59,7 @@ final class CultureFeed_Cdb_List_Results implements Iterator
             $results->items = self::parseFromCdbXmlXmlview($xmlElement);
         }
 
-        $results->setTotalResultsFound((int) $xmlElement->nofrecords);
+        $results->setTotalResultsFound(count($xmlElement->list->item));
 
         return $results;
     }
