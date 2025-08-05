@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @method CultureFeed_Cdb_Data_Calendar_SchemeDay monday()

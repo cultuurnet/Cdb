@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 final class CultureFeed_Cdb_Data_Address_VirtualAddress implements CultureFeed_Cdb_IElement
 {

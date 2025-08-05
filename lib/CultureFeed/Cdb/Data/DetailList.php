@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @implements Iterator<CultureFeed_Cdb_Data_Detail>

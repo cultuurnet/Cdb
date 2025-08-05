@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 final class CultureFeed_Cdb_Data_ProductionDetailList extends CultureFeed_Cdb_Data_DetailList implements CultureFeed_Cdb_IElement
 {
