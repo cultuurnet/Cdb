@@ -1,6 +1,6 @@
 <?php
 
-class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
 {
     private string $calendarSummary;
     private ?CultureFeed_Cdb_Data_PerformerList $performers = null;
