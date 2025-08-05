@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 trait CultureFeed_Cdb_DOMElementAssertionsTrait
 {
