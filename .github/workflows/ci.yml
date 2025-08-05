@@ -64,4 +64,4 @@ jobs:
         run: composer install --no-progress --no-suggest
 
       - name: ✅ Run tests
-        run: vendor/bin/cs-fixer fix --dry-run
+        run: vendor/bin/php-cs-fixer fix --dry-run
