@@ -1,14 +1,7 @@
 <?php
 
-/**
- * @class
- * Representation of a category element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Category types.
-     */
     const CATEGORY_TYPE_EVENT_TYPE = 'eventtype';
     const CATEGORY_TYPE_ACTOR_TYPE = 'actortype';
     const CATEGORY_TYPE_THEME = 'theme';
@@ -17,111 +10,54 @@ class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
     const CATEGORY_TYPE_EDUCATION_LEVEL = 'educationlevel';
     const CATEGORY_TYPE_FACILITY = 'facility';
     const CATEGORY_TYPE_TARGET_AUDIENCE = 'targetaudience';
-    /**
-     * @deprecated use CATEGORY_TYPE_TARGET_AUDIENCE instead.
-     */
+    /** @deprecated use CATEGORY_TYPE_TARGET_AUDIENCE instead. */
     const CATEGORY_TYPE_TARGET_AUDIANCE = 'targetaudience';
     const CATEGORY_TYPE_FLANDERS_REGION = 'flandersregion';
     const CATEGORY_TYPE_UMV = 'umv';
 
-    /**
-     * Type of category.
-     * @var string
-     */
-    protected $type;
+    private string $type;
+    private string $id;
+    private string $name;
 
-    /**
-     * ID from the category.
-     * @var string
-     */
-    protected $id;
-
-    /**
-     * Name from the category.
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * Construct a new category.
-     *
-     * @param string $type
-     *   Type of category.
-     * @param $id
-     *   ID from the category.
-     * @param $name
-     *   Name from the category.
-     */
-    public function __construct($type, $id, $name)
+    public function __construct(string $type, string $id, string $name)
     {
         $this->type = $type;
         $this->id = $id;
         $this->name = $name;
     }
 
-    /**
-     * Get the type of category.
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * Get the ID from the category.
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * Get the name from the category.
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set the type of category.
-     *
-     * @param string $type
-     *   Type of category.
-     */
-    public function setType($type)
+    public function setType(string $type)
     {
         $this->type = $type;
     }
 
-    /**
-     * Set the ID from the category.
-     *
-     * @param string $id
-     *   Id from the category.
-     */
-    public function setId($id)
+    public function setId(string $id)
     {
         $this->id = $id;
     }
 
-    /**
-     * Set the name from the category.
-     *
-     * @param string $name
-     *   Name from the category.
-     */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $categoryElement = $dom->createElement('category');
@@ -132,14 +68,8 @@ class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
         $element->appendChild($categoryElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Category|null
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): ?CultureFeed_Cdb_Data_Category
     {
-
         $attributes = $xmlElement->attributes();
         if (!isset($attributes['type'])) {
             return null;

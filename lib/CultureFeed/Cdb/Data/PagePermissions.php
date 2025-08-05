@@ -1,68 +1,21 @@
 <?php
 
-/**
- * @class
- * Representation of an PagePermissions element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_PagePermissions implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_PagePermissions implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Indicates if the page allows activities.
-     * @var Boolean
-     */
-    public $allowActivities = false;
+    public bool $allowActivities = false;
+    public bool $allowComments = false;
+    public bool $allowFollowers = false;
+    public bool $allowLikes = false;
+    public bool $allowMembers = false;
+    public bool $allowMessages = false;
+    public bool $allowRecommendations = false;
 
-    /**
-     * Indicates if the page allows commenting.
-     * @var Boolean
-     */
-    public $allowComments = false;
-
-    /**
-     * Indicates if the page allows followers.
-     * @var Boolean
-     */
-    public $allowFollowers = false;
-
-    /**
-     * Indicates if the page allows liking.
-     * @var Boolean
-     */
-    public $allowLikes = false;
-
-    /**
-     * Indicates if the page allows to become member.
-     * @var Boolean
-     */
-    public $allowMembers = false;
-
-    /**
-     * Indicates if the page allows to message.
-     * @var Boolean
-     */
-    public $allowMessages = false;
-
-    /**
-     * Indicates if the page allows to recommend a page.
-     * @var Boolean
-     */
-    public $allowRecommendations = false;
-
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_PagePermissions
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_PagePermissions
     {
-
         $pagePermissions = new self();
 
         $pagePermissions->allowActivities = (string) $xmlElement->allowActivities == "true" ? true : false;

@@ -1,86 +1,43 @@
 <?php
 
-/**
- * @class
- * Representation of a organiser element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Organiser label.
-     * @var string
-     */
-    protected $label;
+    private string $label;
+    private ?string $cdbid = null;
+    private CultureFeed_Cdb_Item_Actor $actor;
 
-    /**
-     * Cdbid from organiser actor.
-     */
-    protected $cdbid;
-
-    /**
-     * @var CultureFeed_Cdb_Item_Actor
-     */
-    protected $actor;
-
-    /**
-     * Get the cdbid for this organiser.
-     */
-    public function getCdbid()
+    public function getCdbid(): ?string
     {
         return $this->cdbid;
     }
 
-    /**
-     * Get the label.
-     */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
 
-    /**
-     * Set the cdbid for this organiser.
-     *
-     * @param string $cdbid
-     */
-    public function setCdbid($cdbid)
+    public function setCdbid(string $cdbid): void
     {
         $this->cdbid = $cdbid;
     }
 
-    /**
-     * Set the label
-     *
-     * @param string $label
-     *   Label to set.
-     */
-    public function setLabel($label)
+    public function setLabel(string $label): void
     {
         $this->label = $label;
     }
 
-    /**
-     * @param CultureFeed_Cdb_Item_Actor $actor
-     */
-    public function setActor(CultureFeed_Cdb_Item_Actor $actor)
+    public function setActor(CultureFeed_Cdb_Item_Actor $actor): void
     {
         $this->actor = $actor;
     }
 
-    /**
-     * @return CultureFeed_Cdb_Item_Actor
-     */
-    public function getActor()
+    public function getActor(): CultureFeed_Cdb_Item_Actor
     {
         return $this->actor;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
         $organiserElement = $dom->createElement('organiser');
 
@@ -96,12 +53,7 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
         $element->appendChild($organiserElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Organiser
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Organiser
     {
         $organiser = new CultureFeed_Cdb_Data_Organiser();
 

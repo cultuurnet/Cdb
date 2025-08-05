@@ -1,78 +1,41 @@
 <?php
 
-/**
- * @class
- * Representation of a list of performers in the cdb xml.
- */
-class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IElement, Iterator, Countable
+final class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IElement, Iterator, Countable
 {
-    /**
-     * Current position in the list.
-     * @var int
-     */
-    protected $position = 0;
+    private int $position = 0;
+    private array $performers = [];
 
-    /**
-     * The list of performers.
-     * @var array
-     */
-    protected $performers = array();
-
-    /**
-     * Add a new performer to the list.
-     *
-     * @param CultureFeed_Cdb_Data_Performer $performer
-     *   performer to add.
-     */
-    public function add(CultureFeed_Cdb_Data_Performer $performer)
+    public function add(CultureFeed_Cdb_Data_Performer $performer): void
     {
         $this->performers[] = $performer;
     }
 
-    /**
-     * @see Iterator::rewind()
-     */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
 
-    /**
-     * @see Iterator::current()
-     */
     public function current()
     {
         return $this->performers[$this->position];
     }
 
-    /**
-     * @see Iterator::key()
-     */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
 
-    /**
-     * @see Iterator::next()
-     */
-    public function next()
+    public function next(): void
     {
         ++$this->position;
     }
 
-    /**
-     * @see Iterator::valid()
-     */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->performers[$this->position]);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
         $dom = $element->ownerDocument;
 
@@ -84,12 +47,7 @@ class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IElement, It
         $element->appendChild($performersElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_PerformerList
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_PerformerList
     {
         $performerList = new CultureFeed_Cdb_Data_PerformerList();
 
@@ -106,7 +64,7 @@ class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IElement, It
         return $performerList;
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->performers);
     }

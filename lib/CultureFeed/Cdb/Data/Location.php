@@ -1,123 +1,59 @@
 <?php
 
-/**
- * @class
- * Representation of a location element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Address from the location.
-     * @var CultureFeed_Cdb_Data_Address
-     */
-    protected $address;
+    private CultureFeed_Cdb_Data_Address $address;
+    private string $label;
+    private string $cdbid;
+    private ?CultureFeed_Cdb_Item_Actor $actor = null;
 
-    /**
-     * Location label.
-     * @var string
-     */
-    protected $label;
-
-    /**
-     * Cdbid from location actor.
-     */
-    protected $cdbid;
-
-    /**
-     * Location actor.
-     * @var CultureFeed_Cdb_Item_Actor|null
-     */
-    protected $actor;
-
-    /**
-     * Construct a new location.
-     *
-     * @param CultureFeed_Cdb_Data_Address $address
-     *   Address from the location.
-     */
     public function __construct(CultureFeed_Cdb_Data_Address $address)
     {
         $this->address = $address;
     }
 
-    /**
-     * Get the address.
-     */
-    public function getAddress()
+    public function getAddress(): CultureFeed_Cdb_Data_Address
     {
         return $this->address;
     }
 
-    /**
-     * Get the cdbid for this location.
-     */
-    public function getCdbid()
+    public function getCdbid(): string
     {
         return $this->cdbid;
     }
 
-    /**
-     * Get the label.
-     */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
 
-    /**
-     * @return CultureFeed_Cdb_Item_Actor|null
-     */
-    public function getActor()
+    public function getActor(): ?CultureFeed_Cdb_Item_Actor
     {
         return $this->actor;
     }
 
-    /**
-     * @param CultureFeed_Cdb_Item_Actor $actor
-     */
-    public function setActor(CultureFeed_Cdb_Item_Actor $actor)
+    public function setActor(CultureFeed_Cdb_Item_Actor $actor): void
     {
         $this->actor = $actor;
     }
 
-    /**
-     * Set the address.
-     *
-     * @param CultureFeed_Cdb_Data_Address $address
-     *   Address to set.
-     */
-    public function setAddress(CultureFeed_Cdb_Data_Address $address)
+    public function setAddress(CultureFeed_Cdb_Data_Address $address): void
     {
         $this->address = $address;
     }
 
-    /**
-     * Set the cdbid for this location.
-     *
-     * @param string $cdbid
-     */
-    public function setCdbid($cdbid)
+    public function setCdbid(string $cdbid): void
     {
         $this->cdbid = $cdbid;
     }
 
-    /**
-     * Set the label
-     *
-     * @param string $label
-     *   Label to set.
-     */
-    public function setLabel($label)
+    public function setLabel(string $label): void
     {
         $this->label = $label;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $locationElement = $dom->createElement('location');
@@ -140,14 +76,8 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
         $element->appendChild($locationElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Location
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Location
     {
-
         if (empty($xmlElement->address)) {
             throw new CultureFeed_Cdb_ParseException(
                 "Address missing for location element"

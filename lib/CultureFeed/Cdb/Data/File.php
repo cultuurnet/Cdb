@@ -1,10 +1,7 @@
 <?php
 
-class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Constants for the different allowed file types.
-     */
     const FILE_TYPE_JPEG = 'jpeg';
     const FILE_TYPE_GIF = 'gif';
     const FILE_TYPE_PNG = 'png';
@@ -25,9 +22,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
     const FILE_TYPE_HTML = 'html(1)';
     const FILE_TYPE_ZIP = 'zip';
     const FILE_TYPE_UNKNOWN = 'onbepaald';
-    /**
-     * Constants for the media types.
-     */
+
     const MEDIA_TYPE_PHOTO = 'photo';
     const MEDIA_TYPE_VIDEO = 'video';
     const MEDIA_TYPE_WEBRESOURCE = 'webresource';
@@ -45,406 +40,172 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
     const MEDIA_TYPE_FACEBOOK = 'facebook';
     const MEDIA_TYPE_TAGLINE = 'tagline';
     const MEDIA_TYPE_COLLABORATION = 'collaboration';
-    /**
-     * Constants for relation types.
-     */
+
     const REL_TYPE_ORGANISER = 'organiser';
 
-    /**
-     * Is the current file a main file.
-     * @var bool
-     */
-    protected $main = false;
+    private bool $main = false;
+    private ?string $cdbid = null;
+    private ?string $creationDate = null;
+    private ?string $channel = null;
+    private bool $private = false;
+    private string $mediaType;
+    private string $title;
+    private string $copyright;
+    private ?string $fileName = null;
+    private ?string $fileType= null;
+    private ?string $relationType = null;
+    private string $hLink;
+    private ?string $plainText = null;
+    private ?string $subBrand = null;
+    private ?string $description = null;
 
-    /**
-     * Cdbid from the file.
-     * @var string|null
-     */
-    protected $cdbid;
-
-    /**
-     * Creation date from the file.
-     * @var string|null
-     */
-    protected $creationDate;
-
-    /**
-     * The aggregation channel from this file.
-     * @var string|null
-     */
-    protected $channel;
-
-    /**
-     * Is the current private or not.
-     * @var bool
-     */
-    protected $private = false;
-
-    /**
-     * @var string
-     */
-    protected $date;
-
-    /**
-     * Media type from the file.
-     * @var string
-     */
-    protected $mediaType;
-
-    /**
-     * Title from the file.
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * Copyright information from the file.
-     * @var string
-     */
-    protected $copyright;
-
-    /**
-     * Filename from the file.
-     * @var string|null
-     */
-    protected $fileName;
-
-    /**
-     * File type.
-     * @var string|null
-     */
-    protected $fileType;
-
-    /**
-     * Relation type.
-     * @var string|null
-     */
-    protected $relationType;
-
-    /**
-     * Link to the file.
-     * @var string
-     */
-    protected $hLink;
-
-    /**
-     * Description or review of the file.
-     * @var string|null
-     */
-    protected $plainText;
-
-    /**
-     * Sub brand of the file.
-     *
-     * @var string|null
-     */
-    protected $subBrand;
-
-    /**
-     * Description of the file.
-     *
-     * @var string
-     */
-    protected $description;
-
-    /**
-     * Is the current file a main file.
-     * @return bool
-     */
-    public function isMain()
+    public function isMain(): bool
     {
         return $this->main;
     }
 
-    /**
-     * Is the current file private.
-     * @return bool
-     */
-    public function isPrivate()
+    public function isPrivate(): bool
     {
         return $this->private;
     }
 
-    /**
-     * Return the cdbid of this file.
-     * @return string|null
-     */
-    public function getCdbid()
+    public function getCdbid(): ?string
     {
         return $this->cdbid;
     }
 
-    /**
-     * Return the creation date of this file.
-     *
-     * @return string|null
-     */
-    public function getCreationDate()
+    public function getCreationDate(): ?string
     {
         return $this->creationDate;
     }
 
-    /**
-     * Get the media type of this file.
-     * @return string
-     */
-    public function getMediaType()
+    public function getMediaType(): string
     {
         return $this->mediaType;
     }
 
-    /**
-     * Get the channel of this file.
-     * @return string|null
-     */
-    public function getChannel()
+    public function getChannel(): ?string
     {
         return $this->channel;
     }
 
-    /**
-     * Get the title of this file.
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Get the copyright information of this file.
-     * @return string
-     */
-    public function getCopyright()
+    public function getCopyright(): string
     {
         return $this->copyright;
     }
 
-    /**
-     * Get the filename of this file.
-     * @return string|null
-     */
-    public function getFileName()
+    public function getFileName(): ?string
     {
         return $this->fileName;
     }
 
-    /**
-     * Get the file type of this file.
-     * @return string|null
-     */
-    public function getFileType()
+    public function getFileType(): ?string
     {
         return $this->fileType;
     }
 
-    /**
-     * Get the relation type of this file.
-     */
-    public function getRelationType()
+    public function getRelationType(): ?string
     {
         return $this->relationType;
     }
 
-    /**
-     * Get the link to this file.
-     * @return string
-     */
-    public function getHLink()
+    public function getHLink(): string
     {
         return $this->hLink;
     }
 
-    /**
-     * Get the description or review of this file.
-     * @return string|null
-     */
-    public function getPlainText()
+    public function getPlainText(): ?string
     {
         return $this->plainText;
     }
 
-    /**
-     * Get the sub brand of this file.
-     *
-     * @return string|null
-     *   The sub brand.
-     */
-    public function getSubBrand()
+    public function getSubBrand(): ?string
     {
         return $this->subBrand;
     }
 
-    /**
-     * Get the description of this file.
-     *
-     * @return string|null
-     *   The description.
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * Set the main status of this file.
-     *
-     * @param bool $main status to set.
-     */
-    public function setMain($main = true)
+    public function setMain(bool $main = true): void
     {
         $this->main = $main;
     }
 
-    /**
-     * Set the private status of this file.
-     *
-     * @param bool $private status to set.
-     */
-    public function setPrivate($private)
+    public function setPrivate(bool $private): void
     {
         $this->private = $private;
     }
 
-    /**
-     * Set the cdbid of this file.
-     *
-     * @param string $cdbid Cdbid to set.
-     */
-    public function setCdbid($cdbid)
+    public function setCdbid(string $cdbid): void
     {
         $this->cdbid = $cdbid;
     }
 
-    /**
-     * Set the creation date of this file.
-     *
-     * @param string $date Date to set.
-     */
-    public function setCreationDate($date)
-    {
-        $this->date = $date;
-    }
-
-    /**
-     * Set the media type of this file.
-     *
-     * @param string $type Type to set.
-     */
-    public function setMediaType($type)
+    public function setMediaType(string $type): void
     {
         $this->mediaType = $type;
     }
 
-    /**
-     * Set the source channel of this file.
-     *
-     * @param string $channel Channel to set.
-     */
-    public function setChannel($channel)
+    public function setChannel(string $channel): void
     {
         $this->channel = $channel;
     }
 
-    /**
-     * Set the title of this file.
-     *
-     * @param string $title Title to set.
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Set the copyright information of this file.
-     *
-     * @param string $copyright Copyright to set.
-     */
-    public function setCopyright($copyright)
+    public function setCopyright(string $copyright): void
     {
         $this->copyright = $copyright;
     }
 
-    /**
-     * Set the filename of this file.
-     *
-     * @param string $fileName filename to set.
-     */
-    public function setFileName($fileName)
+    public function setFileName(string $fileName): void
     {
         $this->fileName = $fileName;
     }
 
-    /**
-     * Set the filetype of this file.
-     *
-     * @param string $fileType filetype to set.
-     */
-    public function setFileType($fileType)
+    public function setFileType(string $fileType): void
     {
         $this->fileType = $fileType;
     }
 
-    /**
-     * Set the relation type of this file.
-     *
-     * @param string $relationType
-     */
-    public function setRelationType($relationType)
+    public function setRelationType(string $relationType): void
     {
         $this->relationType = $relationType;
     }
 
-    /**
-     * Set the link to this file.
-     *
-     * @param string $link Link to set.
-     */
-    public function setHLink($link)
+    public function setHLink(string $link): void
     {
         $this->hLink = $link;
     }
 
-    /**
-     * Set the description / review text of this file.
-     */
-    public function setPlainText($text)
+    public function setPlainText(string $text): void
     {
         $this->plainText = $text;
     }
 
-    /**
-     * Set the sub brand of this file.
-     *
-     * @param string $sub_brand
-     *   The sub brand.
-     */
-    public function setSubBrand($sub_brand)
+    public function setSubBrand(string $subBrand): void
     {
-        $this->subBrand = $sub_brand;
+        $this->subBrand = $subBrand;
     }
 
-    /**
-     * Set the description of this file.
-     *
-     * @param string $description .
-     *   The description.
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * Appends the current object to the passed DOM tree.
-     *
-     * @param DOMElement $element
-     *   The DOM tree to append to.
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $fileElement = $dom->createElement('file');
@@ -540,17 +301,8 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
         $element->appendChild($fileElement);
     }
 
-    /**
-     * Parse a new object from a given cdbxml element.
-     *
-     * @param SimpleXMLElement $xmlElement
-     *   XML to parse.
-     *
-     * @throws CultureFeed_Cdb_ParseException
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_File
     {
-
         $file = new self();
 
         $attributes = $xmlElement->attributes();
