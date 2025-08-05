@@ -1,469 +1,211 @@
 <?php
 
-/**
- * @class
- * Class for the representation of list item on the culturefeed.
- */
-class CultureFeed_Cdb_List_Item
+final class CultureFeed_Cdb_List_Item
 {
-    /**
-     * External id from the item.
-     *
-     * @var string
-     */
-    protected $externalId;
+    private string $externalId;
+    private string $cdbId;
+    private bool $private;
+    private string $title;
+    private string $shortDescription;
+    private string $thumbnail;
+    private string $address;
+    private string $city;
+    private string $zip;
+    private string $location;
+    private string $locationId;
+    private string $calendarSummary;
+    private string $coordinates;
+    private string $type;
+    private string $price;
+    private string $priceDescription;
+    private int $ageFrom;
+    private string $performers;
 
-    /**
-     * cdbId from the item.
-     * @var string
-     */
-    protected $cdbId;
-
-    /**
-     * Is item private.
-     * @var bool
-     */
-    protected $private;
-
-    /**
-     * Title from the item
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * Short description from an item.
-     *
-     * @var string
-     */
-    protected $shortDescription;
-
-    /**
-     * Thumbnail from the item.
-     * @var string
-     */
-    protected $thumbnail;
-
-    /**
-     * Address from the item
-     * @var string
-     */
-    protected $address;
-
-    /**
-     * City from the item.
-     * @var string
-     */
-    protected $city;
-
-    /**
-     * Zip code from the location of the item.
-     * @var string
-     */
-    protected $zip;
-
-    /**
-     * Location from the item.
-     * @var string
-     */
-    protected $location;
-
-    /**
-     * Location ID from the items location.
-     * @var string
-     */
-    protected $locationId;
-
-    /**
-     * Calendar summary from this item.
-     * @var string
-     */
-    protected $calendarSummary;
-
-    /**
-     * Coördinates from this item.
-     * @var string
-     */
-    protected $coordinates;
-
-    /**
-     * item type.
-     * @var string
-     */
-    protected $type;
-
-    /**
-     * Price for the item.
-     * @var string
-     */
-    protected $price;
-
-    /**
-     * Price description for the item.
-     */
-    protected $priceDescription;
-
-    /**
-     * Minimum age for the item.
-     * @var int
-     */
-    protected $ageFrom;
-
-    /**
-     * Performers from this item.
-     * @var string
-     */
-    protected $performers;
-
-    /**
-     * Get the external ID from this item.
-     */
-    public function getExternalId()
+    public function getExternalId(): string
     {
         return $this->externalId;
     }
 
-    /**
-     * Get the Cdbid from this item.
-     * @return string
-     */
-    public function getCdbId()
+    public function getCdbId(): string
     {
         return $this->cdbId;
     }
 
-    /**
-     * Get the title from this item.
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Get the short description from current item.
-     * @return string
-     */
-    public function getShortDescription()
+    public function getShortDescription(): string
     {
         return $this->shortDescription;
     }
 
-    /**
-     * Get the thumbnail image from current item.
-     * @return string
-     */
-    public function getThumbnail()
+    public function getThumbnail(): string
     {
         return $this->thumbnail;
     }
 
-    /**
-     * Get the address from this item.
-     * @return string
-     */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
 
-    /**
-     * Get the city from this item.
-     * @return string
-     */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    /**
-     * Get the zip code from this item.
-     * @return string
-     */
-    public function getZip()
+    public function getZip(): string
     {
         return $this->zip;
     }
 
-    /**
-     * Get the location from this item.
-     * @return string
-     */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->location;
     }
 
-    /**
-     * Get the location id from this item.
-     * @return string
-     */
-    public function getLocationId()
+    public function getLocationId(): string
     {
         return $this->locationId;
     }
 
-    /**
-     * Get the calendar summary from this item.
-     * @return string
-     */
-    public function getCalendarSummary()
+    public function getCalendarSummary(): string
     {
         return $this->calendarSummary;
     }
 
-    /**
-     * Get the coördinates from this item.
-     * @return string
-     */
-    public function getCoordinates()
+    public function getCoordinates(): string
     {
         return $this->coordinates;
     }
 
-    /**
-     * Get the type of item.
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * Get the price from this item.
-     * @return string
-     */
-    public function getPrice()
+    public function getPrice(): string
     {
         return $this->price;
     }
 
-    /**
-     * Get the price description from this item.
-     * @return string
-     */
-    public function getPriceDescription()
+    public function getPriceDescription(): string
     {
         return $this->priceDescription;
     }
 
-    /**
-     * Get the minimum age for this item.
-     * @return number
-     */
-    public function getAgeFrom()
+    public function getAgeFrom(): int
     {
         return $this->ageFrom;
     }
 
-    /**
-     * Return the performers from this event.
-     * @return string
-     */
-    public function getPerfomers()
+    public function getPerfomers(): string
     {
         return $this->performers;
     }
 
-    /**
-     * Set the external id from this item.
-     *
-     * @param string $id
-     *   ID to set.
-     */
-    public function setExternalId($id)
+    public function setExternalId(string $id): void
     {
         $this->externalId = $id;
     }
 
-    /**
-     * Set the cdbid from this item.
-     *
-     * @param string $id
-     */
-    public function setCdbId($id)
+    public function setCdbId(string $id): void
     {
         $this->cdbId = $id;
     }
 
-    /**
-     * Set the title from this item.
-     *
-     * @param string $title
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Set item private.
-     *
-     * @param bool $private
-     */
-    public function setPrivate($private)
+    public function setPrivate(bool $private): void
     {
         $this->private = $private;
     }
 
-    /**
-     * Set the short description from current item.
-     */
-    public function setShortDescription($description)
+    public function isPrivate(): bool
+    {
+        return $this->private;
+    }
+
+    public function setShortDescription(string $description): void
     {
         $this->shortDescription = $description;
     }
 
-    /**
-     * Set the thumbnail image from current item.
-     *
-     * @param string $thumbnail
-     */
-    public function setThumbnail($thumbnail)
+    public function setThumbnail(string $thumbnail): void
     {
         $this->thumbnail = $thumbnail;
     }
 
-    /**
-     * Set the address from this item.
-     *
-     * @param string $address
-     *   Address to set.
-     */
-    public function setAddress($address)
+    public function setAddress(string $address): void
     {
         $this->address = $address;
     }
 
-    /**
-     * Set the city from this item.
-     *
-     * @param string $city
-     *   City to set.
-     */
-    public function setCity($city)
+    public function setCity(string $city): void
     {
         $this->city = $city;
     }
 
-    /**
-     * Set the zip code from this item.
-     *
-     * @param string $zip
-     */
-    public function setZip($zip)
+    public function setZip(string $zip): void
     {
         $this->zip = $zip;
     }
 
-    /**
-     * Set the location from this item.
-     *
-     * @param string $location
-     *   Location to set.
-     */
-    public function setLocation($location)
+    public function setLocation(string $location): void
     {
         $this->location = $location;
     }
 
-    /**
-     * Set the location ID from this item.
-     *
-     * @param string $locationId
-     *   Location ID to set.
-     */
-    public function setLocationId($locationId)
+    public function setLocationId(string $locationId): void
     {
         $this->locationId = $locationId;
     }
 
-    /**
-     * Set the calendar summary from this item.
-     *
-     * @param string $calendarSummary
-     *   Summary to set.
-     */
-    public function setCalendarSummary($calendarSummary)
+    public function setCalendarSummary(string $calendarSummary): void
     {
         $this->calendarSummary = $calendarSummary;
     }
 
-    /**
-     * Set the coördinates from this item.
-     *
-     * @param string $coordinates
-     *   Coordinates to set.
-     */
-    public function setCoordinates($coordinates)
+    public function setCoordinates(string $coordinates): void
     {
         $this->coordinates = $coordinates;
     }
 
-    /**
-     * Set the type of item.
-     *
-     * @param string $type
-     */
-    public function setType($type)
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * Set the price of the item.
-     *
-     * @param string $price
-     */
-    public function setPrice($price)
+    public function setPrice(string $price): void
     {
         $this->price = $price;
     }
 
-    /**
-     * Set the price description from this item.
-     *
-     * @param string $description
-     */
-    public function setPriceDescription($description)
+    public function setPriceDescription(string $description): void
     {
         $this->priceDescription = $description;
     }
 
-    /**
-     * Set the minimum age for this item.
-     *
-     * @param int $ageFrom
-     */
-    public function setAgeFrom($ageFrom)
+    public function setAgeFrom(int $ageFrom): void
     {
         $this->ageFrom = $ageFrom;
     }
 
-    /**
-     * Set the performers from this item.
-     *
-     * @param string $performers
-     */
-    public function setPerformers($performers)
+    public function setPerformers(string $performers): void
     {
         $this->performers = $performers;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_List_Item
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_List_Item
     {
-
         $attributes = $xmlElement->attributes();
         $item = new self();
 
-        // Set ID.
         $item->setCdbId((string) $attributes['cidn']);
 
         if (!empty($attributes['private'])) {
