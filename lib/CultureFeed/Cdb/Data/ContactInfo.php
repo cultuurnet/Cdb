@@ -15,12 +15,12 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
     /**
      * @var CultureFeed_Cdb_Data_Mail[]
      */
-    private array $mails = array();
+    private array $mails = [];
 
     /**
      * @var CultureFeed_Cdb_Data_Url[]
      */
-    private array $urls = array();
+    private array $urls = [];
 
     /**
      * @return CultureFeed_Cdb_Data_Address[]

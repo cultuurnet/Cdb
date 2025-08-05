@@ -1,93 +1,22 @@
 <?php
 
-/**
- * @class
- * Representation of an event on the culturefeed.
- */
-class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Minimum age for the event.
-     * @var int
-     */
-    protected $ageFrom;
+    private ?int $ageFrom = null;
+    private ?CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod = null;
+    private ?CultureFeed_Cdb_Data_Calendar $calendar = null;
+    private ?CultureFeed_Cdb_Data_ContactInfo $contactInfo = null;
+    private ?bool $isParent = null;
+    private ?CultureFeed_Cdb_Data_LanguageList $languages = null;
+    private ?CultureFeed_Cdb_Data_Location $location = null;
+    private ?int $maxParticipants = null;
+    private ?CultureFeed_Cdb_Data_Organiser $organiser = null;
+    private ?float $pctComplete = null;
+    private ?bool $published = null;
+    private ?string $validator = null;
+    private ?int $weight = null;
 
-    /**
-     * Booking period for this event.
-     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod|null
-     */
-    protected $bookingPeriod;
-
-    /**
-     * Calendar information for the event.
-     * @var CultureFeed_Cdb_Data_Calendar|null
-     */
-    protected $calendar;
-
-    /**
-     * Contact info for an event.
-     *
-     * @var CultureFeed_Cdb_Data_ContactInfo|null
-     */
-    protected $contactInfo;
-
-    /**
-     * @var bool|null
-     */
-    protected $isParent;
-
-    /**
-     * @var CultureFeed_Cdb_Data_LanguageList|null
-     */
-    protected $languages;
-
-    /**
-     * Location of an event.
-     *
-     * @var CultureFeed_Cdb_Data_Location|null
-     */
-    protected $location;
-
-    /**
-     * Maximum participants
-     * @var int
-     */
-    protected $maxParticipants;
-
-    /**
-     * Organiser of an event.
-     *
-     * @var CultureFeed_Cdb_Data_Organiser|null
-     */
-    protected $organiser;
-
-    /**
-     * @var float|null
-     */
-    protected $pctComplete;
-
-    /**
-     * @var bool|null
-     */
-    protected $published;
-
-    /**
-     * @var string|null
-     */
-    protected $validator;
-
-    /**
-     * Weight for this event.
-     * @var int|null
-     */
-    protected $weight;
-
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Item_Event
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Item_Event
     {
         if (empty($xmlElement->calendar)) {
             throw new CultureFeed_Cdb_ParseException(
@@ -267,241 +196,143 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         return $event;
     }
 
-    /**
-     * @param bool $value
-     */
-    public function setIsParent($value)
+    public function setIsParent(bool $value): void
     {
         $this->isParent = $value;
     }
 
-    /**
-     * @return bool
-     */
-    public function isParent()
+    public function isParent(): ?bool
     {
         return $this->isParent;
     }
 
-    public function getPctComplete()
+    public function getPctComplete(): ?float
     {
         return $this->pctComplete;
     }
 
-    public function setPctComplete($pct)
+    public function setPctComplete(float $pct): void
     {
         $this->pctComplete = $pct;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPublished()
+    public function isPublished(): ?bool
     {
         return $this->published;
     }
 
-    /**
-     * @param bool $value
-     */
-    public function setPublished($value = true)
+    public function setPublished(bool $value = true): void
     {
         $this->published = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getValidator()
+    public function getValidator(): ?string
     {
         return $this->validator;
     }
 
-    /**
-     * @param string $value
-     */
-    public function setValidator($value)
+    public function setValidator(string $value): void
     {
         $this->validator = $value;
     }
 
-    /**
-     * Get the minimum age for this event.
-     */
-    public function getAgeFrom()
+    public function getAgeFrom(): ?int
     {
         return $this->ageFrom;
     }
 
-    public function setAgeFrom(int $age)
+    public function setAgeFrom(int $age): void
     {
         $this->ageFrom = $age;
     }
 
-    /**
-     * Get the calendar from this event.
-     */
-    public function getCalendar()
+    public function getCalendar(): ?CultureFeed_Cdb_Data_Calendar
     {
         return $this->calendar;
     }
 
-    /**
-     * Set the calendar data for the event.
-     *
-     * @param CultureFeed_Cdb_Data_Calendar $calendar
-     *   Calendar data.
-     */
-    public function setCalendar(CultureFeed_Cdb_Data_Calendar $calendar)
+    public function setCalendar(CultureFeed_Cdb_Data_Calendar $calendar): void
     {
         $this->calendar = $calendar;
     }
 
-    /**
-     * Get the location from this event.
-     */
-    public function getLocation()
+    public function getLocation(): ?CultureFeed_Cdb_Data_Location
     {
         return $this->location;
     }
 
-    /**
-     * Set the location from this event.
-     *
-     * @param CultureFeed_Cdb_Data_Location $location
-     *   Location to set.
-     */
-    public function setLocation(CultureFeed_Cdb_Data_Location $location)
+    public function setLocation(CultureFeed_Cdb_Data_Location $location): void
     {
         $this->location = $location;
     }
 
-    /**
-     * Get the organiser from this event.
-     */
-    public function getOrganiser()
+    public function getOrganiser(): ?CultureFeed_Cdb_Data_Organiser
     {
         return $this->organiser;
     }
 
-    /**
-     * Set the organiser from this event.
-     *
-     * @param CultureFeed_Cdb_Data_Organiser $organiser
-     *   Organiser to set.
-     */
-    public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser)
+    public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser): void
     {
         $this->organiser = $organiser;
     }
 
-    /**
-     * Get the contact info from this event.
-     */
-    public function getContactInfo()
+    public function getContactInfo(): ?CultureFeed_Cdb_Data_ContactInfo
     {
         return $this->contactInfo;
     }
 
-    /**
-     * Set the contact info from this event.
-     *
-     * @param CultureFeed_Cdb_Data_ContactInfo $contactInfo
-     *   Contact info to set.
-     */
-    public function setContactInfo(CultureFeed_Cdb_Data_ContactInfo $contactInfo)
+    public function setContactInfo(CultureFeed_Cdb_Data_ContactInfo $contactInfo): void
     {
         $this->contactInfo = $contactInfo;
     }
 
-    /**
-     * Get the maximum amount of participants.
-     */
-    public function getMaxParticipants()
+    public function getMaxParticipants(): ?int
     {
         return $this->maxParticipants;
     }
 
-    /**
-     * Set the maximum amount of participants.
-     */
-    public function setMaxParticipants($maxParticipants)
+    public function setMaxParticipants(int $maxParticipants): void
     {
         $this->maxParticipants = $maxParticipants;
     }
 
-    /**
-     * Get the booking period.
-     */
-    public function getBookingPeriod()
+    public function getBookingPeriod(): ?CultureFeed_Cdb_Data_Calendar_BookingPeriod
     {
         return $this->bookingPeriod;
     }
 
-    /**
-     * Set the booking period.
-     */
-    public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod)
+    public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod): void
     {
         $this->bookingPeriod = $bookingPeriod;
     }
 
-    /**
-     * @return CultureFeed_Cdb_Data_LanguageList
-     */
-    public function getLanguages()
+    public function getLanguages(): ?CultureFeed_Cdb_Data_LanguageList
     {
         return $this->languages;
     }
 
-    public function setLanguages(CultureFeed_Cdb_Data_LanguageList $languages)
+    public function setLanguages(CultureFeed_Cdb_Data_LanguageList $languages): void
     {
         $this->languages = $languages;
     }
 
-    /**
-     * Delete the organiser from this event.
-     */
-    public function deleteOrganiser()
+    public function deleteOrganiser(): void
     {
         $this->organiser = null;
     }
 
-    /**
-     * Get the weight.
-     *
-     * @return int|null
-     *   The weight.
-     */
-    public function getWeight()
+    public function getWeight(): ?int
     {
         return $this->weight;
     }
 
-    /**
-     * Set the weight.
-     *
-     * @param int $weight
-     *   The weight.
-     */
-    public function setWeight($weight)
+    public function setWeight(int $weight): void
     {
         $this->weight = $weight;
     }
 
-    /**
-     * Appends the current object to the passed DOM tree.
-     *
-     * @param DOMElement $element
-     *   The DOM tree to append to.
-     * @param string $cdbScheme
-     *   The cdb schema version.
-     *
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element, $cdbScheme = '3.2')
+    public function appendToDOM(DOMElement $element, string $cdbScheme = '3.2'): void
     {
-
         $dom = $element->ownerDocument;
 
         $eventElement = $dom->createElement('event');
