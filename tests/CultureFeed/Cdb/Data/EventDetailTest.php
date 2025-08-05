@@ -2,9 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-class CultureFeed_Cdb_Data_EventDetailTest extends TestCase
+final class CultureFeed_Cdb_Data_EventDetailTest extends TestCase
 {
-    public function testGeneratesMediaElementIfFilesWereAdded()
+    public function testGeneratesMediaElementIfFilesWereAdded(): void
     {
         $detail = new CultureFeed_Cdb_Data_EventDetail();
 
@@ -36,7 +36,7 @@ class CultureFeed_Cdb_Data_EventDetailTest extends TestCase
         $this->assertEquals(1, $items->length);
     }
 
-    public function testDoesNotGenerateEmptyMediaElement()
+    public function testDoesNotGenerateEmptyMediaElement(): void
     {
         $detail = new CultureFeed_Cdb_Data_EventDetail();
 

@@ -2,19 +2,16 @@
 
 use PHPUnit\Framework\TestCase;
 
-class CultureFeed_Cdb_Data_FileTest extends TestCase
+final class CultureFeed_Cdb_Data_FileTest extends TestCase
 {
-    /**
-     * @var CultureFeed_Cdb_Data_File
-     */
-    protected $file;
+    protected CultureFeed_Cdb_Data_File $file;
 
     public function setUp(): void
     {
         $this->file = new CultureFeed_Cdb_Data_File();
     }
 
-    public function testAppendsFiletypeElementContainingFiletype()
+    public function testAppendsFiletypeElementContainingFiletype(): void
     {
         $this->file->setFileType('jpeg');
 
@@ -34,7 +31,7 @@ class CultureFeed_Cdb_Data_FileTest extends TestCase
         $this->assertEquals('jpeg', $filetypeElement->textContent);
     }
 
-    public function testAppendsTitleElementContainingTitle()
+    public function testAppendsTitleElementContainingTitle(): void
     {
         // Ensure title contains a character like & which has
         // a special meaning in XML, to test for proper escaping.
@@ -55,7 +52,7 @@ class CultureFeed_Cdb_Data_FileTest extends TestCase
         $this->assertEquals($title, $items->item(0)->textContent);
     }
 
-    public function testGetSubBrand()
+    public function testGetSubBrand(): void
     {
         $this->assertNull($this->file->getSubBrand());
 
@@ -65,7 +62,7 @@ class CultureFeed_Cdb_Data_FileTest extends TestCase
         $this->assertEquals($subBrand, $this->file->getSubBrand());
     }
 
-    public function testAppendsSubBrand()
+    public function testAppendsSubBrand(): void
     {
         $subBrand = '2b88e17a-27fc-4310-9556-4df7188a051f';
         $this->file->setSubBrand($subBrand);
@@ -77,10 +74,7 @@ class CultureFeed_Cdb_Data_FileTest extends TestCase
         $this->assertEquals($subBrand, $items->item(0)->textContent);
     }
 
-    /**
-     * @return DOMXPath
-     */
-    private function xpathOnMediaWithFileAppended(CultureFeed_Cdb_Data_File $file)
+    private function xpathOnMediaWithFileAppended(CultureFeed_Cdb_Data_File $file): DOMXPath
     {
         $dom = new DOMDocument();
         $mediaElement = $dom->createElement('media');
@@ -91,7 +85,7 @@ class CultureFeed_Cdb_Data_FileTest extends TestCase
         return new DOMXPath($dom);
     }
 
-    public function testGetDescription()
+    public function testGetDescription(): void
     {
         $this->assertNull($this->file->getDescription());
 

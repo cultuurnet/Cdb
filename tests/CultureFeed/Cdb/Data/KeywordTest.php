@@ -2,19 +2,16 @@
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @file
- */
-class CultureFeed_Cdb_Data_KeywordTest extends TestCase
+final class CultureFeed_Cdb_Data_KeywordTest extends TestCase
 {
-    public function testIsVisibleByDefault()
+    public function testIsVisibleByDefault(): void
     {
         $keyword = new CultureFeed_Cdb_Data_Keyword('foo');
 
         $this->assertTrue($keyword->isVisible());
     }
 
-    public function testVisibilityPassedToConstructor()
+    public function testVisibilityPassedToConstructor(): void
     {
         $visibleKeyword = new CultureFeed_Cdb_Data_Keyword('foo', true);
         $this->assertTrue($visibleKeyword->isVisible());
@@ -23,7 +20,7 @@ class CultureFeed_Cdb_Data_KeywordTest extends TestCase
         $this->assertFalse($invisibleKeyword->isVisible());
     }
 
-    public function testChangeVisibility()
+    public function testChangeVisibility(): void
     {
         $keyword = new CultureFeed_Cdb_Data_Keyword('foo');
 
@@ -36,12 +33,7 @@ class CultureFeed_Cdb_Data_KeywordTest extends TestCase
         $this->assertTrue($keyword->isVisible());
     }
 
-    /**
-     * Provider for valid keyword values.
-     *
-     * @return array
-     */
-    public function validKeywordValues()
+    public function validKeywordValues(): array
     {
         return array(
             array('foo'),
@@ -51,21 +43,15 @@ class CultureFeed_Cdb_Data_KeywordTest extends TestCase
 
     /**
      * @dataProvider validKeywordValues
-     *
-     * @param string $validValue
      */
-    public function testValidValue($validValue)
+    public function testValidValue(string $validValue): void
     {
         $keyword = new CultureFeed_Cdb_Data_Keyword($validValue);
         $this->assertSame($validValue, $keyword->getValue());
     }
 
-    /**
-     * Test append to dom.
-     */
-    public function testAppendToDOM()
+    public function testAppendToDOM(): void
     {
-
         /** @var CultureFeed_Cdb_Data_Keyword[] $keywords */
         $keywords = array(
             new CultureFeed_Cdb_Data_Keyword('foo'),

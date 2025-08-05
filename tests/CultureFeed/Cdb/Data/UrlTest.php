@@ -2,16 +2,11 @@
 
 use PHPUnit\Framework\TestCase;
 
-class CultureFeed_Cdb_Data_UrlTest extends TestCase
+final class CultureFeed_Cdb_Data_UrlTest extends TestCase
 {
     use CultureFeed_Cdb_DOMElementAssertionsTrait;
 
-    /**
-     * @param $fileName
-     *
-     * @return DOMDocument
-     */
-    public function loadSample($fileName)
+    public function loadSample(string $fileName): DOMDocument
     {
         $sampleDir = __DIR__ . '/samples/UrlTest/';
         $filePath = $sampleDir . $fileName;
@@ -22,7 +17,7 @@ class CultureFeed_Cdb_Data_UrlTest extends TestCase
         return $dom;
     }
 
-    public function testAppendsUrlAsTextNode()
+    public function testAppendsUrlAsTextNode(): void
     {
         $sample = $this->loadSample('minimal.xml');
 
@@ -44,14 +39,14 @@ class CultureFeed_Cdb_Data_UrlTest extends TestCase
         );
     }
 
-    public function testGetUrlReturnsUrlSetBefore()
+    public function testGetUrlReturnsUrlSetBefore(): void
     {
         $urlString = 'http://example.com/?foo=1&bar=2';
         $url = new CultureFeed_Cdb_Data_Url($urlString, false, false);
         $this->assertEquals($urlString, $url->getUrl());
     }
 
-    public function testIsMainReturnMainSetBefore()
+    public function testIsMainReturnMainSetBefore(): void
     {
         $urlString = 'http://example.com/?foo=1&bar=2';
 

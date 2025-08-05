@@ -2,7 +2,7 @@
 
 trait CultureFeed_Cdb_DOMElementAssertionsTrait
 {
-    public function assertEqualDOMElement(DOMElement $expected, DOMNode $actual)
+    public function assertEqualDOMElement(DOMElement $expected, DOMNode $actual): void
     {
         if (!$actual instanceof DOMElement) {
             $this->fail('Expected a DOMElement, got ' . get_class($actual));

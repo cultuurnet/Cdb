@@ -2,31 +2,27 @@
 
 use PHPUnit\Framework\TestCase;
 
-class CultureFeed_Cdb_Data_MediaTest extends TestCase
+final class CultureFeed_Cdb_Data_MediaTest extends TestCase
 {
-    /**
-     * @var CultureFeed_Cdb_Data_Media
-     */
-    protected $media;
+    protected CultureFeed_Cdb_Data_Media $media;
 
     public function setUp(): void
     {
         $this->media = new CultureFeed_Cdb_Data_Media();
     }
 
-    public function testImplementsCountable()
+    public function testImplementsCountable(): void
     {
-
         $this->assertInstanceOf('\Countable', $this->media);
     }
 
-    public function testCountIs0OnNewInstance()
+    public function testCountIs0OnNewInstance(): void
     {
         $this->assertInstanceOf('\Countable', $this->media);
         $this->assertCount(0, $this->media);
     }
 
-    public function testAddingFilesIncrementsCount()
+    public function testAddingFilesIncrementsCount(): void
     {
         $toAdd = range(1, 10);
 
@@ -41,7 +37,7 @@ class CultureFeed_Cdb_Data_MediaTest extends TestCase
         }
     }
 
-    protected function randomPhotoFile()
+    protected function randomPhotoFile(): CultureFeed_Cdb_Data_File
     {
         $file = new CultureFeed_Cdb_Data_File();
         $file->setMediaType($file::MEDIA_TYPE_PHOTO);
@@ -49,7 +45,7 @@ class CultureFeed_Cdb_Data_MediaTest extends TestCase
         return $file;
     }
 
-    protected function randomWebResourceFile()
+    protected function randomWebResourceFile(): CultureFeed_Cdb_Data_File
     {
         $file = new CultureFeed_Cdb_Data_File();
         $file->setMediaType($file::MEDIA_TYPE_WEBRESOURCE);
@@ -57,7 +53,7 @@ class CultureFeed_Cdb_Data_MediaTest extends TestCase
         return $file;
     }
 
-    protected function randomImageUrl()
+    protected function randomImageUrl(): string
     {
         $categories = array(
             'abstract',
@@ -82,7 +78,7 @@ class CultureFeed_Cdb_Data_MediaTest extends TestCase
         return $url;
     }
 
-    public function testCanFilterByMediaType()
+    public function testCanFilterByMediaType(): void
     {
         $picture1 = $this->randomPhotoFile();
         $picture2 = $this->randomPhotoFile();
