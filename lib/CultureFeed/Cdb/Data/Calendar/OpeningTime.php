@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 final class CultureFeed_Cdb_Data_Calendar_OpeningTime implements CultureFeed_Cdb_IElement
 {
     private string $openFrom;

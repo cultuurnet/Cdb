@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
 {
     private ?int $ageFrom = null;
@@ -72,7 +74,7 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
         }
 
         if (isset($event_attributes['pctcomplete'])) {
-            $event->setPctComplete(floatval($event_attributes['pctcomplete']));
+            $event->setPctComplete((float) $event_attributes['pctcomplete']);
         }
 
         if (isset($event_attributes['published'])) {
@@ -440,7 +442,7 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
                 }
                 $eventElement->appendChild($keywordsElement);
             } else {
-                $keywords = array();
+                $keywords = [];
                 foreach ($this->keywords as $keyword) {
                     $keywords[$keyword->getValue()] = $keyword->getValue();
                 }

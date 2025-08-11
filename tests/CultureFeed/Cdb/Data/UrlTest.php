@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
 final class CultureFeed_Cdb_Data_UrlTest extends TestCase

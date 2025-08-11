@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 final class CultureFeed_Cdb_Data_Calendar_Permanent extends CultureFeed_Cdb_Data_Calendar implements CultureFeed_Cdb_IElement
 {
     private ?CultureFeed_Cdb_Data_Calendar_Exceptions $exceptions = null;
@@ -50,7 +52,7 @@ final class CultureFeed_Cdb_Data_Calendar_Permanent extends CultureFeed_Cdb_Data
     {
         if (!isset($xmlElement->permanentopeningtimes->permanent)) {
             throw new CultureFeed_Cdb_ParseException(
-                "Permanent data is missing for permanent opening times"
+                'Permanent data is missing for permanent opening times'
             );
         }
 

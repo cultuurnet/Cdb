@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
 final class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
@@ -69,10 +71,10 @@ final class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
      */
     public function missingElementSamples(): array
     {
-        return array(
-            array('missing_city.xml'),
-            array('missing_country.xml'),
-            array('missing_zipcode.xml'),
-        );
+        return [
+            ['missing_city.xml'],
+            ['missing_country.xml'],
+            ['missing_zipcode.xml'],
+        ];
     }
 }

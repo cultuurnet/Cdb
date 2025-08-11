@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 final class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
 {
     private int $ageFrom;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 abstract class CultureFeed_Cdb_Data_Detail
 {
     protected ?string $title = null;

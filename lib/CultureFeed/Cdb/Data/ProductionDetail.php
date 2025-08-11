@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 final class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
 {
     private string $calendarSummary;
@@ -76,14 +78,14 @@ final class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_D
     {
         if (empty($xmlElement->title)) {
             throw new CultureFeed_Cdb_ParseException(
-                "Title missing for productiondetail element"
+                'Title missing for productiondetail element'
             );
         }
 
         $attributes = $xmlElement->attributes();
         if (empty($attributes['lang'])) {
             throw new CultureFeed_Cdb_ParseException(
-                "Language (lang) missing for productiondetail element"
+                'Language (lang) missing for productiondetail element'
             );
         }
 

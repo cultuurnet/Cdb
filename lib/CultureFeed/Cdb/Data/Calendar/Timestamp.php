@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 final class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_IElement
 {
     private string $date;
     private ?string $startTime = null;
     private ?string $endTime = null;
-    private ?string $openType= null;
+    private ?string $openType = null;
 
     public function __construct(string $date, string $startTime = null, string $endTime = null)
     {
@@ -97,7 +99,7 @@ final class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_I
     {
         if (empty($xmlElement->date)) {
             throw new CultureFeed_Cdb_ParseException(
-                "Date is missing for timestamp"
+                'Date is missing for timestamp'
             );
         }
 

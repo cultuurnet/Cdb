@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 final class CultureFeed_Cdb_Xml
 {
     /**
@@ -7,7 +9,7 @@ final class CultureFeed_Cdb_Xml
      *   This constant will be removed in future versions. Use the method
      *   namespaceUriForVersion() instead.
      */
-    const DEFAULT_NAMESPACE_URI = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL';
+    public const DEFAULT_NAMESPACE_URI = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL';
 
     /**
      * @deprecated

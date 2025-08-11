@@ -1,47 +1,49 @@
 <?php
 
+declare(strict_types=1);
+
 final class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 {
-    const FILE_TYPE_JPEG = 'jpeg';
-    const FILE_TYPE_GIF = 'gif';
-    const FILE_TYPE_PNG = 'png';
-    const FILE_TYPE_MP3 = 'mp3';
-    const FILE_TYPE_QUICK_TIME = 'qt';
-    const FILE_TYPE_MOV = 'mov';
-    const FILE_TYPE_WMV = 'wmv';
-    const FILE_TYPE_WAV = 'wav';
-    const FILE_TYPE_RM = 'rm';
-    const FILE_TYPE_AVI = 'avi';
-    const FILE_TYPE_MPG = 'mpg';
-    const FILE_TYPE_SWF = 'swf';
-    const FILE_TYPE_PDF = 'pdf';
-    const FILE_TYPE_RTF = 'rtf';
-    const FILE_TYPE_DOC = 'doc';
-    const FILE_TYPE_XLS = 'xls';
-    const FILE_TYPE_TXT = 'txt';
-    const FILE_TYPE_HTML = 'html(1)';
-    const FILE_TYPE_ZIP = 'zip';
-    const FILE_TYPE_UNKNOWN = 'onbepaald';
+    public const FILE_TYPE_JPEG = 'jpeg';
+    public const FILE_TYPE_GIF = 'gif';
+    public const FILE_TYPE_PNG = 'png';
+    public const FILE_TYPE_MP3 = 'mp3';
+    public const FILE_TYPE_QUICK_TIME = 'qt';
+    public const FILE_TYPE_MOV = 'mov';
+    public const FILE_TYPE_WMV = 'wmv';
+    public const FILE_TYPE_WAV = 'wav';
+    public const FILE_TYPE_RM = 'rm';
+    public const FILE_TYPE_AVI = 'avi';
+    public const FILE_TYPE_MPG = 'mpg';
+    public const FILE_TYPE_SWF = 'swf';
+    public const FILE_TYPE_PDF = 'pdf';
+    public const FILE_TYPE_RTF = 'rtf';
+    public const FILE_TYPE_DOC = 'doc';
+    public const FILE_TYPE_XLS = 'xls';
+    public const FILE_TYPE_TXT = 'txt';
+    public const FILE_TYPE_HTML = 'html(1)';
+    public const FILE_TYPE_ZIP = 'zip';
+    public const FILE_TYPE_UNKNOWN = 'onbepaald';
 
-    const MEDIA_TYPE_PHOTO = 'photo';
-    const MEDIA_TYPE_VIDEO = 'video';
-    const MEDIA_TYPE_WEBRESOURCE = 'webresource';
-    const MEDIA_TYPE_WEBSITE = 'website';
-    const MEDIA_TYPE_CULTUREFEED_PAGE = 'culturefeed-page';
-    const MEDIA_TYPE_RESERVATIONS = 'reservations';
-    const MEDIA_TYPE_ROADMAP = 'roadmap';
-    const MEDIA_TYPE_TEXT = 'text';
-    const MEDIA_TYPE_IMAGEWEB = 'imageweb';
-    const MEDIA_TYPE_IMAGEPRINT = 'imageprint';
-    const MEDIA_TYPE_BLOG = 'blog';
-    const MEDIA_TYPE_YOUTUBE = 'youtube';
-    const MEDIA_TYPE_GOOGLEPLUS = 'google-plus';
-    const MEDIA_TYPE_TWITTER = 'twitter';
-    const MEDIA_TYPE_FACEBOOK = 'facebook';
-    const MEDIA_TYPE_TAGLINE = 'tagline';
-    const MEDIA_TYPE_COLLABORATION = 'collaboration';
+    public const MEDIA_TYPE_PHOTO = 'photo';
+    public const MEDIA_TYPE_VIDEO = 'video';
+    public const MEDIA_TYPE_WEBRESOURCE = 'webresource';
+    public const MEDIA_TYPE_WEBSITE = 'website';
+    public const MEDIA_TYPE_CULTUREFEED_PAGE = 'culturefeed-page';
+    public const MEDIA_TYPE_RESERVATIONS = 'reservations';
+    public const MEDIA_TYPE_ROADMAP = 'roadmap';
+    public const MEDIA_TYPE_TEXT = 'text';
+    public const MEDIA_TYPE_IMAGEWEB = 'imageweb';
+    public const MEDIA_TYPE_IMAGEPRINT = 'imageprint';
+    public const MEDIA_TYPE_BLOG = 'blog';
+    public const MEDIA_TYPE_YOUTUBE = 'youtube';
+    public const MEDIA_TYPE_GOOGLEPLUS = 'google-plus';
+    public const MEDIA_TYPE_TWITTER = 'twitter';
+    public const MEDIA_TYPE_FACEBOOK = 'facebook';
+    public const MEDIA_TYPE_TAGLINE = 'tagline';
+    public const MEDIA_TYPE_COLLABORATION = 'collaboration';
 
-    const REL_TYPE_ORGANISER = 'organiser';
+    public const REL_TYPE_ORGANISER = 'organiser';
 
     private bool $main = false;
     private ?string $cdbid = null;
@@ -52,7 +54,7 @@ final class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
     private string $title;
     private string $copyright;
     private ?string $fileName = null;
-    private ?string $fileType= null;
+    private ?string $fileType = null;
     private ?string $relationType = null;
     private string $hLink;
     private ?string $plainText = null;

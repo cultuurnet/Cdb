@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @implements Iterator<CultureFeed_Cdb_List_Item|CultureFeed_Cdb_Item_Base>
  */
@@ -70,7 +72,7 @@ final class CultureFeed_Cdb_List_Results implements Iterator
      */
     public static function parseFromCdbXmlList(SimpleXMLElement $xmlElement): array
     {
-        $items = array();
+        $items = [];
 
         foreach ($xmlElement->list->item as $item) {
             $items[] = CultureFeed_Cdb_List_Item::parseFromCdbXml($item);
@@ -82,9 +84,9 @@ final class CultureFeed_Cdb_List_Results implements Iterator
     /**
      * @return array<CultureFeed_Cdb_Item_Base|null>
      */
-    protected static function parseFromCdbXmlXmlview(SimpleXMLElement $xmlElement): array
+    private static function parseFromCdbXmlXmlview(SimpleXMLElement $xmlElement): array
     {
-        $items = array();
+        $items = [];
 
         foreach ($xmlElement->listName->itemName as $item) {
             $items[] = CultureFeed_Cdb_Default::parseItem($item);

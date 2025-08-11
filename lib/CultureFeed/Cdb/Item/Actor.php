@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 final class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
 {
     private ?CultureFeed_Cdb_Data_ContactInfo $contactInfo = null;
@@ -132,7 +134,7 @@ final class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base impleme
                 }
                 $actorElement->appendChild($keywordsElement);
             } else {
-                $keywords = array();
+                $keywords = [];
                 foreach ($this->keywords as $keyword) {
                     $keywords[$keyword->getValue()] = $keyword->getValue();
                 }

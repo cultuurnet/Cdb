@@ -1,6 +1,8 @@
 <?php
 
-class CultureFeed_Cdb_Item_Reference
+declare(strict_types=1);
+
+final class CultureFeed_Cdb_Item_Reference
 {
     private string $title = '';
     private string $cdbId = '';

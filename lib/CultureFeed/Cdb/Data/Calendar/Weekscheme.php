@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @method CultureFeed_Cdb_Data_Calendar_SchemeDay monday()
  * @method CultureFeed_Cdb_Data_Calendar_SchemeDay tuesday()
@@ -14,7 +16,7 @@ final class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_
     /**
      * @var CultureFeed_Cdb_Data_Calendar_SchemeDay[]|null[]
      */
-    private array $days = array(
+    private array $days = [
         'monday' => null,
         'tuesday' => null,
         'wednesday' => null,
@@ -22,7 +24,7 @@ final class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_
         'friday' => null,
         'saturday' => null,
         'sunday' => null,
-    );
+    ];
 
     public function setDay(string $dayName, CultureFeed_Cdb_Data_Calendar_SchemeDay $openingInfo): void
     {
@@ -69,7 +71,7 @@ final class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_
         foreach (CultureFeed_Cdb_Data_Calendar_SchemeDay::$allowedDays as $day) {
             if (!isset($xmlElement->{$day})) {
                 throw new CultureFeed_Cdb_ParseException(
-                    "Missing required data for " . $day
+                    'Missing required data for ' . $day
                 );
             }
         }

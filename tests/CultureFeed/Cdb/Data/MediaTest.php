@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
 final class CultureFeed_Cdb_Data_MediaTest extends TestCase
@@ -55,7 +57,7 @@ final class CultureFeed_Cdb_Data_MediaTest extends TestCase
 
     protected function randomImageUrl(): string
     {
-        $categories = array(
+        $categories = [
             'abstract',
             'city',
             'people',
@@ -69,7 +71,7 @@ final class CultureFeed_Cdb_Data_MediaTest extends TestCase
             'cats',
             'fashion',
             'technics',
-        );
+        ];
         $category = array_rand($categories);
         $number = rand(1, 10);
 

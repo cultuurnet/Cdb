@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 trait CultureFeed_Cdb_DOMElementAssertionsTrait
 {
     public function assertEqualDOMElement(DOMElement $expected, DOMNode $actual): void

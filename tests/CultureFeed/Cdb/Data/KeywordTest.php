@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
 final class CultureFeed_Cdb_Data_KeywordTest extends TestCase
@@ -38,10 +40,10 @@ final class CultureFeed_Cdb_Data_KeywordTest extends TestCase
      */
     public function validKeywordValues(): array
     {
-        return array(
-            array('foo'),
-            array('bar'),
-        );
+        return [
+            ['foo'],
+            ['bar'],
+        ];
     }
 
     /**
@@ -56,10 +58,10 @@ final class CultureFeed_Cdb_Data_KeywordTest extends TestCase
     public function testAppendToDOM(): void
     {
         /** @var CultureFeed_Cdb_Data_Keyword[] $keywords */
-        $keywords = array(
+        $keywords = [
             new CultureFeed_Cdb_Data_Keyword('foo'),
             new CultureFeed_Cdb_Data_Keyword('bar', false),
-        );
+        ];
 
         $dom = new DOMDocument('1.0', 'utf8');
         $root = $dom->createElement('keywords');

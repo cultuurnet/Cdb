@@ -1,6 +1,8 @@
 <?php
 
-class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
+declare(strict_types=1);
+
+final class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
 {
     private string $calendarSummary;
     private ?CultureFeed_Cdb_Data_PerformerList $performers = null;
@@ -35,7 +37,10 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
         $dom = $element->ownerDocument;
 
         $detailElement = $dom->createElement('eventdetail');
-        $detailElement->setAttribute('lang', $this->language);
+
+        if (!empty($this->language)) {
+            $detailElement->setAttribute('lang', $this->language);
+        }
 
         if (!empty($this->calendarSummary)) {
             $summaryElement = $dom->createElement('calendarsummary');
@@ -87,7 +92,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
         $attributes = $xmlElement->attributes();
         if (empty($attributes['lang'])) {
             throw new CultureFeed_Cdb_ParseException(
-                "Lang missing for eventdetail element"
+                'Lang missing for eventdetail element'
             );
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 abstract class CultureFeed_Cdb_Item_Base
 {
     protected ?string $availableFrom = null;
@@ -26,7 +28,7 @@ abstract class CultureFeed_Cdb_Item_Base
         CultureFeed_Cdb_Item_Base $item
     ): void {
         if (@count($xmlElement->keywords)) {
-            $keywordsString = trim($xmlElement->keywords);
+            $keywordsString = trim((string) $xmlElement->keywords);
 
             if ($keywordsString === '') {
                 /**
@@ -267,7 +269,7 @@ abstract class CultureFeed_Cdb_Item_Base
         if ($asObject) {
             return $this->keywords;
         } else {
-            $keywords = array();
+            $keywords = [];
             foreach ($this->keywords as $keyword) {
                 $keywords[$keyword->getValue()] = $keyword->getValue();
             }

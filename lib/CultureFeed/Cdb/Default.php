@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 final class CultureFeed_Cdb_Default
 {
     /**
      * @deprecated Use CultureFeed_Cdb_Xml::namespaceUriForVersion() instead.
      */
-    const CDB_SCHEME_URL = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL';
-    const CDB_SCHEME_NAME = 'cdbxml';
+    public const CDB_SCHEME_URL = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL';
+    public const CDB_SCHEME_NAME = 'cdbxml';
 
     /** @var array<string, array<CultureFeed_Cdb_IElement>> */
     private array $items = [];

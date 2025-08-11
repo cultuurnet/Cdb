@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
 final class CultureFeed_Cdb_Default_DefaultTest extends TestCase
@@ -9,11 +11,11 @@ final class CultureFeed_Cdb_Default_DefaultTest extends TestCase
      */
     public function versionProvider(): array
     {
-        return array(
-            array('3.1'),
-            array('3.2'),
-            array('3.3'),
-        );
+        return [
+            ['3.1'],
+            ['3.2'],
+            ['3.3'],
+        ];
     }
 
     /**

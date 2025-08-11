@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 final class CultureFeed_Cdb_Data_Calendar_PeriodList extends CultureFeed_Cdb_Data_Calendar implements CultureFeed_Cdb_IElement
 {
     public function add(CultureFeed_Cdb_Data_Calendar_Period $period): void

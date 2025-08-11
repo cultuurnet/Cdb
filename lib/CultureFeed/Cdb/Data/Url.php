@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @class
  * Representation of an url element in the cdb xml.
