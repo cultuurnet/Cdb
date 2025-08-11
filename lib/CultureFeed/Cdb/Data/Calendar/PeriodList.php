@@ -1,26 +1,13 @@
 <?php
 
-/**
- * @class
- * Representation of a periods element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Calendar_PeriodList extends CultureFeed_Cdb_Data_Calendar implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Calendar_PeriodList extends CultureFeed_Cdb_Data_Calendar implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Add a new period to the list.
-     *
-     * @param CultureFeed_Cdb_Data_Calendar_Period $period
-     *   Period to add.
-     */
-    public function add(CultureFeed_Cdb_Data_Calendar_Period $period)
+    public function add(CultureFeed_Cdb_Data_Calendar_Period $period): void
     {
         $this->items[] = $period;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
         $dom = $element->ownerDocument;
 
@@ -35,14 +22,8 @@ class CultureFeed_Cdb_Data_Calendar_PeriodList extends CultureFeed_Cdb_Data_Cale
         }
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Calendar_PeriodList
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Calendar_PeriodList
     {
-
         $periodList = new CultureFeed_Cdb_Data_Calendar_PeriodList();
 
         if (!empty($xmlElement->periods->period)) {

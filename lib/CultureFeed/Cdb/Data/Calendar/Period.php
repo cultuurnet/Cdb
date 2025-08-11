@@ -1,133 +1,62 @@
 <?php
 
-/**
- * @class
- * Representation of a period element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Calendar_Period implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Calendar_Period implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Start date for this period.
-     * @var string
-     */
-    protected $dateFrom;
+    private string $dateFrom;
+    private string $dateTo;
+    private ?CultureFeed_Cdb_Data_Calendar_Exceptions $exceptions = null;
+    private ?CultureFeed_Cdb_Data_Calendar_Weekscheme $weekScheme = null;
 
-    /**
-     * End date for this period.
-     * @var string
-     */
-    protected $dateTo;
-
-    /**
-     * Exceptions for this period.
-     * @var CultureFeed_Cdb_Data_Calendar_Exceptions|null
-     */
-    protected $exceptions;
-
-    /**
-     * Week scheme for this period.
-     * @var CultureFeed_Cdb_Data_Calendar_Weekscheme|null
-     */
-    protected $weekScheme;
-
-    /**
-     * Construct a new period.
-     *
-     * @param string $dateFrom
-     *   Start date for the period.
-     * @param string $dateTo
-     *   End date for the period.
-     */
-    public function __construct($dateFrom, $dateTo)
+    public function __construct(string $dateFrom, string $dateTo)
     {
         $this->setdateFrom($dateFrom);
         $this->setdateTo($dateTo);
     }
 
-    /**
-     * Get the start date for this period.
-     */
-    public function getDateFrom()
+    public function getDateFrom(): string
     {
         return $this->dateFrom;
     }
 
-    /**
-     * Get the end date for this period.
-     */
-    public function getDateTo()
+    public function getDateTo(): string
     {
         return $this->dateTo;
     }
 
-    /**
-     * Get the exceptions for this period.
-     */
-    public function getExceptions()
+    public function getExceptions(): ?CultureFeed_Cdb_Data_Calendar_Exceptions
     {
         return $this->exceptions;
     }
 
-    /**
-     * Get the weekscheme for this period.
-     */
-    public function getWeekScheme()
+    public function getWeekScheme(): ?CultureFeed_Cdb_Data_Calendar_Weekscheme
     {
         return $this->weekScheme;
     }
 
-    /**
-     * Set the start date for this period.
-     *
-     * @param string $dateFrom
-     *   Start date to set.
-     */
-    public function setDateFrom($dateFrom)
+    public function setDateFrom(string $dateFrom): void
     {
         CultureFeed_Cdb_Data_Calendar::validateDate($dateFrom);
         $this->dateFrom = $dateFrom;
     }
 
-    /**
-     * Set the to date for this period.
-     *
-     * @param string $dateTo
-     *   End date to set.
-     */
-    public function setDateTo($dateTo)
+    public function setDateTo(string $dateTo): void
     {
         CultureFeed_Cdb_Data_Calendar::validateDate($dateTo);
         $this->dateTo = $dateTo;
     }
 
-    /**
-     * Set the exceptions for this period.
-     *
-     * @param CultureFeed_Cdb_Data_Calendar_Exceptions $exceptions
-     *   Exceptions to set.
-     */
-    public function setExceptions(CultureFeed_Cdb_Data_Calendar_Exceptions $exceptions)
+    public function setExceptions(CultureFeed_Cdb_Data_Calendar_Exceptions $exceptions): void
     {
         $this->exceptions = $exceptions;
     }
 
-    /**
-     * Set the week scheme for this period.
-     *
-     * @param CultureFeed_Cdb_Data_Calendar_Weekscheme $scheme
-     *   Week scheme to set.
-     */
-    public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $scheme)
+    public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $scheme): void
     {
         $this->weekScheme = $scheme;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $periodElement = $dom->createElement('period');
@@ -149,14 +78,8 @@ class CultureFeed_Cdb_Data_Calendar_Period implements CultureFeed_Cdb_IElement
         $element->appendChild($periodElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Calendar_Period
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Calendar_Period
     {
-
         if (empty($xmlElement->datefrom)) {
             throw new CultureFeed_Cdb_ParseException(
                 "Date from is missing for period"

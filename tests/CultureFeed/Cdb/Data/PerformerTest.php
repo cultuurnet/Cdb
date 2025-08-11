@@ -2,16 +2,11 @@
 
 use PHPUnit\Framework\TestCase;
 
-class CultureFeed_Cdb_Data_PerformerTest extends TestCase
+final class CultureFeed_Cdb_Data_PerformerTest extends TestCase
 {
     use CultureFeed_Cdb_DOMElementAssertionsTrait;
 
-    /**
-     * @param $fileName
-     *
-     * @return DOMDocument
-     */
-    public function loadSample($fileName)
+    public function loadSample(string $fileName): DOMDocument
     {
         $sampleDir = __DIR__ . '/samples/PerformerTest/';
         $filePath = $sampleDir . $fileName;
@@ -22,7 +17,7 @@ class CultureFeed_Cdb_Data_PerformerTest extends TestCase
         return $dom;
     }
 
-    public function testAppendsLabelElementContainingLabel()
+    public function testAppendsLabelElementContainingLabel(): void
     {
         $performer = new CultureFeed_Cdb_Data_Performer();
         $performer->setLabel('Simon & Garfunkel');
@@ -44,7 +39,7 @@ class CultureFeed_Cdb_Data_PerformerTest extends TestCase
         $this->assertEquals('Simon & Garfunkel', $labelElement->textContent);
     }
 
-    public function testAppendsRoleBeforeLabel()
+    public function testAppendsRoleBeforeLabel(): void
     {
         $sample = $this->loadSample('full_with_label.xml');
 
@@ -67,7 +62,7 @@ class CultureFeed_Cdb_Data_PerformerTest extends TestCase
         );
     }
 
-    public function testDoesNotGenerateEmptyRoleElementWhenNoRoleWasSet()
+    public function testDoesNotGenerateEmptyRoleElementWhenNoRoleWasSet(): void
     {
         $sample = $this->loadSample('without_role.xml');
 

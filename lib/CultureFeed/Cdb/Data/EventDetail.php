@@ -1,73 +1,37 @@
 <?php
 
-/**
- * @class
- * Representation of an EventDetail element in the cdb xml.
- */
 class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Calendar summary from this eventDetail.
-     * @var string
-     */
-    protected $calendarSummary;
+    private string $calendarSummary;
+    private ?CultureFeed_Cdb_Data_PerformerList $performers = null;
 
-    /**
-     * @var CultureFeed_Cdb_Data_PerformerList|null
-     */
-    protected $performers;
-
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->media = new CultureFeed_Cdb_Data_Media();
     }
 
-    /**
-     * Get the calendar summary.
-     * @return string
-     */
-    public function getCalendarSummary()
+    public function getCalendarSummary(): string
     {
         return $this->calendarSummary;
     }
 
-    /**
-     * Get the performers.
-     *
-     * @return CultureFeed_Cdb_Data_PerformerList
-     */
-    public function getPerformers()
+    public function getPerformers(): ?CultureFeed_Cdb_Data_PerformerList
     {
         return $this->performers;
     }
 
-    /**
-     * Set the calendar summary.
-     *
-     * @param string $summary
-     */
-    public function setCalendarSummary($summary)
+    public function setCalendarSummary(string $summary): void
     {
         $this->calendarSummary = $summary;
     }
 
-    /**
-     * Set the performers.
-     */
-    public function setPerformers(CultureFeed_Cdb_Data_PerformerList $performers)
+    public function setPerformers(CultureFeed_Cdb_Data_PerformerList $performers): void
     {
         $this->performers = $performers;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $detailElement = $dom->createElement('eventdetail');
@@ -118,14 +82,8 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
         $element->appendChild($detailElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_EventDetail
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_EventDetail
     {
-
         $attributes = $xmlElement->attributes();
         if (empty($attributes['lang'])) {
             throw new CultureFeed_Cdb_ParseException(

@@ -1,20 +1,13 @@
 <?php
 
-/**
- * @file
- */
-class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement
 {
     const TYPE_DUBBED = 'dubbed';
     const TYPE_SPOKEN = 'spoken';
     const TYPE_SUBTITLES = 'subtitles';
 
-    /**
-     * @var string
-     */
-    protected $type;
-
-    protected $language;
+    private ?string $language;
+    private ?string $type;
 
     public function __construct($language = null, $type = null)
     {
@@ -22,32 +15,28 @@ class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement
         $this->type = $type;
     }
 
-    public function setType($type)
+    public function setLanguage(string $language): void
+    {
+        $this->language = $language;
+    }
+
+    public function getLanguage(): string
+    {
+        return $this->language;
+    }
+
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
 
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    public function getLanguage()
+    public function appendToDOM(DOMElement $element): void
     {
-        return $this->language;
-    }
-
-    public function setLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
-    {
-
         $dom = $element->ownerDocument;
 
         $languageElement = $dom->createElement('language');
@@ -60,14 +49,8 @@ class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement
         $element->appendChild($languageElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Language
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Language
     {
-
         $language = new self((string) $xmlElement);
 
         $attributes = $xmlElement->attributes();

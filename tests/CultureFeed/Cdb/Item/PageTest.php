@@ -2,17 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @file
- */
-class CultureFeed_Cdb_Item_PageTest extends TestCase
+final class CultureFeed_Cdb_Item_PageTest extends TestCase
 {
-    /**
-     * @param $fileName
-     *
-     * @return SimpleXMLElement
-     */
-    public function loadSample($fileName)
+    public function loadSample(string $fileName): SimpleXMLElement
     {
         $sampleDir = __DIR__ . '/samples/PageTest/';
         $filePath = $sampleDir . $fileName;
@@ -22,7 +14,7 @@ class CultureFeed_Cdb_Item_PageTest extends TestCase
         return $xml;
     }
 
-    public function testParsePage()
+    public function testParsePage(): void
     {
         $xml = $this->loadSample('page.xml');
 

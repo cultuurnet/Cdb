@@ -2,17 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @file
- */
-class CultureFeed_Cdb_List_ResultsTest extends TestCase
+final class CultureFeed_Cdb_List_ResultsTest extends TestCase
 {
-    /**
-     * @param $fileName
-     *
-     * @return SimpleXMLElement
-     */
-    protected function loadSample($fileName)
+    protected function loadSample(string $fileName): SimpleXMLElement
     {
         $sampleDir = __DIR__ . '/samples/ResultsTest/';
         $filePath = $sampleDir . $fileName;
@@ -20,7 +12,7 @@ class CultureFeed_Cdb_List_ResultsTest extends TestCase
         return simplexml_load_file($filePath);
     }
 
-    public function testParseFromCdbXml()
+    public function testParseFromCdbXml(): void
     {
         $xml = $this->loadSample('eventlist.xml');
 
@@ -29,7 +21,7 @@ class CultureFeed_Cdb_List_ResultsTest extends TestCase
         $this->assertInstanceOf('CultureFeed_Cdb_List_Results', $list);
 
         // This should be checked, it does not seem work as expected currently.
-        //$this->assertEquals(50, $list->getTotalResultsfound());
+        $this->assertEquals(50, $list->getTotalResultsfound());
 
         $this->assertCount(50, $list);
         $this->assertContainsOnly('CultureFeed_Cdb_List_Item', $list);

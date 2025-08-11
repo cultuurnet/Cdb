@@ -2,15 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * Created by PhpStorm.
- * User: Kristof
- * Date: 12/12/13
- * Time: 19:46
- */
-class CultureFeed_Cdb_Data_Calendar_WeekschemeTest extends TestCase
+final class CultureFeed_Cdb_Data_Calendar_WeekschemeTest extends TestCase
 {
-    public function testAppendToDOM()
+    public function testAppendToDOM(): void
     {
         $open = CultureFeed_Cdb_Data_Calendar_SchemeDay::SCHEMEDAY_OPEN_TYPE_OPEN;
         $closed = CultureFeed_Cdb_Data_Calendar_SchemeDay::SCHEMEDAY_OPEN_TYPE_CLOSED;

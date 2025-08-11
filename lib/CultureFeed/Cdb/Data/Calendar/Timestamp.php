@@ -1,48 +1,14 @@
 <?php
 
-/**
- * @class
- * Representation of a timestamp element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Date from the timestamp.
-     * @var string
-     */
-    protected $date;
+    private string $date;
+    private ?string $startTime = null;
+    private ?string $endTime = null;
+    private ?string $openType= null;
 
-    /**
-     * Start time from the timestamp.
-     * @var string
-     */
-    protected $startTime;
-
-    /**
-     * End time from the timestamp.
-     * @var string
-     */
-    protected $endTime;
-
-    /**
-     * Open type for the timestamp.
-     * @var string
-     */
-    protected $openType;
-
-    /**
-     * Construct a new calendar timestamp.
-     *
-     * @param string $date
-     *   Date from the timestamp.
-     * @param string $startTime
-     *   Start time from the timestamp.
-     * @param string $endTime
-     *   End time from the timestamp.
-     */
-    public function __construct($date, $startTime = null, $endTime = null)
+    public function __construct(string $date, string $startTime = null, string $endTime = null)
     {
-
         $this->setDate($date);
 
         if ($startTime !== null) {
@@ -54,90 +20,51 @@ class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_IElemen
         }
     }
 
-    /**
-     * Get the date.
-     */
-    public function getDate()
+    public function getDate(): string
     {
         return $this->date;
     }
 
-    /**
-     * Get the start time.
-     */
-    public function getStartTime()
+    public function getStartTime(): ?string
     {
         return $this->startTime;
     }
 
-    /**
-     * Get the end time.
-     */
-    public function getEndTime()
+    public function getEndTime(): ?string
     {
         return $this->endTime;
     }
 
-    /**
-     * Get the open type.
-     */
-    public function getOpenType()
+    public function getOpenType(): ?string
     {
         return $this->openType;
     }
 
-    /**
-     * Set the date from the timestamp.
-     *
-     * @param string $date
-     *   Date to set.
-     */
-    public function setDate($date)
+    public function setDate(string $date): void
     {
         CultureFeed_Cdb_Data_Calendar::validateDate($date);
         $this->date = $date;
     }
 
-    /**
-     * Set the start time from the timestamp.
-     *
-     * @param string $time
-     *   Start time to set.
-     */
-    public function setStartTime($time)
+    public function setStartTime(string $time): void
     {
         CultureFeed_Cdb_Data_Calendar::validateTime($time);
         $this->startTime = $time;
     }
 
-    /**
-     * Set the end time from the timestamp.
-     *
-     * @param string $time
-     *   End time to set.
-     */
-    public function setEndTime($time)
+    public function setEndTime(string $time): void
     {
         CultureFeed_Cdb_Data_Calendar::validateTime($time);
         $this->endTime = $time;
     }
 
-    /**
-     * Set the open type for the timestamp.
-     *
-     * @param string $type
-     */
-    public function setOpenType($type)
+    public function setOpenType(string $type): void
     {
         $this->openType = $type;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $timestampElement = $dom->createElement('timestamp');
@@ -166,14 +93,8 @@ class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_IElemen
         $element->appendChild($timestampElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Calendar_Timestamp
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Calendar_Timestamp
     {
-
         if (empty($xmlElement->date)) {
             throw new CultureFeed_Cdb_ParseException(
                 "Date is missing for timestamp"

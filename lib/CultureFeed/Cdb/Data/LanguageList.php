@@ -1,76 +1,45 @@
 <?php
 
-class CultureFeed_Cdb_Data_LanguageList implements CultureFeed_Cdb_IElement, Iterator, Countable
+final class CultureFeed_Cdb_Data_LanguageList implements CultureFeed_Cdb_IElement, Iterator, Countable
 {
+    private int $position = 0;
     /**
-     * Current position in the list.
-     * @var int
+     * @var CultureFeed_Cdb_Data_Language[]
      */
-    protected $position = 0;
+    private array $languages = [];
 
-    /**
-     * The list of languages.
-     * @var array
-     */
-    protected $languages = array();
-
-    /**
-     * Add a new language to the list.
-     *
-     * @param CultureFeed_Cdb_Data_Language $language
-     *   language to add.
-     */
-    public function add(CultureFeed_Cdb_Data_Language $language)
+    public function add(CultureFeed_Cdb_Data_Language $language): void
     {
         $this->languages[] = $language;
     }
 
-    /**
-     * @see Iterator::rewind()
-     */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
 
-    /**
-     * @see Iterator::current()
-     */
     public function current()
     {
         return $this->languages[$this->position];
     }
 
-    /**
-     * @see Iterator::key()
-     */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
 
-    /**
-     * @see Iterator::next()
-     */
-    public function next()
+    public function next(): void
     {
         ++$this->position;
     }
 
-    /**
-     * @see Iterator::valid()
-     */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->languages[$this->position]);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         if (count($this) > 0) {
@@ -83,14 +52,8 @@ class CultureFeed_Cdb_Data_LanguageList implements CultureFeed_Cdb_IElement, Ite
         }
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_LanguageList
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_LanguageList
     {
-
         $languageList = new self();
 
         if (!empty($xmlElement->language)) {
@@ -106,7 +69,7 @@ class CultureFeed_Cdb_Data_LanguageList implements CultureFeed_Cdb_IElement, Ite
         return $languageList;
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->languages);
     }

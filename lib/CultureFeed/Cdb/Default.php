@@ -1,48 +1,18 @@
 <?php
 
-/**
- * @class
- * Representation of the cdb xml on the culturefeed.
- */
-class CultureFeed_Cdb_Default
+final class CultureFeed_Cdb_Default
 {
     /**
-     * Url to the 3.2 cdb xml scheme.
-     *
      * @deprecated Use CultureFeed_Cdb_Xml::namespaceUriForVersion() instead.
      */
     const CDB_SCHEME_URL = 'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL';
-    /**
-     * Name from the xml scheme.
-     */
     const CDB_SCHEME_NAME = 'cdbxml';
 
-    /**
-     * List of items to be placed in the CdbXml.
-     * @var array
-     */
-    private $items = array();
+    private array $items = [];
+    private string $cdb_schema_url;
+    private string $cdb_schema_version = '3.2';
 
-    /**
-     * The cdb schema url.
-     *
-     * @var string
-     */
-    private $cdb_schema_url;
-
-    /**
-     * The cdb schema version.
-     *
-     * @var string
-     */
-    private $cdb_schema_version = '3.2';
-
-    /**
-     * Creates a CultureFeed_Cdb_Default class.
-     *
-     * @param string $cdb_schema_version
-     */
-    public function __construct($cdb_schema_version = '3.2')
+    public function __construct(string $cdb_schema_version = '3.2')
     {
         $this->cdb_schema_version = $cdb_schema_version;
 
@@ -51,37 +21,17 @@ class CultureFeed_Cdb_Default
         );
     }
 
-    /**
-     * Get the cdb schema url.
-     *
-     * @return string
-     *   The schema url.
-     */
-    public function getSchemaUrl()
+    public function getSchemaUrl(): string
     {
         return $this->cdb_schema_url;
     }
 
-    /**
-     * Get the cdb schema url.
-     *
-     * @return string
-     *   The schema url.
-     */
-    public function getSchemaVersion()
+    public function getSchemaVersion(): string
     {
         return $this->cdb_schema_version;
     }
 
-    /**
-     * Add an item from a  to the items list.
-     *
-     * @param CultureFeed_Cdb_Item_Base $item
-     *  Item to add
-     *
-     * @throws Exception
-     */
-    public function addItem(CultureFeed_Cdb_Item_Base $item)
+    public function addItem(CultureFeed_Cdb_Item_Base $item): void
     {
         $type = get_class($item);
 
@@ -106,17 +56,10 @@ class CultureFeed_Cdb_Default
     }
 
     /**
-     * Parse a given xml element to an CultureFeed_Cdb_Item_Base.
-     *
-     * @param SimpleXMLElement $xmlElement
-     *   XML element from the item to parse.
      * @return CultureFeed_Cdb_Item_Actor|CultureFeed_Cdb_Item_Event|CultureFeed_Cdb_Item_Production|null
-     * @throws CultureFeed_Cdb_ParseException
      */
     public static function parseItem(SimpleXMLElement $xmlElement)
     {
-
-        // Return the correct cdb item.
         switch ($xmlElement->getName()) {
             case 'event':
                 return CultureFeed_Cdb_Item_Event::parseFromCdbXml($xmlElement);
@@ -134,12 +77,8 @@ class CultureFeed_Cdb_Default
         }
     }
 
-    /**
-     * Print the Cdb.
-     */
-    public function __toString()
+    public function __toString(): string
     {
-
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
         $dom->preserveWhiteSpace = false;

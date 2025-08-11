@@ -4,108 +4,51 @@
  * @class
  * Representation of an url element in the cdb xml.
  */
-class CultureFeed_Cdb_Data_Url implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Url implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Indicate if this is the main url.
-     * @var bool
-     */
-    protected $main;
+    private bool $main;
+    private bool $reservation;
+    private string $url;
 
-    /**
-     * Indicate if this url can be used for reservations.
-     * @var bool
-     */
-    protected $reservation;
-
-    /**
-     * The actual url.
-     * @var string
-     */
-    protected $url;
-
-    /**
-     * Construct the url object.
-     *
-     * @param string $url
-     *   The url.
-     * @param bool $isMain
-     *   Main address or not.
-     * @param bool $forReservations
-     *   Usable for reservations or not
-     */
-    public function __construct($url, $isMain = false, $forReservations = false)
+    public function __construct(string $url, bool $isMain = false, bool $forReservations = false)
     {
         $this->url = $url;
         $this->main = $isMain;
         $this->reservation = $forReservations;
     }
 
-    /**
-     * Is the current url the main url, or not
-     * @return bool
-     */
-    public function isMain()
+    public function isMain(): bool
     {
         return $this->main;
     }
 
-    /**
-     * Can the current url be used for reservations.
-     * @return bool
-     */
-    public function isForReservations()
+    public function isForReservations(): bool
     {
         return $this->reservation;
     }
 
-    /**
-     * Get the actual url.
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * Set the main state.
-     *
-     * @param bool $isMain
-     *   State to set.
-     */
-    public function setMain($isMain = true)
+    public function setMain(bool $isMain = true): void
     {
         $this->main = $isMain;
     }
 
-    /**
-     * Set the reservation state.
-     *
-     * @param bool $forReservation
-     *   State to set.
-     */
-    public function setReservation($forReservation = true)
+    public function setReservation(bool $forReservation = true): void
     {
         $this->reservation = $forReservation;
     }
 
-    /**
-     * Set the url.
-     *
-     * @param string $url
-     *   Url to set.
-     */
-    public function setUrl($url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $urlElement = $dom->createElement('url');
@@ -122,14 +65,8 @@ class CultureFeed_Cdb_Data_Url implements CultureFeed_Cdb_IElement
         $element->appendChild($urlElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Url
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Url
     {
-
         $attributes = $xmlElement->attributes();
         $is_main = isset($attributes['main']) && $attributes['main'] == 'true';
         $for_reservations = isset($attributes['reservation']) && $attributes['reservation'] == 'true';

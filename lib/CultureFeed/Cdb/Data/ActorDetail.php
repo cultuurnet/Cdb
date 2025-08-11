@@ -1,50 +1,26 @@
 <?php
 
-/**
- * @class
- * Representation of an EventDetail element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Calendar summary from this actorDetail.
-     * @var string
-     */
-    protected $calendarSummary;
+    private string $calendarSummary;
 
-    /**
-     * Construct the ActorDetail.
-     */
     public function __construct()
     {
         $this->media = new CultureFeed_Cdb_Data_Media();
     }
 
-    /**
-     * Get the calendar summary.
-     * @return string
-     */
-    public function getCalendarSummary()
+    public function getCalendarSummary(): string
     {
         return $this->calendarSummary;
     }
 
-    /**
-     * Set the calendar summary.
-     *
-     * @param string $summary
-     */
-    public function setCalendarSummary($summary)
+    public function setCalendarSummary(string $summary): void
     {
         $this->calendarSummary = $summary;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $detailElement = $dom->createElement('actordetail');
@@ -87,12 +63,7 @@ class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail imple
         $element->appendChild($detailElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return self
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_ActorDetail
     {
         if (empty($xmlElement->title)) {
             throw new CultureFeed_Cdb_ParseException(
