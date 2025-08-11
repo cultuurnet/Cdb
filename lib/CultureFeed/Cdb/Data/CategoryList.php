@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @implements Iterator<CultureFeed_Cdb_Data_Category>
+ */
 final class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElement, Iterator
 {
     private int $position = 0;
@@ -13,7 +16,7 @@ final class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElemen
         $this->categories[] = $category;
     }
 
-    public function delete($key): void
+    public function delete(int $key): void
     {
         unset($this->categories[$key]);
     }
@@ -43,6 +46,9 @@ final class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElemen
         return isset($this->categories[$this->position]);
     }
 
+    /**
+     * @return array<CultureFeed_Cdb_Data_Category>
+     */
     public function getCategoriesByType(string $type): array
     {
         $categories = array();
@@ -57,7 +63,6 @@ final class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElemen
 
     public function hasCategory(string $id): bool
     {
-
         foreach ($this->categories as $category) {
             if ($category->getId() == $id) {
                 return true;
@@ -85,11 +90,10 @@ final class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElemen
 
         if (!empty($xmlElement->category)) {
             foreach ($xmlElement->category as $categoryElement) {
-                $category = CultureFeed_Cdb_Data_Category::parseFromCdbXml(
-                    $categoryElement
-                );
-                if ($category) {
+                try {
+                    $category = CultureFeed_Cdb_Data_Category::parseFromCdbXml($categoryElement);
                     $categoryList->add($category);
+                } catch (CultureFeed_Cdb_ParseException $exception) {
                 }
             }
         }

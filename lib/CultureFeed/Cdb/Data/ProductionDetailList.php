@@ -7,6 +7,7 @@ final class CultureFeed_Cdb_Data_ProductionDetailList extends CultureFeed_Cdb_Da
         $dom = $element->ownerDocument;
 
         $detailsElement = $dom->createElement('productiondetails');
+        /** @var CultureFeed_Cdb_Data_ProductionDetail $detail */
         foreach ($this as $detail) {
             $detail->appendToDom($detailsElement);
         }

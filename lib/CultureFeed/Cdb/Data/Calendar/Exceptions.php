@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * @implements Iterator<CultureFeed_Cdb_Data_Calendar_Timestamp>
+ */
 final class CultureFeed_Cdb_Data_Calendar_Exceptions implements CultureFeed_Cdb_IElement, Iterator
 {
     private int $position = 0;
+    /** @var array<CultureFeed_Cdb_Data_Calendar_Timestamp> */
     private array $items = [];
 
     public function add(CultureFeed_Cdb_Data_Calendar_Timestamp $timestamp): void

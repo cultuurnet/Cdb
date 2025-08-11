@@ -125,6 +125,9 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
         $this->urls = array();
     }
 
+    /**
+     * @return array<string, array<string>>
+     */
     public function getReservationInfo(): array
     {
         $info = array();
@@ -150,6 +153,9 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
         return $info;
     }
 
+    /**
+     * @return array<string, array<string>>
+     */
     public function getMainInfo(): array
     {
         $info = array();

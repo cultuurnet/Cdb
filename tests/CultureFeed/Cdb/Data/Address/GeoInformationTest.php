@@ -4,6 +4,9 @@ use PHPUnit\Framework\TestCase;
 
 final class CultureFeed_Cdb_Data_Address_GeoInformationTest extends TestCase
 {
+    /**
+     * @return array<array<string>>
+     */
     public function sampleCoordinates(): array
     {
         return array(

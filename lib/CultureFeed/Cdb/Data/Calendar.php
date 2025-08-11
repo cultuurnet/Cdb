@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @implements Iterator<CultureFeed_Cdb_IElement>
+ */
 abstract class CultureFeed_Cdb_Data_Calendar implements CultureFeed_Cdb_IElement, Iterator
 {
     const OPEN_TYPE_OPEN = 'open';
@@ -14,6 +17,7 @@ abstract class CultureFeed_Cdb_Data_Calendar implements CultureFeed_Cdb_IElement
     const ISO8601_REGEX_TIME = '^(2[0-3]|[0-1][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)??(Z|[+-](?:2[0-3]|[0-1][0-9]):[0-5][0-9])?$';
 
     protected int $position = 0;
+    /** @var array<CultureFeed_Cdb_IElement> */
     protected array $items = [];
 
     public function rewind(): void

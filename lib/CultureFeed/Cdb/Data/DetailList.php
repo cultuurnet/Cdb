@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * @implements Iterator<CultureFeed_Cdb_Data_Detail>
+ */
 abstract class CultureFeed_Cdb_Data_DetailList implements CultureFeed_Cdb_IElement, Iterator
 {
     protected int $position = 0;
+    /** @var array<CultureFeed_Cdb_Data_Detail> */
     protected array $details = [];
 
     public function add(CultureFeed_Cdb_Data_Detail $detail): void

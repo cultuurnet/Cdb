@@ -5,21 +5,15 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
     private string $id;
     private string $name;
     private bool $officialPage;
-    /**
-     * @var string[]
-     */
+    /** @var array<string> */
     private array $categories;
-    /**
-     * @var string[]
-     */
+    /** @var array<string> */
     private array $keywords;
     private string $description;
     private CultureFeed_Cdb_Data_Address_PhysicalAddress $address;
     private string $email;
     private string $telephone;
-    /**
-     * @var string[]
-     */
+    /** @var array<string> */
     private array $links;
     private string $image;
     private string $cover;
@@ -54,7 +48,7 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCategories(): array
     {
@@ -62,7 +56,7 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getKeywords(): array
     {
@@ -89,6 +83,9 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         return $this->telephone;
     }
 
+    /**
+     * @return array<string>
+     */
     public function getLinks(): array
     {
         return $this->links;
@@ -139,11 +136,17 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         $this->cover = $cover;
     }
 
+    /**
+     * @param array<string> $categories
+     */
     public function setCategories(array $categories): void
     {
         $this->categories = $categories;
     }
 
+    /**
+     * @param array<string> $keywords
+     */
     public function setKeywords(array $keywords): void
     {
         $this->keywords = $keywords;

@@ -33,6 +33,9 @@ final class CultureFeed_Cdb_Data_KeywordTest extends TestCase
         $this->assertTrue($keyword->isVisible());
     }
 
+    /**
+     * @return array<array<string>>
+     */
     public function validKeywordValues(): array
     {
         return array(

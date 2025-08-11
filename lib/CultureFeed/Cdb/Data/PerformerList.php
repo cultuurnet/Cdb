@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * @implements Iterator<CultureFeed_Cdb_Data_Performer>
+ */
 final class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IElement, Iterator, Countable
 {
     private int $position = 0;
+    /** @var array<CultureFeed_Cdb_Data_Performer> */
     private array $performers = [];
 
     public function add(CultureFeed_Cdb_Data_Performer $performer): void

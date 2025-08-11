@@ -1,12 +1,13 @@
 <?php
 
+/**
+ * @implements Iterator<CultureFeed_Cdb_List_Item|CultureFeed_Cdb_Item_Base>
+ */
 final class CultureFeed_Cdb_List_Results implements Iterator
 {
     private int $position = 0;
     private int $totalResultsFound;
-    /**
-     * @var CultureFeed_Cdb_List_Item[]
-     */
+    /** @var array<CultureFeed_Cdb_List_Item|CultureFeed_Cdb_Item_Base> */
     private array $items;
 
     public function add(CultureFeed_Cdb_List_Item $item): void
@@ -64,6 +65,9 @@ final class CultureFeed_Cdb_List_Results implements Iterator
         return $results;
     }
 
+    /**
+     * @return array<CultureFeed_Cdb_List_Item>
+     */
     public static function parseFromCdbXmlList(SimpleXMLElement $xmlElement): array
     {
         $items = array();
@@ -75,6 +79,9 @@ final class CultureFeed_Cdb_List_Results implements Iterator
         return $items;
     }
 
+    /**
+     * @return array<CultureFeed_Cdb_Item_Base|null>
+     */
     protected static function parseFromCdbXmlXmlview(SimpleXMLElement $xmlElement): array
     {
         $items = array();

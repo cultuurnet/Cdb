@@ -41,17 +41,17 @@ final class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
         return $this->name;
     }
 
-    public function setType(string $type)
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
 
-    public function setId(string $id)
+    public function setId(string $id): void
     {
         $this->id = $id;
     }
 
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -68,15 +68,15 @@ final class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
         $element->appendChild($categoryElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): ?CultureFeed_Cdb_Data_Category
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Category
     {
         $attributes = $xmlElement->attributes();
         if (!isset($attributes['type'])) {
-            return null;
+            throw new CultureFeed_Cdb_ParseException();
         }
 
         if (!isset($attributes['catid'])) {
-            return null;
+            throw new CultureFeed_Cdb_ParseException();
         }
 
         return new CultureFeed_Cdb_Data_Category(

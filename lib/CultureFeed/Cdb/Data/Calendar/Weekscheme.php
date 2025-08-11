@@ -35,7 +35,6 @@ final class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_
 
     public function getDay(string $dayName): ?CultureFeed_Cdb_Data_Calendar_SchemeDay
     {
-
         if (!array_key_exists($dayName, $this->days)) {
             throw new Exception('Trying to access unexisting day ' . $dayName);
         }
@@ -43,6 +42,9 @@ final class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_
         return $this->days[$dayName];
     }
 
+    /**
+     * @return array<CultureFeed_Cdb_Data_Calendar_SchemeDay>|array<null>
+     */
     public function getDays(): array
     {
         return $this->days;
@@ -120,7 +122,10 @@ final class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_
         return $weekscheme;
     }
 
-    public function __call($name, $arguments)
+    /**
+     * @param array<mixed> $arguments
+     */
+    public function __call(string $name, array $arguments): CultureFeed_Cdb_Data_Calendar_SchemeDay
     {
         if (array_key_exists($name, $this->days)) {
             if (!$this->days[$name] instanceof CultureFeed_Cdb_Data_Calendar_SchemeDay) {

@@ -10,25 +10,21 @@ abstract class CultureFeed_Cdb_Item_Base
     protected ?string $creationDate = null;
     protected ?CultureFeed_Cdb_Data_DetailList $details = null;
     protected ?string $externalId = null;
-    /**
-     * @var CultureFeed_Cdb_Data_Keyword[]
-     */
+    /** @var array<CultureFeed_Cdb_Data_Keyword> */
     protected array $keywords = [];
     protected ?string $lastUpdated = null;
     protected ?string $lastUpdatedBy = null;
     protected ?string $owner = null;
     protected ?bool $private = null;
     protected ?string $publisher = null;
-    /**
-     * @var CultureFeed_Cdb_Item_Reference[]
-     */
+    /** @var array<CultureFeed_Cdb_Item_Reference> */
     protected array $relations;
     protected ?string $wfStatus;
 
     protected static function parseKeywords(
         SimpleXMLElement $xmlElement,
         CultureFeed_Cdb_Item_Base $item
-    ) {
+    ): void {
         if (@count($xmlElement->keywords)) {
             $keywordsString = trim($xmlElement->keywords);
 
@@ -263,9 +259,11 @@ abstract class CultureFeed_Cdb_Item_Base
         $this->details = $details;
     }
 
+    /**
+     * @return array<string>|array<CultureFeed_Cdb_Data_Keyword>
+     */
     public function getKeywords(bool $asObject = false): array
     {
-
         if ($asObject) {
             return $this->keywords;
         } else {
@@ -277,6 +275,9 @@ abstract class CultureFeed_Cdb_Item_Base
         }
     }
 
+    /**
+     * @return array<CultureFeed_Cdb_Item_Reference>
+     */
     public function getRelations(): array
     {
         return $this->relations;

@@ -7,6 +7,7 @@ final class CultureFeed_Cdb_Data_ActorDetailList extends CultureFeed_Cdb_Data_De
         $dom = $element->ownerDocument;
 
         $detailsElement = $dom->createElement('actordetails');
+        /** @var CultureFeed_Cdb_Data_ActorDetail $detail */
         foreach ($this as $detail) {
             $detail->appendToDom($detailsElement);
         }
