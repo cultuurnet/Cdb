@@ -1,8 +1,10 @@
 <?php
 
-class CultureFeed_Cdb_Item_ActorTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CultureFeed_Cdb_Item_ActorTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->actor = new CultureFeed_Cdb_Item_Actor();
     }
@@ -60,22 +62,20 @@ class CultureFeed_Cdb_Item_ActorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Invoerders Algemeen ', $actor->getOwner());
     }
 
-    /**
-     * @expectedException CultureFeed_Cdb_ParseException
-     * @expectedExceptionMessage Categories missing for actor element
-     */
     public function testParseCdbXmlWithoutCategories()
     {
+        $this->expectException(CultureFeed_Cdb_ParseException::class);
+        $this->expectExceptionMessage('Categories missing for actor element');
+
         $xml = $this->loadSample('actor-no-categories.xml');
         CultureFeed_Cdb_Item_Actor::parseFromCdbXml($xml);
     }
 
-    /**
-     * @expectedException CultureFeed_Cdb_ParseException
-     * @expectedExceptionMessage Actordetails missing for actor element
-     */
     public function testParseCdbXmlWithoutActorDetails()
     {
+        $this->expectException(CultureFeed_Cdb_ParseException::class);
+        $this->expectExceptionMessage('Actordetails missing for actor element');
+
         $xml = $this->loadSample('actor-no-actordetails.xml');
         CultureFeed_Cdb_Item_Actor::parseFromCdbXml($xml);
     }

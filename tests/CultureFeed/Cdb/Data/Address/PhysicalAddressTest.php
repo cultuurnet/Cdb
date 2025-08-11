@@ -1,6 +1,8 @@
 <?php
 
-class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
 {
     public function loadSample($fileName)
     {
@@ -8,15 +10,6 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends PHPUnit_Framework
         $filePath = $sampleDir . $fileName;
 
         return simplexml_load_file($filePath);
-    }
-
-    public function missingElementSamples()
-    {
-        return array(
-            array('missing_city.xml'),
-            array('missing_country.xml'),
-            array('missing_zipcode.xml'),
-        );
     }
 
     public function testParseFull()
@@ -62,13 +55,21 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends PHPUnit_Framework
 
     /**
      * @dataProvider missingElementSamples
-     * @expectedException CultureFeed_Cdb_ParseException
      */
     public function testParseXMLWithMissingElementThrowsException($sampleName)
     {
+        $this->expectException(CultureFeed_Cdb_ParseException::class);
+
         $sample = $this->loadSample($sampleName);
-        $address = CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml(
-            $sample
+        CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml($sample);
+    }
+
+    public function missingElementSamples()
+    {
+        return array(
+            array('missing_city.xml'),
+            array('missing_country.xml'),
+            array('missing_zipcode.xml'),
         );
     }
 }
