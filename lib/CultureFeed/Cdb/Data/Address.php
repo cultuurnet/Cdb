@@ -8,13 +8,13 @@ class CultureFeed_Cdb_Data_Address implements CultureFeed_Cdb_IElement
 {
     /**
      * Physical address.
-     * @var CultureFeed_Cdb_Data_Address_PhysicalAddress
+     * @var CultureFeed_Cdb_Data_Address_PhysicalAddress|null
      */
     protected $physicalAddress;
 
     /**
      * Virtual address.
-     * @var CultureFeed_Cdb_Data_Address_VirtualAddress
+     * @var CultureFeed_Cdb_Data_Address_VirtualAddress|null
      */
     protected $virtualAddress;
 
@@ -49,7 +49,7 @@ class CultureFeed_Cdb_Data_Address implements CultureFeed_Cdb_IElement
 
     /**
      * Get the virtual address.
-     * @return CultureFeed_Cdb_Data_Address_VirtualAddress
+     * @return CultureFeed_Cdb_Data_Address_VirtualAddress|null
      */
     public function getVirtualAddress()
     {

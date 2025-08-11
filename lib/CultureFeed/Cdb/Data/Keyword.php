@@ -99,7 +99,7 @@ class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
 
         $attributes = $xmlElement->attributes();
         if (!isset($attributes['visible'])) {
-            $attributes['visible'] = true;
+            $attributes['visible'] = new SimpleXMLElement('true');
         }
 
         return new CultureFeed_Cdb_Data_Keyword(

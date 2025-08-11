@@ -13,11 +13,13 @@
       }
     },
     "require-dev": {
-      "phpunit/phpunit": "^9.0"
+      "phpunit/phpunit": "^9.0",
+        "phpstan/phpstan": "^2.1"
     },
     "require": {
       "php": ">=7.4",
-      "ext-simplexml": "*"
+      "ext-simplexml": "*",
+      "ext-dom": "*"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

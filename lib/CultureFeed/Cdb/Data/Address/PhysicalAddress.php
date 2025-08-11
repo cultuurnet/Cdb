@@ -38,7 +38,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
 
     /**
      * Geo information from the address.
-     * @var CultureFeed_Cdb_Data_Address_GeoInformation
+     * @var CultureFeed_Cdb_Data_Address_GeoInformation|null
      */
     protected $gis;
 
@@ -104,7 +104,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_Cdb_IE
     /**
      * Set the housenumber.
      *
-     * @param string $housenumber
+     * @param string $houseNumber
      *   Housenumber to set.
      */
     public function setHouseNumber($houseNumber)

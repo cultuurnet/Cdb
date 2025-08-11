@@ -19,7 +19,7 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
     protected $description;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $title;
 
@@ -108,7 +108,7 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
 
         if (isset($this->value)) {
             $valueElement = $dom->createElement('pricevalue');
-            $valueElement->appendChild($dom->createTextNode($this->value));
+            $valueElement->appendChild($dom->createTextNode((string) $this->value));
             $priceElement->appendChild($valueElement);
         }
 
@@ -131,7 +131,7 @@ class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
 
-        $value = !empty($xmlElement->pricevalue) ? (string) $xmlElement->pricevalue : null;
+        $value = !empty($xmlElement->pricevalue) ? (float) $xmlElement->pricevalue : null;
         $price = new CultureFeed_Cdb_Data_Price($value);
 
         if (!empty($xmlElement->pricedescription)) {

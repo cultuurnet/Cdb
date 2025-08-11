@@ -319,7 +319,7 @@ class CultureFeed_Cdb_List_Item
     /**
      * Set the thumbnail image from current item.
      *
-     * @param string $id
+     * @param string $thumbnail
      */
     public function setThumbnail($thumbnail)
     {
@@ -529,7 +529,7 @@ class CultureFeed_Cdb_List_Item
         }
 
         if (!empty($attributes['agefrom'])) {
-            $item->setAgeFrom((string) $attributes['agefrom']);
+            $item->setAgeFrom((int) $attributes['agefrom']);
         }
 
         if (!empty($attributes['performers'])) {

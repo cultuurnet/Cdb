@@ -8,13 +8,13 @@ class CultureFeed_Cdb_Data_Calendar_Permanent extends CultureFeed_Cdb_Data_Calen
 {
     /**
      * Exceptions for the opening times.
-     * @var CultureFeed_Cdb_Data_Calendar_Exceptions
+     * @var CultureFeed_Cdb_Data_Calendar_Exceptions|null
      */
     protected $exceptions;
 
     /**
      * Week scheme for the permanent opening times.
-     * @var CultureFeed_Cdb_Data_Calendar_WeekScheme
+     * @var CultureFeed_Cdb_Data_Calendar_Weekscheme|null
      */
     protected $weekScheme;
 
@@ -32,10 +32,10 @@ class CultureFeed_Cdb_Data_Calendar_Permanent extends CultureFeed_Cdb_Data_Calen
     /**
      * Set the week scheme for the opening times.
      *
-     * @param CultureFeed_Cdb_Data_Calendar_WeekScheme $scheme
+     * @param CultureFeed_Cdb_Data_Calendar_Weekscheme $scheme
      *   Weekscheme to set.
      */
-    public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_WeekScheme $scheme)
+    public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $scheme)
     {
         $this->weekScheme = $scheme;
     }

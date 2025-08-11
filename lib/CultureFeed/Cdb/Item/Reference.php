@@ -41,8 +41,6 @@ class CultureFeed_Cdb_Item_Reference
      * setCdbId().
      *
      * @param  string $cdbId
-     *
-     * @return string
      */
     public function setCdbId($cdbId)
     {
@@ -63,8 +61,6 @@ class CultureFeed_Cdb_Item_Reference
      * setExternalId().
      *
      * @param  string $externalId
-     *
-     * @return string
      */
     public function setExternalId($externalId)
     {
@@ -85,8 +81,6 @@ class CultureFeed_Cdb_Item_Reference
      * getTitle().
      *
      * @param string $title
-     *
-     * @return string
      */
     public function setTitle($title)
     {

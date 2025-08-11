@@ -135,20 +135,18 @@ class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
     /**
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
      *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Category
+     * @return CultureFeed_Cdb_Data_Category|null
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
 
         $attributes = $xmlElement->attributes();
         if (!isset($attributes['type'])) {
-            return;
-            //throw new CultureFeed_Cdb_ParseException("Category type missing for category element");
+            return null;
         }
 
         if (!isset($attributes['catid'])) {
-            return;
-            //throw new CultureFeed_Cdb_ParseException("Category ID missing for category element");
+            return null;
         }
 
         return new CultureFeed_Cdb_Data_Category(
