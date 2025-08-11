@@ -1,9 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * @class
- * Representation of a weekscheme element in the cdb xml.
- *
  * @method CultureFeed_Cdb_Data_Calendar_SchemeDay monday()
  * @method CultureFeed_Cdb_Data_Calendar_SchemeDay tuesday()
  * @method CultureFeed_Cdb_Data_Calendar_SchemeDay wednesday()
@@ -12,13 +11,12 @@
  * @method CultureFeed_Cdb_Data_Calendar_SchemeDay saturday()
  * @method CultureFeed_Cdb_Data_Calendar_SchemeDay sunday()
  */
-class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IElement
+final class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IElement
 {
     /**
-     * Opening information for all days.
      * @var CultureFeed_Cdb_Data_Calendar_SchemeDay[]|null[]
      */
-    protected $days = array(
+    private array $days = [
         'monday' => null,
         'tuesday' => null,
         'wednesday' => null,
@@ -26,20 +24,10 @@ class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IEleme
         'friday' => null,
         'saturday' => null,
         'sunday' => null,
-    );
+    ];
 
-    /**
-     * Set the opening info for a given day.
-     *
-     * @param string $dayName
-     *   Name of the day to get.
-     * @param CultureFeed_Cdb_Data_Calendar_SchemeDay $openingInfo
-     *
-     * @throws Exception
-     */
-    public function setDay($dayName, CultureFeed_Cdb_Data_Calendar_SchemeDay $openingInfo)
+    public function setDay(string $dayName, CultureFeed_Cdb_Data_Calendar_SchemeDay $openingInfo): void
     {
-
         if (!array_key_exists($dayName, $this->days)) {
             throw new Exception('Trying to set unexisting day ' . $dayName);
         }
@@ -47,16 +35,8 @@ class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IEleme
         $this->days[$dayName] = $openingInfo;
     }
 
-    /**
-     * Get the openings info for a given day.
-     *
-     * @param string $dayName
-     *
-     * @throws Exception
-     */
-    public function getDay($dayName)
+    public function getDay(string $dayName): ?CultureFeed_Cdb_Data_Calendar_SchemeDay
     {
-
         if (!array_key_exists($dayName, $this->days)) {
             throw new Exception('Trying to access unexisting day ' . $dayName);
         }
@@ -65,19 +45,15 @@ class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IEleme
     }
 
     /**
-     * Return all the days.
+     * @return array<CultureFeed_Cdb_Data_Calendar_SchemeDay>|array<null>
      */
-    public function getDays()
+    public function getDays(): array
     {
         return $this->days;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $schemeElement = $dom->createElement('weekscheme');
@@ -90,18 +66,12 @@ class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IEleme
         $element->appendChild($schemeElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Calendar_Weekscheme
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Calendar_Weekscheme
     {
-
         foreach (CultureFeed_Cdb_Data_Calendar_SchemeDay::$allowedDays as $day) {
             if (!isset($xmlElement->{$day})) {
                 throw new CultureFeed_Cdb_ParseException(
-                    "Missing required data for " . $day
+                    'Missing required data for ' . $day
                 );
             }
         }
@@ -154,7 +124,10 @@ class CultureFeed_Cdb_Data_Calendar_Weekscheme implements CultureFeed_Cdb_IEleme
         return $weekscheme;
     }
 
-    public function __call($name, $arguments)
+    /**
+     * @param array<mixed> $arguments
+     */
+    public function __call(string $name, array $arguments): CultureFeed_Cdb_Data_Calendar_SchemeDay
     {
         if (array_key_exists($name, $this->days)) {
             if (!$this->days[$name] instanceof CultureFeed_Cdb_Data_Calendar_SchemeDay) {

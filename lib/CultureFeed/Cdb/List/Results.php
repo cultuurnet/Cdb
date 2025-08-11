@@ -1,103 +1,58 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * @class
- * Class for the representation of results found for a list search.
+ * @implements Iterator<CultureFeed_Cdb_List_Item|CultureFeed_Cdb_Item_Base>
  */
-class CultureFeed_Cdb_List_Results implements Iterator
+final class CultureFeed_Cdb_List_Results implements Iterator
 {
-    /**
-     * Current position in the list.
-     * @var int
-     */
-    protected $position = 0;
+    private int $position = 0;
+    private int $totalResultsFound;
+    /** @var array<CultureFeed_Cdb_List_Item|CultureFeed_Cdb_Item_Base> */
+    private array $items;
 
-    /**
-     * Total results found
-     * @var string
-     */
-    protected $totalResultsFound;
-
-    /**
-     * Array with the found items for current search.
-     * @var CultureFeed_Cdb_List_Item[]
-     */
-    protected $items;
-
-    /**
-     * Add a new category to the list.
-     *
-     * @param CultureFeed_Cdb_List_Item $item
-     *   Category to add.
-     */
-    public function add(CultureFeed_Cdb_List_Item $item)
+    public function add(CultureFeed_Cdb_List_Item $item): void
     {
         $this->items[] = $item;
     }
 
-    /**
-     * @see Iterator::rewind()
-     */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
 
-    /**
-     * @see Iterator::current()
-     */
     public function current()
     {
         return $this->items[$this->position];
     }
 
-    /**
-     * @see Iterator::key()
-     */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
 
-    /**
-     * @see Iterator::next()
-     */
-    public function next()
+    public function next(): void
     {
         ++$this->position;
     }
 
-    /**
-     * @see Iterator::valid()
-     */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->items[$this->position]);
     }
 
-    /**
-     * Set the total number of results that are found.
-     */
-    public function setTotalResultsFound($totalResultsFound)
+    public function setTotalResultsFound(int $totalResultsFound): void
     {
         $this->totalResultsFound = $totalResultsFound;
     }
 
-    /**
-     * Get the total number of results found
-     * @return string
-     */
-    public function getTotalResultsfound()
+    public function getTotalResultsfound(): int
     {
         return $this->totalResultsFound;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_List_Results
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_List_Results
     {
         $results = new self();
 
@@ -107,21 +62,17 @@ class CultureFeed_Cdb_List_Results implements Iterator
             $results->items = self::parseFromCdbXmlXmlview($xmlElement);
         }
 
-        $results->setTotalResultsFound((int) $xmlElement->nofrecords);
+        $results->setTotalResultsFound(count($xmlElement->list->item));
 
         return $results;
     }
 
     /**
-     * Get the list items
-     *
-     * @param SimpleXMLElement $xmlElement
-     *
-     * @return array
+     * @return array<CultureFeed_Cdb_List_Item>
      */
-    protected static function parseFromCdbXmlList(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXmlList(SimpleXMLElement $xmlElement): array
     {
-        $items = array();
+        $items = [];
 
         foreach ($xmlElement->list->item as $item) {
             $items[] = CultureFeed_Cdb_List_Item::parseFromCdbXml($item);
@@ -131,26 +82,11 @@ class CultureFeed_Cdb_List_Results implements Iterator
     }
 
     /**
-     * Get the xmlview items
-     *
-     * @param SimpleXMLElement $xmlElement
-     *
-     * @return array
+     * @return array<CultureFeed_Cdb_Item_Base|null>
      */
-    protected static function parseFromCdbXmlXmlview(SimpleXMLElement $xmlElement)
+    private static function parseFromCdbXmlXmlview(SimpleXMLElement $xmlElement): array
     {
-        $items = array();
-
-        if ($xmlElement->events) {
-            $listName = 'events';
-            $itemName = 'event';
-        } elseif ($xmlElement->actors) {
-            $listName = 'actors';
-            $itemName = 'actor';
-        } elseif ($xmlElement->productions) {
-            $listName = 'productions';
-            $itemName = 'production';
-        }
+        $items = [];
 
         foreach ($xmlElement->listName->itemName as $item) {
             $items[] = CultureFeed_Cdb_Default::parseItem($item);

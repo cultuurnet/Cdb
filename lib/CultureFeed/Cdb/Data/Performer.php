@@ -1,98 +1,51 @@
 <?php
 
-/**
- * @class
- * Representation of a category element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement
+declare(strict_types=1);
+
+final class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Label for the Performer.
-     * @var string
-     */
-    protected $label;
+    private ?string $label;
+    private ?string $role;
+    private CultureFeed_Cdb_Item_Actor $actor;
 
-    /**
-     * Role of the performer.
-     * @var string
-     */
-    protected $role;
-
-    /**
-     * Actor for the performer.
-     * @var CultureFeed_Cdb_Item_Actor
-     */
-    protected $actor;
-
-    public function __construct($role = null, $label = null)
+    public function __construct(string $role = null, string $label = null)
     {
         $this->role = $role;
         $this->label = $label;
     }
 
-    /**
-     * Get the label of the performer.
-     */
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
-    /**
-     * Get the role of the performer.
-     */
-    public function getRole()
+    public function getRole(): ?string
     {
         return $this->role;
     }
 
-    /**
-     * Get the actor.
-     */
-    public function getActor()
+    public function getActor(): CultureFeed_Cdb_Item_Actor
     {
         return $this->actor;
     }
 
-    /**
-     * Set the label of the performer.
-     *
-     * @param string $label
-     *   Label of the performer
-     */
-    public function setLabel($label)
+    public function setLabel(string $label): void
     {
         $this->label = $label;
     }
 
-    /**
-     * Set the role of the performer.
-     *
-     * @param string $role
-     *   Role of the performer
-     */
-    public function setRole($role)
+    public function setRole(string $role): void
     {
         $this->role = $role;
     }
 
-    /**
-     * Set the actor.
-     *
-     * @param CultureFeed_Cdb_Item_Actor $actor
-     *   The actor.
-     */
-    public function setActor(CultureFeed_Cdb_Item_Actor $actor)
+    public function setActor(CultureFeed_Cdb_Item_Actor $actor): void
     {
         $this->actor = $actor;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $performerElement = $dom->createElement('performer');
@@ -110,14 +63,8 @@ class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement
         $element->appendChild($performerElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Performer
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Performer
     {
-
         $performer = new CultureFeed_Cdb_Data_Performer();
 
         if (!empty($xmlElement->label)) {

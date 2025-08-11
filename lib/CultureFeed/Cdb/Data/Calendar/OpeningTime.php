@@ -1,32 +1,13 @@
 <?php
 
-/**
- * @class
- * Representation of an openingTime element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Calendar_OpeningTime implements CultureFeed_Cdb_IElement
+declare(strict_types=1);
+
+final class CultureFeed_Cdb_Data_Calendar_OpeningTime implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Start time from the opening hour.
-     * @var string
-     */
-    protected $openFrom;
+    private string $openFrom;
+    private ?string $openTill = null;
 
-    /**
-     * End time from the opening hour.
-     * @var string
-     */
-    protected $openTill;
-
-    /**
-     * Construct a new openingTime.
-     *
-     * @param string $openFrom
-     *   Start time for the opening time.
-     * @param string|null $openTill
-     *   End time for the opening time.
-     */
-    public function __construct($openFrom, $openTill = null)
+    public function __construct(string $openFrom, string $openTill = null)
     {
         $this->setOpenFrom($openFrom);
 
@@ -35,52 +16,30 @@ class CultureFeed_Cdb_Data_Calendar_OpeningTime implements CultureFeed_Cdb_IElem
         }
     }
 
-    /**
-     * Get the opening from time.
-     */
-    public function getOpenFrom()
+    public function getOpenFrom(): string
     {
         return $this->openFrom;
     }
 
-    /**
-     * Get the opening from time.
-     */
-    public function getOpenTill()
+    public function getOpenTill(): ?string
     {
         return $this->openTill;
     }
 
-    /**
-     * Set the opening from time.
-     *
-     * @param string $openFrom
-     *   Opening time to set.
-     */
-    public function setOpenFrom($openFrom)
+    public function setOpenFrom(string $openFrom): void
     {
         CultureFeed_Cdb_Data_Calendar::validateTime($openFrom);
         $this->openFrom = $openFrom;
     }
 
-    /**
-     * Set the open till time.
-     *
-     * @param string $openTill
-     *   Open till time to set.
-     */
-    public function setOpenTill($openTill)
+    public function setOpenTill(string $openTill): void
     {
         CultureFeed_Cdb_Data_Calendar::validateTime($openTill);
         $this->openTill = $openTill;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $openingElement = $dom->createElement('openingtime');
@@ -92,14 +51,8 @@ class CultureFeed_Cdb_Data_Calendar_OpeningTime implements CultureFeed_Cdb_IElem
         $element->appendChild($openingElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Calendar_OpeningTime
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Calendar_OpeningTime
     {
-
         $attributes = $xmlElement->attributes();
         if (!isset($attributes['from'])) {
             $openFrom = '00:00:00';

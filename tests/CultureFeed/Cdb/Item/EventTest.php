@@ -1,26 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
-class CultureFeed_Cdb_Item_EventTest extends TestCase
+final class CultureFeed_Cdb_Item_EventTest extends TestCase
 {
-    /**
-     * @var CultureFeed_Cdb_Item_Event
-     */
-    protected $event;
+    private CultureFeed_Cdb_Item_Event $event;
 
     public function setUp(): void
     {
         $this->event = new CultureFeed_Cdb_Item_Event();
     }
 
-    /**
-     * @param $fileName
-     * @param $cdbScheme
-     *
-     * @return SimpleXMLElement
-     */
-    public function loadSample($fileName, $cdbScheme = '3.2')
+    public function loadSample(string $fileName, string $cdbScheme = '3.2'): SimpleXMLElement
     {
         $sampleDir = __DIR__ . '/samples/EventTest/cdbxml-' . $cdbScheme . '/';
         $filePath = $sampleDir . $fileName;
@@ -35,13 +28,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         return $xml;
     }
 
-    /**
-     * @param $fileName
-     * @param $cdbScheme
-     *
-     * @return string
-     */
-    public function samplePath($fileName, $cdbScheme = '3.2')
+    public function samplePath(string $fileName, string $cdbScheme = '3.2'): string
     {
         $sampleDir = __DIR__ . '/samples/EventTest/cdbxml-' . $cdbScheme . '/';
         $filePath = $sampleDir . $fileName;
@@ -49,7 +36,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         return $filePath;
     }
 
-    public function testAppendsCdbidAttributeOnlyWhenCdbidIsSet()
+    public function testAppendsCdbidAttributeOnlyWhenCdbidIsSet(): void
     {
         $this->assertEquals(null, $this->event->getCdbId());
 
@@ -87,20 +74,20 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array<bool>>
      */
-    public function privatePropertyValues()
+    public function privatePropertyValues(): array
     {
-        return array(
-            array(true),
-            array(false),
-        );
+        return [
+            [true],
+            [false],
+        ];
     }
 
     /**
      * @dataProvider privatePropertyValues
      */
-    public function testAppendsBooleanPrivateProperty($value)
+    public function testAppendsBooleanPrivateProperty(bool $value): void
     {
         $this->assertNULL($this->event->isPrivate());
 
@@ -123,30 +110,29 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals($value, $this->event->isPrivate());
     }
 
-    public function privatePropertySamples()
+    /**
+     * @return array<array<string|bool>>
+     */
+    public function privatePropertySamples(): array
     {
-        return array(
-            array('private.xml', true),
-            array('non-private.xml', false),
-        );
+        return [
+            ['private.xml', true],
+            ['non-private.xml', false],
+        ];
     }
 
     /**
      * @dataProvider privatePropertySamples
-     *
-     * @param $sampleName
-     * @param $value
      */
-    public function testCreateFromXmlParsesPrivateAttribute($sampleName, $value)
+    public function testCreateFromXmlParsesPrivateAttribute(string $sampleName, bool $value): void
     {
         $xml = $this->loadSample($sampleName);
-        //var_dump($xml->asXML());
         $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
 
         $this->assertEquals($value, $event->isPrivate());
     }
 
-    public function testParseCdbXMLGuideExample6Dot2()
+    public function testParseCdbXMLGuideExample6Dot2(): void
     {
         $xml = $this->loadSample('cdbxml-guide-example-6-2.xml');
 
@@ -230,7 +216,6 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
 
         $contact_info = $event->getContactInfo();
         $mails = $contact_info->getMails();
-        $this->assertIsArray($mails);
         $this->assertCount(1, $mails);
         $this->assertContainsOnly('CultureFeed_Cdb_Data_Mail', $mails);
 
@@ -241,7 +226,6 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertFalse($mail->isMainMail());
 
         $phones = $contact_info->getPhones();
-        $this->assertIsArray($phones);
         $this->assertCount(1, $phones);
         $this->assertContainsOnly('CultureFeed_Cdb_Data_Phone', $phones);
 
@@ -253,7 +237,6 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertNULL($phone->getType());
 
         $urls = $contact_info->getUrls();
-        $this->assertIsArray($urls);
         $this->assertCount(1, $urls);
         $this->assertContainsOnly('CultureFeed_Cdb_Data_Url', $urls);
 
@@ -405,7 +388,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals('Café Bonnefooi', $organiser->getLabel());
     }
 
-    public function testParseEvent20140108()
+    public function testParseEvent20140108(): void
     {
         $xml = $this->loadSample('test-event-2014-01-08.xml');
 
@@ -455,6 +438,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals('15:00:00', $timestamp->getEndTime());
 
         $calendar->next();
+        /** @var CultureFeed_Cdb_Data_Calendar_Timestamp $timestamp */
         $timestamp = $calendar->current();
 
         $this->assertEquals('2014-02-20', $timestamp->getDate());
@@ -509,7 +493,6 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $contact_info = $event->getContactInfo();
 
         $addresses = $contact_info->getAddresses();
-        $this->assertIsArray($addresses);
         $this->assertCount(1, $addresses);
 
         /** @var CultureFeed_Cdb_Data_Address $address */
@@ -535,7 +518,6 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         );
         $this->assertEquals('62', $physicalAddress->getHouseNumber());
         $phones = $contact_info->getPhones();
-        $this->assertIsArray($phones);
         $this->assertCount(1, $phones);
         $this->assertContainsOnly('CultureFeed_Cdb_Data_Phone', $phones);
         /** @var CultureFeed_Cdb_Data_Phone $phone */
@@ -544,7 +526,6 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals('phone', $phone->getType());
 
         $urls = $contact_info->getUrls();
-        $this->assertIsArray($urls);
         $this->assertCount(1, $urls);
         $this->assertContainsOnly('CultureFeed_Cdb_Data_Url', $urls);
 
@@ -632,6 +613,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals('Ruime Activiteit', $detail->getTitle());
 
         $details->next();
+        /** @var CultureFeed_Cdb_Data_EventDetail $detail */
         $detail = $details->current();
         $this->assertEquals('fr', $detail->getLanguage());
         $this->assertEquals(
@@ -642,6 +624,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals('RB', $detail->getTitle());
 
         $details->next();
+        /** @var CultureFeed_Cdb_Data_EventDetail $detail */
         $detail = $details->current();
         $this->assertEquals('de', $detail->getLanguage());
         $this->assertEquals(
@@ -701,7 +684,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         );
     }
 
-    public function testCreateCdbXMLGuideExample6Dot2()
+    public function testCreateCdbXMLGuideExample6Dot2(): void
     {
         $event = new CultureFeed_Cdb_Item_Event();
         $event->setAvailableFrom('2010-02-25T00:00:00');
@@ -896,7 +879,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertEquals($expected_xml, $xml);
     }
 
-    public function testCreateTestEvent20140108()
+    public function testCreateTestEvent20140108(): void
     {
         $event = new CultureFeed_Cdb_Item_Event();
         $event->setAvailableFrom('2014-01-08T00:00:00');
@@ -1044,15 +1027,6 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->expectNotToPerformAssertions();
     }
 
-    /**
-     * Asserts that two XML documents are equal.
-     *
-     * @param  string $expectedFile
-     * @param  string $actualXml
-     * @param  string $message
-     *
-     * @since  Method available since Release 3.3.0
-     */
     public static function assertXmlStringEqualsXmlFile(string $expectedFile, $actualXml, string $message = ''): void
     {
         self::assertFileExists($expectedFile);
@@ -1072,21 +1046,21 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         self::assertEquals($expected, $actual, $message);
     }
 
-    public function testGetKeywordsAsObjects()
+    public function testGetKeywordsAsObjects(): void
     {
         $this->event->addKeyword('foo');
         $this->event->addKeyword('bar');
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
                 'bar' => new CultureFeed_Cdb_Data_Keyword('bar'),
-            ),
+            ],
             $this->event->getKeywords(true)
         );
     }
 
-    public function testAddKeywordObjects()
+    public function testAddKeywordObjects(): void
     {
         $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
         $this->event->addKeyword(
@@ -1094,23 +1068,23 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         );
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => 'foo',
                 'bar' => 'bar',
-            ),
+            ],
             $this->event->getKeywords()
         );
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
                 'bar' => new CultureFeed_Cdb_Data_Keyword('bar', false),
-            ),
+            ],
             $this->event->getKeywords(true)
         );
     }
 
-    public function testDeleteKeywordObjects()
+    public function testDeleteKeywordObjects(): void
     {
         $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
         $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar'));
@@ -1118,29 +1092,29 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->event->deleteKeyword(new CultureFeed_Cdb_Data_Keyword('bar'));
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
-            ),
+            ],
             $this->event->getKeywords(true)
         );
     }
 
-    public function testParseKeywordsXml()
+    public function testParseKeywordsXml(): void
     {
 
         $xml = $this->loadSample('test-event-2014-01-08.xml', '3.3');
         $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
 
         $this->assertEquals(
-            array(
+            [
                 'feest' => new CultureFeed_Cdb_Data_Keyword('feest'),
                 'test' => new CultureFeed_Cdb_Data_Keyword('test', false),
-            ),
+            ],
             $event->getKeywords(true)
         );
     }
 
-    public function testDeleteKeywordWithStringArgument()
+    public function testDeleteKeywordWithStringArgument(): void
     {
         $this->event->addKeyword('foo');
         $this->event->addKeyword(
@@ -1153,18 +1127,18 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->event->deleteKeyword('bar');
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => 'foo',
                 'baz' => 'baz',
-            ),
+            ],
             $this->event->getKeywords()
         );
 
         $this->assertEquals(
-            array(
+            [
                 'foo' => new CultureFeed_Cdb_Data_Keyword('foo'),
                 'baz' => new CultureFeed_Cdb_Data_Keyword('baz', false),
-            ),
+            ],
             $this->event->getKeywords(true)
         );
     }
@@ -1172,9 +1146,8 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
     /**
      * Test keyword appendToDom for cdb < 3.3
      */
-    public function testKeywordAppendToDomAsValue()
+    public function testKeywordAppendToDomAsValue(): void
     {
-
         $event = new CultureFeed_Cdb_Item_Event();
         $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
         $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar', false));
@@ -1198,9 +1171,8 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
     /**
      * Test keyword appendToDom for cdb 3.3
      */
-    public function testKeywordAppendToDomAsTag()
+    public function testKeywordAppendToDomAsTag(): void
     {
-
         $event = new CultureFeed_Cdb_Item_Event();
         $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
         $event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar', false));
@@ -1221,7 +1193,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         );
     }
 
-    public function testGetAndSetPublisher()
+    public function testGetAndSetPublisher(): void
     {
         $event = new CultureFeed_Cdb_Item_Event();
         $this->assertNull($event->getPublisher());
@@ -1230,7 +1202,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertSame('xyz', $event->getPublisher());
     }
 
-    public function testGetAndSetWeight()
+    public function testGetAndSetWeight(): void
     {
         $event = new CultureFeed_Cdb_Item_Event();
         $this->assertNull($event->getWeight());
@@ -1245,7 +1217,7 @@ class CultureFeed_Cdb_Item_EventTest extends TestCase
      *   - event publisher and weight
      *   - file subbrand and description
      */
-    public function testParseCdbXml3Dot3SchemaAdditions()
+    public function testParseCdbXml3Dot3SchemaAdditions(): void
     {
         $xml = $this->loadSample(
             '085377d6-a3c9-4c8f-88b9-3d6ab0201361.xml',

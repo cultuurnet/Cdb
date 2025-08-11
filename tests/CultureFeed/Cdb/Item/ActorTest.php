@@ -1,36 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
-class CultureFeed_Cdb_Item_ActorTest extends TestCase
+final class CultureFeed_Cdb_Item_ActorTest extends TestCase
 {
-    /**
-     * @param $fileName
-     * @param $cdbScheme
-     *
-     * @return SimpleXMLElement
-     */
-    public function loadSample($fileName, $cdbScheme = '3.2')
+    public function loadSample(string $fileName, string $cdbScheme = '3.2'): SimpleXMLElement
     {
         $sampleDir = __DIR__ . '/samples/ActorTest/cdbxml-' . $cdbScheme . '/';
         $filePath = $sampleDir . $fileName;
 
-        /*$xml = simplexml_load_file(
-            $filePath,
-            'SimpleXMLElement',
-            0,
-            'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/' . $cdbScheme . '/FINAL'
-        );*/
         $file = file_get_contents($filePath);
         $xml = simplexml_load_string($file);
 
         return $xml;
     }
 
-    /**
-     * Integration test for parsing  cdbxml version 3.2
-     */
-    public function testParseCdbXml()
+    public function testParseCdbXml(): void
     {
         $xml = $this->loadSample('actor.xml');
         $actor = CultureFeed_Cdb_Item_Actor::parseFromCdbXml($xml);
@@ -57,7 +44,7 @@ class CultureFeed_Cdb_Item_ActorTest extends TestCase
         $this->assertEquals('Invoerders Algemeen ', $actor->getOwner());
     }
 
-    public function testParseCdbXmlWithoutCategories()
+    public function testParseCdbXmlWithoutCategories(): void
     {
         $this->expectException(CultureFeed_Cdb_ParseException::class);
         $this->expectExceptionMessage('Categories missing for actor element');
@@ -66,7 +53,7 @@ class CultureFeed_Cdb_Item_ActorTest extends TestCase
         CultureFeed_Cdb_Item_Actor::parseFromCdbXml($xml);
     }
 
-    public function testParseCdbXmlWithoutActorDetails()
+    public function testParseCdbXmlWithoutActorDetails(): void
     {
         $this->expectException(CultureFeed_Cdb_ParseException::class);
         $this->expectExceptionMessage('Actordetails missing for actor element');

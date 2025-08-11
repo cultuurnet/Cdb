@@ -1,81 +1,40 @@
 <?php
 
-/**
- * @class
- * Representation of geo information in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Address_GeoInformation implements CultureFeed_Cdb_IElement
+declare(strict_types=1);
+
+final class CultureFeed_Cdb_Data_Address_GeoInformation implements CultureFeed_Cdb_IElement
 {
-    /**
-     * X coördinate from the location.
-     * @var string
-     */
-    protected $xCoordinate;
+    private string $xCoordinate;
+    private string $yCoordinate;
 
-    /**
-     * Y coördinate from the location.
-     * @var string
-     */
-    protected $yCoordinate;
-
-    /**
-     * Construct the geo information.
-     *
-     * @param string $xCoordinate
-     *   X coördinate from the location.
-     * @param string $yCoordinate
-     *   Y coördinate from the location.
-     */
-    public function __construct($xCoordinate, $yCoordinate)
+    public function __construct(string $xCoordinate, string $yCoordinate)
     {
         $this->xCoordinate = $xCoordinate;
         $this->yCoordinate = $yCoordinate;
     }
 
-    /**
-     * Set the x coordinate.
-     *
-     * @param string $coordinate
-     *   Coördinate to set.
-     */
-    public function setXCoordinate($coordinate)
+    public function setXCoordinate(string $coordinate): void
     {
         $this->xCoordinate = $coordinate;
     }
 
-    /**
-     * Set the x coordinate.
-     *
-     * @param string $coordinate
-     *   Coördinate to set.
-     */
-    public function setYCoordinate($coordinate)
+    public function setYCoordinate(string $coordinate): void
     {
         $this->yCoordinate = $coordinate;
     }
 
-    /**
-     * Get the x coördinate.
-     */
-    public function getXCoordinate()
+    public function getXCoordinate(): string
     {
         return $this->xCoordinate;
     }
 
-    /**
-     * Get the y coördinate.
-     */
-    public function getYCoordinate()
+    public function getYCoordinate(): string
     {
         return $this->yCoordinate;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $gisElement = $dom->createElement('gis');
@@ -89,17 +48,11 @@ class CultureFeed_Cdb_Data_Address_GeoInformation implements CultureFeed_Cdb_IEl
         $element->appendChild($gisElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Address_GeoInformation
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Address_GeoInformation
     {
-
         if (empty($xmlElement->xcoordinate) || empty($xmlElement->ycoordinate)) {
             throw new CultureFeed_Cdb_ParseException(
-                "Coördinates are missing on gis element"
+                'Coördinates are missing on gis element'
             );
         }
 

@@ -1,16 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
-/**
- * Created by PhpStorm.
- * User: Kristof
- * Date: 12/12/13
- * Time: 19:46
- */
-class CultureFeed_Cdb_Data_Calendar_WeekschemeTest extends TestCase
+final class CultureFeed_Cdb_Data_Calendar_WeekschemeTest extends TestCase
 {
-    public function testAppendToDOM()
+    public function testAppendToDOM(): void
     {
         $open = CultureFeed_Cdb_Data_Calendar_SchemeDay::SCHEMEDAY_OPEN_TYPE_OPEN;
         $closed = CultureFeed_Cdb_Data_Calendar_SchemeDay::SCHEMEDAY_OPEN_TYPE_CLOSED;
@@ -18,7 +14,7 @@ class CultureFeed_Cdb_Data_Calendar_WeekschemeTest extends TestCase
         $ws = new CultureFeed_Cdb_Data_Calendar_Weekscheme();
 
         /** @var CultureFeed_Cdb_Data_Calendar_SchemeDay[] $days */
-        $days = array();
+        $days = [];
         $days[] = new CultureFeed_Cdb_Data_Calendar_SchemeDay(
             CultureFeed_Cdb_Data_Calendar_SchemeDay::MONDAY,
             $closed

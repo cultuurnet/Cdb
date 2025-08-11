@@ -1,152 +1,72 @@
 <?php
 
-/**
- * @class
- * Representation of a Detail element in the cdb xml.
- */
+declare(strict_types=1);
+
 abstract class CultureFeed_Cdb_Data_Detail
 {
-    /**
-     * Title from the detail item.
-     *
-     * @var string
-     */
-    protected $title;
+    protected ?string $title = null;
+    protected ?string $shortDescription = null;
+    protected ?string $longDescription = null;
+    protected ?string $language = null;
+    protected ?CultureFeed_Cdb_Data_Media $media = null;
+    protected ?CultureFeed_Cdb_Data_Price $price = null;
 
-    /**
-     * Short description from an item.
-     *
-     * @var string
-     */
-    protected $shortDescription;
-
-    /**
-     * @var string
-     */
-    protected $longDescription;
-
-    /**
-     * Language from current detail.
-     * @var string
-     */
-    protected $language;
-
-    /**
-     * @var CultureFeed_Cdb_Data_Media
-     */
-    protected $media;
-
-    /**
-     * Price information from the item.
-     * @var CultureFeed_Cdb_Data_Price|null
-     */
-    protected $price;
-
-    /**
-     * Get the title from current detail.
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Get the short description from current detail.
-     *
-     * @return string
-     */
-    public function getShortDescription()
+    public function getShortDescription(): ?string
     {
         return $this->shortDescription;
     }
 
-    /**
-     * Get the long description from current detail.
-     *
-     * @return string
-     */
-    public function getLongDescription()
+    public function getLongDescription(): ?string
     {
         return $this->longDescription;
     }
 
-    /**
-     * Get the language from current detail.
-     */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
 
-    /**
-     * Get the list of media items from current detail.
-     *
-     * @return CultureFeed_Cdb_Data_Media
-     */
-    public function getMedia()
+    public function getMedia(): ?CultureFeed_Cdb_Data_Media
     {
         return $this->media;
     }
 
-    /**
-     * Get the price information from current detail.
-     *
-     * @return CultureFeed_Cdb_Data_Price
-     */
-    public function getPrice()
+    public function getPrice(): ?CultureFeed_Cdb_Data_Price
     {
         return $this->price;
     }
 
-    /**
-     * Set the title from current detail.
-     *
-     * @param $title
-     *   Title to set.
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Set the short description from current detail.
-     */
-    public function setShortDescription($description)
+    public function setShortDescription(string $description): void
     {
         $this->shortDescription = $description;
     }
 
-    /**
-     * Set the long description from current detail.
-     */
-    public function setLongDescription($description)
+    public function setLongDescription(string $description): void
     {
         $this->longDescription = $description;
     }
 
-    /**
-     * Get the language from current detail.
-     */
-    public function setLanguage($language)
+    public function setLanguage(string $language): void
     {
         $this->language = $language;
     }
 
-    /**
-     * Set the price information for current detail.
-     *
-     * @param CultureFeed_Cdb_Data_Price $price
-     */
-    public function setPrice($price)
+    public function setPrice(CultureFeed_Cdb_Data_Price $price): void
     {
         $this->price = $price;
     }
 
-    /**
-     * @param CultureFeed_Cdb_Data_Media $media
-     */
-    public function setMedia(CultureFeed_Cdb_Data_Media $media)
+    public function setMedia(CultureFeed_Cdb_Data_Media $media): void
     {
         $this->media = $media;
     }

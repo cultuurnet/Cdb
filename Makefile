@@ -1,4 +1,4 @@
-.PHONY: up down build bash install test stan
+.PHONY: up down build bash install test stan cs cs-fix ci
 
 up:
 	docker-compose up -d
@@ -21,4 +21,10 @@ test:
 stan:
 	docker-compose exec php ./vendor/bin/phpstan
 
-ci: stan test
+cs:
+	docker-compose exec php ./vendor/bin/php-cs-fixer fix --dry-run
+
+cs-fix:
+	docker-compose exec php ./vendor/bin/php-cs-fixer fix
+
+ci: cs stan test

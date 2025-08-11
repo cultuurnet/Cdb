@@ -1,57 +1,18 @@
 <?php
 
-/**
- * @class
- * Representation of a phone element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Phone implements CultureFeed_Cdb_IElement
+declare(strict_types=1);
+
+final class CultureFeed_Cdb_Data_Phone implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Current phone is a phone.
-     */
-    const PHONE_TYPE_PHONE = 'phone';
-    /**
-     * Current phone is a fax.
-     */
-    const PHONE_TYPE_FAX = 'fax';
+    public const PHONE_TYPE_PHONE = 'phone';
+    public const PHONE_TYPE_FAX = 'fax';
 
-    /**
-     * Indicate if this is the main phone.
-     * @var bool
-     */
-    protected $main;
+    private ?bool $main;
+    private ?bool $reservation;
+    private ?string $type;
+    private string $number;
 
-    /**
-     * Indicate if this phone can be used for reservations.
-     * @var bool
-     */
-    protected $reservation;
-
-    /**
-     * Type of phone.
-     * @var string
-     */
-    protected $type = self::PHONE_TYPE_PHONE;
-
-    /**
-     * The actual phone number.
-     * @var string
-     */
-    protected $number;
-
-    /**
-     * Construct the phone object.
-     *
-     * @param string $number
-     *   The phone number address.
-     * @param string $type
-     *   The type of phone.
-     * @param bool $isMain
-     *   Main phone or not.
-     * @param bool $forReservations
-     *   Usable for reservations or not
-     */
-    public function __construct($number, $type = null, $isMain = null, $forReservations = null)
+    public function __construct(string $number, string $type = null, bool $isMain = null, bool $forReservations = null)
     {
         $this->number = $number;
         $this->type = $type;
@@ -59,90 +20,48 @@ class CultureFeed_Cdb_Data_Phone implements CultureFeed_Cdb_IElement
         $this->reservation = $forReservations;
     }
 
-    /**
-     * Is the current phone the main phone, or not
-     * @return bool
-     */
-    public function isMainPhone()
+    public function isMainPhone(): ?bool
     {
         return $this->main;
     }
 
-    /**
-     * Can the current phone be used for reservations.
-     * @return bool
-     */
-    public function isForReservations()
+    public function isForReservations(): ?bool
     {
         return $this->reservation;
     }
 
-    /**
-     * Get the type of phone.
-     */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * Get the phone number.
-     */
-    public function getNumber()
+    public function getNumber(): string
     {
         return $this->number;
     }
 
-    /**
-     * Set the main state.
-     *
-     * @param bool $isMain
-     *   State to set.
-     */
-    public function setMain($isMain)
+    public function setMain(bool $isMain): void
     {
         $this->main = $isMain;
     }
 
-    /**
-     * Set the reservation state.
-     *
-     * @param bool $forReservation
-     *   State to set.
-     */
-    public function setReservation($forReservation)
+    public function setReservation(bool $forReservation): void
     {
         $this->reservation = $forReservation;
     }
 
-    /**
-     * Set the type of phone.
-     *
-     * @param string $type
-     *   Type of phone to set.
-     */
-    public function setType($type)
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * Set the phone number.
-     *
-     * @param string $number
-     *   Phone number to set.
-     */
-    public function setNumber($number)
+    public function setNumber(string $number): void
     {
         $this->number = $number;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $phoneElement = $dom->createElement('phone', $this->number);
@@ -161,14 +80,8 @@ class CultureFeed_Cdb_Data_Phone implements CultureFeed_Cdb_IElement
         $element->appendChild($phoneElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Phone
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Phone
     {
-
         $attributes = $xmlElement->attributes();
         $is_main = isset($attributes['main']) && $attributes['main'] == 'true';
         $for_reservations = isset($attributes['reservation']) && $attributes['reservation'] == 'true';

@@ -1,67 +1,34 @@
 <?php
 
-/**
- * @class
- * Representation of a permanent / permanentOpeningTimes element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Calendar_Permanent extends CultureFeed_Cdb_Data_Calendar implements CultureFeed_Cdb_IElement
+declare(strict_types=1);
+
+final class CultureFeed_Cdb_Data_Calendar_Permanent extends CultureFeed_Cdb_Data_Calendar implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Exceptions for the opening times.
-     * @var CultureFeed_Cdb_Data_Calendar_Exceptions|null
-     */
-    protected $exceptions;
+    private ?CultureFeed_Cdb_Data_Calendar_Exceptions $exceptions = null;
+    private ?CultureFeed_Cdb_Data_Calendar_Weekscheme $weekScheme = null;
 
-    /**
-     * Week scheme for the permanent opening times.
-     * @var CultureFeed_Cdb_Data_Calendar_Weekscheme|null
-     */
-    protected $weekScheme;
-
-    /**
-     * Set the exceptions for the opening times.
-     *
-     * @param CultureFeed_Cdb_Data_Calendar_Exceptions $exceptions
-     *   Exceptions to set.
-     */
-    public function setExceptions(CultureFeed_Cdb_Data_Calendar_Exceptions $exceptions)
+    public function setExceptions(CultureFeed_Cdb_Data_Calendar_Exceptions $exceptions): void
     {
         $this->exceptions = $exceptions;
     }
 
-    /**
-     * Set the week scheme for the opening times.
-     *
-     * @param CultureFeed_Cdb_Data_Calendar_Weekscheme $scheme
-     *   Weekscheme to set.
-     */
-    public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $scheme)
+    public function setWeekScheme(CultureFeed_Cdb_Data_Calendar_Weekscheme $scheme): void
     {
         $this->weekScheme = $scheme;
     }
 
-    /**
-     * Get the weekscheme from the permanent calendar.
-     */
-    public function getWeekScheme()
+    public function getWeekScheme(): ?CultureFeed_Cdb_Data_Calendar_Weekscheme
     {
         return $this->weekScheme;
     }
 
-    /**
-     * Get the exceptions from the permanent calendar.
-     */
-    public function getExceptions()
+    public function getExceptions(): ?CultureFeed_Cdb_Data_Calendar_Exceptions
     {
         return $this->exceptions;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $calendarElement = $dom->createElement('calendar');
@@ -81,17 +48,11 @@ class CultureFeed_Cdb_Data_Calendar_Permanent extends CultureFeed_Cdb_Data_Calen
         $element->appendChild($calendarElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Calendar_Permanent
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Calendar_Permanent
     {
-
         if (!isset($xmlElement->permanentopeningtimes->permanent)) {
             throw new CultureFeed_Cdb_ParseException(
-                "Permanent data is missing for permanent opening times"
+                'Permanent data is missing for permanent opening times'
             );
         }
 

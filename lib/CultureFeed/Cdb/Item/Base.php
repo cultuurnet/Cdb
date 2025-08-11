@@ -1,115 +1,34 @@
 <?php
 
-/**
- * @class
- * Abstract base class for the representation of an item on the culturefeed.
- */
+declare(strict_types=1);
+
 abstract class CultureFeed_Cdb_Item_Base
 {
-    /**
-     * @var string
-     */
-    protected $availableFrom;
+    protected ?string $availableFrom = null;
+    protected ?string $availableTo = null;
+    protected ?CultureFeed_Cdb_Data_CategoryList $categories = null;
+    protected ?string $cdbId = null;
+    protected ?string $createdBy = null;
+    protected ?string $creationDate = null;
+    protected ?CultureFeed_Cdb_Data_DetailList $details = null;
+    protected ?string $externalId = null;
+    /** @var array<CultureFeed_Cdb_Data_Keyword> */
+    protected array $keywords = [];
+    protected ?string $lastUpdated = null;
+    protected ?string $lastUpdatedBy = null;
+    protected ?string $owner = null;
+    protected ?bool $private = null;
+    protected ?string $publisher = null;
+    /** @var array<CultureFeed_Cdb_Item_Reference> */
+    protected array $relations;
+    protected ?string $wfStatus;
 
-    /**
-     * @var string
-     */
-    protected $availableTo;
-
-    /**
-     * Categories from the item.
-     * @var CultureFeed_Cdb_Data_CategoryList|null
-     */
-    protected $categories;
-
-    /**
-     * cdbId from the item.
-     * @var string
-     */
-    protected $cdbId;
-
-    /**
-     * @var string
-     */
-    protected $createdBy;
-
-    /**
-     * @var string
-     */
-    protected $creationDate;
-
-    /**
-     * Details from the item.
-     *
-     * @var CultureFeed_Cdb_Data_DetailList|null
-     */
-    protected $details;
-
-    /**
-     * External id from the item.
-     *
-     * @var string
-     */
-    protected $externalId;
-
-    /**
-     * Keywords from the item
-     *
-     * @var CultureFeed_Cdb_Data_Keyword[] List with keywords.
-     */
-    protected $keywords = array();
-
-    /**
-     * @var string|null
-     */
-    protected $lastUpdated;
-
-    /**
-     * @var string|null
-     */
-    protected $lastUpdatedBy;
-
-    /**
-     * Owner of this item.
-     * @var string|null
-     */
-    protected $owner;
-
-    /**
-     * Is item private
-     * @var bool|null
-     */
-    protected $private = null;
-
-    /**
-     * Publisher of this item.
-     * @var string|null
-     */
-    protected $publisher;
-
-    /**
-     * Relations from the item.
-     * @var CultureFeed_Cdb_Item_Reference[] List with related items.
-     */
-    protected $relations;
-
-    /**
-     * @var string|null
-     */
-    protected $wfStatus;
-
-    /**
-     * Parses keywords from cdbxml.
-     *
-     * @param SimpleXMLElement $xmlElement
-     * @param CultureFeed_Cdb_Item_Base $item
-     */
     protected static function parseKeywords(
         SimpleXMLElement $xmlElement,
         CultureFeed_Cdb_Item_Base $item
-    ) {
+    ): void {
         if (@count($xmlElement->keywords)) {
-            $keywordsString = trim($xmlElement->keywords);
+            $keywordsString = trim((string) $xmlElement->keywords);
 
             if ($keywordsString === '') {
                 /**
@@ -139,14 +58,10 @@ abstract class CultureFeed_Cdb_Item_Base
     }
 
     /**
-     * Add a keyword to this item.
-     *
      * @param string|CultureFeed_Cdb_Data_Keyword $keyword
-     *   Add a keyword.
      */
-    public function addKeyword($keyword)
+    public function addKeyword($keyword): void
     {
-
         // Keyword can be object (cdb 3.3) or string (< 3.3).
         if (!is_string($keyword)) {
             $this->keywords[$keyword->getValue()] = $keyword;
@@ -157,11 +72,7 @@ abstract class CultureFeed_Cdb_Item_Base
         }
     }
 
-    /**
-     * @param CultureFeed_Cdb_Item_Base $item
-     * @param SimpleXMLElement $xmlElement
-     */
-    protected static function parseCommonAttributes(CultureFeed_Cdb_Item_Base $item, SimpleXMLElement $xmlElement)
+    protected static function parseCommonAttributes(CultureFeed_Cdb_Item_Base $item, SimpleXMLElement $xmlElement): void
     {
         $attributes = $xmlElement->attributes();
 
@@ -210,269 +121,155 @@ abstract class CultureFeed_Cdb_Item_Base
         }
     }
 
-    /**
-     * Get the external ID from this item.
-     */
-    public function getExternalId()
+    public function getExternalId(): ?string
     {
         return $this->externalId;
     }
 
-    /**
-     * Set the external id from this item.
-     *
-     * @param string $id
-     *   ID to set.
-     */
-    public function setExternalId($id)
+    public function setExternalId(string $id): void
     {
         $this->externalId = $id;
     }
 
-    /**
-     * Get the Cdbid from this item.
-     * @return string
-     */
-    public function getCdbId()
+    public function getCdbId(): ?string
     {
         return $this->cdbId;
     }
 
-    /**
-     * Set the cdbid from this item.
-     *
-     * @param string $id
-     */
-    public function setCdbId($id)
+    public function setCdbId(string $id): void
     {
         $this->cdbId = $id;
     }
 
-    /**
-     * Get if item is private.
-     * @return bool|null
-     */
-    public function isPrivate()
+    public function isPrivate(): ?bool
     {
         return $this->private;
     }
 
-    /**
-     * Set if item is private.
-     *
-     * @param bool $private
-     */
-    public function setPrivate($private = true)
+    public function setPrivate(bool $private = true): void
     {
         $this->private = $private;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastUpdated()
+    public function getLastUpdated(): ?string
     {
         return $this->lastUpdated;
     }
 
-    /**
-     * @param string $value
-     */
-    public function setLastUpdated($value)
+    public function setLastUpdated(string $value): void
     {
         $this->lastUpdated = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastUpdatedBy()
+    public function getLastUpdatedBy(): ?string
     {
         return $this->lastUpdatedBy;
     }
 
-    /**
-     * @param string $author
-     */
-    public function setLastUpdatedBy($author)
+    public function setLastUpdatedBy(string $author): void
     {
         $this->lastUpdatedBy = $author;
     }
 
-    /**
-     * @return string
-     */
-    public function getAvailableFrom()
+    public function getAvailableFrom(): ?string
     {
         return $this->availableFrom;
     }
 
-    /**
-     * @param string $value
-     */
-    public function setAvailableFrom($value)
+    public function setAvailableFrom(string $value): void
     {
         $this->availableFrom = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getAvailableTo()
+    public function getAvailableTo(): ?string
     {
         return $this->availableTo;
     }
 
-    /**
-     * @param string $value
-     */
-    public function setAvailableTo($value)
+    public function setAvailableTo(string $value): void
     {
         $this->availableTo = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreatedBy()
+    public function getCreatedBy(): ?string
     {
         return $this->createdBy;
     }
 
-    /**
-     * @param string $author
-     */
-    public function setCreatedBy($author)
+    public function setCreatedBy(string $author): void
     {
         $this->createdBy = $author;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreationDate()
+    public function getCreationDate(): ?string
     {
         return $this->creationDate;
     }
 
-    /**
-     * @param string $value
-     */
-    public function setCreationDate($value)
+    public function setCreationDate(string $value): void
     {
         $this->creationDate = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getOwner()
+    public function getOwner(): ?string
     {
         return $this->owner;
     }
 
-    /**
-     * @param string $owner
-     */
-    public function setOwner($owner)
+    public function setOwner(string $owner): void
     {
         $this->owner = $owner;
     }
 
-    /**
-     * @return string
-     */
-    public function getWfStatus()
+    public function getWfStatus(): ?string
     {
         return $this->wfStatus;
     }
 
-    /**
-     * @param string $status
-     */
-    public function setWfStatus($status)
+    public function setWfStatus(string $status): void
     {
         $this->wfStatus = $status;
     }
 
-    /**
-     * Get the publisher.
-     *
-     * @return string|null
-     *   The publisher.
-     */
-    public function getPublisher()
+    public function getPublisher(): ?string
     {
         return $this->publisher;
     }
 
-    /**
-     * Set the publisher.
-     *
-     * @param string $publisher
-     *   The publisher.
-     */
-    public function setPublisher($publisher)
+    public function setPublisher(string $publisher): void
     {
         $this->publisher = $publisher;
     }
 
-    /**
-     * Get the categories from this item.
-     */
-    public function getCategories()
+    public function getCategories(): ?CultureFeed_Cdb_Data_CategoryList
     {
         return $this->categories;
     }
 
-    /**
-     * Set the categories from this item.
-     *
-     * @param CultureFeed_Cdb_Data_CategoryList $categories
-     *   Categories to set.
-     */
-    public function setCategories(CultureFeed_Cdb_Data_CategoryList $categories)
+    public function setCategories(CultureFeed_Cdb_Data_CategoryList $categories): void
     {
         $this->categories = $categories;
     }
 
-    /**
-     * Get the details from this item.
-     *
-     * @return CultureFeed_Cdb_Data_DetailList
-     */
-    public function getDetails()
+    public function getDetails(): ?CultureFeed_Cdb_Data_DetailList
     {
         return $this->details;
     }
 
-    /**
-     * Set the details from this item.
-     *
-     * @param CultureFeed_Cdb_Data_DetailList $details
-     *   Detail information from the current item.
-     */
-    public function setDetails(CultureFeed_Cdb_Data_DetailList $details)
+    public function setDetails(CultureFeed_Cdb_Data_DetailList $details): void
     {
         $this->details = $details;
     }
 
     /**
-     * Get the keywords from this item.
-     *
-     * @param bool $asObject
-     *   Return keywords as objects or values.
-     *
-     * @return array
-     *   The keywords.
+     * @return array<string>|array<CultureFeed_Cdb_Data_Keyword>
      */
-    public function getKeywords($asObject = false)
+    public function getKeywords(bool $asObject = false): array
     {
-
         if ($asObject) {
             return $this->keywords;
         } else {
-            $keywords = array();
+            $keywords = [];
             foreach ($this->keywords as $keyword) {
                 $keywords[$keyword->getValue()] = $keyword->getValue();
             }
@@ -481,24 +278,18 @@ abstract class CultureFeed_Cdb_Item_Base
     }
 
     /**
-     * Get the relations from this item.
+     * @return array<CultureFeed_Cdb_Item_Reference>
      */
-    public function getRelations()
+    public function getRelations(): array
     {
         return $this->relations;
     }
 
     /**
-     * Delete a keyword from this item.
-     *
      * @param string|CultureFeed_Cdb_Data_Keyword $keyword
-     *   Delete keyword as object or value.
-     *
-     * @throws Exception
      */
-    public function deleteKeyword($keyword)
+    public function deleteKeyword($keyword): void
     {
-
         if (!is_string($keyword)) {
             $keyword = $keyword->getValue();
         }
@@ -510,24 +301,13 @@ abstract class CultureFeed_Cdb_Item_Base
         unset($this->keywords[$keyword]);
     }
 
-    /**
-     * Add a relation to the current item.
-     *
-     * @param CultureFeed_Cdb_Item_Reference $item
-     */
-    public function addRelation(CultureFeed_Cdb_Item_Reference $item)
+    public function addRelation(CultureFeed_Cdb_Item_Reference $item): void
     {
         $this->relations[$item->getCdbId()] = $item;
     }
 
-    /**
-     * Delete a relation from the item.
-     *
-     * @param string $cdbid Cdbid to delete
-     */
-    public function deleteRelation($cdbid)
+    public function deleteRelation(string $cdbid): void
     {
-
         if (!isset($this->relations[$cdbid])) {
             throw new Exception('Trying to remove a non-existing relation.');
         }

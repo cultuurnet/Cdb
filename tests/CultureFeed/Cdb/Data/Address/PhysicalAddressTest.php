@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
-class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
+final class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
 {
-    public function loadSample($fileName)
+    public function loadSample(string $fileName): SimpleXMLElement
     {
         $sampleDir = __DIR__ . '/samples/PhysicalAddressTest/';
         $filePath = $sampleDir . $fileName;
@@ -12,7 +14,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
         return simplexml_load_file($filePath);
     }
 
-    public function testParseFull()
+    public function testParseFull(): void
     {
         $sample = $this->loadSample('full.xml');
 
@@ -36,7 +38,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
         $this->assertEquals('50,8391', $geo->getYCoordinate());
     }
 
-    public function testParseMinimal()
+    public function testParseMinimal(): void
     {
         $sample = $this->loadSample('minimal.xml');
 
@@ -56,7 +58,7 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
     /**
      * @dataProvider missingElementSamples
      */
-    public function testParseXMLWithMissingElementThrowsException($sampleName)
+    public function testParseXMLWithMissingElementThrowsException(string $sampleName): void
     {
         $this->expectException(CultureFeed_Cdb_ParseException::class);
 
@@ -64,12 +66,15 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends TestCase
         CultureFeed_Cdb_Data_Address_PhysicalAddress::parseFromCdbXml($sample);
     }
 
-    public function missingElementSamples()
+    /**
+     * @return array<array<string>>
+     */
+    public function missingElementSamples(): array
     {
-        return array(
-            array('missing_city.xml'),
-            array('missing_country.xml'),
-            array('missing_zipcode.xml'),
-        );
+        return [
+            ['missing_city.xml'],
+            ['missing_country.xml'],
+            ['missing_zipcode.xml'],
+        ];
     }
 }

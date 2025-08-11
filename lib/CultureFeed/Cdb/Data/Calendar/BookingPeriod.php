@@ -1,69 +1,40 @@
 <?php
 
-/**
- * @class
- * Representation of a booking period element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Calendar_BookingPeriod implements CultureFeed_Cdb_IElement
+declare(strict_types=1);
+
+final class CultureFeed_Cdb_Data_Calendar_BookingPeriod implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Start date
-     * @var int
-     */
-    protected $dateFrom;
+    private int $dateFrom;
+    private int $dateTill;
 
-    /**
-     * End date
-     * @var int
-     */
-    protected $dateTill;
-
-    /**
-     * Construct a new booking period.
-     *
-     * @param int $dateFrom
-     *   Timestamp of the from date.
-     * @param int $dateTill
-     *   Timestamp of the end date.
-     */
-    public function __construct($dateFrom, $dateTill)
+    public function __construct(int $dateFrom, int $dateTill)
     {
         $this->dateFrom = $dateFrom;
         $this->dateTill = $dateTill;
     }
 
-    /**
-     * Get the start date.
-     */
-    public function getDateFrom()
+    public function getDateFrom(): int
     {
         return $this->dateFrom;
     }
 
-    /**
-     * Get the end date.
-     */
-    public function getDateTill()
+    public function getDateTill(): int
     {
         return $this->dateTill;
     }
 
-    public function setDateFrom(int $dateFrom)
+    public function setDateFrom(int $dateFrom): void
     {
         $this->dateFrom = $dateFrom;
     }
 
-    public function setDateTill(int $dateTill)
+    public function setDateTill(int $dateTill): void
     {
         $this->dateTill = $dateTill;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $bookingElement = $dom->createElement('bookingperiod');
@@ -78,14 +49,9 @@ class CultureFeed_Cdb_Data_Calendar_BookingPeriod implements CultureFeed_Cdb_IEl
         $element->appendChild($bookingElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Calendar_BookingPeriod
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
-    {
 
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Calendar_BookingPeriod
+    {
         if (empty($xmlElement->datefrom)) {
             throw new CultureFeed_Cdb_ParseException(
                 "Required attribute 'datefrom' is missing on bookingperiod"

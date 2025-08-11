@@ -1,84 +1,53 @@
 <?php
 
-class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator, Countable
+declare(strict_types=1);
+
+/**
+ * @implements Iterator<CultureFeed_Cdb_Data_File>
+ */
+final class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator, Countable
 {
-    /**
-     * Current position in the list.
-     * @var int
-     */
-    protected $position = 0;
+    private int $position = 0;
+    /** @var array<CultureFeed_Cdb_Data_File> */
+    private array $details = [];
 
-    /**
-     * The list of details.
-     * @var CultureFeed_Cdb_Data_File[]
-     */
-    protected $details = array();
-
-    /**
-     * Add a new file to the list.
-     *
-     * @param CultureFeed_Cdb_Data_File $file
-     *   File to add.
-     */
-    public function add(CultureFeed_Cdb_Data_File $file)
+    public function add(CultureFeed_Cdb_Data_File $file): void
     {
         $this->details[] = $file;
     }
 
-    /**
-     * @see Iterator::rewind()
-     */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
 
-    /**
-     * @see Iterator::current()
-     */
     public function current()
     {
         return $this->details[$this->position];
     }
 
-    /**
-     * @see Iterator::key()
-     */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
 
-    /**
-     * @see Iterator::next()
-     */
-    public function next()
+    public function next(): void
     {
         ++$this->position;
     }
 
-    /**
-     * @see Iterator::valid()
-     */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->details[$this->position]);
     }
 
-    /**
-     * Remove the given position.
-     */
-    public function remove($position)
+    public function remove(int $position): void
     {
         unset($this->details[$position]);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element)
+    public function appendToDOM(DOMElement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $mediaElement = $dom->createElement('media');
@@ -90,12 +59,7 @@ class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator, 
         $element->appendChild($mediaElement);
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Media
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Media
     {
         $media = new self();
 
@@ -110,10 +74,7 @@ class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator, 
         return $media;
     }
 
-    /**
-     * @return self
-     */
-    public function byMediaType($type)
+    public function byMediaType(string $type): CultureFeed_Cdb_Data_Media
     {
         $media = new self();
 
@@ -127,9 +88,9 @@ class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator, 
     }
 
     /**
-     * @return self
+     * @param string[] $types
      */
-    public function byMediaTypes($types)
+    public function byMediaTypes(array $types): CultureFeed_Cdb_Data_Media
     {
         $media = new self();
 
@@ -142,7 +103,7 @@ class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iterator, 
         return $media;
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->details);
     }

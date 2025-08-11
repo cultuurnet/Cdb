@@ -1,88 +1,46 @@
 <?php
 
-/**
- * Class CultureFeed_Cdb_Item_Reference
- *
- * Holds references between different Cdb Items.
- */
-class CultureFeed_Cdb_Item_Reference
+declare(strict_types=1);
+
+final class CultureFeed_Cdb_Item_Reference
 {
-    private $title = '';
+    private string $title = '';
+    private string $cdbId = '';
+    private string $externalId = '';
 
-    private $cdbId = '';
-
-    private $externalId = '';
-
-    /**
-     * Constructor.
-     *
-     * @param string $cdbId
-     * @param string $title
-     * @param string $externalId
-     */
-    public function __construct($cdbId, $title = '', $externalId = '')
+    public function __construct(string $cdbId, string $title = '', string $externalId = '')
     {
         $this->cdbId = $cdbId;
         $this->title = $title;
         $this->externalId = $externalId;
     }
 
-    /**
-     * getCdbId().
-     *
-     * @return string $cdbId
-     */
-    public function getCdbId()
+    public function getCdbId(): string
     {
         return $this->cdbId;
     }
 
-    /**
-     * setCdbId().
-     *
-     * @param  string $cdbId
-     */
-    public function setCdbId($cdbId)
+    public function setCdbId(string $cdbId): void
     {
         $this->cdbId = $cdbId;
     }
 
-    /**
-     * getExternalId().
-     *
-     * @return string
-     */
-    public function getExternalId()
+    public function getExternalId(): string
     {
         return $this->externalId;
     }
 
-    /**
-     * setExternalId().
-     *
-     * @param  string $externalId
-     */
-    public function setExternalId($externalId)
+    public function setExternalId(string $externalId): void
     {
         $this->externalId = $externalId;
     }
 
-    /**
-     * getTitle().
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * getTitle().
-     *
-     * @param string $title
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }

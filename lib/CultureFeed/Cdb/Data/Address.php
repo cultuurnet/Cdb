@@ -1,108 +1,51 @@
 <?php
 
-/**
- * @class
- * Representation of an address element in the cdb xml.
- */
-class CultureFeed_Cdb_Data_Address implements CultureFeed_Cdb_IElement
+declare(strict_types=1);
+
+final class CultureFeed_Cdb_Data_Address implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Physical address.
-     * @var CultureFeed_Cdb_Data_Address_PhysicalAddress|null
-     */
-    protected $physicalAddress;
+    private ?CultureFeed_Cdb_Data_Address_PhysicalAddress $physicalAddress = null;
+    private ?CultureFeed_Cdb_Data_Address_VirtualAddress $virtualAddress = null;
+    private ?string $label = null;
 
-    /**
-     * Virtual address.
-     * @var CultureFeed_Cdb_Data_Address_VirtualAddress|null
-     */
-    protected $virtualAddress;
-
-    /**
-     * Label for this address.
-     * @var string
-     */
-    protected $label;
-
-    /**
-     * Construct a new address.
-     *
-     * @param CultureFeed_Cdb_Data_Address_PhysicalAddress $physical
-     *   Physical address.
-     * @param CultureFeed_Cdb_Data_Address_VirtualAddress $virtual
-     *   Virtual address.
-     */
     public function __construct(CultureFeed_Cdb_Data_Address_PhysicalAddress $physical = null, CultureFeed_Cdb_Data_Address_VirtualAddress $virtual = null)
     {
         $this->physicalAddress = $physical;
         $this->virtualAddress = $virtual;
     }
 
-    /**
-     * Get the physical address.
-     * @return CultureFeed_Cdb_Data_Address_PhysicalAddress
-     */
-    public function getPhysicalAddress()
+    public function getPhysicalAddress(): ?CultureFeed_Cdb_Data_Address_PhysicalAddress
     {
         return $this->physicalAddress;
     }
 
-    /**
-     * Get the virtual address.
-     * @return CultureFeed_Cdb_Data_Address_VirtualAddress|null
-     */
-    public function getVirtualAddress()
+    public function getVirtualAddress(): ?CultureFeed_Cdb_Data_Address_VirtualAddress
     {
         return $this->virtualAddress;
     }
 
-    /**
-     * Get the label.
-     */
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
-    /**
-     * Set the physical address
-     *
-     * @param CultureFeed_Cdb_Data_Address_PhysicalAddress $address
-     *   Address to set.
-     */
-    public function setPhysicalAddress(CultureFeed_Cdb_Data_Address_PhysicalAddress $address)
+    public function setPhysicalAddress(CultureFeed_Cdb_Data_Address_PhysicalAddress $address): void
     {
         $this->physicalAddress = $address;
     }
 
-    /**
-     * Set the virtual address.
-     *
-     * @param CultureFeed_Cdb_Data_Address_VirtualAddress $address
-     *   Address to set.
-     */
-    public function setVirtualAddress(CultureFeed_Cdb_Data_Address_VirtualAddress $address)
+    public function setVirtualAddress(CultureFeed_Cdb_Data_Address_VirtualAddress $address): void
     {
         $this->virtualAddress = $address;
     }
 
-    /**
-     * Set the label of this address.
-     *
-     * @param string $label
-     *   Label to set.
-     */
-    public function setLabel($label)
+    public function setLabel(string $label): void
     {
         $this->label = $label;
     }
 
-    /**
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMELement $element)
+    public function appendToDOM(DOMELement $element): void
     {
-
         $dom = $element->ownerDocument;
 
         $addressElement = $dom->createElement('address');
@@ -118,15 +61,10 @@ class CultureFeed_Cdb_Data_Address implements CultureFeed_Cdb_IElement
     }
 
     /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Address
-     *
      * @throws Exception
      */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Address
     {
-
         $address = new CultureFeed_Cdb_Data_Address();
         if (!empty($xmlElement->physical)) {
             $address->setPhysicalAddress(

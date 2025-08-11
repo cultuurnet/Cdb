@@ -1,39 +1,15 @@
 <?php
 
-class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
+declare(strict_types=1);
+
+final class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
 {
-    /**
-     * Minimum age for the production.
-     * @var int
-     */
-    protected $ageFrom;
+    private int $ageFrom;
+    private ?CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod = null;
+    private int $maxParticipants;
+    private CultureFeed_Cdb_Data_Organiser $organiser;
 
-    /**
-     * Booking period for this event.
-     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod|null
-     */
-    protected $bookingPeriod;
-
-    /**
-     * Maximum participants
-     * @var int
-     */
-    protected $maxParticipants;
-
-    /**
-     * organiser
-     * @var CultureFeed_Cdb_Data_Organiser
-     */
-    protected $organiser;
-
-    /**
-     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
-     *     $xmlElement)
-     *
-     * @return CultureFeed_Cdb_Item_Production
-     * @throws CultureFeed_Cdb_ParseException
-     */
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Item_Production
     {
         if (empty($xmlElement->categories)) {
             throw new CultureFeed_Cdb_ParseException(
@@ -50,7 +26,6 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
         $attributes = $xmlElement->attributes();
         $production = new CultureFeed_Cdb_Item_Production();
 
-        // Set ID.
         if (isset($attributes['cdbid'])) {
             $production->setCdbId((string) $attributes['cdbid']);
         }
@@ -85,7 +60,6 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
             $production->setAgeFrom((int) $xmlElement->agefrom);
         }
 
-        // Set organiser.
         if (!empty($xmlElement->organiser)) {
             $production->setOrganiser(
                 CultureFeed_Cdb_Data_Organiser::parseFromCdbXml(
@@ -94,26 +68,22 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
             );
         }
 
-        // Set categories
         $production->setCategories(
             CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml(
                 $xmlElement->categories
             )
         );
 
-        // Set production details.
         $production->setDetails(
             CultureFeed_Cdb_Data_ProductionDetailList::parseFromCdbXml(
                 $xmlElement->productiondetails
             )
         );
 
-        // Set max participants.
         if (!empty($xmlElement->maxparticipants)) {
             $production->setMaxParticipants((int) $xmlElement->maxparticipants);
         }
 
-        // Set booking period.
         if (!empty($xmlElement->bookingperiod)) {
             $production->setBookingPeriod(
                 CultureFeed_Cdb_Data_Calendar_BookingPeriod::parseFromCdbXml(
@@ -122,7 +92,6 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
             );
         }
 
-        // Set the related events for this production.
         if (!empty($xmlElement->relatedevents) && isset($xmlElement->relatedevents->id)) {
             foreach ($xmlElement->relatedevents->id as $relatedItem) {
                 $attributes = $relatedItem->attributes();
@@ -135,88 +104,53 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
             }
         }
 
-        // Set the keywords.
         self::parseKeywords($xmlElement, $production);
 
         return $production;
     }
 
-    /**
-     * Get the minimum age for this production.
-     */
-    public function getAgeFrom()
+    public function getAgeFrom(): int
     {
         return $this->ageFrom;
     }
 
-    public function setAgeFrom(int $age)
+    public function setAgeFrom(int $age): void
     {
         $this->ageFrom = $age;
     }
 
-    /**
-     * Get the maximum amount of participants.
-     */
-    public function getMaxParticipants()
+    public function getMaxParticipants(): int
     {
         return $this->maxParticipants;
     }
 
-    /**
-     * Set the maximum amount of participants.
-     */
-    public function setMaxParticipants($maxParticipants)
+    public function setMaxParticipants(int $maxParticipants): void
     {
         $this->maxParticipants = $maxParticipants;
     }
 
-    /**
-     * Get the booking period.
-     */
-    public function getBookingPeriod()
+    public function getBookingPeriod(): ?CultureFeed_Cdb_Data_Calendar_BookingPeriod
     {
         return $this->bookingPeriod;
     }
 
-    /**
-     * Set the booking period.
-     */
-    public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod)
+    public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod): void
     {
         $this->bookingPeriod = $bookingPeriod;
     }
 
-    /**
-     * Get the organiser from this event.
-     */
-    public function getOrganiser()
+    public function getOrganiser(): CultureFeed_Cdb_Data_Organiser
     {
         return $this->organiser;
     }
 
-    /**
-     * Set an organiser.
-     *
-     * @param CultureFeed_Cdb_Data_Organiser $organiser
-     */
-    public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser)
+    public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser): void
     {
         $this->organiser = $organiser;
     }
 
-    /**
-     * Appends the current object to the passed DOM tree.
-     *
-     * @param DOMElement $element
-     *   The DOM tree to append to.
-     * @param string $cdbScheme
-     *   The cdb schema version.
-     *
-     * @see CultureFeed_Cdb_IElement::appendToDOM()
-     */
-    public function appendToDOM(DOMElement $element, $cdbScheme = '3.2')
+    public function appendToDOM(DOMElement $element, string $cdbScheme = '3.2'): void
     {
-
         $dom = $element->ownerDocument;
 
         $productionElement = $dom->createElement('production');
