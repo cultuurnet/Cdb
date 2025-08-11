@@ -1,6 +1,6 @@
 <?php
 
-abstract class CultureFeed_Cdb_Data_Calendar implements Iterator
+abstract class CultureFeed_Cdb_Data_Calendar implements CultureFeed_Cdb_IElement, Iterator
 {
     /**
      * Open type: the event is open.

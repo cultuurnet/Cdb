@@ -18,7 +18,7 @@ abstract class CultureFeed_Cdb_Item_Base
 
     /**
      * Categories from the item.
-     * @var CultureFeed_Cdb_Data_CategoryList
+     * @var CultureFeed_Cdb_Data_CategoryList|null
      */
     protected $categories;
 
@@ -41,7 +41,7 @@ abstract class CultureFeed_Cdb_Item_Base
     /**
      * Details from the item.
      *
-     * @var CultureFeed_Cdb_Data_DetailList
+     * @var CultureFeed_Cdb_Data_DetailList|null
      */
     protected $details;
 
@@ -60,30 +60,30 @@ abstract class CultureFeed_Cdb_Item_Base
     protected $keywords = array();
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $lastUpdated;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $lastUpdatedBy;
 
     /**
      * Owner of this item.
-     * @var string
+     * @var string|null
      */
     protected $owner;
 
     /**
      * Is item private
-     * @var bool
+     * @var bool|null
      */
     protected $private = null;
 
     /**
      * Publisher of this item.
-     * @var string
+     * @var string|null
      */
     protected $publisher;
 
@@ -94,7 +94,7 @@ abstract class CultureFeed_Cdb_Item_Base
     protected $relations;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $wfStatus;
 
@@ -250,7 +250,7 @@ abstract class CultureFeed_Cdb_Item_Base
 
     /**
      * Get if item is private.
-     * @return bool
+     * @return bool|null
      */
     public function isPrivate()
     {
@@ -398,7 +398,7 @@ abstract class CultureFeed_Cdb_Item_Base
     /**
      * Get the publisher.
      *
-     * @return string
+     * @return string|null
      *   The publisher.
      */
     public function getPublisher()

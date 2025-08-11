@@ -63,7 +63,7 @@ class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement
     /**
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
      *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Category
+     * @return CultureFeed_Cdb_Data_Language
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {

@@ -58,19 +58,19 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Cdbid from the file.
-     * @var string
+     * @var string|null
      */
     protected $cdbid;
 
     /**
      * Creation date from the file.
-     * @var string
+     * @var string|null
      */
     protected $creationDate;
 
     /**
      * The aggregation channel from this file.
-     * @var string
+     * @var string|null
      */
     protected $channel;
 
@@ -79,6 +79,11 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
      * @var bool
      */
     protected $private = false;
+
+    /**
+     * @var string
+     */
+    protected $date;
 
     /**
      * Media type from the file.
@@ -100,19 +105,19 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Filename from the file.
-     * @var string
+     * @var string|null
      */
     protected $fileName;
 
     /**
      * File type.
-     * @var string
+     * @var string|null
      */
     protected $fileType;
 
     /**
      * Relation type.
-     * @var string
+     * @var string|null
      */
     protected $relationType;
 
@@ -124,14 +129,14 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Description or review of the file.
-     * @var string
+     * @var string|null
      */
     protected $plainText;
 
     /**
      * Sub brand of the file.
      *
-     * @var string
+     * @var string|null
      */
     protected $subBrand;
 
@@ -144,7 +149,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Is the current file a main file.
-     * @return $bool
+     * @return bool
      */
     public function isMain()
     {
@@ -153,7 +158,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Is the current file private.
-     * @return $bool
+     * @return bool
      */
     public function isPrivate()
     {
@@ -162,7 +167,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Return the cdbid of this file.
-     * @return string
+     * @return string|null
      */
     public function getCdbid()
     {
@@ -172,7 +177,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
     /**
      * Return the creation date of this file.
      *
-     * @return string
+     * @return string|null
      */
     public function getCreationDate()
     {
@@ -190,7 +195,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Get the channel of this file.
-     * @return string
+     * @return string|null
      */
     public function getChannel()
     {
@@ -217,7 +222,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Get the filename of this file.
-     * @return string
+     * @return string|null
      */
     public function getFileName()
     {
@@ -226,7 +231,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Get the file type of this file.
-     * @return string
+     * @return string|null
      */
     public function getFileType()
     {
@@ -252,7 +257,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
 
     /**
      * Get the description or review of this file.
-     * @return string
+     * @return string|null
      */
     public function getPlainText()
     {
@@ -262,7 +267,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
     /**
      * Get the sub brand of this file.
      *
-     * @return string
+     * @return string|null
      *   The sub brand.
      */
     public function getSubBrand()
@@ -273,7 +278,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
     /**
      * Get the description of this file.
      *
-     * @return string
+     * @return string|null
      *   The description.
      */
     public function getDescription()
@@ -284,7 +289,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
     /**
      * Set the main status of this file.
      *
-     * @param bool Main status to set.
+     * @param bool $main status to set.
      */
     public function setMain($main = true)
     {
@@ -294,7 +299,7 @@ class CultureFeed_Cdb_Data_File implements CultureFeed_Cdb_IElement
     /**
      * Set the private status of this file.
      *
-     * @param bool Private status to set.
+     * @param bool $private status to set.
      */
     public function setPrivate($private)
     {

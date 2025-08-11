@@ -10,7 +10,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
 
     /**
      * Booking period for this event.
-     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
+     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod|null
      */
     protected $bookingPeriod;
 
@@ -36,13 +36,13 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
         if (empty($xmlElement->categories)) {
-            throw new CultureFeed_ParseException(
+            throw new CultureFeed_Cdb_ParseException(
                 'Categories are required for production element'
             );
         }
 
         if (empty($xmlElement->productiondetails)) {
-            throw new CultureFeed_ParseException(
+            throw new CultureFeed_Cdb_ParseException(
                 'Production details are required for production element'
             );
         }
@@ -59,25 +59,25 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
             $production->setExternalId((string) $attributes['externalid']);
         }
 
-        if (isset($event_attributes['availablefrom'])) {
+        if (isset($attributes['availablefrom'])) {
             $production->setAvailableFrom(
-                (string) $event_attributes['availablefrom']
+                (string) $attributes['availablefrom']
             );
         }
 
-        if (isset($event_attributes['availableto'])) {
+        if (isset($attributes['availableto'])) {
             $production->setAvailableTo(
-                (string) $event_attributes['availableto']
+                (string) $attributes['availableto']
             );
         }
 
-        if (isset($event_attributes['createdby'])) {
-            $production->setCreatedBy((string) $event_attributes['createdby']);
+        if (isset($attributes['createdby'])) {
+            $production->setCreatedBy((string) $attributes['createdby']);
         }
 
-        if (isset($event_attributes['creationdate'])) {
+        if (isset($attributes['creationdate'])) {
             $production->setCreationDate(
-                (string) $event_attributes['creationdate']
+                (string) $attributes['creationdate']
             );
         }
 
@@ -149,21 +149,8 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
         return $this->ageFrom;
     }
 
-    /**
-     * Set the minimum age for this production.
-     *
-     * @param int $age
-     *   Minimum age.
-     *
-     * @throws UnexpectedValueException
-     */
-    public function setAgeFrom($age)
+    public function setAgeFrom(int $age)
     {
-
-        if (!is_numeric($age)) {
-            throw new UnexpectedValueException('Invalid age: ' . $age);
-        }
-
         $this->ageFrom = $age;
     }
 
@@ -258,13 +245,13 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
 
         if ($this->ageFrom) {
             $productionElement->appendChild(
-                $dom->createElement('agefrom', $this->ageFrom)
+                $dom->createElement('agefrom', (string) $this->ageFrom)
             );
         }
 
         if ($this->maxParticipants) {
             $productionElement->appendChild(
-                $dom->createElement('maxparticipants', $this->maxParticipants)
+                $dom->createElement('maxparticipants', (string) $this->maxParticipants)
             );
         }
 
@@ -291,7 +278,7 @@ class CultureFeed_Cdb_Item_Production extends CultureFeed_Cdb_Item_Base implemen
         if (count($this->keywords) > 0) {
             $keywordElement = $dom->createElement('keywords');
             $keywordElement->appendChild(
-                $dom->createTextNode(implode(';', $this->keywords))
+                $dom->createTextNode(implode(';', array_map(fn ($keyword) => $keyword->getValue(), $this->keywords)))
             );
             $productionElement->appendChild($keywordElement);
         }

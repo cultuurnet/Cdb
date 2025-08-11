@@ -79,7 +79,7 @@ class CultureFeed_Cdb_Default
      * @param CultureFeed_Cdb_Item_Base $item
      *  Item to add
      *
-     * @throws Exception.
+     * @throws Exception
      */
     public function addItem(CultureFeed_Cdb_Item_Base $item)
     {

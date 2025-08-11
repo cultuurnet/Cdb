@@ -1,4 +1,4 @@
-.PHONY: up down build bash install test cs
+.PHONY: up down build bash install test stan
 
 up:
 	docker-compose up -d
@@ -18,5 +18,7 @@ install:
 test:
 	docker-compose exec php ./vendor/bin/phpunit
 
-cs:
-	docker-compose exec php ./vendor/bin/phpcs
+stan:
+	docker-compose exec php ./vendor/bin/phpstan
+
+ci: stan test

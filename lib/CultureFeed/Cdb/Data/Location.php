@@ -25,7 +25,7 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
 
     /**
      * Location actor.
-     * @var CultureFeed_Cdb_Item_Actor
+     * @var CultureFeed_Cdb_Item_Actor|null
      */
     protected $actor;
 
@@ -65,7 +65,7 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
     }
 
     /**
-     * @return CultureFeed_Cdb_Item_Actor
+     * @return CultureFeed_Cdb_Item_Actor|null
      */
     public function getActor()
     {
@@ -122,9 +122,7 @@ class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
 
         $locationElement = $dom->createElement('location');
 
-        if ($this->address) {
-            $this->address->appendToDOM($locationElement);
-        }
+        $this->address->appendToDOM($locationElement);
 
         if ($this->label) {
             $labelElement = $dom->createElement('label');

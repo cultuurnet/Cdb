@@ -337,7 +337,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
     /**
      * Set the email.
      *
-     * @param string
+     * @param string $email
      */
     public function setEmail($email)
     {
@@ -387,7 +387,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
     /**
      * Set the name of this page.
      *
-     * @param string $name
+     * @param string $tagline
      */
     public function setTagline($tagline)
     {
@@ -489,7 +489,7 @@ class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
 
         // Set the visibility.
         if (!empty($xmlElement->visible)) {
-            $page->setVisibility((string) $xmlElement->visible);
+            $page->setVisibility((bool) $xmlElement->visible);
         }
 
         // Set address.

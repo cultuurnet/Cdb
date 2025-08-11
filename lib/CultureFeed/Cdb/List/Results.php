@@ -20,14 +20,14 @@ class CultureFeed_Cdb_List_Results implements Iterator
 
     /**
      * Array with the found items for current search.
-     * @var string
+     * @var CultureFeed_Cdb_List_Item[]
      */
     protected $items;
 
     /**
      * Add a new category to the list.
      *
-     * @param CultureFeed_Cdb_Data_Category $category
+     * @param CultureFeed_Cdb_List_Item $item
      *   Category to add.
      */
     public function add(CultureFeed_Cdb_List_Item $item)
@@ -85,7 +85,7 @@ class CultureFeed_Cdb_List_Results implements Iterator
 
     /**
      * Get the total number of results found
-     * @return number
+     * @return string
      */
     public function getTotalResultsfound()
     {
@@ -152,7 +152,7 @@ class CultureFeed_Cdb_List_Results implements Iterator
             $itemName = 'production';
         }
 
-        foreach ($xmlElement->$listName->$itemName as $item) {
+        foreach ($xmlElement->listName->itemName as $item) {
             $items[] = CultureFeed_Cdb_Default::parseItem($item);
         }
 
