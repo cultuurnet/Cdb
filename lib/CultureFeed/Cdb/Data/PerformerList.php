@@ -4,7 +4,7 @@
  * @class
  * Representation of a list of performers in the cdb xml.
  */
-class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IElement, Iterator
+class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IElement, Iterator, Countable
 {
     /**
      * Current position in the list.
@@ -104,5 +104,10 @@ class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IElement, It
         }
 
         return $performerList;
+    }
+
+    public function count()
+    {
+        return count($this->performers);
     }
 }
