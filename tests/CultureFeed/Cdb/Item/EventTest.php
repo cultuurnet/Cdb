@@ -1,13 +1,15 @@
 <?php
 
-class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CultureFeed_Cdb_Item_EventTest extends TestCase
 {
     /**
      * @var CultureFeed_Cdb_Item_Event
      */
     protected $event;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->event = new CultureFeed_Cdb_Item_Event();
     }
@@ -117,7 +119,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
         $this->event->setPrivate($value);
 
-        $this->assertInternalType('boolean', $this->event->isPrivate());
+        $this->assertIsBool($this->event->isPrivate());
         $this->assertEquals($value, $this->event->isPrivate());
     }
 
@@ -168,7 +170,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $this->assertSame('2010-07-28T13:58:55', $event->getLastUpdated());
         $this->assertSame('mverdoodt', $event->getLastUpdatedBy());
         $this->assertSame('SKB Import', $event->getOwner());
-        $this->assertInternalType('float', $event->getPctComplete());
+        $this->assertIsFloat($event->getPctComplete());
         $this->assertEquals(80, $event->getPctComplete());
         $this->assertFalse($event->isPrivate());
         $this->assertTrue($event->isPublished());
@@ -228,7 +230,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
 
         $contact_info = $event->getContactInfo();
         $mails = $contact_info->getMails();
-        $this->assertInternalType('array', $mails);
+        $this->assertIsArray($mails);
         $this->assertCount(1, $mails);
         $this->assertContainsOnly('CultureFeed_Cdb_Data_Mail', $mails);
 
@@ -239,7 +241,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($mail->isMainMail());
 
         $phones = $contact_info->getPhones();
-        $this->assertInternalType('array', $phones);
+        $this->assertIsArray($phones);
         $this->assertCount(1, $phones);
         $this->assertContainsOnly('CultureFeed_Cdb_Data_Phone', $phones);
 
@@ -251,7 +253,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $this->assertNULL($phone->getType());
 
         $urls = $contact_info->getUrls();
-        $this->assertInternalType('array', $urls);
+        $this->assertIsArray($urls);
         $this->assertCount(1, $urls);
         $this->assertContainsOnly('CultureFeed_Cdb_Data_Url', $urls);
 
@@ -348,7 +350,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         // keywords are delimited by a semicolon, in our xml sample however they seem to be delimited
         // by a comma.
         $keywords = $event->getKeywords();
-        $this->assertInternalType('array', $keywords);
+        $this->assertIsArray($keywords);
         $this->assertCount(1, $keywords);
         $this->assertContainsOnly('string', $keywords, true);
 
@@ -508,7 +510,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $contact_info = $event->getContactInfo();
 
         $addresses = $contact_info->getAddresses();
-        $this->assertInternalType('array', $addresses);
+        $this->assertIsArray($addresses);
         $this->assertCount(1, $addresses);
 
         /** @var CultureFeed_Cdb_Data_Address $address */
@@ -534,7 +536,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         );
         $this->assertEquals('62', $physicalAddress->getHouseNumber());
         $phones = $contact_info->getPhones();
-        $this->assertInternalType('array', $phones);
+        $this->assertIsArray($phones);
         $this->assertCount(1, $phones);
         $this->assertContainsOnly('CultureFeed_Cdb_Data_Phone', $phones);
         /** @var CultureFeed_Cdb_Data_Phone $phone */
@@ -543,7 +545,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('phone', $phone->getType());
 
         $urls = $contact_info->getUrls();
-        $this->assertInternalType('array', $urls);
+        $this->assertIsArray($urls);
         $this->assertCount(1, $urls);
         $this->assertContainsOnly('CultureFeed_Cdb_Data_Url', $urls);
 
@@ -651,7 +653,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('RB', $detail->getTitle());
 
         $keywords = $event->getKeywords();
-        $this->assertInternalType('array', $keywords);
+        $this->assertIsArray($keywords);
         $this->assertCount(2, $keywords);
 
         $keyword = reset($keywords);
@@ -1040,6 +1042,8 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
         $price = new CultureFeed_Cdb_Data_Price(4.00);
         $price->setDescription('Extra Korting voor vroegboekers');
         $detailNl->setPrice($price);
+
+        $this->expectNotToPerformAssertions();
     }
 
     /**
@@ -1051,7 +1055,7 @@ class CultureFeed_Cdb_Item_EventTest extends PHPUnit_Framework_TestCase
      *
      * @since  Method available since Release 3.3.0
      */
-    public static function assertXmlStringEqualsXmlFile($expectedFile, $actualXml, $message = '')
+    public static function assertXmlStringEqualsXmlFile(string $expectedFile, $actualXml, string $message = ''): void
     {
         self::assertFileExists($expectedFile);
 

@@ -1,6 +1,8 @@
 <?php
 
-class CultureFeed_Cdb_Default_DefaultTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CultureFeed_Cdb_Default_DefaultTest extends TestCase
 {
     public function versionProvider()
     {

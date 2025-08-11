@@ -1,9 +1,11 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @file
  */
-class CultureFeed_Cdb_Data_KeywordTest extends PHPUnit_Framework_TestCase
+class CultureFeed_Cdb_Data_KeywordTest extends TestCase
 {
     public function testIsVisibleByDefault()
     {

@@ -1,12 +1,14 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Created by PhpStorm.
  * User: Kristof
  * Date: 12/12/13
  * Time: 20:31
  */
-class CultureFeed_Cdb_Data_Calendar_PeriodTest extends PHPUnit_Framework_TestCase
+class CultureFeed_Cdb_Data_Calendar_PeriodTest extends TestCase
 {
     public function testAppendToDOM()
     {

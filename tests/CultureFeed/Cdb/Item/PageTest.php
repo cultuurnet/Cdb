@@ -1,9 +1,11 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @file
  */
-class CultureFeed_Cdb_Item_PageTest extends PHPUnit_Framework_TestCase
+class CultureFeed_Cdb_Item_PageTest extends TestCase
 {
     /**
      * @param $fileName

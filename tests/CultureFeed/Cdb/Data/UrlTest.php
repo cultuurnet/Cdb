@@ -1,7 +1,11 @@
 <?php
 
-class CultureFeed_Cdb_Data_UrlTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CultureFeed_Cdb_Data_UrlTest extends TestCase
 {
+    use CultureFeed_Cdb_DOMElementAssertionsTrait;
+
     /**
      * @param $fileName
      *
@@ -34,7 +38,7 @@ class CultureFeed_Cdb_Data_UrlTest extends PHPUnit_Framework_TestCase
         $items = $xpath->query('/contactinfo/url');
         $this->assertEquals(1, $items->length);
 
-        $this->assertEqualXMLStructure(
+        $this->assertEqualDOMElement(
             $sample->documentElement,
             $items->item(0)
         );

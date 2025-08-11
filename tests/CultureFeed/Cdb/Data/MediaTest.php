@@ -1,13 +1,15 @@
 <?php
 
-class CultureFeed_Cdb_Data_MediaTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CultureFeed_Cdb_Data_MediaTest extends TestCase
 {
     /**
      * @var CultureFeed_Cdb_Data_Media
      */
     protected $media;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->media = new CultureFeed_Cdb_Data_Media();
     }
