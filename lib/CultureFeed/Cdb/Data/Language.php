@@ -22,7 +22,7 @@ final class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement
         $this->language = $language;
     }
 
-    public function getLanguage(): string
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -32,7 +32,7 @@ final class CultureFeed_Cdb_Data_Language implements CultureFeed_Cdb_IElement
         $this->type = $type;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
