@@ -49,10 +49,6 @@ class CultureFeed_Cdb_Data_UrlTest extends TestCase
         $urlString = 'http://example.com/?foo=1&bar=2';
         $url = new CultureFeed_Cdb_Data_Url($urlString, false, false);
         $this->assertEquals($urlString, $url->getUrl());
-
-        $newUrlString = 'http://example.com';
-        $url->setUrl($urlString);
-        $url->setUrl($newUrlString, $url->getUrl());
     }
 
     public function testIsMainReturnMainSetBefore()

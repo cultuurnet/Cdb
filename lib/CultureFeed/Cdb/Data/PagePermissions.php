@@ -58,7 +58,7 @@ class CultureFeed_Cdb_Data_PagePermissions implements CultureFeed_Cdb_IElement
     /**
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
      *     $xmlElement)
-     * @return CultureFeed_Cdb_Item_Page
+     * @return CultureFeed_Cdb_Data_PagePermissions
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {

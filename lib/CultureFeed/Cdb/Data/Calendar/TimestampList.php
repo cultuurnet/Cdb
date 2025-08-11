@@ -39,7 +39,7 @@ class CultureFeed_Cdb_Data_Calendar_TimestampList extends CultureFeed_Cdb_Data_C
     /**
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
      *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_PeriodList
+     * @return CultureFeed_Cdb_Data_Calendar_TimestampList
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {

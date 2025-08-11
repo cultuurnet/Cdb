@@ -13,7 +13,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
     protected $calendarSummary;
 
     /**
-     * @var CultureFeed_Cdb_Data_PerformerList
+     * @var CultureFeed_Cdb_Data_PerformerList|null
      */
     protected $performers;
 
@@ -56,8 +56,6 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
 
     /**
      * Set the performers.
-     *
-     * @param CultureFeed_Cdb_Data_PerformersList $performers
      */
     public function setPerformers(CultureFeed_Cdb_Data_PerformerList $performers)
     {
@@ -123,7 +121,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
     /**
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
      *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_EventDetailList
+     * @return CultureFeed_Cdb_Data_EventDetail
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
@@ -135,7 +133,7 @@ class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail imple
             );
         }
 
-        $eventDetail = new Culturefeed_Cdb_Data_EventDetail();
+        $eventDetail = new CultureFeed_Cdb_Data_EventDetail();
 
         $eventDetail->setLanguage((string) $attributes['lang']);
 

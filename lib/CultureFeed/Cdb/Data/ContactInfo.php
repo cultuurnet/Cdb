@@ -8,13 +8,13 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
 {
     /**
      * List of addresses.
-     * @var array
+     * @var CultureFeed_Cdb_Data_Address[]
      */
     protected $addresses = array();
 
     /**
      * List of phones.
-     * @var array
+     * @var CultureFeed_Cdb_Data_Phone[]
      */
     protected $phones = array();
 
@@ -26,7 +26,7 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
 
     /**
      * List of urls.
-     * @var array
+     * @var CultureFeed_Cdb_Data_Url[]
      */
     protected $urls = array();
 
@@ -204,7 +204,7 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
 
     /**
      * Get the reservation contact info.
-     * @return array()
+     * @return array
      */
     public function getReservationInfo()
     {
@@ -234,7 +234,7 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
 
     /**
      * Get the main contact info.
-     * @return array()
+     * @return array
      */
     public function getMainInfo()
     {
@@ -248,14 +248,14 @@ class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
         }
 
         foreach ($this->phones as $phone) {
-            if ($phone->isMain()) {
+            if ($phone->isMainPhone()) {
                 $info['phone'][] = $phone->getNumber();
             }
         }
 
         foreach ($this->mails as $mail) {
-            if ($mail->isMain()) {
-                $info['mails'][] = $mail->getAddress();
+            if ($mail->isMainMail()) {
+                $info['mails'][] = $mail->getMailAddress();
             }
         }
 

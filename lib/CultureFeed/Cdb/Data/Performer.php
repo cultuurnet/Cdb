@@ -113,7 +113,7 @@ class CultureFeed_Cdb_Data_Performer implements CultureFeed_Cdb_IElement
     /**
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
      *     $xmlElement)
-     * @return CultureFeed_Cdb_Data_Category
+     * @return CultureFeed_Cdb_Data_Performer
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {

@@ -8,13 +8,13 @@ class CultureFeed_Cdb_Data_Address_GeoInformation implements CultureFeed_Cdb_IEl
 {
     /**
      * X coördinate from the location.
-     * @var decimal
+     * @var string
      */
     protected $xCoordinate;
 
     /**
      * Y coördinate from the location.
-     * @var decimal
+     * @var string
      */
     protected $yCoordinate;
 
