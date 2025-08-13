@@ -1,6 +1,6 @@
 services:
   php:
-    build: docker/php8.0
+    build: docker/php8.1
     container_name: php
     working_dir: /cdb
     volumes:

@@ -21,7 +21,7 @@ final class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IEleme
         $this->position = 0;
     }
 
-    public function current()
+    public function current(): CultureFeed_Cdb_Data_Performer
     {
         return $this->performers[$this->position];
     }
