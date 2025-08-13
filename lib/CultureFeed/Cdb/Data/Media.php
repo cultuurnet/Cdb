@@ -21,7 +21,7 @@ final class CultureFeed_Cdb_Data_Media implements CultureFeed_Cdb_IElement, Iter
         $this->position = 0;
     }
 
-    public function current()
+    public function current(): CultureFeed_Cdb_Data_File
     {
         return $this->details[$this->position];
     }

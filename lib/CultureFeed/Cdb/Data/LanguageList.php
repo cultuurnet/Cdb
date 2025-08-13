@@ -21,7 +21,7 @@ final class CultureFeed_Cdb_Data_LanguageList implements CultureFeed_Cdb_IElemen
         $this->position = 0;
     }
 
-    public function current()
+    public function current(): CultureFeed_Cdb_Data_Language
     {
         return $this->languages[$this->position];
     }

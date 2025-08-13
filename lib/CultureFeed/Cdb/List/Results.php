@@ -22,7 +22,7 @@ final class CultureFeed_Cdb_List_Results implements Iterator
         $this->position = 0;
     }
 
-    public function current()
+    public function current(): CultureFeed_Cdb_List_Item|CultureFeed_Cdb_Item_Base
     {
         return $this->items[$this->position];
     }

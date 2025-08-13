@@ -99,7 +99,7 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
         }
 
         // Set calendar information.
-        $calendar_type = key($xmlElement->calendar);
+        $calendar_type = key((array) $xmlElement->calendar);
         if ($calendar_type == 'permanentopeningtimes') {
             $event->setCalendar(
                 CultureFeed_Cdb_Data_Calendar_Permanent::parseFromCdbXml(

@@ -28,7 +28,7 @@ final class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElemen
         $this->position = 0;
     }
 
-    public function current()
+    public function current(): CultureFeed_Cdb_Data_Category
     {
         return $this->categories[$this->position];
     }

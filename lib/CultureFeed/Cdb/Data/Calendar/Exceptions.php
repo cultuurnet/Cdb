@@ -21,7 +21,7 @@ final class CultureFeed_Cdb_Data_Calendar_Exceptions implements CultureFeed_Cdb_
         $this->position = 0;
     }
 
-    public function current()
+    public function current(): CultureFeed_Cdb_Data_Calendar_Timestamp
     {
         return $this->items[$this->position];
     }
