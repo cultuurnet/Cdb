@@ -84,14 +84,14 @@ final class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_
             $this->gis->appendToDOM($physicalElement);
         }
         if ($this->houseNumber) {
-            $physicalElement->appendChild(
-                $dom->createElement('housenr', $this->houseNumber)
-            );
+            $houseNr = $dom->createElement('housenr');
+            $houseNr->appendChild($dom->createTextNode($this->houseNumber));
+            $physicalElement->appendChild($houseNr);
         }
         if ($this->street) {
-            $physicalElement->appendChild(
-                $dom->createElement('street', $this->street)
-            );
+            $street = $dom->createElement('street');
+            $street->appendChild($dom->createTextNode($this->street));
+            $physicalElement->appendChild($street);
         }
         $physicalElement->appendChild(
             $dom->createElement('zipcode', $this->zip)
