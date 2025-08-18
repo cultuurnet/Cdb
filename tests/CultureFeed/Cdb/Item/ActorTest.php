@@ -18,14 +18,12 @@ class CultureFeed_Cdb_Item_ActorTest extends PHPUnit_Framework_TestCase
         $sampleDir = __DIR__ . '/samples/ActorTest/cdbxml-' . $cdbScheme . '/';
         $filePath = $sampleDir . $fileName;
 
-        /*$xml = simplexml_load_file(
+        $xml = simplexml_load_file(
             $filePath,
             'SimpleXMLElement',
             0,
             'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/' . $cdbScheme . '/FINAL'
-        );*/
-        $file = file_get_contents($filePath);
-        $xml = simplexml_load_string($file);
+        );
 
         return $xml;
     }

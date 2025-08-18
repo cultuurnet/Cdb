@@ -8,9 +8,15 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 {
     /**
      * Minimum age for the event.
-     * @var int
+     * @var int|null
      */
     protected $ageFrom;
+
+    /**
+     * Maximum age for the event.
+     * @var int|null
+     */
+    protected $ageTo;
 
     /**
      * Booking period for this event.
@@ -86,24 +92,14 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
      * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
      *     $xmlElement)
      * @return CultureFeed_Cdb_Item_Event
+     *
+     * @throws CultureFeed_Cdb_ParseException
      */
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
         if (empty($xmlElement->calendar)) {
             throw new CultureFeed_Cdb_ParseException(
                 'Calendar missing for event element'
-            );
-        }
-
-        if (empty($xmlElement->categories)) {
-            throw new CultureFeed_Cdb_ParseException(
-                'Categories missing for event element'
-            );
-        }
-
-        if (empty($xmlElement->contactinfo)) {
-            throw new CultureFeed_Cdb_ParseException(
-                'Contact info missing for event element'
             );
         }
 
@@ -122,16 +118,9 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         $event_attributes = $xmlElement->attributes();
         $event = new CultureFeed_Cdb_Item_Event();
 
-        CultureFeed_Cdb_Item_Base::parseCommonAttributes($event, $xmlElement);
-
-        if (isset($event_attributes['private'])) {
-            $event->setPrivate(
-                filter_var(
-                    (string) $event_attributes['private'],
-                    FILTER_VALIDATE_BOOLEAN
-                )
-            );
-        }
+        self::parseCommonAttributes($event, $xmlElement);
+        self::parseCategories($event, $xmlElement);
+        self::parseKeywords($event, $xmlElement);
 
         if (isset($event_attributes['isparent'])) {
             $event->setIsParent(
@@ -164,7 +153,11 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
         }
 
         if (isset($xmlElement->agefrom)) {
-            $event->setAgeFrom((int) $xmlElement->agefrom);
+            $event->setAgeFrom((string) $xmlElement->agefrom);
+        }
+
+        if (isset($xmlElement->ageto)) {
+            $event->setAgeTo((string) $xmlElement->ageto);
         }
 
         // Set calendar information.
@@ -189,19 +182,14 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
             );
         }
 
-        // Set categories
-        $event->setCategories(
-            CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml(
-                $xmlElement->categories
-            )
-        );
-
         // Set contact information.
-        $event->setContactInfo(
-            CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml(
-                $xmlElement->contactinfo
-            )
-        );
+        if (!is_null($xmlElement->contactInfo)) {
+            $event->setContactInfo(
+                CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml(
+                    $xmlElement->contactinfo
+                )
+            );
+        }
 
         // Set event details.
         $event->setDetails(
@@ -240,7 +228,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
             );
         }
 
-        // Set relations.
+        // Set related productions.
         if (!empty($xmlElement->eventrelations) && !empty($xmlElement->eventrelations->relatedproduction)) {
             foreach ($xmlElement->eventrelations->relatedproduction as $relatedProduction) {
                 $attributes = $relatedProduction->attributes();
@@ -254,7 +242,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
                 );
             }
         }
-        self::parseKeywords($xmlElement, $event);
 
         if (!empty($xmlElement->languages)) {
             $event->setLanguages(
@@ -327,6 +314,8 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
     /**
      * Get the minimum age for this event.
+     *
+     * @return int|null
      */
     public function getAgeFrom()
     {
@@ -334,21 +323,55 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     }
 
     /**
+     * Get the maximum age for this event.
+     *
+     * @return int|null
+     */
+    public function getAgeTo()
+    {
+        return $this->ageTo;
+    }
+
+    /**
      * Set the minimum age for this event.
      *
-     * @param int $age
+     * @param string|int|null $age
      *   Minimum age.
      *
      * @throws UnexpectedValueException
      */
-    public function setAgeFrom($age)
+    public function setAgeFrom($age = null)
     {
+        if (!is_null($age)) {
+            if (!is_int($age) && !is_numeric($age)) {
+                throw new UnexpectedValueException('Invalid minimum age: ' . $age);
+            }
 
-        if (!is_numeric($age)) {
-            throw new UnexpectedValueException('Invalid age: ' . $age);
+            $age = (int) $age;
         }
 
         $this->ageFrom = $age;
+    }
+
+    /**
+     * Set the maximum age for this event.
+     *
+     * @param string|int|null $age
+     *   Maximum age.
+     *
+     * @throws UnexpectedValueException
+     */
+    public function setAgeTo($age = null)
+    {
+        if (!is_null($age)) {
+            if (!is_int($age) && !is_numeric($age)) {
+                throw new UnexpectedValueException('Invalid maximum age: ' . $age);
+            }
+
+            $age = (int) $age;
+        }
+
+        $this->ageTo = $age;
     }
 
     /**
@@ -454,7 +477,7 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
     /**
      * Set the booking period.
      */
-    public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod)
+    public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod = null)
     {
         $this->bookingPeriod = $bookingPeriod;
     }
@@ -514,39 +537,24 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
      */
     public function appendToDOM(DOMElement $element, $cdbScheme = '3.2')
     {
-
         $dom = $element->ownerDocument;
 
         $eventElement = $dom->createElement('event');
 
-        if ($this->ageFrom) {
+        $this->appendCommonAttributesToDOM($eventElement, $cdbScheme);
+        $this->appendKeywordsToDOM($eventElement, $cdbScheme);
+        $this->appendCategoriesToDOM($eventElement, $cdbScheme);
+
+        if (isset($this->ageFrom)) {
             $eventElement->appendChild(
                 $dom->createElement('agefrom', $this->ageFrom)
             );
         }
 
-        if ($this->availableFrom) {
-            $eventElement->setAttribute('availablefrom', $this->availableFrom);
-        }
-
-        if ($this->availableTo) {
-            $eventElement->setAttribute('availableto', $this->availableTo);
-        }
-
-        if ($this->cdbId) {
-            $eventElement->setAttribute('cdbid', $this->cdbId);
-        }
-
-        if ($this->createdBy) {
-            $eventElement->setAttribute('createdby', $this->createdBy);
-        }
-
-        if ($this->creationDate) {
-            $eventElement->setAttribute('creationdate', $this->creationDate);
-        }
-
-        if ($this->externalId) {
-            $eventElement->setAttribute('externalid', $this->externalId);
+        if (isset($this->ageTo)) {
+            $eventElement->appendChild(
+                $dom->createElement('ageto', $this->ageTo)
+            );
         }
 
         if (isset($this->isParent)) {
@@ -556,27 +564,8 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
             );
         }
 
-        if (isset($this->lastUpdated)) {
-            $eventElement->setAttribute('lastupdated', $this->lastUpdated);
-        }
-
-        if (isset($this->lastUpdatedBy)) {
-            $eventElement->setAttribute('lastupdatedby', $this->lastUpdatedBy);
-        }
-
-        if (isset($this->owner)) {
-            $eventElement->setAttribute('owner', $this->owner);
-        }
-
         if (isset($this->pctComplete)) {
             $eventElement->setAttribute('pctcomplete', $this->pctComplete);
-        }
-
-        if (isset($this->private)) {
-            $eventElement->setAttribute(
-                'private',
-                $this->private ? 'true' : 'false'
-            );
         }
 
         if (isset($this->published)) {
@@ -590,20 +579,8 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
             $eventElement->setAttribute('validator', $this->validator);
         }
 
-        if (isset($this->wfStatus)) {
-            $eventElement->setAttribute('wfstatus', $this->wfStatus);
-        }
-
-        if ($this->publisher) {
-            $eventElement->setAttribute('publisher', $this->publisher);
-        }
-
         if ($this->calendar) {
             $this->calendar->appendToDOM($eventElement);
-        }
-
-        if ($this->categories) {
-            $this->categories->appendToDOM($eventElement);
         }
 
         if ($this->contactInfo) {
@@ -612,25 +589,6 @@ class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements Cu
 
         if ($this->details) {
             $this->details->appendToDOM($eventElement);
-        }
-
-        if (count($this->keywords) > 0) {
-            $keywordsElement = $dom->createElement('keywords');
-            if (version_compare($cdbScheme, '3.3', '>=')) {
-                foreach ($this->keywords as $keyword) {
-                    $keyword->appendToDOM($keywordsElement);
-                }
-                $eventElement->appendChild($keywordsElement);
-            } else {
-                $keywords = array();
-                foreach ($this->keywords as $keyword) {
-                    $keywords[$keyword->getValue()] = $keyword->getValue();
-                }
-                $keywordsElement->appendChild(
-                    $dom->createTextNode(implode(';', $keywords))
-                );
-                $eventElement->appendChild($keywordsElement);
-            }
         }
 
         if (isset($this->languages)) {

@@ -71,4 +71,38 @@ class CultureFeed_Cdb_Data_Address_PhysicalAddressTest extends PHPUnit_Framework
             $sample
         );
     }
+
+    public function testAppendToDom()
+    {
+        $physicalAddress = new \CultureFeed_Cdb_Data_Address_PhysicalAddress();
+        $physicalAddress->setStreet('Sint & Gisleinstraat');
+        $physicalAddress->setHouseNumber('61 & 62');
+        $physicalAddress->setZip('1000');
+        $physicalAddress->setCity('Brussel');
+        $physicalAddress->setCountry('BE');
+
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->formatOutput = true;
+        $dom->preserveWhiteSpace = false;
+
+        // The physical address can only be appended to another element,
+        // not to the dom document. So we append it to a temporary root
+        // element first.
+        $rootElement = $dom->createElement('root');
+        $dom->appendChild($rootElement);
+        $physicalAddress->appendToDOM($rootElement);
+
+        // Set <physical> as the root element.
+        $xpath = new DOMXPath($dom);
+        $items = $xpath->query('//physical');
+        $this->assertEquals(1, $items->length);
+        $addressElement = $items->item(0);
+        $dom->removeChild($rootElement);
+        $dom->appendChild($addressElement);
+
+        $expectedCdbXml = file_get_contents(__DIR__ . '/samples/PhysicalAddressTest/street_special_character.xml');
+        $actualCdbXml = $dom->saveXML();
+
+        $this->assertEquals($expectedCdbXml, $actualCdbXml);
+    }
 }

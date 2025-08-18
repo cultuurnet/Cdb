@@ -53,6 +53,13 @@ abstract class CultureFeed_Cdb_Item_Base
     protected $externalId;
 
     /**
+     * External url from the item.
+     *
+     * @var string
+     */
+    protected $externalUrl;
+
+    /**
      * Keywords from the item
      *
      * @var CultureFeed_Cdb_Data_Keyword[] List with keywords.
@@ -99,46 +106,6 @@ abstract class CultureFeed_Cdb_Item_Base
     protected $wfStatus;
 
     /**
-     * Parses keywords from cdbxml.
-     *
-     * @param SimpleXMLElement $xmlElement
-     * @param CultureFeed_Cdb_Item_Base $item
-     */
-    protected static function parseKeywords(
-        SimpleXMLElement $xmlElement,
-        CultureFeed_Cdb_Item_Base $item
-    ) {
-        if (@count($xmlElement->keywords)) {
-            $keywordsString = trim($xmlElement->keywords);
-
-            if ($keywordsString === '') {
-                /**
-                 * @var SimpleXMLElement $keywordElement
-                 */
-                foreach ($xmlElement->keywords->keyword as $keywordElement) {
-                    $attributes = $keywordElement->attributes();
-                    $visible =
-                        !isset($attributes['visible']) ||
-                        $attributes['visible'] == 'true';
-
-                    $item->addKeyword(
-                        new CultureFeed_Cdb_Data_Keyword(
-                            (string) $keywordElement,
-                            $visible
-                        )
-                    );
-                }
-            } else {
-                $keywords = explode(';', $keywordsString);
-
-                foreach ($keywords as $keyword) {
-                    $item->addKeyword(trim($keyword));
-                }
-            }
-        }
-    }
-
-    /**
      * Add a keyword to this item.
      *
      * @param string|CultureFeed_Cdb_Data_Keyword $keyword
@@ -171,6 +138,10 @@ abstract class CultureFeed_Cdb_Item_Base
 
         if (isset($attributes['externalid'])) {
             $item->setExternalId((string) $attributes['externalid']);
+        }
+
+        if (isset($attributes['externalurl'])) {
+            $item->setExternalUrl((string) $attributes['externalurl']);
         }
 
         if (isset($attributes['availablefrom'])) {
@@ -208,6 +179,186 @@ abstract class CultureFeed_Cdb_Item_Base
         if (isset($attributes['wfstatus'])) {
             $item->setWfStatus((string) $attributes['wfstatus']);
         }
+
+        if (isset($attributes['private'])) {
+            $item->setPrivate(
+                filter_var(
+                    (string) $attributes['private'],
+                    FILTER_VALIDATE_BOOLEAN
+                )
+            );
+        }
+    }
+
+    /**
+     * @param DOMElement $element
+     */
+    protected function appendCommonAttributesToDOM(
+        DOMElement $element,
+        $cdbScheme = '3.2'
+    ) {
+        if ($this->availableFrom) {
+            $element->setAttribute('availablefrom', $this->availableFrom);
+        }
+
+        if ($this->availableTo) {
+            $element->setAttribute('availableto', $this->availableTo);
+        }
+
+        if ($this->cdbId) {
+            $element->setAttribute('cdbid', $this->cdbId);
+        }
+
+        if ($this->createdBy) {
+            $element->setAttribute('createdby', $this->createdBy);
+        }
+
+        if ($this->creationDate) {
+            $element->setAttribute('creationdate', $this->creationDate);
+        }
+
+        if ($this->externalId) {
+            $element->setAttribute('externalid', $this->externalId);
+        }
+
+        if ($this->externalUrl && version_compare($cdbScheme, '3.3', '>=')) {
+            $element->setAttribute('externalurl', $this->externalUrl);
+        }
+
+        if (isset($this->lastUpdated)) {
+            $element->setAttribute('lastupdated', $this->lastUpdated);
+        }
+
+        if (isset($this->lastUpdatedBy)) {
+            $element->setAttribute('lastupdatedby', $this->lastUpdatedBy);
+        }
+
+        if (isset($this->owner)) {
+            $element->setAttribute('owner', $this->owner);
+        }
+
+        if (isset($this->private)) {
+            $element->setAttribute(
+                'private',
+                $this->private ? 'true' : 'false'
+            );
+        }
+
+        if (isset($this->wfStatus)) {
+            $element->setAttribute('wfstatus', $this->wfStatus);
+        }
+
+        if ($this->publisher) {
+            $element->setAttribute('publisher', $this->publisher);
+        }
+    }
+
+    /**
+     * Parses keywords from cdbxml.
+     *
+     * @param CultureFeed_Cdb_Item_Base $item
+     * @param SimpleXMLElement $xmlElement
+     */
+    protected static function parseKeywords(
+        CultureFeed_Cdb_Item_Base $item,
+        SimpleXMLElement $xmlElement
+    ) {
+        if (@count($xmlElement->keywords)) {
+            $keywordsString = trim($xmlElement->keywords);
+
+            if ($keywordsString === '') {
+                /**
+                 * @var SimpleXMLElement $keywordElement
+                 */
+                foreach ($xmlElement->keywords->keyword as $keywordElement) {
+                    $attributes = $keywordElement->attributes();
+                    $visible =
+                        !isset($attributes['visible']) ||
+                        $attributes['visible'] == 'true';
+
+                    $item->addKeyword(
+                        new CultureFeed_Cdb_Data_Keyword(
+                            (string) $keywordElement,
+                            $visible
+                        )
+                    );
+                }
+            } else {
+                $keywords = explode(';', $keywordsString);
+
+                foreach ($keywords as $keyword) {
+                    $item->addKeyword(trim($keyword));
+                }
+            }
+        }
+    }
+
+    /**
+     * @param DOMElement $element
+     * @param string $cdbScheme
+     */
+    protected function appendKeywordsToDOM(
+        DOMElement $element,
+        $cdbScheme = '3.2'
+    ) {
+        $dom = $element->ownerDocument;
+
+        if (count($this->keywords) > 0) {
+            $keywordsElement = $dom->createElement('keywords');
+            if (version_compare($cdbScheme, '3.3', '>=')) {
+                foreach ($this->keywords as $keyword) {
+                    $keyword->appendToDOM($keywordsElement);
+                }
+                $element->appendChild($keywordsElement);
+            } else {
+                $keywords = array();
+                foreach ($this->keywords as $keyword) {
+                    $keywords[$keyword->getValue()] = $keyword->getValue();
+                }
+                $keywordsElement->appendChild(
+                    $dom->createTextNode(implode(';', $keywords))
+                );
+                $element->appendChild($keywordsElement);
+            }
+        }
+    }
+
+    /**
+     * @param CultureFeed_Cdb_Item_Base $item
+     * @param SimpleXMLElement $xmlElement
+     *
+     * @throws CultureFeed_Cdb_ParseException
+     */
+    protected static function parseCategories(
+        CultureFeed_Cdb_Item_Base $item,
+        SimpleXMLElement $xmlElement
+    ) {
+        if (empty($xmlElement->categories)) {
+            $elementName = $xmlElement->getName();
+
+            throw new CultureFeed_Cdb_ParseException(
+                "Categories missing for {$elementName} element"
+            );
+        }
+
+        $item->setCategories(
+            CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml(
+                $xmlElement->categories
+            )
+        );
+    }
+
+    /**
+     * @param DOMElement $element
+     * @param string $cdbScheme
+     */
+    protected function appendCategoriesToDOM(
+        DOMElement $element,
+        $cdbScheme = '3.2'
+    ) {
+        if ($this->categories) {
+            $this->categories->appendToDOM($element);
+        }
     }
 
     /**
@@ -227,6 +378,27 @@ abstract class CultureFeed_Cdb_Item_Base
     public function setExternalId($id)
     {
         $this->externalId = $id;
+    }
+
+    /**
+     * Get the external url from this item.
+     *
+     * @return string
+     */
+    public function getExternalUrl()
+    {
+        return $this->externalUrl;
+    }
+
+    /**
+     * Set the external url from this item.
+     *
+     * @param string $url
+     *   Url to set.
+     */
+    public function setExternalUrl($url)
+    {
+        $this->externalUrl = $url;
     }
 
     /**
@@ -503,11 +675,12 @@ abstract class CultureFeed_Cdb_Item_Base
             $keyword = $keyword->getValue();
         }
 
-        if (!isset($this->keywords[$keyword])) {
-            throw new Exception('Trying to remove a non-existing keyword.');
-        }
-
-        unset($this->keywords[$keyword]);
+        $this->keywords = array_filter(
+            $this->keywords,
+            function (CultureFeed_Cdb_Data_Keyword $itemKeyword) use ($keyword) {
+                return strcmp(mb_strtolower($itemKeyword->getValue(), 'UTF-8'), mb_strtolower($keyword, 'UTF-8')) !== 0;
+            }
+        );
     }
 
     /**

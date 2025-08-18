@@ -18,6 +18,11 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
     protected $cdbid;
 
     /**
+     * @var string
+     */
+    protected $externalid;
+
+    /**
      * @var CultureFeed_Cdb_Item_Actor
      */
     protected $actor;
@@ -46,6 +51,22 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
     public function setCdbid($cdbid)
     {
         $this->cdbid = $cdbid;
+    }
+
+    /**
+     * @param string $externalid
+     */
+    public function setExternalId($externalid)
+    {
+        $this->externalid = (string) $externalid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExternalId()
+    {
+        return $this->externalid;
     }
 
     /**
@@ -87,9 +108,15 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
         if ($this->label) {
             $labelElement = $dom->createElement('label');
             $labelElement->appendChild($dom->createTextNode($this->label));
+
             if ($this->cdbid) {
                 $labelElement->setAttribute('cdbid', $this->cdbid);
             }
+
+            if ($this->externalid) {
+                $labelElement->setAttribute('externalid', $this->externalid);
+            }
+
             $organiserElement->appendChild($labelElement);
         }
 
@@ -113,8 +140,13 @@ class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
             $organiser->setLabel((string) $xmlElement->label);
 
             $attributes = $xmlElement->label->attributes();
+
             if (!empty($attributes->cdbid)) {
                 $organiser->setCdbid((string) $attributes->cdbid);
+            }
+
+            if (!empty($attributes->externalid)) {
+                $organiser->setExternalId($attributes->externalid);
             }
         } elseif (!empty($xmlElement->actor)) {
             $actor = CultureFeed_Cdb_Item_Actor::parseFromCdbXml(

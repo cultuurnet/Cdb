@@ -110,8 +110,6 @@ class CultureFeed_Cdb_Default
      *
      * @param SimpleXMLElement $xmlElement
      *   XML element from the item to parse.
-     * @return CultureFeed_Cdb_Item_Actor|CultureFeed_Cdb_Item_Event|CultureFeed_Cdb_Item_Production|null
-     * @throws CultureFeed_Cdb_ParseException
      */
     public static function parseItem(SimpleXMLElement $xmlElement)
     {
