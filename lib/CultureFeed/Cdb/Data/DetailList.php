@@ -43,6 +43,8 @@ abstract class CultureFeed_Cdb_Data_DetailList implements CultureFeed_Cdb_IEleme
 
     public function getDetailByLanguage(string $language_code): ?CultureFeed_Cdb_Data_Detail
     {
+        $this->rewind();
+
         foreach ($this as $detail) {
             if ($language_code == $detail->getLanguage()) {
                 return $detail;
@@ -50,5 +52,12 @@ abstract class CultureFeed_Cdb_Data_DetailList implements CultureFeed_Cdb_IEleme
         }
 
         return null;
+    }
+
+    public function getFirst(): ?CultureFeed_Cdb_Data_Detail
+    {
+        // Reset indices to 0, 1, 2, ... before trying to get the value for index 0.
+        $details = array_values($this->details);
+        return $details[0] ?? null;
     }
 }
