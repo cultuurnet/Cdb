@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf8"?>
+<weekscheme>
+    <monday opentype="closed"/>
+    <tuesday opentype="open">
+        <openingtime from="" to="20:00:00"/>
+    </tuesday>
+    <wednesday opentype="open">
+        <openingtime from="08:00:00" to="20:00:00"/>
+    </wednesday>
+    <thursday opentype="closed"/>
+    <friday opentype="open"/>
+    <saturday opentype="open"/>
+    <sunday opentype="closed"/>
+</weekscheme>
