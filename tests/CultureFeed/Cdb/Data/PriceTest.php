@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-namespace CultureFeed\Cdb\Data;
-
-use CultureFeed_Cdb_Data_Price;
-use DOMDocument;
 use PHPUnit\Framework\TestCase;
 
 final class CultureFeed_Cdb_Data_PriceTest extends TestCase

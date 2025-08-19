@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace CultureFeed\Cdb\Data\Calendar;
-
 use PHPUnit\Framework\TestCase;
 
 final class CultureFeed_Cdb_Data_Calendar_TimestampTest extends TestCase

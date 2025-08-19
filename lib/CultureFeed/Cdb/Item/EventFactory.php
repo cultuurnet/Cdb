@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace CultureFeed\Cdb\Item;
-
 final class CultureFeed_Cdb_Item_EventFactory
 {
     public static function fromActor(\CultureFeed_Cdb_Item_Actor $actor, string $unknownLocationLabel = 'Onbekend'): \CultureFeed_Cdb_Item_Event

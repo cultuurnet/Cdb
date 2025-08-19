@@ -2,11 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CultureFeed\Cdb\Data\Calendar;
-
-use CultureFeed_Cdb_Data_Calendar_Weekscheme;
 use PHPUnit\Framework\TestCase;
-use SimpleXMLElement;
 
 final class CultureFeed_Cdb_Data_OpeningTimeTest extends TestCase
 {
