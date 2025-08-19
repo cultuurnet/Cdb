@@ -6,6 +6,7 @@ final class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base impleme
 {
     private ?CultureFeed_Cdb_Data_ContactInfo $contactInfo = null;
     private ?CultureFeed_Cdb_Data_Calendar_Weekscheme $weekScheme = null;
+    private bool $asset;
 
     public function __construct()
     {
@@ -14,12 +15,6 @@ final class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base impleme
 
     public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Item_Actor
     {
-        if (empty($xmlElement->categories)) {
-            throw new CultureFeed_Cdb_ParseException(
-                'Categories missing for actor element'
-            );
-        }
-
         if (empty($xmlElement->actordetails)) {
             throw new CultureFeed_Cdb_ParseException(
                 'Actordetails missing for actor element'
@@ -28,17 +23,18 @@ final class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base impleme
 
         $actor = new self();
 
-        CultureFeed_Cdb_Item_Base::parseCommonAttributes($actor, $xmlElement);
+        $attributes = $xmlElement->attributes();
+        if (isset($attributes['asset'])) {
+            $actor->setAsset((bool) $attributes['asset']);
+        }
+
+        self::parseCommonAttributes($actor, $xmlElement);
+        self::parseKeywords($actor, $xmlElement);
+        self::parseCategories($actor, $xmlElement);
 
         $actor->setDetails(
             CultureFeed_Cdb_Data_ActorDetailList::parseFromCdbXml(
                 $xmlElement->actordetails
-            )
-        );
-
-        $actor->setCategories(
-            CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml(
-                $xmlElement->categories
             )
         );
 
@@ -49,8 +45,6 @@ final class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base impleme
                 )
             );
         }
-
-        self::parseKeywords($xmlElement, $actor);
 
         if (!empty($xmlElement->weekscheme)) {
             $actor->setWeekScheme(
@@ -84,66 +78,37 @@ final class CultureFeed_Cdb_Item_Actor extends CultureFeed_Cdb_Item_Base impleme
         $this->weekScheme = $weekScheme;
     }
 
+    public function setAsset(bool $asset = true): void
+    {
+        $this->asset = $asset;
+    }
+
     public function appendToDOM(DOMElement $element, string $cdbScheme = '3.2'): void
     {
         $dom = $element->ownerDocument;
 
         $actorElement = $dom->createElement('actor');
 
-        if ($this->cdbId) {
-            $actorElement->setAttribute('cdbid', $this->cdbId);
-        }
+        $this->appendCommonAttributesToDOM($actorElement, $cdbScheme);
 
-        if ($this->externalId) {
-            $actorElement->setAttribute('externalid', $this->externalId);
+        if (isset($this->asset)) {
+            $actorElement->setAttribute(
+                'asset',
+                $this->asset ? 'true' : 'false'
+            );
         }
 
         if ($this->details) {
             $this->details->appendToDOM($actorElement);
         }
 
-        if ($this->categories) {
-            $this->categories->appendToDOM($actorElement);
-        }
+        $this->appendCategoriesToDOM($actorElement, $cdbScheme);
 
         if ($this->contactInfo) {
             $this->contactInfo->appendToDOM($actorElement);
         }
 
-        if ($this->createdBy) {
-            $actorElement->setAttribute('createdby', $this->createdBy);
-        }
-
-        if ($this->creationDate) {
-            $actorElement->setAttribute('creationdate', $this->creationDate);
-        }
-
-        if (isset($this->lastUpdated)) {
-            $actorElement->setAttribute('lastupdated', $this->lastUpdated);
-        }
-
-        if (isset($this->lastUpdatedBy)) {
-            $actorElement->setAttribute('lastupdatedby', $this->lastUpdatedBy);
-        }
-
-        if (count($this->keywords) > 0) {
-            $keywordsElement = $dom->createElement('keywords');
-            if (version_compare($cdbScheme, '3.3', '>=')) {
-                foreach ($this->keywords as $keyword) {
-                    $keyword->appendToDOM($keywordsElement);
-                }
-                $actorElement->appendChild($keywordsElement);
-            } else {
-                $keywords = [];
-                foreach ($this->keywords as $keyword) {
-                    $keywords[$keyword->getValue()] = $keyword->getValue();
-                }
-                $keywordsElement->appendChild(
-                    $dom->createTextNode(implode(';', $keywords))
-                );
-                $actorElement->appendChild($keywordsElement);
-            }
-        }
+        $this->appendKeywordsToDOM($actorElement, $cdbScheme);
 
         if ($this->weekScheme) {
             $this->weekScheme->appendToDOM($actorElement);
