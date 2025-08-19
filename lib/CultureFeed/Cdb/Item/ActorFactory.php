@@ -40,10 +40,14 @@ final class CultureFeed_Cdb_Item_ActorFactory
                         $actorDetail->setLanguage($eventDetail->getLanguage());
                         $actorDetail->setTitle($eventDetail->getTitle());
                         $actorDetail->setShortDescription($eventDetail->getShortDescription());
-                        $actorDetail->setLongDescription($eventDetail->getLongDescription());
+                        if (!empty($eventDetail->getLongDescription())) {
+                            $actorDetail->setLongDescription($eventDetail->getLongDescription());
+                        }
                         $actorDetail->setCalendarSummary($eventDetail->getCalendarSummary());
                         $actorDetail->setMedia($eventDetail->getMedia());
-                        $actorDetail->setPrice($eventDetail->getPrice());
+                        if (!empty($eventDetail->getPrice())) {
+                            $actorDetail->setPrice($eventDetail->getPrice());
+                        }
 
                         $actorDetailList->add($actorDetail);
                     }

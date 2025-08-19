@@ -22,8 +22,8 @@ abstract class CultureFeed_Cdb_Item_Base
     protected ?bool $private = null;
     protected ?string $publisher = null;
     /** @var array<CultureFeed_Cdb_Item_Reference> */
-    protected array $relations;
-    protected ?string $wfStatus;
+    protected array $relations = [];
+    protected ?string $wfStatus = null;
 
     /**
      * @param string|CultureFeed_Cdb_Data_Keyword $keyword
