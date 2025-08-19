@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-final class CultureFeed_Cdb_Item_Event_FactoryTest extends TestCase
+final class CultureFeed_Cdb_Item_EventFactoryTest extends TestCase
 {
     /**
      * @dataProvider actorToEventDataProvider
