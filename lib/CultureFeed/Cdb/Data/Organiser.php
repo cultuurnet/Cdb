@@ -6,7 +6,7 @@ final class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
 {
     private string $label;
     private ?string $cdbid = null;
-    private CultureFeed_Cdb_Item_Actor $actor;
+    private ?CultureFeed_Cdb_Item_Actor $actor = null;
     private ?string $externalId = null;
 
     public function getCdbid(): ?string
@@ -34,7 +34,7 @@ final class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
         $this->actor = $actor;
     }
 
-    public function getActor(): CultureFeed_Cdb_Item_Actor
+    public function getActor(): ?CultureFeed_Cdb_Item_Actor
     {
         return $this->actor;
     }
