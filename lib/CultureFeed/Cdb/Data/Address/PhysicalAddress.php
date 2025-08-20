@@ -6,9 +6,9 @@ final class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_
 {
     private ?string $street = null;
     private ?string $houseNumber = null;
-    private ?string $city = null;
-    private ?string $zip = null;
-    private ?string $country = null;
+    private string $city;
+    private string $zip;
+    private string $country;
     private ?CultureFeed_Cdb_Data_Address_GeoInformation $gis = null;
 
     public function getStreet(): ?string
@@ -21,17 +21,17 @@ final class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_
         return $this->houseNumber;
     }
 
-    public function getCity(): ?string
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    public function getZip(): ?string
+    public function getZip(): string
     {
         return $this->zip;
     }
 
-    public function getCountry(): ?string
+    public function getCountry(): string
     {
         return $this->country;
     }
