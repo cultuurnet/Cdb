@@ -6,7 +6,7 @@ final class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
 {
     private CultureFeed_Cdb_Data_Address $address;
     private string $label;
-    private ?string $cdbid = null;
+    private string $cdbid;
     private ?CultureFeed_Cdb_Item_Actor $actor = null;
     private ?string $externalId = null;
 
@@ -20,7 +20,7 @@ final class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
         return $this->address;
     }
 
-    public function getCdbid(): ?string
+    public function getCdbid(): string
     {
         return $this->cdbid;
     }
