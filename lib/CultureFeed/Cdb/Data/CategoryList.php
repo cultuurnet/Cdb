@@ -18,6 +18,10 @@ final class CultureFeed_Cdb_Data_CategoryList implements CultureFeed_Cdb_IElemen
         $this->categories[] = $category;
     }
 
+    /**
+    * @deprecated Using the delete method will result in an issue when iterating,
+    * because the index aka position gets a gap and the iteration stops on the gap.
+    */
     public function delete(int $key): void
     {
         unset($this->categories[$key]);

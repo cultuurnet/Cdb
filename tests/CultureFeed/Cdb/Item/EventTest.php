@@ -363,6 +363,10 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
             '920e9755-94a0-42c1-8c8c-9d17f693d0be',
             $location->getCdbid()
         );
+        $this->assertEquals(
+            'external-id-1',
+            $location->getExternalId()
+        );
         $this->assertEquals('Café Bonnefooi', $location->getLabel());
 
         $address = $location->getAddress();
@@ -809,10 +813,12 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
 
         $location->setLabel('Café Bonnefooi');
         $location->setCdbid('920e9755-94a0-42c1-8c8c-9d17f693d0be');
+        $location->setExternalId('external-id-1');
         $event->setLocation($location);
 
         $organiser = new CultureFeed_Cdb_Data_Organiser();
         $organiser->setLabel('Café Bonnefooi');
+        $organiser->setExternalId('external-id-2');
         $event->setOrganiser($organiser);
 
         $languages = new CultureFeed_Cdb_Data_LanguageList();
@@ -1088,6 +1094,7 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
     {
         $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('foo'));
         $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('bar'));
+        $this->event->addKeyword(new CultureFeed_Cdb_Data_Keyword('BAR'));
 
         $this->event->deleteKeyword(new CultureFeed_Cdb_Data_Keyword('bar'));
 
@@ -1111,6 +1118,40 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
                 'test' => new CultureFeed_Cdb_Data_Keyword('test', false),
             ],
             $event->getKeywords(true)
+        );
+    }
+
+    public function testAgeRange(): void
+    {
+        $xml = $this->loadSample('test-event-2014-01-08-age-range.xml', '3.3');
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($xml);
+
+        $dom = new DOMDocument('1.0', 'utf-8');
+        $eventsElement = $dom->createElement('events');
+        $dom->appendChild($eventsElement);
+        $event->appendToDOM($eventsElement);
+        $xpath = new DOMXPath($dom);
+        $ageFromItems = $xpath->query('/events/event/agefrom');
+        $ageToItems = $xpath->query('/events/event/ageto');
+
+        $this->assertEquals(
+            5,
+            $event->getAgeFrom()
+        );
+
+        $this->assertEquals(
+            10,
+            $event->getAgeTo()
+        );
+
+        $this->assertEquals(
+            5,
+            $ageFromItems->item(0)->nodeValue
+        );
+
+        $this->assertEquals(
+            10,
+            $ageToItems->item(0)->nodeValue
         );
     }
 
@@ -1211,12 +1252,6 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
         $this->assertSame(1, $event->getWeight());
     }
 
-    /**
-     * Integration test for parsing the following additions to cdbxml version
-     * 3.3:
-     *   - event publisher and weight
-     *   - file subbrand and description
-     */
     public function testParseCdbXml3Dot3SchemaAdditions(): void
     {
         $xml = $this->loadSample(
@@ -1255,5 +1290,111 @@ final class CultureFeed_Cdb_Item_EventTest extends TestCase
             '2b88e17a-27fc-4310-9556-4df7188a051f',
             $secondFile->getSubBrand()
         );
+    }
+
+    public function testParseExternalUrl(): void
+    {
+        $cdbxml33 = $this->loadSample('cdbxml-guide-example-6-2-externalurl.xml', '3.3');
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($cdbxml33);
+
+        $this->assertEquals(
+            'http://uitdatabank.be/event/ea37cae2-c91e-4810-89ab-e060432d2b78',
+            $event->getExternalUrl()
+        );
+
+        $cdbxml32 = $this->loadSample('cdbxml-guide-example-6-2.xml', '3.2');
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($cdbxml32);
+
+        $this->assertEmpty($event->getExternalUrl());
+    }
+
+    public function testAppendExternalUrlAttributeIn3Dot3(): void
+    {
+        $cdbXmlWithoutExternalUrl = $this->loadSample('cdbxml-guide-example-6-2.xml', '3.3');
+
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($cdbXmlWithoutExternalUrl);
+        $event->setExternalUrl('http://uitdatabank.be/event/ea37cae2-c91e-4810-89ab-e060432d2b78');
+
+        // We need to do some funky stuff to generate the XML as it is in the sample file.
+        $generatedCdbXml = $this->generateXmlWithNoCdbXmlRootElementButWithNSOnRootElement(
+            $event,
+            '3.3'
+        );
+
+        $this->assertXmlStringEqualsXmlFile(
+            __DIR__ . '/samples/EventTest/cdbxml-3.3/cdbxml-guide-example-6-2.xml',
+            $generatedCdbXml
+        );
+    }
+
+    public function testDoNotAppendExtraUrlAttributeIn3Dot2(): void
+    {
+        $cdbXml = $this->loadSample('cdbxml-guide-example-6-2-without-external-url.xml', '3.2');
+
+        $event = CultureFeed_Cdb_Item_Event::parseFromCdbXml($cdbXml);
+        $event->setExternalUrl('http://uitdatabank.be/event/ea37cae2-c91e-4810-89ab-e060432d2b78');
+
+        // We need to do some funky stuff to generate the XML as it is in the sample file.
+        $generatedCdbXml = $this->generateXmlWithNoCdbXmlRootElementButWithNSOnRootElement(
+            $event,
+            '3.2'
+        );
+
+        $this->assertXmlStringEqualsXmlFile(
+            __DIR__ . '/samples/EventTest/cdbxml-3.2/cdbxml-guide-example-6-2-without-external-url.xml',
+            $generatedCdbXml
+        );
+    }
+
+    private function generateXmlWithNoCdbXmlRootElementButWithNSOnRootElement(
+        CultureFeed_Cdb_Item_Event $event,
+        string $nsVersion
+    ): string {
+        // Taken from other test methods in this file and adapted where necessary.
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = true;
+
+        $dummy_element = $dom->createElement('dummy');
+        $dom->appendChild($dummy_element);
+
+        $event->appendToDOM($dummy_element);
+
+        $xpath = new DOMXPath($dom);
+        $items = $xpath->query('//event');
+        $this->assertEquals(1, $items->length);
+        $event_element = $items->item(0);
+
+        $dom->removeChild($dummy_element);
+        $dom->appendChild($event_element);
+
+        $eventElements = $dom->getElementsByTagName('event');
+
+        /* @var DOMElement $eventElement */
+        $eventElement = $eventElements->item(0);
+        $eventElement->setAttribute(
+            'xmlns',
+            CultureFeed_Cdb_Xml::namespaceUriForVersion($nsVersion)
+        );
+
+        return $dom->saveXML();
+    }
+
+    public function testBookingPeriodCanBeRemoved(): void
+    {
+        $event = new CultureFeed_Cdb_Item_Event();
+
+        $event->setBookingPeriod(
+            new CultureFeed_Cdb_Data_Calendar_BookingPeriod(0, 1483228800)
+        );
+
+        $this->assertEquals(
+            new CultureFeed_Cdb_Data_Calendar_BookingPeriod(0, 1483228800),
+            $event->getBookingPeriod()
+        );
+
+        $event->setBookingPeriod(null);
+
+        $this->assertNull($event->getBookingPeriod());
     }
 }

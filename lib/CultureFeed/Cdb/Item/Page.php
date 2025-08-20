@@ -22,7 +22,6 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
     private bool $visible;
     private ?CultureFeed_Cdb_Data_PagePermissions $permissions = null;
     private string $tagline;
-    private string $externalId;
 
     public function getId(): string
     {
@@ -197,16 +196,6 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         $this->tagline = $tagline;
     }
 
-    public function setExternalId(string $externalId): void
-    {
-        $this->externalId = $externalId;
-    }
-
-    public function getExternalId(): string
-    {
-        return $this->externalId;
-    }
-
     public function appendToDOM(DOMElement $element): void
     {
     }
@@ -342,8 +331,6 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         );
 
         $page->setTagline((string) $xmlElement->tagline);
-
-        $page->setExternalId((string) $xmlElement->externalid);
 
         return $page;
     }

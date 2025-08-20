@@ -6,8 +6,9 @@ final class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
 {
     private CultureFeed_Cdb_Data_Address $address;
     private string $label;
-    private string $cdbid;
+    private ?string $cdbid = null;
     private ?CultureFeed_Cdb_Item_Actor $actor = null;
+    private ?string $externalId = null;
 
     public function __construct(CultureFeed_Cdb_Data_Address $address)
     {
@@ -19,7 +20,7 @@ final class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
         return $this->address;
     }
 
-    public function getCdbid(): string
+    public function getCdbid(): ?string
     {
         return $this->cdbid;
     }
@@ -32,6 +33,11 @@ final class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
     public function getActor(): ?CultureFeed_Cdb_Item_Actor
     {
         return $this->actor;
+    }
+
+    public function getExternalId(): ?string
+    {
+        return $this->externalId;
     }
 
     public function setActor(CultureFeed_Cdb_Item_Actor $actor): void
@@ -54,6 +60,11 @@ final class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
         $this->label = $label;
     }
 
+    public function setExternalId(string $externalId): void
+    {
+        $this->externalId = $externalId;
+    }
+
     public function appendToDOM(DOMELement $element): void
     {
         $dom = $element->ownerDocument;
@@ -68,6 +79,11 @@ final class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
             if ($this->cdbid) {
                 $labelElement->setAttribute('cdbid', $this->cdbid);
             }
+
+            if ($this->externalId) {
+                $labelElement->setAttribute('externalid', $this->externalId);
+            }
+
             $locationElement->appendChild($labelElement);
         }
 
@@ -94,8 +110,13 @@ final class CultureFeed_Cdb_Data_Location implements CultureFeed_Cdb_IElement
         if (!empty($xmlElement->label)) {
             $attributes = $xmlElement->label->attributes();
             $location->setLabel((string) $xmlElement->label);
+
             if (isset($attributes['cdbid'])) {
                 $location->setCdbid((string) $attributes['cdbid']);
+            }
+
+            if (isset($attributes['externalid'])) {
+                $location->setExternalId((string) $attributes['externalid']);
             }
         }
 

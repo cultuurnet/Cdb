@@ -37,6 +37,37 @@ final class CultureFeed_Cdb_Data_Calendar_Timestamp implements CultureFeed_Cdb_I
         return $this->endTime;
     }
 
+    /**
+     * Get the chronological end date of a timestamp.
+     * CDBXML only keeps track of one date and a set of start and end times.
+     * When the end time is smaller than the start time we assume it's past midnight.
+     * If this happens the end date is pushed to the next day to keep it chronological.
+     * When start time and/or end time are missing the date is returned as is.
+     *
+     * @return string
+     *  The end date as a string in the Y-m-d format. e.g.: 2017-05-25
+     */
+    public function getEndDate(): string
+    {
+        $dateFormat = 'Y-m-d';
+        $dateTimeFormat = 'Y-m-d H:i:s';
+        $startTime = $this->getStartTime();
+        $endTime = $this->getEndTime();
+
+        if (empty($startTime) || empty($endTime)) {
+            return $this->getDate();
+        }
+
+        $startDateTime = DateTime::createFromFormat($dateTimeFormat, $this->getDate() . ' ' . $startTime);
+        $endDateTime = DateTime::createFromFormat($dateTimeFormat, $this->getDate() . ' ' . $endTime);
+
+        if ($endTime !== '00:00:00' && $endDateTime < $startDateTime) {
+            $endDateTime->add(new DateInterval('P1D'));
+        }
+
+        return $endDateTime->format($dateFormat);
+    }
+
     public function getOpenType(): ?string
     {
         return $this->openType;
