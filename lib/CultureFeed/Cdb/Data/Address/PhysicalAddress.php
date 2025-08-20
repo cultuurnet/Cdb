@@ -46,9 +46,12 @@ final class CultureFeed_Cdb_Data_Address_PhysicalAddress implements CultureFeed_
         $this->street = trim($street);
     }
 
-    public function setHouseNumber(string $houseNumber): void
+    /**
+     * @param string|int $houseNumber
+     */
+    public function setHouseNumber($houseNumber): void
     {
-        $this->houseNumber = trim($houseNumber);
+        $this->houseNumber = trim((string) $houseNumber);
     }
 
     public function setCity(string $city): void
