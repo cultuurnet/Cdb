@@ -1,47 +1,78 @@
 <?php
 
-declare(strict_types=1);
-
 /**
- * @implements Iterator<CultureFeed_Cdb_Data_Performer>
+ * @class
+ * Representation of a list of performers in the cdb xml.
  */
-final class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IElement, Iterator, Countable
+class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IElement, Iterator
 {
-    private int $position = 0;
-    /** @var array<CultureFeed_Cdb_Data_Performer> */
-    private array $performers = [];
+    /**
+     * Current position in the list.
+     * @var int
+     */
+    protected $position = 0;
 
-    public function add(CultureFeed_Cdb_Data_Performer $performer): void
+    /**
+     * The list of performers.
+     * @var array
+     */
+    protected $performers = array();
+
+    /**
+     * Add a new performer to the list.
+     *
+     * @param CultureFeed_Cdb_Data_performer $performer
+     *   performer to add.
+     */
+    public function add(CultureFeed_Cdb_Data_Performer $performer)
     {
         $this->performers[] = $performer;
     }
 
-    public function rewind(): void
+    /**
+     * @see Iterator::rewind()
+     */
+    public function rewind()
     {
         $this->position = 0;
     }
 
-    public function current(): CultureFeed_Cdb_Data_Performer
+    /**
+     * @see Iterator::current()
+     */
+    public function current()
     {
         return $this->performers[$this->position];
     }
 
-    public function key(): int
+    /**
+     * @see Iterator::key()
+     */
+    public function key()
     {
         return $this->position;
     }
 
-    public function next(): void
+    /**
+     * @see Iterator::next()
+     */
+    public function next()
     {
         ++$this->position;
     }
 
-    public function valid(): bool
+    /**
+     * @see Iterator::valid()
+     */
+    public function valid()
     {
         return isset($this->performers[$this->position]);
     }
 
-    public function appendToDOM(DOMElement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element)
     {
         $dom = $element->ownerDocument;
 
@@ -53,7 +84,12 @@ final class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IEleme
         $element->appendChild($performersElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_PerformerList
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_PerformerList
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
         $performerList = new CultureFeed_Cdb_Data_PerformerList();
 
@@ -68,10 +104,5 @@ final class CultureFeed_Cdb_Data_PerformerList implements CultureFeed_Cdb_IEleme
         }
 
         return $performerList;
-    }
-
-    public function count(): int
-    {
-        return count($this->performers);
     }
 }

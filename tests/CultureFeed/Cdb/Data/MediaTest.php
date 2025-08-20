@@ -1,30 +1,30 @@
 <?php
 
-declare(strict_types=1);
-
-use PHPUnit\Framework\TestCase;
-
-final class CultureFeed_Cdb_Data_MediaTest extends TestCase
+class CultureFeed_Cdb_Data_MediaTest extends PHPUnit_Framework_TestCase
 {
-    protected CultureFeed_Cdb_Data_Media $media;
+    /**
+     * @var CultureFeed_Cdb_Data_Media
+     */
+    protected $media;
 
-    public function setUp(): void
+    public function setUp()
     {
         $this->media = new CultureFeed_Cdb_Data_Media();
     }
 
-    public function testImplementsCountable(): void
+    public function testImplementsCountable()
     {
+
         $this->assertInstanceOf('\Countable', $this->media);
     }
 
-    public function testCountIs0OnNewInstance(): void
+    public function testCountIs0OnNewInstance()
     {
         $this->assertInstanceOf('\Countable', $this->media);
         $this->assertCount(0, $this->media);
     }
 
-    public function testAddingFilesIncrementsCount(): void
+    public function testAddingFilesIncrementsCount()
     {
         $toAdd = range(1, 10);
 
@@ -39,7 +39,7 @@ final class CultureFeed_Cdb_Data_MediaTest extends TestCase
         }
     }
 
-    protected function randomPhotoFile(): CultureFeed_Cdb_Data_File
+    protected function randomPhotoFile()
     {
         $file = new CultureFeed_Cdb_Data_File();
         $file->setMediaType($file::MEDIA_TYPE_PHOTO);
@@ -47,7 +47,7 @@ final class CultureFeed_Cdb_Data_MediaTest extends TestCase
         return $file;
     }
 
-    protected function randomWebResourceFile(): CultureFeed_Cdb_Data_File
+    protected function randomWebResourceFile()
     {
         $file = new CultureFeed_Cdb_Data_File();
         $file->setMediaType($file::MEDIA_TYPE_WEBRESOURCE);
@@ -55,9 +55,9 @@ final class CultureFeed_Cdb_Data_MediaTest extends TestCase
         return $file;
     }
 
-    protected function randomImageUrl(): string
+    protected function randomImageUrl()
     {
-        $categories = [
+        $categories = array(
             'abstract',
             'city',
             'people',
@@ -71,7 +71,7 @@ final class CultureFeed_Cdb_Data_MediaTest extends TestCase
             'cats',
             'fashion',
             'technics',
-        ];
+        );
         $category = array_rand($categories);
         $number = rand(1, 10);
 
@@ -80,7 +80,7 @@ final class CultureFeed_Cdb_Data_MediaTest extends TestCase
         return $url;
     }
 
-    public function testCanFilterByMediaType(): void
+    public function testCanFilterByMediaType()
     {
         $picture1 = $this->randomPhotoFile();
         $picture2 = $this->randomPhotoFile();

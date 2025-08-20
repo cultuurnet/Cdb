@@ -1,65 +1,127 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of a category element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
 {
-    public const CATEGORY_TYPE_EVENT_TYPE = 'eventtype';
-    public const CATEGORY_TYPE_ACTOR_TYPE = 'actortype';
-    public const CATEGORY_TYPE_THEME = 'theme';
-    public const CATEGORY_TYPE_PUBLICSCOPE = 'publicscope';
-    public const CATEGORY_TYPE_EDUCATION_FIELD = 'educationfield';
-    public const CATEGORY_TYPE_EDUCATION_LEVEL = 'educationlevel';
-    public const CATEGORY_TYPE_FACILITY = 'facility';
-    public const CATEGORY_TYPE_TARGET_AUDIENCE = 'targetaudience';
-    /** @deprecated use CATEGORY_TYPE_TARGET_AUDIENCE instead. */
-    public const CATEGORY_TYPE_TARGET_AUDIANCE = 'targetaudience';
-    public const CATEGORY_TYPE_FLANDERS_REGION = 'flandersregion';
-    public const CATEGORY_TYPE_UMV = 'umv';
+    /**
+     * Category types.
+     */
+    const CATEGORY_TYPE_EVENT_TYPE = 'eventtype';
+    const CATEGORY_TYPE_ACTOR_TYPE = 'actortype';
+    const CATEGORY_TYPE_THEME = 'theme';
+    const CATEGORY_TYPE_PUBLICSCOPE = 'publicscope';
+    const CATEGORY_TYPE_EDUCATION_FIELD = 'educationfield';
+    const CATEGORY_TYPE_EDUCATION_LEVEL = 'educationlevel';
+    const CATEGORY_TYPE_FACILITY = 'facility';
+    const CATEGORY_TYPE_TARGET_AUDIENCE = 'targetaudience';
+    /**
+     * @deprecated use CATEGORY_TYPE_TARGET_AUDIENCE instead.
+     */
+    const CATEGORY_TYPE_TARGET_AUDIANCE = 'targetaudience';
+    const CATEGORY_TYPE_FLANDERS_REGION = 'flandersregion';
+    const CATEGORY_TYPE_UMV = 'umv';
 
-    private string $type;
-    private string $id;
-    private string $name;
+    /**
+     * Type of category.
+     * @var string
+     */
+    protected $type;
 
-    public function __construct(string $type, string $id, string $name)
+    /**
+     * ID from the category.
+     * @var string
+     */
+    protected $id;
+
+    /**
+     * Name from the category.
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * Construct a new category.
+     *
+     * @param string $type
+     *   Type of category.
+     * @param $id
+     *   ID from the category.
+     * @param $name
+     *   Name from the category.
+     */
+    public function __construct($type, $id, $name)
     {
         $this->type = $type;
         $this->id = $id;
         $this->name = $name;
     }
 
-    public function getType(): string
+    /**
+     * Get the type of category.
+     */
+    public function getType()
     {
         return $this->type;
     }
 
-    public function getId(): string
+    /**
+     * Get the ID from the category.
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getName(): string
+    /**
+     * Get the name from the category.
+     */
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setType(string $type): void
+    /**
+     * Set the type of category.
+     *
+     * @param string $type
+     *   Type of category.
+     */
+    public function setType($type)
     {
         $this->type = $type;
     }
 
-    public function setId(string $id): void
+    /**
+     * Set the ID from the category.
+     *
+     * @param string $id
+     *   Id from the category.
+     */
+    public function setId($id)
     {
         $this->id = $id;
     }
 
-    public function setName(string $name): void
+    /**
+     * Set the name from the category.
+     *
+     * @param string $name
+     *   Name from the category.
+     */
+    public function setName($name)
     {
         $this->name = $name;
     }
 
-    public function appendToDOM(DOMElement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $categoryElement = $dom->createElement('category');
@@ -70,15 +132,23 @@ final class CultureFeed_Cdb_Data_Category implements CultureFeed_Cdb_IElement
         $element->appendChild($categoryElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Category
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_Category
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
+
         $attributes = $xmlElement->attributes();
         if (!isset($attributes['type'])) {
-            throw new CultureFeed_Cdb_ParseException();
+            return;
+            //throw new CultureFeed_Cdb_ParseException("Category type missing for category element");
         }
 
         if (!isset($attributes['catid'])) {
-            throw new CultureFeed_Cdb_ParseException();
+            return;
+            //throw new CultureFeed_Cdb_ParseException("Category ID missing for category element");
         }
 
         return new CultureFeed_Cdb_Data_Category(

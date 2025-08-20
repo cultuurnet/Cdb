@@ -1,23 +1,37 @@
 <?php
 
-declare(strict_types=1);
-
-use PHPUnit\Framework\TestCase;
-
-final class CultureFeed_Cdb_Item_ActorTest extends TestCase
+class CultureFeed_Cdb_Item_ActorTest extends PHPUnit_Framework_TestCase
 {
-    public function loadSample(string $fileName, string $cdbScheme = '3.2'): SimpleXMLElement
+    public function setUp()
+    {
+        $this->actor = new CultureFeed_Cdb_Item_Actor();
+    }
+
+    /**
+     * @param $fileName
+     * @param $cdbScheme
+     *
+     * @return SimpleXMLElement
+     */
+    public function loadSample($fileName, $cdbScheme = '3.2')
     {
         $sampleDir = __DIR__ . '/samples/ActorTest/cdbxml-' . $cdbScheme . '/';
         $filePath = $sampleDir . $fileName;
 
-        $file = file_get_contents($filePath);
-        $xml = simplexml_load_string($file);
+        $xml = simplexml_load_file(
+            $filePath,
+            'SimpleXMLElement',
+            0,
+            'http://www.cultuurdatabank.com/XMLSchema/CdbXSD/' . $cdbScheme . '/FINAL'
+        );
 
         return $xml;
     }
 
-    public function testParseCdbXml(): void
+    /**
+     * Integration test for parsing  cdbxml version 3.2
+     */
+    public function testParseCdbXml()
     {
         $xml = $this->loadSample('actor.xml');
         $actor = CultureFeed_Cdb_Item_Actor::parseFromCdbXml($xml);
@@ -44,20 +58,22 @@ final class CultureFeed_Cdb_Item_ActorTest extends TestCase
         $this->assertEquals('Invoerders Algemeen ', $actor->getOwner());
     }
 
-    public function testParseCdbXmlWithoutCategories(): void
+    /**
+     * @expectedException CultureFeed_Cdb_ParseException
+     * @expectedExceptionMessage Categories missing for actor element
+     */
+    public function testParseCdbXmlWithoutCategories()
     {
-        $this->expectException(CultureFeed_Cdb_ParseException::class);
-        $this->expectExceptionMessage('Categories missing for actor element');
-
         $xml = $this->loadSample('actor-no-categories.xml');
         CultureFeed_Cdb_Item_Actor::parseFromCdbXml($xml);
     }
 
-    public function testParseCdbXmlWithoutActorDetails(): void
+    /**
+     * @expectedException CultureFeed_Cdb_ParseException
+     * @expectedExceptionMessage Actordetails missing for actor element
+     */
+    public function testParseCdbXmlWithoutActorDetails()
     {
-        $this->expectException(CultureFeed_Cdb_ParseException::class);
-        $this->expectExceptionMessage('Actordetails missing for actor element');
-
         $xml = $this->loadSample('actor-no-actordetails.xml');
         CultureFeed_Cdb_Item_Actor::parseFromCdbXml($xml);
     }

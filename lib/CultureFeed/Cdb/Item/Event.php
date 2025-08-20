@@ -1,40 +1,105 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of an event on the culturefeed.
+ */
+class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base implements CultureFeed_Cdb_IElement
 {
-    private ?int $ageFrom = null;
-    private ?CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod = null;
-    private ?CultureFeed_Cdb_Data_Calendar $calendar = null;
-    private ?CultureFeed_Cdb_Data_ContactInfo $contactInfo = null;
-    private ?bool $isParent = null;
-    private ?CultureFeed_Cdb_Data_LanguageList $languages = null;
-    private ?CultureFeed_Cdb_Data_Location $location = null;
-    private ?int $maxParticipants = null;
-    private ?CultureFeed_Cdb_Data_Organiser $organiser = null;
-    private ?float $pctComplete = null;
-    private ?bool $published = null;
-    private ?string $validator = null;
-    private ?int $weight = null;
+    /**
+     * Minimum age for the event.
+     * @var int|null
+     */
+    protected $ageFrom;
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Item_Event
+    /**
+     * Maximum age for the event.
+     * @var int|null
+     */
+    protected $ageTo;
+
+    /**
+     * Booking period for this event.
+     * @var CultureFeed_Cdb_Data_Calendar_BookingPeriod
+     */
+    protected $bookingPeriod;
+
+    /**
+     * Calendar information for the event.
+     * @var CultureFeed_Cdb_Data_Calendar
+     */
+    protected $calendar;
+
+    /**
+     * Contact info for an event.
+     *
+     * @var CultureFeed_Cdb_Data_ContactInfo
+     */
+    protected $contactInfo;
+
+    /**
+     * @var bool
+     */
+    protected $isParent;
+
+    /**
+     * @var CultureFeed_Cdb_Data_LanguageList
+     */
+    protected $languages;
+
+    /**
+     * Location of an event.
+     *
+     * @var CultureFeed_Cdb_Data_Location
+     */
+    protected $location;
+
+    /**
+     * Maximum participants
+     * @var int
+     */
+    protected $maxParticipants;
+
+    /**
+     * Organiser of an event.
+     *
+     * @var CultureFeed_Cdb_Data_Organiser
+     */
+    protected $organiser;
+
+    /**
+     * @var float
+     */
+    protected $pctComplete;
+
+    /**
+     * @var bool
+     */
+    protected $published;
+
+    /**
+     * @var string
+     */
+    protected $validator;
+
+    /**
+     * Weight for this event.
+     * @var int
+     */
+    protected $weight;
+
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Item_Event
+     *
+     * @throws CultureFeed_Cdb_ParseException
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
         if (empty($xmlElement->calendar)) {
             throw new CultureFeed_Cdb_ParseException(
                 'Calendar missing for event element'
-            );
-        }
-
-        if (empty($xmlElement->categories)) {
-            throw new CultureFeed_Cdb_ParseException(
-                'Categories missing for event element'
-            );
-        }
-
-        if (empty($xmlElement->contactinfo)) {
-            throw new CultureFeed_Cdb_ParseException(
-                'Contact info missing for event element'
             );
         }
 
@@ -53,16 +118,9 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
         $event_attributes = $xmlElement->attributes();
         $event = new CultureFeed_Cdb_Item_Event();
 
-        CultureFeed_Cdb_Item_Base::parseCommonAttributes($event, $xmlElement);
-
-        if (isset($event_attributes['private'])) {
-            $event->setPrivate(
-                filter_var(
-                    (string) $event_attributes['private'],
-                    FILTER_VALIDATE_BOOLEAN
-                )
-            );
-        }
+        self::parseCommonAttributes($event, $xmlElement);
+        self::parseCategories($event, $xmlElement);
+        self::parseKeywords($event, $xmlElement);
 
         if (isset($event_attributes['isparent'])) {
             $event->setIsParent(
@@ -74,7 +132,7 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
         }
 
         if (isset($event_attributes['pctcomplete'])) {
-            $event->setPctComplete((float) $event_attributes['pctcomplete']);
+            $event->setPctComplete(floatval($event_attributes['pctcomplete']));
         }
 
         if (isset($event_attributes['published'])) {
@@ -95,11 +153,15 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
         }
 
         if (isset($xmlElement->agefrom)) {
-            $event->setAgeFrom((int) $xmlElement->agefrom);
+            $event->setAgeFrom((string) $xmlElement->agefrom);
+        }
+
+        if (isset($xmlElement->ageto)) {
+            $event->setAgeTo((string) $xmlElement->ageto);
         }
 
         // Set calendar information.
-        $calendar_type = key((array) $xmlElement->calendar);
+        $calendar_type = key($xmlElement->calendar);
         if ($calendar_type == 'permanentopeningtimes') {
             $event->setCalendar(
                 CultureFeed_Cdb_Data_Calendar_Permanent::parseFromCdbXml(
@@ -120,19 +182,14 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
             );
         }
 
-        // Set categories
-        $event->setCategories(
-            CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml(
-                $xmlElement->categories
-            )
-        );
-
         // Set contact information.
-        $event->setContactInfo(
-            CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml(
-                $xmlElement->contactinfo
-            )
-        );
+        if (!is_null($xmlElement->contactInfo)) {
+            $event->setContactInfo(
+                CultureFeed_Cdb_Data_ContactInfo::parseFromCdbXml(
+                    $xmlElement->contactinfo
+                )
+            );
+        }
 
         // Set event details.
         $event->setDetails(
@@ -171,7 +228,7 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
             );
         }
 
-        // Set relations.
+        // Set related productions.
         if (!empty($xmlElement->eventrelations) && !empty($xmlElement->eventrelations->relatedproduction)) {
             foreach ($xmlElement->eventrelations->relatedproduction as $relatedProduction) {
                 $attributes = $relatedProduction->attributes();
@@ -185,7 +242,6 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
                 );
             }
         }
-        self::parseKeywords($xmlElement, $event);
 
         if (!empty($xmlElement->languages)) {
             $event->setLanguages(
@@ -198,175 +254,307 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
         return $event;
     }
 
-    public function setIsParent(bool $value): void
+    /**
+     * @param bool $value
+     */
+    public function setIsParent($value)
     {
         $this->isParent = $value;
     }
 
-    public function isParent(): ?bool
+    /**
+     * @return bool
+     */
+    public function isParent()
     {
         return $this->isParent;
     }
 
-    public function getPctComplete(): ?float
+    public function getPctComplete()
     {
         return $this->pctComplete;
     }
 
-    public function setPctComplete(float $pct): void
+    public function setPctComplete($pct)
     {
         $this->pctComplete = $pct;
     }
 
-    public function isPublished(): ?bool
+    /**
+     * @return bool
+     */
+    public function isPublished()
     {
         return $this->published;
     }
 
-    public function setPublished(bool $value = true): void
+    /**
+     * @param bool $value
+     */
+    public function setPublished($value = true)
     {
         $this->published = $value;
     }
 
-    public function getValidator(): ?string
+    /**
+     * @return string
+     */
+    public function getValidator()
     {
         return $this->validator;
     }
 
-    public function setValidator(string $value): void
+    /**
+     * @param string $value
+     */
+    public function setValidator($value)
     {
         $this->validator = $value;
     }
 
-    public function getAgeFrom(): ?int
+    /**
+     * Get the minimum age for this event.
+     *
+     * @return int|null
+     */
+    public function getAgeFrom()
     {
         return $this->ageFrom;
     }
 
-    public function setAgeFrom(int $age): void
+    /**
+     * Get the maximum age for this event.
+     *
+     * @return int|null
+     */
+    public function getAgeTo()
     {
+        return $this->ageTo;
+    }
+
+    /**
+     * Set the minimum age for this event.
+     *
+     * @param string|int|null $age
+     *   Minimum age.
+     *
+     * @throws UnexpectedValueException
+     */
+    public function setAgeFrom($age = null)
+    {
+        if (!is_null($age)) {
+            if (!is_int($age) && !is_numeric($age)) {
+                throw new UnexpectedValueException('Invalid minimum age: ' . $age);
+            }
+
+            $age = (int) $age;
+        }
+
         $this->ageFrom = $age;
     }
 
-    public function getCalendar(): ?CultureFeed_Cdb_Data_Calendar
+    /**
+     * Set the maximum age for this event.
+     *
+     * @param string|int|null $age
+     *   Maximum age.
+     *
+     * @throws UnexpectedValueException
+     */
+    public function setAgeTo($age = null)
+    {
+        if (!is_null($age)) {
+            if (!is_int($age) && !is_numeric($age)) {
+                throw new UnexpectedValueException('Invalid maximum age: ' . $age);
+            }
+
+            $age = (int) $age;
+        }
+
+        $this->ageTo = $age;
+    }
+
+    /**
+     * Get the calendar from this event.
+     */
+    public function getCalendar()
     {
         return $this->calendar;
     }
 
-    public function setCalendar(CultureFeed_Cdb_Data_Calendar $calendar): void
+    /**
+     * Set the calendar data for the event.
+     *
+     * @param CultureFeed_Cdb_Data_Calendar $calendar
+     *   Calendar data.
+     */
+    public function setCalendar(CultureFeed_Cdb_Data_Calendar $calendar)
     {
         $this->calendar = $calendar;
     }
 
-    public function getLocation(): ?CultureFeed_Cdb_Data_Location
+    /**
+     * Get the location from this event.
+     */
+    public function getLocation()
     {
         return $this->location;
     }
 
-    public function setLocation(CultureFeed_Cdb_Data_Location $location): void
+    /**
+     * Set the location from this event.
+     *
+     * @param CultureFeed_Cdb_Data_Location $location
+     *   Location to set.
+     */
+    public function setLocation(CultureFeed_Cdb_Data_Location $location)
     {
         $this->location = $location;
     }
 
-    public function getOrganiser(): ?CultureFeed_Cdb_Data_Organiser
+    /**
+     * Get the organiser from this event.
+     */
+    public function getOrganiser()
     {
         return $this->organiser;
     }
 
-    public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser): void
+    /**
+     * Set the organiser from this event.
+     *
+     * @param CultureFeed_Cdb_Data_Organiser $organiser
+     *   Organiser to set.
+     */
+    public function setOrganiser(CultureFeed_Cdb_Data_Organiser $organiser)
     {
         $this->organiser = $organiser;
     }
 
-    public function getContactInfo(): ?CultureFeed_Cdb_Data_ContactInfo
+    /**
+     * Get the contact info from this event.
+     */
+    public function getContactInfo()
     {
         return $this->contactInfo;
     }
 
-    public function setContactInfo(CultureFeed_Cdb_Data_ContactInfo $contactInfo): void
+    /**
+     * Set the contact info from this event.
+     *
+     * @param CultureFeed_Cdb_Data_Calendar $contactInfo
+     *   Contact info to set.
+     */
+    public function setContactInfo(CultureFeed_Cdb_Data_ContactInfo $contactInfo)
     {
         $this->contactInfo = $contactInfo;
     }
 
-    public function getMaxParticipants(): ?int
+    /**
+     * Get the maximum amount of participants.
+     */
+    public function getMaxParticipants()
     {
         return $this->maxParticipants;
     }
 
-    public function setMaxParticipants(int $maxParticipants): void
+    /**
+     * Set the maximum amount of participants.
+     */
+    public function setMaxParticipants($maxParticipants)
     {
         $this->maxParticipants = $maxParticipants;
     }
 
-    public function getBookingPeriod(): ?CultureFeed_Cdb_Data_Calendar_BookingPeriod
+    /**
+     * Get the booking period.
+     */
+    public function getBookingPeriod()
     {
         return $this->bookingPeriod;
     }
 
-    public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod): void
+    /**
+     * Set the booking period.
+     */
+    public function setBookingPeriod(CultureFeed_Cdb_Data_Calendar_BookingPeriod $bookingPeriod = null)
     {
         $this->bookingPeriod = $bookingPeriod;
     }
 
-    public function getLanguages(): ?CultureFeed_Cdb_Data_LanguageList
+    /**
+     * @return CultureFeed_Cdb_Data_LanguageList
+     */
+    public function getLanguages()
     {
         return $this->languages;
     }
 
-    public function setLanguages(CultureFeed_Cdb_Data_LanguageList $languages): void
+    public function setLanguages(CultureFeed_Cdb_Data_LanguageList $languages)
     {
         $this->languages = $languages;
     }
 
-    public function deleteOrganiser(): void
+    /**
+     * Delete the organiser from this event.
+     */
+    public function deleteOrganiser()
     {
         $this->organiser = null;
     }
 
-    public function getWeight(): ?int
+    /**
+     * Get the weight.
+     *
+     * @return int
+     *   The weight.
+     */
+    public function getWeight()
     {
         return $this->weight;
     }
 
-    public function setWeight(int $weight): void
+    /**
+     * Set the weight.
+     *
+     * @param int $weight
+     *   The weight.
+     */
+    public function setWeight($weight)
     {
         $this->weight = $weight;
     }
 
-    public function appendToDOM(DOMElement $element, string $cdbScheme = '3.2'): void
+    /**
+     * Appends the current object to the passed DOM tree.
+     *
+     * @param DOMElement $element
+     *   The DOM tree to append to.
+     * @param string $cdbScheme
+     *   The cdb schema version.
+     *
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element, $cdbScheme = '3.2')
     {
         $dom = $element->ownerDocument;
 
         $eventElement = $dom->createElement('event');
 
-        if ($this->ageFrom) {
+        $this->appendCommonAttributesToDOM($eventElement, $cdbScheme);
+        $this->appendKeywordsToDOM($eventElement, $cdbScheme);
+        $this->appendCategoriesToDOM($eventElement, $cdbScheme);
+
+        if (isset($this->ageFrom)) {
             $eventElement->appendChild(
-                $dom->createElement('agefrom', (string) $this->ageFrom)
+                $dom->createElement('agefrom', $this->ageFrom)
             );
         }
 
-        if ($this->availableFrom) {
-            $eventElement->setAttribute('availablefrom', $this->availableFrom);
-        }
-
-        if ($this->availableTo) {
-            $eventElement->setAttribute('availableto', $this->availableTo);
-        }
-
-        if ($this->cdbId) {
-            $eventElement->setAttribute('cdbid', $this->cdbId);
-        }
-
-        if ($this->createdBy) {
-            $eventElement->setAttribute('createdby', $this->createdBy);
-        }
-
-        if ($this->creationDate) {
-            $eventElement->setAttribute('creationdate', $this->creationDate);
-        }
-
-        if ($this->externalId) {
-            $eventElement->setAttribute('externalid', $this->externalId);
+        if (isset($this->ageTo)) {
+            $eventElement->appendChild(
+                $dom->createElement('ageto', $this->ageTo)
+            );
         }
 
         if (isset($this->isParent)) {
@@ -376,27 +564,8 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
             );
         }
 
-        if (isset($this->lastUpdated)) {
-            $eventElement->setAttribute('lastupdated', $this->lastUpdated);
-        }
-
-        if (isset($this->lastUpdatedBy)) {
-            $eventElement->setAttribute('lastupdatedby', $this->lastUpdatedBy);
-        }
-
-        if (isset($this->owner)) {
-            $eventElement->setAttribute('owner', $this->owner);
-        }
-
         if (isset($this->pctComplete)) {
-            $eventElement->setAttribute('pctcomplete', (string) $this->pctComplete);
-        }
-
-        if (isset($this->private)) {
-            $eventElement->setAttribute(
-                'private',
-                $this->private ? 'true' : 'false'
-            );
+            $eventElement->setAttribute('pctcomplete', $this->pctComplete);
         }
 
         if (isset($this->published)) {
@@ -410,20 +579,8 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
             $eventElement->setAttribute('validator', $this->validator);
         }
 
-        if (isset($this->wfStatus)) {
-            $eventElement->setAttribute('wfstatus', $this->wfStatus);
-        }
-
-        if ($this->publisher) {
-            $eventElement->setAttribute('publisher', $this->publisher);
-        }
-
         if ($this->calendar) {
             $this->calendar->appendToDOM($eventElement);
-        }
-
-        if ($this->categories) {
-            $this->categories->appendToDOM($eventElement);
         }
 
         if ($this->contactInfo) {
@@ -432,25 +589,6 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
 
         if ($this->details) {
             $this->details->appendToDOM($eventElement);
-        }
-
-        if (count($this->keywords) > 0) {
-            $keywordsElement = $dom->createElement('keywords');
-            if (version_compare($cdbScheme, '3.3', '>=')) {
-                foreach ($this->keywords as $keyword) {
-                    $keyword->appendToDOM($keywordsElement);
-                }
-                $eventElement->appendChild($keywordsElement);
-            } else {
-                $keywords = [];
-                foreach ($this->keywords as $keyword) {
-                    $keywords[$keyword->getValue()] = $keyword->getValue();
-                }
-                $keywordsElement->appendChild(
-                    $dom->createTextNode(implode(';', $keywords))
-                );
-                $eventElement->appendChild($keywordsElement);
-            }
         }
 
         if (isset($this->languages)) {
@@ -467,7 +605,7 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
 
         if ($this->maxParticipants) {
             $eventElement->appendChild(
-                $dom->createElement('maxparticipants', (string) $this->maxParticipants)
+                $dom->createElement('maxparticipants', $this->maxParticipants)
             );
         }
 

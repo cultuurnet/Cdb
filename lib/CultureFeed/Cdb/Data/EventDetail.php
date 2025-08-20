@@ -1,46 +1,79 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of an EventDetail element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
 {
-    private string $calendarSummary;
-    private ?CultureFeed_Cdb_Data_PerformerList $performers = null;
+    /**
+     * Calendar summary from this eventDetail.
+     * @var string
+     */
+    protected $calendarSummary;
 
+    /**
+     * @var CultureFeed_Cdb_Data_PerformerList
+     */
+    protected $performers;
+
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->media = new CultureFeed_Cdb_Data_Media();
     }
 
-    public function getCalendarSummary(): string
+    /**
+     * Get the calendar summary.
+     * @return string
+     */
+    public function getCalendarSummary()
     {
         return $this->calendarSummary;
     }
 
-    public function getPerformers(): ?CultureFeed_Cdb_Data_PerformerList
+    /**
+     * Get the performers.
+     *
+     * @return CultureFeed_Cdb_Data_PerformerList
+     */
+    public function getPerformers()
     {
         return $this->performers;
     }
 
-    public function setCalendarSummary(string $summary): void
+    /**
+     * Set the calendar summary.
+     *
+     * @param string $summary
+     */
+    public function setCalendarSummary($summary)
     {
         $this->calendarSummary = $summary;
     }
 
-    public function setPerformers(CultureFeed_Cdb_Data_PerformerList $performers): void
+    /**
+     * Set the performers.
+     *
+     * @param CultureFeed_Cdb_Data_PerformersList $performers
+     */
+    public function setPerformers(CultureFeed_Cdb_Data_PerformerList $performers)
     {
         $this->performers = $performers;
     }
 
-    public function appendToDOM(DOMElement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $detailElement = $dom->createElement('eventdetail');
-
-        if (!empty($this->language)) {
-            $detailElement->setAttribute('lang', $this->language);
-        }
+        $detailElement->setAttribute('lang', $this->language);
 
         if (!empty($this->calendarSummary)) {
             $summaryElement = $dom->createElement('calendarsummary');
@@ -87,16 +120,22 @@ final class CultureFeed_Cdb_Data_EventDetail extends CultureFeed_Cdb_Data_Detail
         $element->appendChild($detailElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_EventDetail
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_EventDetailList
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
+
         $attributes = $xmlElement->attributes();
         if (empty($attributes['lang'])) {
             throw new CultureFeed_Cdb_ParseException(
-                'Lang missing for eventdetail element'
+                "Lang missing for eventdetail element"
             );
         }
 
-        $eventDetail = new CultureFeed_Cdb_Data_EventDetail();
+        $eventDetail = new Culturefeed_Cdb_Data_EventDetail();
 
         $eventDetail->setLanguage((string) $attributes['lang']);
 

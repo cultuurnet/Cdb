@@ -1,61 +1,134 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of a organiser element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
 {
-    private string $label;
-    private ?string $cdbid = null;
-    private CultureFeed_Cdb_Item_Actor $actor;
+    /**
+     * Organiser label.
+     * @var string
+     */
+    protected $label;
 
-    public function getCdbid(): ?string
+    /**
+     * Cdbid from organiser actor.
+     */
+    protected $cdbid;
+
+    /**
+     * @var string
+     */
+    protected $externalid;
+
+    /**
+     * @var CultureFeed_Cdb_Item_Actor
+     */
+    protected $actor;
+
+    /**
+     * Get the cdbid for this organiser.
+     */
+    public function getCdbid()
     {
         return $this->cdbid;
     }
 
-    public function getLabel(): string
+    /**
+     * Get the label.
+     */
+    public function getLabel()
     {
         return $this->label;
     }
 
-    public function setCdbid(string $cdbid): void
+    /**
+     * Set the cdbid for this organiser.
+     *
+     * @param string $cdbid
+     */
+    public function setCdbid($cdbid)
     {
         $this->cdbid = $cdbid;
     }
 
-    public function setLabel(string $label): void
+    /**
+     * @param string $externalid
+     */
+    public function setExternalId($externalid)
+    {
+        $this->externalid = (string) $externalid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExternalId()
+    {
+        return $this->externalid;
+    }
+
+    /**
+     * Set the label
+     *
+     * @param string $label
+     *   Label to set.
+     */
+    public function setLabel($label)
     {
         $this->label = $label;
     }
 
-    public function setActor(CultureFeed_Cdb_Item_Actor $actor): void
+    /**
+     * @param CultureFeed_Cdb_Item_Actor $actor
+     */
+    public function setActor(CultureFeed_Cdb_Item_Actor $actor)
     {
         $this->actor = $actor;
     }
 
-    public function getActor(): CultureFeed_Cdb_Item_Actor
+    /**
+     * @return CultureFeed_Cdb_Item_Actor
+     */
+    public function getActor()
     {
         return $this->actor;
     }
 
-    public function appendToDOM(DOMELement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMELement $element)
     {
+
         $dom = $element->ownerDocument;
         $organiserElement = $dom->createElement('organiser');
 
         if ($this->label) {
             $labelElement = $dom->createElement('label');
             $labelElement->appendChild($dom->createTextNode($this->label));
+
             if ($this->cdbid) {
                 $labelElement->setAttribute('cdbid', $this->cdbid);
             }
+
+            if ($this->externalid) {
+                $labelElement->setAttribute('externalid', $this->externalid);
+            }
+
             $organiserElement->appendChild($labelElement);
         }
 
         $element->appendChild($organiserElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Organiser
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_Organiser
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
         $organiser = new CultureFeed_Cdb_Data_Organiser();
 
@@ -67,8 +140,13 @@ final class CultureFeed_Cdb_Data_Organiser implements CultureFeed_Cdb_IElement
             $organiser->setLabel((string) $xmlElement->label);
 
             $attributes = $xmlElement->label->attributes();
+
             if (!empty($attributes->cdbid)) {
                 $organiser->setCdbid((string) $attributes->cdbid);
+            }
+
+            if (!empty($attributes->externalid)) {
+                $organiser->setExternalId($attributes->externalid);
             }
         } elseif (!empty($xmlElement->actor)) {
             $actor = CultureFeed_Cdb_Item_Actor::parseFromCdbXml(

@@ -1,48 +1,80 @@
 <?php
 
-declare(strict_types=1);
-
 /**
- * @implements Iterator<CultureFeed_Cdb_Data_Calendar_Timestamp>
+ * @class
+ * Representation of a exceptions element in the cdb xml.
  */
-final class CultureFeed_Cdb_Data_Calendar_Exceptions implements CultureFeed_Cdb_IElement, Iterator
+class CultureFeed_Cdb_Data_Calendar_Exceptions implements CultureFeed_Cdb_IElement, Iterator
 {
-    private int $position = 0;
-    /** @var array<CultureFeed_Cdb_Data_Calendar_Timestamp> */
-    private array $items = [];
+    /**
+     * Current position in the list.
+     * @var int
+     */
+    protected $position = 0;
 
-    public function add(CultureFeed_Cdb_Data_Calendar_Timestamp $timestamp): void
+    /**
+     * The list of items.
+     * @var array
+     */
+    protected $items = array();
+
+    /**
+     * Add a new exception to the list.
+     *
+     * @param CultureFeed_Cdb_Data_Calendar_Timestamp $timestamp
+     *   Timestamp to add.
+     */
+    public function add(CultureFeed_Cdb_Data_Calendar_Timestamp $timestamp)
     {
         $this->items[] = $timestamp;
     }
 
-    public function rewind(): void
+    /**
+     * @see Iterator::rewind()
+     */
+    public function rewind()
     {
         $this->position = 0;
     }
 
-    public function current(): CultureFeed_Cdb_Data_Calendar_Timestamp
+    /**
+     * @see Iterator::current()
+     */
+    public function current()
     {
         return $this->items[$this->position];
     }
 
-    public function key(): int
+    /**
+     * @see Iterator::key()
+     */
+    public function key()
     {
         return $this->position;
     }
 
-    public function next(): void
+    /**
+     * @see Iterator::next()
+     */
+    public function next()
     {
         ++$this->position;
     }
 
-    public function valid(): bool
+    /**
+     * @see Iterator::valid()
+     */
+    public function valid()
     {
         return isset($this->items[$this->position]);
     }
 
-    public function appendToDOM(DOMELement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMELement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $exceptionsElement = $dom->createElement('exceptions');
@@ -53,7 +85,12 @@ final class CultureFeed_Cdb_Data_Calendar_Exceptions implements CultureFeed_Cdb_
         $element->appendChild($exceptionsElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Calendar_Exceptions
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_Calendar_Exceptions
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
         $exceptions = new CultureFeed_Cdb_Data_Calendar_Exceptions();
 

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<event xmlns="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.2/FINAL" availablefrom="2010-02-25T00:00:00"
+<event xmlns="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.3/FINAL" availablefrom="2010-02-25T00:00:00"
        availableto="2010-08-09T00:00:00" cdbid="ea37cae2-c91e-4810-89ab-e060432d2b78" createdby="mverdoodt"
        creationdate="2010-07-05T18:28:18" externalid="SKB Import:SKB00001_216413" isparent="false"
-       lastupdated="2010-07-28T13:58:55" lastupdatedby="mverdoodt" owner="SKB Import" pctcomplete="80" private="false"
-       published="true" validator="SKB" wfstatus="approved">
+       lastupdated="2010-07-28T13:58:55" lastupdatedby="mverdoodt" owner="SKB Import" pctcomplete="80"
+       private="false" published="true" validator="SKB" wfstatus="approved">
+  <keywords>Free Jazz, Acoustisch</keywords>
+  <categories>
+    <category catid="0.50.4.0.0" type="eventtype">Concert</category>
+    <category catid="1.8.2.0.0" type="theme">Jazz en blues</category>
+    <category catid="6.2.0.0.0" type="publicscope">Regionaal</category>
+  </categories>
   <agefrom>18</agefrom>
   <calendar>
     <timestamps>
@@ -13,11 +19,6 @@
       </timestamp>
     </timestamps>
   </calendar>
-  <categories>
-    <category catid="0.50.4.0.0" type="eventtype">Concert</category>
-    <category catid="1.8.2.0.0" type="theme">Jazz en blues</category>
-    <category catid="6.2.0.0.0" type="publicscope">Regionaal</category>
-  </categories>
   <contactinfo>
     <mail>info@bonnefooi.be</mail>
     <phone>0487-62.22.31</phone>
@@ -43,7 +44,6 @@
       </media>
       <price>
         <title>The Bonnefooi Acoustic Jam</title>
-        <pricevalue>0</pricevalue>
       </price>
       <shortdescription>Korte omschrijving.</shortdescription>
       <title>The Bonnefooi Acoustic Jam</title>
@@ -52,7 +52,6 @@
       <shortdescription>Short description.</shortdescription>
     </eventdetail>
   </eventdetails>
-  <keywords>Free Jazz, Acoustisch</keywords>
   <languages>
     <language type="spoken">Nederlands</language>
     <language type="spoken">Frans</language>

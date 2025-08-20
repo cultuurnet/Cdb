@@ -1,27 +1,22 @@
 <?php
 
-declare(strict_types=1);
-
-use PHPUnit\Framework\TestCase;
-
-final class CultureFeed_Cdb_Default_DefaultTest extends TestCase
+class CultureFeed_Cdb_Default_DefaultTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @return array<array<string>>
-     */
-    public function versionProvider(): array
+    public function versionProvider()
     {
-        return [
-            ['3.1'],
-            ['3.2'],
-            ['3.3'],
-        ];
+        return array(
+            array('3.1'),
+            array('3.2'),
+            array('3.3'),
+        );
     }
 
     /**
      * @dataProvider versionProvider
+     *
+     * @param string $version
      */
-    public function testConstructorWithSpecificVersion(string $version): void
+    public function testConstructorWithSpecificVersion($version)
     {
         $cdbXml = new CultureFeed_Cdb_Default($version);
         $this->assertEquals(
@@ -31,7 +26,7 @@ final class CultureFeed_Cdb_Default_DefaultTest extends TestCase
         $this->assertEquals($version, $cdbXml->getSchemaVersion());
     }
 
-    public function testConstructorWithoutSpecificVersion(): void
+    public function testConstructorWithoutSpecificVersion()
     {
         $cdbXml = new CultureFeed_Cdb_Default();
         $this->assertEquals(

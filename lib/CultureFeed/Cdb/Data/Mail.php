@@ -1,26 +1,60 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_Mail implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of a mail element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_Mail implements CultureFeed_Cdb_IElement
 {
-    private string $address;
-    private ?bool $main;
-    private ?bool $reservation;
+    /**
+     * Indicate if this is the main mail.
+     * @var bool
+     */
+    protected $main;
 
-    public function __construct(string $address, bool $isMain = null, bool $forReservations = null)
+    /**
+     * Indicate if this mail can be used for reservations.
+     * @var bool
+     */
+    protected $reservation;
+
+    /**
+     * Mail address.
+     * @var string
+     */
+    protected $address;
+
+    /**
+     * Construct the mail object.
+     *
+     * @param string $address
+     *   The Mail address.
+     * @param bool $isMain
+     *   Main address or not.
+     * @param bool $forReservations
+     *   Usable for reservations or not
+     */
+    public function __construct($address, $isMain = null, $forReservations = null)
     {
         $this->address = $address;
         $this->main = $isMain;
         $this->reservation = $forReservations;
     }
 
-    public function isMainMail(): ?bool
+    /**
+     * Is the current mail the main mail, or not
+     * @return bool
+     */
+    public function isMainMail()
     {
         return $this->main;
     }
 
-    public function isForReservations(): ?bool
+    /**
+     * Can the current mail be used for reservations.
+     * @return bool
+     */
+    public function isForReservations()
     {
         return $this->reservation;
     }
@@ -28,28 +62,50 @@ final class CultureFeed_Cdb_Data_Mail implements CultureFeed_Cdb_IElement
     /**
      * Get the mail address.
      */
-    public function getMailAddress(): string
+    public function getMailAddress()
     {
         return $this->address;
     }
 
-    public function setMain(bool $isMain): void
+    /**
+     * Set the main state.
+     *
+     * @param bool $isMain
+     *   State to set.
+     */
+    public function setMain($isMain)
     {
         $this->main = $isMain;
     }
 
-    public function setReservation(bool $forReservation): void
+    /**
+     * Set the reservation state.
+     *
+     * @param bool $forReservation
+     *   State to set.
+     */
+    public function setReservation($forReservation)
     {
         $this->reservation = $forReservation;
     }
 
-    public function setMailAddress(string $address): void
+    /**
+     * Set the mail address.
+     *
+     * @param string $address
+     *   Address to set.
+     */
+    public function setMailAddress($address)
     {
         $this->address = $address;
     }
 
-    public function appendToDOM(DOMELement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMELement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $mailElement = $dom->createElement('mail', $this->address);
@@ -65,8 +121,14 @@ final class CultureFeed_Cdb_Data_Mail implements CultureFeed_Cdb_IElement
         $element->appendChild($mailElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Mail
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_Mail
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
+
         $attributes = $xmlElement->attributes();
         $is_main = isset($attributes['main']) && $attributes['main'] == 'true';
         $for_reservations = isset($attributes['reservation']) && $attributes['reservation'] == 'true';

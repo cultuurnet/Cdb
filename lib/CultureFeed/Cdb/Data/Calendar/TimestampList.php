@@ -1,16 +1,28 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_Calendar_TimestampList extends CultureFeed_Cdb_Data_Calendar implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of a timestamps element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_Calendar_TimestampList extends CultureFeed_Cdb_Data_Calendar implements CultureFeed_Cdb_IElement
 {
-    public function add(CultureFeed_Cdb_Data_Calendar_Timestamp $timestamp): void
+    /**
+     * Add a new timestamp to the list.
+     *
+     * @param CultureFeed_Cdb_Data_Calendar_Timestamp $timestamp
+     *   Timestamp to add.
+     */
+    public function add(CultureFeed_Cdb_Data_Calendar_Timestamp $timestamp)
     {
         $this->items[] = $timestamp;
     }
 
-    public function appendToDOM(DOMElement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $calendarElement = $dom->createElement('calendar');
@@ -24,8 +36,14 @@ final class CultureFeed_Cdb_Data_Calendar_TimestampList extends CultureFeed_Cdb_
         }
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Calendar_TimestampList
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_PeriodList
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
+
         $timestampList = new CultureFeed_Cdb_Data_Calendar_TimestampList();
         if (!empty($xmlElement->timestamp)) {
             foreach ($xmlElement->timestamp as $timestampElement) {

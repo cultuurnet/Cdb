@@ -1,12 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
-use PHPUnit\Framework\TestCase;
-
-final class CultureFeed_Cdb_Data_EventDetailTest extends TestCase
+class CultureFeed_Cdb_Data_EventDetailTest extends PHPUnit_Framework_TestCase
 {
-    public function testGeneratesMediaElementIfFilesWereAdded(): void
+    public function testGeneratesMediaElementIfFilesWereAdded()
     {
         $detail = new CultureFeed_Cdb_Data_EventDetail();
 
@@ -38,7 +34,7 @@ final class CultureFeed_Cdb_Data_EventDetailTest extends TestCase
         $this->assertEquals(1, $items->length);
     }
 
-    public function testDoesNotGenerateEmptyMediaElement(): void
+    public function testDoesNotGenerateEmptyMediaElement()
     {
         $detail = new CultureFeed_Cdb_Data_EventDetail();
 

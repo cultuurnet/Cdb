@@ -1,218 +1,406 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of a page on the culturefeed.
+ * This is not a real cdb item at the moment
+ */
+class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
 {
-    private string $id;
-    private string $name;
-    private bool $officialPage;
-    /** @var array<string> */
-    private array $categories;
-    /** @var array<string> */
-    private array $keywords;
-    private string $description;
-    private CultureFeed_Cdb_Data_Address_PhysicalAddress $address;
-    private string $email;
-    private string $telephone;
-    /** @var array<string> */
-    private array $links;
-    private string $image;
-    private string $cover;
-    private bool $visible;
-    private ?CultureFeed_Cdb_Data_PagePermissions $permissions = null;
-    private string $tagline;
-    private string $externalId;
+    /**
+     * Id of the page.
+     * @var string
+     */
+    protected $id;
 
-    public function getId(): string
+    /**
+     * Name of the page.
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * Is current page an official page.
+     * @var bool
+     */
+    protected $officialPage;
+
+    /**
+     * Categories of the page.
+     * @var string[]
+     */
+    protected $categories;
+
+    /**
+     * Keywords of the page.
+     * @var string[]
+     */
+    protected $keywords;
+
+    /**
+     * Description of the page.
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * Address for this page.
+     * @var CultureFeed_Cdb_Data_Address_PhysicalAddress
+     */
+    protected $address;
+
+    /**
+     * Email of this page.
+     * @var string
+     */
+    protected $email;
+
+    /**
+     * Telephone of this page.
+     * @var string
+     */
+    protected $telephone;
+
+    /**
+     * Links of this page.
+     * @var string[]
+     */
+    protected $links;
+
+    /**
+     * Image of this page.
+     * @var String url
+     */
+    protected $image;
+
+    /**
+     * Cover of this page.
+     * @var String url
+     */
+    protected $cover;
+
+    /**
+     * Indicates whether the page is visible.
+     */
+    protected $visible;
+
+    /**
+     * Permissions of a page.
+     * @var CultureFeed_Cdb_Data_PagePermissions
+     */
+    protected $permissions = null;
+
+    /**
+     * Tagline of the page.
+     * @var string
+     */
+    protected $tagline;
+
+    /**
+     * Get the id of this page.
+     * @return string
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getName(): string
+    /**
+     * Get the name of this page.
+     * @return string
+     */
+    public function getName()
     {
         return $this->name;
     }
 
-    public function isOfficialPage(): bool
+    /**
+     * Is the current page official.
+     */
+    public function isOfficialPage()
     {
         return $this->officialPage;
     }
 
-    public function getImage(): string
+    /**
+     * Get the image of this page.
+     * @return string
+     */
+    public function getImage()
     {
         return $this->image;
     }
 
-    public function getCover(): string
+    /**
+     * Get the cover of this page.
+     * @return string
+     */
+    public function getCover()
     {
         return $this->cover;
     }
 
     /**
-     * @return array<string>
+     * Get the categories of this page.
+     * @return string[]
      */
-    public function getCategories(): array
+    public function getCategories()
     {
         return $this->categories;
     }
 
     /**
-     * @return array<string>
+     * Get the keywords of this page.
+     * @return string[]
      */
-    public function getKeywords(): array
+    public function getKeywords()
     {
         return $this->keywords;
     }
 
-    public function getDescription(): string
+    /**
+     * Get the description of this page.
+     */
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function getAddress(): CultureFeed_Cdb_Data_Address_PhysicalAddress
+    /**
+     * Get the address.
+     * @return CultureFeed_Cdb_Data_Address_PhysicalAddress
+     */
+    public function getAddress()
     {
         return $this->address;
     }
 
-    public function getEmail(): string
+    /**
+     * Get the email.
+     * @return string
+     */
+    public function getEmail()
     {
         return $this->email;
     }
 
-    public function getTelephone(): string
+    /**
+     * Get the telephone
+     * @return string
+     */
+    public function getTelephone()
     {
         return $this->telephone;
     }
 
     /**
-     * @return array<string>
+     * Get the links.
+     * @return string[]
      */
-    public function getLinks(): array
+    public function getLinks()
     {
         return $this->links;
     }
 
-    public function getVisibility(): bool
+    /**
+     * Get the visibility.
+     * @return Boolean
+     */
+    public function getVisibility()
     {
-        return $this->visible == 'true';
+        return $this->visible == "true" ? true : false;
     }
 
-    public function getPermissions(): ?CultureFeed_Cdb_Data_PagePermissions
+    /**
+     * Get the permissions.
+     * @return CultureFeed_Cdb_Data_PagePermissions
+     */
+    public function getPermissions()
     {
         return $this->permissions;
     }
 
-    public function isVisible(): bool
+    /**
+     * Alias of getVisibility.
+     * @return Boolean
+     */
+    public function isVisible()
     {
         return $this->getVisibility();
     }
 
-    public function getTagline(): string
+    /**
+     * Get the tagline of this page.
+     * @return string
+     */
+    public function getTagline()
     {
         return $this->tagline;
     }
 
-    public function setId(string $id): void
+    /**
+     * Set the id.
+     *
+     * @param string $id
+     */
+    public function setId($id)
     {
         $this->id = $id;
     }
 
-    public function setName(string $name): void
+    /**
+     * Set the name of this page.
+     *
+     * @param string $name
+     */
+    public function setName($name)
     {
         $this->name = $name;
     }
 
-    public function setOfficialPage(bool $officialPage): void
+    /**
+     * Set the OfficialPage bool.
+     */
+    public function setOfficialPage($officialPage)
     {
         $this->officialPage = $officialPage;
     }
 
-    public function setImage(string $image): void
+    /**
+     * Set the image of this page.
+     *
+     * @param string $image
+     */
+    public function setImage($image)
     {
         $this->image = $image;
     }
 
-    public function setCover(string $cover): void
+    /**
+     * Set the cover of this page.
+     *
+     * @param string $cover
+     */
+    public function setCover($cover)
     {
         $this->cover = $cover;
     }
 
     /**
-     * @param array<string> $categories
+     * Set the categories of the page.
+     *
+     * @param array $categories
      */
-    public function setCategories(array $categories): void
+    public function setCategories($categories)
     {
         $this->categories = $categories;
     }
 
     /**
-     * @param array<string> $keywords
+     * Set the keywords of the page.
+     *
+     * @param array $keywords
      */
-    public function setKeywords(array $keywords): void
+    public function setKeywords($keywords)
     {
         $this->keywords = $keywords;
     }
 
-    public function setDescription(string $description): void
+    /**
+     * Set the description of the page.
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
     {
         $this->description = $description;
     }
 
-    public function setAddress(CultureFeed_Cdb_Data_Address_PhysicalAddress $address): void
+    /**
+     * Set the address.
+     *
+     * @param CultureFeed_Cdb_Data_Address_PhysicalAddress $address
+     */
+    public function setAddress(CultureFeed_Cdb_Data_Address_PhysicalAddress $address)
     {
         $this->address = $address;
     }
 
-    public function setEmail(string $email): void
+    /**
+     * Set the email.
+     *
+     * @param string
+     */
+    public function setEmail($email)
     {
         $this->email = $email;
     }
 
-    public function setTelephone(string $telephone): void
+    /**
+     * Set the telephone.
+     *
+     * @param string $telephone
+     */
+    public function setTelephone($telephone)
     {
         $this->telephone = $telephone;
     }
 
     /**
+     * Set the links.
+     *
      * @param string[] $links
      */
-    public function setLinks(array $links): void
+    public function setLinks($links)
     {
         $this->links = $links;
     }
 
-    public function setVisibility(bool $visible): void
+    /**
+     * Set the visibility.
+     *
+     * @param Boolean $visible
+     */
+    public function setVisibility($visible)
     {
         $this->visible = $visible;
     }
 
-    public function setPermissions(CultureFeed_Cdb_Data_PagePermissions $permissions): void
+    /**
+     * Set the permissions.
+     *
+     * @param CultureFeed_Cdb_Data_PagePermissions $permissions
+     */
+    public function setPermissions($permissions)
     {
         $this->permissions = $permissions;
     }
 
-    public function setTagline(string $tagline): void
+    /**
+     * Set the name of this page.
+     *
+     * @param string $name
+     */
+    public function setTagline($tagline)
     {
         $this->tagline = $tagline;
     }
 
-    public function setExternalId(string $externalId): void
-    {
-        $this->externalId = $externalId;
-    }
-
-    public function getExternalId(): string
-    {
-        return $this->externalId;
-    }
-
-    public function appendToDOM(DOMElement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element)
     {
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Item_Page
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Item_Page
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
+
         if (empty($xmlElement->uid)) {
             throw new CultureFeed_Cdb_ParseException(
                 'Uid missing for page element'
@@ -227,6 +415,7 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
 
         $page = new self();
 
+        // Set ID + name.
         $page->setId((string) $xmlElement->uid);
         $page->setName((string) $xmlElement->name);
         $page->setOfficialPage(
@@ -236,7 +425,8 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
             )
         );
 
-        $categories = [];
+        // Set categories
+        $categories = array();
         if (!empty($xmlElement->categoryIds->categoryId)) {
             foreach ($xmlElement->categoryIds->categoryId as $category) {
                 $categories[] = (string) $category;
@@ -244,7 +434,8 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         }
         $page->setCategories($categories);
 
-        $keywords = [];
+        // Set keywords
+        $keywords = array();
         if (!empty($xmlElement->keywords->keyword)) {
             foreach ($xmlElement->keywords->keyword as $keyword) {
                 $keywords[] = (string) $keyword;
@@ -252,22 +443,27 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         }
         $page->setKeywords($keywords);
 
+        // Set description.
         if (!empty($xmlElement->description)) {
             $page->setDescription((string) $xmlElement->description);
         }
 
+        // Set the image.
         if (!empty($xmlElement->image)) {
             $page->setImage((string) $xmlElement->image);
         }
 
+        // Set the cover.
         if (!empty($xmlElement->cover)) {
             $page->setCover((string) $xmlElement->cover);
         }
 
+        // Set the visibility.
         if (!empty($xmlElement->visible)) {
-            $page->setVisibility((bool) $xmlElement->visible);
+            $page->setVisibility((string) $xmlElement->visible);
         }
 
+        // Set address.
         $address = new CultureFeed_Cdb_Data_Address_PhysicalAddress();
         $addressElement = $xmlElement->address;
         $has_address = false;
@@ -308,6 +504,7 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
             $page->setAddress($address);
         }
 
+        // Set contact info.
         if (!empty($xmlElement->contactInfo->email)) {
             $page->setEmail((string) $xmlElement->contactInfo->email);
         }
@@ -315,7 +512,8 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
             $page->setTelephone((string) $xmlElement->contactInfo->telephone);
         }
 
-        $links = [];
+        // Set links.
+        $links = array();
         if (!empty($xmlElement->links)) {
             foreach ($xmlElement->links->children() as $link) {
                 $url = (string) $link;
@@ -335,15 +533,15 @@ final class CultureFeed_Cdb_Item_Page implements CultureFeed_Cdb_IElement
         }
         $page->setLinks($links);
 
+        // Set the permissions.
         $page->setPermissions(
             CultureFeed_Cdb_Data_PagePermissions::parseFromCdbXml(
                 $xmlElement->permissions
             )
         );
 
+        // Set tagline.
         $page->setTagline((string) $xmlElement->tagline);
-
-        $page->setExternalId((string) $xmlElement->externalid);
 
         return $page;
     }

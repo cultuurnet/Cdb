@@ -1,14 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
-use PHPUnit\Framework\TestCase;
-
-final class CultureFeed_Cdb_Data_UrlTest extends TestCase
+class CultureFeed_Cdb_Data_UrlTest extends PHPUnit_Framework_TestCase
 {
-    use CultureFeed_Cdb_DOMElementAssertionsTrait;
-
-    public function loadSample(string $fileName): DOMDocument
+    /**
+     * @param $fileName
+     *
+     * @return DOMDocument
+     */
+    public function loadSample($fileName)
     {
         $sampleDir = __DIR__ . '/samples/UrlTest/';
         $filePath = $sampleDir . $fileName;
@@ -19,7 +18,7 @@ final class CultureFeed_Cdb_Data_UrlTest extends TestCase
         return $dom;
     }
 
-    public function testAppendsUrlAsTextNode(): void
+    public function testAppendsUrlAsTextNode()
     {
         $sample = $this->loadSample('minimal.xml');
 
@@ -35,20 +34,24 @@ final class CultureFeed_Cdb_Data_UrlTest extends TestCase
         $items = $xpath->query('/contactinfo/url');
         $this->assertEquals(1, $items->length);
 
-        $this->assertEqualDOMElement(
+        $this->assertEqualXMLStructure(
             $sample->documentElement,
             $items->item(0)
         );
     }
 
-    public function testGetUrlReturnsUrlSetBefore(): void
+    public function testGetUrlReturnsUrlSetBefore()
     {
         $urlString = 'http://example.com/?foo=1&bar=2';
         $url = new CultureFeed_Cdb_Data_Url($urlString, false, false);
         $this->assertEquals($urlString, $url->getUrl());
+
+        $newUrlString = 'http://example.com';
+        $url->setUrl($urlString);
+        $url->setUrl($newUrlString, $url->getUrl());
     }
 
-    public function testIsMainReturnMainSetBefore(): void
+    public function testIsMainReturnMainSetBefore()
     {
         $urlString = 'http://example.com/?foo=1&bar=2';
 

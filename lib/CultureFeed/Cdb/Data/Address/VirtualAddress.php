@@ -1,28 +1,53 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_Address_VirtualAddress implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of a virtual address element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_Address_VirtualAddress implements CultureFeed_Cdb_IElement
 {
-    private string $title;
+    /**
+     * Title from the virtual address.
+     * @var string
+     */
+    protected $title;
 
-    public function __construct(string $title)
+    /**
+     * Construct the virtual address.
+     *
+     * @param string $title
+     *   Title from the address.
+     */
+    public function __construct($title)
     {
         $this->title = $title;
     }
 
-    public function setTitle(string $title): void
+    /**
+     * Set the title.
+     *
+     * @param string $title
+     *   Title to set.
+     */
+    public function setTitle($title)
     {
         $this->title = $title;
     }
 
-    public function getTitle(): string
+    /**
+     * Get the title.
+     */
+    public function getTitle()
     {
         return $this->title;
     }
 
-    public function appendToDOM(DOMElement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $virtualElement = $dom->createElement('virtual');
@@ -33,11 +58,17 @@ final class CultureFeed_Cdb_Data_Address_VirtualAddress implements CultureFeed_C
         $element->appendChild($virtualElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Address_VirtualAddress
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_Address_VirtualAddress
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
+
         if (empty($xmlElement->title)) {
             throw new CultureFeed_Cdb_ParseException(
-                'Title is missing for virtual address'
+                "Title is missing for virtual address"
             );
         }
 

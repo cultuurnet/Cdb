@@ -1,40 +1,81 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of a keyword element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
 {
-    private string $value;
-    private bool $visible;
+    /**
+     * Keyword value.
+     * @var string
+     */
+    protected $value;
 
-    public function __construct(string $value, bool $visible = true)
+    /**
+     * Keyword visibility.
+     * @var bool
+     */
+    protected $visible;
+
+    /**
+     * Construct a new keyword.
+     *
+     * @param $value
+     *   The keyword value.
+     * @param $visible
+     *   The keyword visibility.
+     */
+    public function __construct($value, $visible = true)
     {
         $this->value = $value;
         $this->visible = $visible;
     }
 
-    public function getValue(): string
+    /**
+     * Get the value of the keyword.
+     */
+    public function getValue()
     {
         return $this->value;
     }
 
-    public function isVisible(): bool
+    /**
+     * Get the visibility of the keyword.
+     */
+    public function isVisible()
     {
         return $this->visible;
     }
 
-    public function setValue(string $value): void
+    /**
+     * Set the value of the keyword.
+     *
+     * @param string $value
+     *   The keyword value.
+     */
+    public function setValue($value)
     {
         $this->value = $value;
     }
 
-    public function setVisibility(bool $visible): void
+    /**
+     * Set the visibility of the keyword.
+     *
+     * @param bool $visible
+     *   The keyword visibility.
+     */
+    public function setVisibility($visible)
     {
         $this->visible = $visible;
     }
 
-    public function appendToDOM(DOMElement $element): void
+    /**
+     * @inheritdoc
+     */
+    public function appendToDOM(DOMElement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $keywordElement = $dom->createElement('keyword');
@@ -46,16 +87,24 @@ final class CultureFeed_Cdb_Data_Keyword implements CultureFeed_Cdb_IElement
         $element->appendChild($keywordElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Keyword
+    /**
+     * @param SimpleXMLElement $xmlElement
+     *
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_Keyword
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
+
         $attributes = $xmlElement->attributes();
         if (!isset($attributes['visible'])) {
-            $attributes['visible'] = new SimpleXMLElement('true');
+            $attributes['visible'] = true;
         }
 
         return new CultureFeed_Cdb_Data_Keyword(
             (string) $xmlElement,
-            (bool )$attributes['visible']
+            $attributes['visible']
         );
     }
 }

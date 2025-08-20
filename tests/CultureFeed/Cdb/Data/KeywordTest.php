@@ -1,19 +1,18 @@
 <?php
 
-declare(strict_types=1);
-
-use PHPUnit\Framework\TestCase;
-
-final class CultureFeed_Cdb_Data_KeywordTest extends TestCase
+/**
+ * @file
+ */
+class CultureFeed_Cdb_Data_KeywordTest extends PHPUnit_Framework_TestCase
 {
-    public function testIsVisibleByDefault(): void
+    public function testIsVisibleByDefault()
     {
         $keyword = new CultureFeed_Cdb_Data_Keyword('foo');
 
         $this->assertTrue($keyword->isVisible());
     }
 
-    public function testVisibilityPassedToConstructor(): void
+    public function testVisibilityPassedToConstructor()
     {
         $visibleKeyword = new CultureFeed_Cdb_Data_Keyword('foo', true);
         $this->assertTrue($visibleKeyword->isVisible());
@@ -22,7 +21,7 @@ final class CultureFeed_Cdb_Data_KeywordTest extends TestCase
         $this->assertFalse($invisibleKeyword->isVisible());
     }
 
-    public function testChangeVisibility(): void
+    public function testChangeVisibility()
     {
         $keyword = new CultureFeed_Cdb_Data_Keyword('foo');
 
@@ -36,32 +35,40 @@ final class CultureFeed_Cdb_Data_KeywordTest extends TestCase
     }
 
     /**
-     * @return array<array<string>>
+     * Provider for valid keyword values.
+     *
+     * @return array
      */
-    public function validKeywordValues(): array
+    public function validKeywordValues()
     {
-        return [
-            ['foo'],
-            ['bar'],
-        ];
+        return array(
+            array('foo'),
+            array('bar'),
+        );
     }
 
     /**
      * @dataProvider validKeywordValues
+     *
+     * @param string $validValue
      */
-    public function testValidValue(string $validValue): void
+    public function testValidValue($validValue)
     {
         $keyword = new CultureFeed_Cdb_Data_Keyword($validValue);
         $this->assertSame($validValue, $keyword->getValue());
     }
 
-    public function testAppendToDOM(): void
+    /**
+     * Test append to dom.
+     */
+    public function testAppendToDOM()
     {
+
         /** @var CultureFeed_Cdb_Data_Keyword[] $keywords */
-        $keywords = [
+        $keywords = array(
             new CultureFeed_Cdb_Data_Keyword('foo'),
             new CultureFeed_Cdb_Data_Keyword('bar', false),
-        ];
+        );
 
         $dom = new DOMDocument('1.0', 'utf8');
         $root = $dom->createElement('keywords');

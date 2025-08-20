@@ -1,12 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-use PHPUnit\Framework\TestCase;
-
-final class CultureFeed_Cdb_Data_Calendar_PeriodTest extends TestCase
+/**
+ * Created by PhpStorm.
+ * User: Kristof
+ * Date: 12/12/13
+ * Time: 20:31
+ */
+class CultureFeed_Cdb_Data_Calendar_PeriodTest extends PHPUnit_Framework_TestCase
 {
-    public function testAppendToDOM(): void
+    public function testAppendToDOM()
     {
         $from = '2013-12-06';
         $to = '2013-12-25';

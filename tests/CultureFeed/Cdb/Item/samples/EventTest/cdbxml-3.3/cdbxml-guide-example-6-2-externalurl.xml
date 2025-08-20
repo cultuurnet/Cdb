@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<event xmlns="http://www.cultuurdatabank.com/XMLSchema/CdbXSD/3.3/FINAL" availablefrom="2010-02-25T00:00:00"
+       availableto="2010-08-09T00:00:00" cdbid="ea37cae2-c91e-4810-89ab-e060432d2b78" createdby="mverdoodt"
+       creationdate="2010-07-05T18:28:18" externalid="SKB Import:SKB00001_216413"
+       externalurl="http://uitdatabank.be/event/ea37cae2-c91e-4810-89ab-e060432d2b78" isparent="false"
+       lastupdated="2010-07-28T13:58:55" lastupdatedby="mverdoodt" owner="SKB Import" pctcomplete="80"
+       private="false" published="true" validator="SKB" wfstatus="approved">
+  <keywords>Free Jazz, Acoustisch</keywords>
+  <categories>
+    <category catid="0.50.4.0.0" type="eventtype">Concert</category>
+    <category catid="1.8.2.0.0" type="theme">Jazz en blues</category>
+    <category catid="6.2.0.0.0" type="publicscope">Regionaal</category>
+  </categories>
+  <agefrom>18</agefrom>
+  <calendar>
+    <timestamps>
+      <timestamp>
+        <date>2010-08-01</date>
+        <timestart>21:00:00.0000000</timestart>
+      </timestamp>
+    </timestamps>
+  </calendar>
+  <contactinfo>
+    <mail>info@bonnefooi.be</mail>
+    <phone>0487-62.22.31</phone>
+    <url main="true">http://www.bonnefooi.be</url>
+  </contactinfo>
+  <eventdetails>
+    <eventdetail lang="nl">
+      <calendarsummary>zo 01/08/10 om 21:00</calendarsummary>
+      <performers>
+        <performer>
+          <role>Muzikant</role>
+          <label>Matt, the Englishman in Brussels</label>
+        </performer>
+      </performers>
+      <longdescription>Weggelaten voor leesbaarheid...</longdescription>
+      <media>
+        <file main="true">
+          <copyright>Bonnefooi</copyright>
+          <hlink>http://www.bonnefooi.be/images/sized/site/images/uploads/Jeroen_Jamming-453x604.jpg</hlink>
+          <mediatype>imageweb</mediatype>
+          <title>Jeroen Jamming</title>
+        </file>
+      </media>
+      <price>
+        <title>The Bonnefooi Acoustic Jam</title>
+        <pricevalue>0</pricevalue>
+      </price>
+      <shortdescription>Korte omschrijving.</shortdescription>
+      <title>The Bonnefooi Acoustic Jam</title>
+    </eventdetail>
+    <eventdetail lang="en">
+      <shortdescription>Short description.</shortdescription>
+    </eventdetail>
+  </eventdetails>
+  <languages>
+    <language type="spoken">Nederlands</language>
+    <language type="spoken">Frans</language>
+  </languages>
+  <location>
+    <address>
+      <physical>
+        <city>Brussel</city>
+        <country>BE</country>
+        <housenr>8</housenr>
+        <street>Steenstraat</street>
+        <zipcode>1000</zipcode>
+      </physical>
+    </address>
+    <label cdbid="920e9755-94a0-42c1-8c8c-9d17f693d0be">Café Bonnefooi</label>
+  </location>
+  <organiser>
+    <label>Café Bonnefooi</label>
+  </organiser>
+</event>

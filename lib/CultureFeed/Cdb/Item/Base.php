@@ -1,67 +1,119 @@
 <?php
 
-declare(strict_types=1);
-
+/**
+ * @class
+ * Abstract base class for the representation of an item on the culturefeed.
+ */
 abstract class CultureFeed_Cdb_Item_Base
 {
-    protected ?string $availableFrom = null;
-    protected ?string $availableTo = null;
-    protected ?CultureFeed_Cdb_Data_CategoryList $categories = null;
-    protected ?string $cdbId = null;
-    protected ?string $createdBy = null;
-    protected ?string $creationDate = null;
-    protected ?CultureFeed_Cdb_Data_DetailList $details = null;
-    protected ?string $externalId = null;
-    /** @var array<CultureFeed_Cdb_Data_Keyword> */
-    protected array $keywords = [];
-    protected ?string $lastUpdated = null;
-    protected ?string $lastUpdatedBy = null;
-    protected ?string $owner = null;
-    protected ?bool $private = null;
-    protected ?string $publisher = null;
-    /** @var array<CultureFeed_Cdb_Item_Reference> */
-    protected array $relations;
-    protected ?string $wfStatus;
-
-    protected static function parseKeywords(
-        SimpleXMLElement $xmlElement,
-        CultureFeed_Cdb_Item_Base $item
-    ): void {
-        if (@count($xmlElement->keywords)) {
-            $keywordsString = trim((string) $xmlElement->keywords);
-
-            if ($keywordsString === '') {
-                /**
-                 * @var SimpleXMLElement $keywordElement
-                 */
-                foreach ($xmlElement->keywords->keyword as $keywordElement) {
-                    $attributes = $keywordElement->attributes();
-                    $visible =
-                        !isset($attributes['visible']) ||
-                        $attributes['visible'] == 'true';
-
-                    $item->addKeyword(
-                        new CultureFeed_Cdb_Data_Keyword(
-                            (string) $keywordElement,
-                            $visible
-                        )
-                    );
-                }
-            } else {
-                $keywords = explode(';', $keywordsString);
-
-                foreach ($keywords as $keyword) {
-                    $item->addKeyword(trim($keyword));
-                }
-            }
-        }
-    }
+    /**
+     * @var string
+     */
+    protected $availableFrom;
 
     /**
-     * @param string|CultureFeed_Cdb_Data_Keyword $keyword
+     * @var string
      */
-    public function addKeyword($keyword): void
+    protected $availableTo;
+
+    /**
+     * Categories from the item.
+     * @var CultureFeed_Cdb_Data_CategoryList
+     */
+    protected $categories;
+
+    /**
+     * cdbId from the item.
+     * @var string
+     */
+    protected $cdbId;
+
+    /**
+     * @var string
+     */
+    protected $createdBy;
+
+    /**
+     * @var string
+     */
+    protected $creationDate;
+
+    /**
+     * Details from the item.
+     *
+     * @var CultureFeed_Cdb_Data_DetailList
+     */
+    protected $details;
+
+    /**
+     * External id from the item.
+     *
+     * @var string
+     */
+    protected $externalId;
+
+    /**
+     * External url from the item.
+     *
+     * @var string
+     */
+    protected $externalUrl;
+
+    /**
+     * Keywords from the item
+     *
+     * @var CultureFeed_Cdb_Data_Keyword[] List with keywords.
+     */
+    protected $keywords = array();
+
+    /**
+     * @var string
+     */
+    protected $lastUpdated;
+
+    /**
+     * @var string
+     */
+    protected $lastUpdatedBy;
+
+    /**
+     * Owner of this item.
+     * @var string
+     */
+    protected $owner;
+
+    /**
+     * Is item private
+     * @var bool
+     */
+    protected $private = null;
+
+    /**
+     * Publisher of this item.
+     * @var string
+     */
+    protected $publisher;
+
+    /**
+     * Relations from the item.
+     * @var CultureFeed_Cdb_Item_Reference[] List with related items.
+     */
+    protected $relations;
+
+    /**
+     * @var string
+     */
+    protected $wfStatus;
+
+    /**
+     * Add a keyword to this item.
+     *
+     * @param string|CultureFeed_Cdb_Data_Keyword $keyword
+     *   Add a keyword.
+     */
+    public function addKeyword($keyword)
     {
+
         // Keyword can be object (cdb 3.3) or string (< 3.3).
         if (!is_string($keyword)) {
             $this->keywords[$keyword->getValue()] = $keyword;
@@ -72,7 +124,11 @@ abstract class CultureFeed_Cdb_Item_Base
         }
     }
 
-    protected static function parseCommonAttributes(CultureFeed_Cdb_Item_Base $item, SimpleXMLElement $xmlElement): void
+    /**
+     * @param CultureFeed_Cdb_Item_Base $item
+     * @param SimpleXMLElement $xmlElement
+     */
+    protected static function parseCommonAttributes(CultureFeed_Cdb_Item_Base $item, SimpleXMLElement $xmlElement)
     {
         $attributes = $xmlElement->attributes();
 
@@ -82,6 +138,10 @@ abstract class CultureFeed_Cdb_Item_Base
 
         if (isset($attributes['externalid'])) {
             $item->setExternalId((string) $attributes['externalid']);
+        }
+
+        if (isset($attributes['externalurl'])) {
+            $item->setExternalUrl((string) $attributes['externalurl']);
         }
 
         if (isset($attributes['availablefrom'])) {
@@ -119,157 +179,472 @@ abstract class CultureFeed_Cdb_Item_Base
         if (isset($attributes['wfstatus'])) {
             $item->setWfStatus((string) $attributes['wfstatus']);
         }
+
+        if (isset($attributes['private'])) {
+            $item->setPrivate(
+                filter_var(
+                    (string) $attributes['private'],
+                    FILTER_VALIDATE_BOOLEAN
+                )
+            );
+        }
     }
 
-    public function getExternalId(): ?string
+    /**
+     * @param DOMElement $element
+     */
+    protected function appendCommonAttributesToDOM(
+        DOMElement $element,
+        $cdbScheme = '3.2'
+    ) {
+        if ($this->availableFrom) {
+            $element->setAttribute('availablefrom', $this->availableFrom);
+        }
+
+        if ($this->availableTo) {
+            $element->setAttribute('availableto', $this->availableTo);
+        }
+
+        if ($this->cdbId) {
+            $element->setAttribute('cdbid', $this->cdbId);
+        }
+
+        if ($this->createdBy) {
+            $element->setAttribute('createdby', $this->createdBy);
+        }
+
+        if ($this->creationDate) {
+            $element->setAttribute('creationdate', $this->creationDate);
+        }
+
+        if ($this->externalId) {
+            $element->setAttribute('externalid', $this->externalId);
+        }
+
+        if ($this->externalUrl && version_compare($cdbScheme, '3.3', '>=')) {
+            $element->setAttribute('externalurl', $this->externalUrl);
+        }
+
+        if (isset($this->lastUpdated)) {
+            $element->setAttribute('lastupdated', $this->lastUpdated);
+        }
+
+        if (isset($this->lastUpdatedBy)) {
+            $element->setAttribute('lastupdatedby', $this->lastUpdatedBy);
+        }
+
+        if (isset($this->owner)) {
+            $element->setAttribute('owner', $this->owner);
+        }
+
+        if (isset($this->private)) {
+            $element->setAttribute(
+                'private',
+                $this->private ? 'true' : 'false'
+            );
+        }
+
+        if (isset($this->wfStatus)) {
+            $element->setAttribute('wfstatus', $this->wfStatus);
+        }
+
+        if ($this->publisher) {
+            $element->setAttribute('publisher', $this->publisher);
+        }
+    }
+
+    /**
+     * Parses keywords from cdbxml.
+     *
+     * @param CultureFeed_Cdb_Item_Base $item
+     * @param SimpleXMLElement $xmlElement
+     */
+    protected static function parseKeywords(
+        CultureFeed_Cdb_Item_Base $item,
+        SimpleXMLElement $xmlElement
+    ) {
+        if (@count($xmlElement->keywords)) {
+            $keywordsString = trim($xmlElement->keywords);
+
+            if ($keywordsString === '') {
+                /**
+                 * @var SimpleXMLElement $keywordElement
+                 */
+                foreach ($xmlElement->keywords->keyword as $keywordElement) {
+                    $attributes = $keywordElement->attributes();
+                    $visible =
+                        !isset($attributes['visible']) ||
+                        $attributes['visible'] == 'true';
+
+                    $item->addKeyword(
+                        new CultureFeed_Cdb_Data_Keyword(
+                            (string) $keywordElement,
+                            $visible
+                        )
+                    );
+                }
+            } else {
+                $keywords = explode(';', $keywordsString);
+
+                foreach ($keywords as $keyword) {
+                    $item->addKeyword(trim($keyword));
+                }
+            }
+        }
+    }
+
+    /**
+     * @param DOMElement $element
+     * @param string $cdbScheme
+     */
+    protected function appendKeywordsToDOM(
+        DOMElement $element,
+        $cdbScheme = '3.2'
+    ) {
+        $dom = $element->ownerDocument;
+
+        if (count($this->keywords) > 0) {
+            $keywordsElement = $dom->createElement('keywords');
+            if (version_compare($cdbScheme, '3.3', '>=')) {
+                foreach ($this->keywords as $keyword) {
+                    $keyword->appendToDOM($keywordsElement);
+                }
+                $element->appendChild($keywordsElement);
+            } else {
+                $keywords = array();
+                foreach ($this->keywords as $keyword) {
+                    $keywords[$keyword->getValue()] = $keyword->getValue();
+                }
+                $keywordsElement->appendChild(
+                    $dom->createTextNode(implode(';', $keywords))
+                );
+                $element->appendChild($keywordsElement);
+            }
+        }
+    }
+
+    /**
+     * @param CultureFeed_Cdb_Item_Base $item
+     * @param SimpleXMLElement $xmlElement
+     *
+     * @throws CultureFeed_Cdb_ParseException
+     */
+    protected static function parseCategories(
+        CultureFeed_Cdb_Item_Base $item,
+        SimpleXMLElement $xmlElement
+    ) {
+        if (empty($xmlElement->categories)) {
+            $elementName = $xmlElement->getName();
+
+            throw new CultureFeed_Cdb_ParseException(
+                "Categories missing for {$elementName} element"
+            );
+        }
+
+        $item->setCategories(
+            CultureFeed_Cdb_Data_CategoryList::parseFromCdbXml(
+                $xmlElement->categories
+            )
+        );
+    }
+
+    /**
+     * @param DOMElement $element
+     * @param string $cdbScheme
+     */
+    protected function appendCategoriesToDOM(
+        DOMElement $element,
+        $cdbScheme = '3.2'
+    ) {
+        if ($this->categories) {
+            $this->categories->appendToDOM($element);
+        }
+    }
+
+    /**
+     * Get the external ID from this item.
+     */
+    public function getExternalId()
     {
         return $this->externalId;
     }
 
-    public function setExternalId(string $id): void
+    /**
+     * Set the external id from this item.
+     *
+     * @param string $id
+     *   ID to set.
+     */
+    public function setExternalId($id)
     {
         $this->externalId = $id;
     }
 
-    public function getCdbId(): ?string
+    /**
+     * Get the external url from this item.
+     *
+     * @return string
+     */
+    public function getExternalUrl()
+    {
+        return $this->externalUrl;
+    }
+
+    /**
+     * Set the external url from this item.
+     *
+     * @param string $url
+     *   Url to set.
+     */
+    public function setExternalUrl($url)
+    {
+        $this->externalUrl = $url;
+    }
+
+    /**
+     * Get the Cdbid from this item.
+     * @return string
+     */
+    public function getCdbId()
     {
         return $this->cdbId;
     }
 
-    public function setCdbId(string $id): void
+    /**
+     * Set the cdbid from this item.
+     *
+     * @param string $id
+     */
+    public function setCdbId($id)
     {
         $this->cdbId = $id;
     }
 
-    public function isPrivate(): ?bool
+    /**
+     * Get if item is private.
+     * @return bool
+     */
+    public function isPrivate()
     {
         return $this->private;
     }
 
-    public function setPrivate(bool $private = true): void
+    /**
+     * Set if item is private.
+     *
+     * @param bool $private
+     */
+    public function setPrivate($private = true)
     {
         $this->private = $private;
     }
 
-    public function getLastUpdated(): ?string
+    /**
+     * @return string
+     */
+    public function getLastUpdated()
     {
         return $this->lastUpdated;
     }
 
-    public function setLastUpdated(string $value): void
+    /**
+     * @param string $value
+     */
+    public function setLastUpdated($value)
     {
         $this->lastUpdated = $value;
     }
 
-    public function getLastUpdatedBy(): ?string
+    /**
+     * @return string
+     */
+    public function getLastUpdatedBy()
     {
         return $this->lastUpdatedBy;
     }
 
-    public function setLastUpdatedBy(string $author): void
+    /**
+     * @param string $author
+     */
+    public function setLastUpdatedBy($author)
     {
         $this->lastUpdatedBy = $author;
     }
 
-    public function getAvailableFrom(): ?string
+    /**
+     * @return string
+     */
+    public function getAvailableFrom()
     {
         return $this->availableFrom;
     }
 
-    public function setAvailableFrom(string $value): void
+    /**
+     * @param string $value
+     */
+    public function setAvailableFrom($value)
     {
         $this->availableFrom = $value;
     }
 
-    public function getAvailableTo(): ?string
+    /**
+     * @return string
+     */
+    public function getAvailableTo()
     {
         return $this->availableTo;
     }
 
-    public function setAvailableTo(string $value): void
+    /**
+     * @param string $value
+     */
+    public function setAvailableTo($value)
     {
         $this->availableTo = $value;
     }
 
-    public function getCreatedBy(): ?string
+    /**
+     * @return string
+     */
+    public function getCreatedBy()
     {
         return $this->createdBy;
     }
 
-    public function setCreatedBy(string $author): void
+    /**
+     * @param string $author
+     */
+    public function setCreatedBy($author)
     {
         $this->createdBy = $author;
     }
 
-    public function getCreationDate(): ?string
+    /**
+     * @return string
+     */
+    public function getCreationDate()
     {
         return $this->creationDate;
     }
 
-    public function setCreationDate(string $value): void
+    /**
+     * @param string $value
+     */
+    public function setCreationDate($value)
     {
         $this->creationDate = $value;
     }
 
-    public function getOwner(): ?string
+    /**
+     * @return string
+     */
+    public function getOwner()
     {
         return $this->owner;
     }
 
-    public function setOwner(string $owner): void
+    /**
+     * @param string $owner
+     */
+    public function setOwner($owner)
     {
         $this->owner = $owner;
     }
 
-    public function getWfStatus(): ?string
+    /**
+     * @return string
+     */
+    public function getWfStatus()
     {
         return $this->wfStatus;
     }
 
-    public function setWfStatus(string $status): void
+    /**
+     * @param string $status
+     */
+    public function setWfStatus($status)
     {
         $this->wfStatus = $status;
     }
 
-    public function getPublisher(): ?string
+    /**
+     * Get the publisher.
+     *
+     * @return string
+     *   The publisher.
+     */
+    public function getPublisher()
     {
         return $this->publisher;
     }
 
-    public function setPublisher(string $publisher): void
+    /**
+     * Set the publisher.
+     *
+     * @param string $publisher
+     *   The publisher.
+     */
+    public function setPublisher($publisher)
     {
         $this->publisher = $publisher;
     }
 
-    public function getCategories(): ?CultureFeed_Cdb_Data_CategoryList
+    /**
+     * Get the categories from this item.
+     */
+    public function getCategories()
     {
         return $this->categories;
     }
 
-    public function setCategories(CultureFeed_Cdb_Data_CategoryList $categories): void
+    /**
+     * Set the categories from this item.
+     *
+     * @param CultureFeed_Cdb_Data_CategoryList $categories
+     *   Categories to set.
+     */
+    public function setCategories(CultureFeed_Cdb_Data_CategoryList $categories)
     {
         $this->categories = $categories;
     }
 
-    public function getDetails(): ?CultureFeed_Cdb_Data_DetailList
+    /**
+     * Get the details from this item.
+     *
+     * @return CultureFeed_Cdb_Data_DetailList
+     */
+    public function getDetails()
     {
         return $this->details;
     }
 
-    public function setDetails(CultureFeed_Cdb_Data_DetailList $details): void
+    /**
+     * Set the details from this item.
+     *
+     * @param CultureFeed_Cdb_Data_DetailList $details
+     *   Detail information from the current item.
+     */
+    public function setDetails(CultureFeed_Cdb_Data_DetailList $details)
     {
         $this->details = $details;
     }
 
     /**
-     * @return array<string>|array<CultureFeed_Cdb_Data_Keyword>
+     * Get the keywords from this item.
+     *
+     * @param bool $asObject
+     *   Return keywords as objects or values.
+     *
+     * @return array
+     *   The keywords.
      */
-    public function getKeywords(bool $asObject = false): array
+    public function getKeywords($asObject = false)
     {
+
         if ($asObject) {
             return $this->keywords;
         } else {
-            $keywords = [];
+            $keywords = array();
             foreach ($this->keywords as $keyword) {
                 $keywords[$keyword->getValue()] = $keyword->getValue();
             }
@@ -278,36 +653,54 @@ abstract class CultureFeed_Cdb_Item_Base
     }
 
     /**
-     * @return array<CultureFeed_Cdb_Item_Reference>
+     * Get the relations from this item.
      */
-    public function getRelations(): array
+    public function getRelations()
     {
         return $this->relations;
     }
 
     /**
+     * Delete a keyword from this item.
+     *
      * @param string|CultureFeed_Cdb_Data_Keyword $keyword
+     *   Delete keyword as object or value.
+     *
+     * @throws Exception
      */
-    public function deleteKeyword($keyword): void
+    public function deleteKeyword($keyword)
     {
+
         if (!is_string($keyword)) {
             $keyword = $keyword->getValue();
         }
 
-        if (!isset($this->keywords[$keyword])) {
-            throw new Exception('Trying to remove a non-existing keyword.');
-        }
-
-        unset($this->keywords[$keyword]);
+        $this->keywords = array_filter(
+            $this->keywords,
+            function (CultureFeed_Cdb_Data_Keyword $itemKeyword) use ($keyword) {
+                return strcmp(mb_strtolower($itemKeyword->getValue(), 'UTF-8'), mb_strtolower($keyword, 'UTF-8')) !== 0;
+            }
+        );
     }
 
-    public function addRelation(CultureFeed_Cdb_Item_Reference $item): void
+    /**
+     * Add a relation to the current item.
+     *
+     * @param CultureFeed_Cdb_Item_Reference $item
+     */
+    public function addRelation(CultureFeed_Cdb_Item_Reference $item)
     {
         $this->relations[$item->getCdbId()] = $item;
     }
 
-    public function deleteRelation(string $cdbid): void
+    /**
+     * Delete a relation from the item.
+     *
+     * @param string $cdbid Cdbid to delete
+     */
+    public function deleteRelation($cdbid)
     {
+
         if (!isset($this->relations[$cdbid])) {
             throw new Exception('Trying to remove a non-existing relation.');
         }

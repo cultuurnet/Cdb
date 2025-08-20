@@ -1,28 +1,50 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of an EventDetail element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
 {
-    private string $calendarSummary;
+    /**
+     * Calendar summary from this actorDetail.
+     * @var string
+     */
+    protected $calendarSummary;
 
+    /**
+     * Construct the ActorDetail.
+     */
     public function __construct()
     {
         $this->media = new CultureFeed_Cdb_Data_Media();
     }
 
-    public function getCalendarSummary(): string
+    /**
+     * Get the calendar summary.
+     * @return string
+     */
+    public function getCalendarSummary()
     {
         return $this->calendarSummary;
     }
 
-    public function setCalendarSummary(string $summary): void
+    /**
+     * Set the calendar summary.
+     *
+     * @param string $summary
+     */
+    public function setCalendarSummary($summary)
     {
         $this->calendarSummary = $summary;
     }
 
-    public function appendToDOM(DOMElement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $detailElement = $dom->createElement('actordetail');
@@ -34,7 +56,7 @@ final class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail
                 $dom->createTextNode($this->calendarSummary)
             );
             $detailElement->appendChild(
-                $dom->createTextNode($this->calendarSummary)
+                $summaryElement
             );
         }
 
@@ -65,18 +87,23 @@ final class CultureFeed_Cdb_Data_ActorDetail extends CultureFeed_Cdb_Data_Detail
         $element->appendChild($detailElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_ActorDetail
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return self
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
         if (empty($xmlElement->title)) {
             throw new CultureFeed_Cdb_ParseException(
-                'Title missing for actordetail element'
+                "Title missing for actordetail element"
             );
         }
 
         $attributes = $xmlElement->attributes();
         if (empty($attributes['lang'])) {
             throw new CultureFeed_Cdb_ParseException(
-                'Lang missing for actordetail element'
+                "Lang missing for actordetail element"
             );
         }
 

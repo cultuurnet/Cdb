@@ -1,12 +1,16 @@
 <?php
 
-declare(strict_types=1);
-
-use PHPUnit\Framework\TestCase;
-
-final class CultureFeed_Cdb_Item_PageTest extends TestCase
+/**
+ * @file
+ */
+class CultureFeed_Cdb_Item_PageTest extends PHPUnit_Framework_TestCase
 {
-    public function loadSample(string $fileName): SimpleXMLElement
+    /**
+     * @param $fileName
+     *
+     * @return SimpleXMLElement
+     */
+    public function loadSample($fileName)
     {
         $sampleDir = __DIR__ . '/samples/PageTest/';
         $filePath = $sampleDir . $fileName;
@@ -16,7 +20,7 @@ final class CultureFeed_Cdb_Item_PageTest extends TestCase
         return $xml;
     }
 
-    public function testParsePage(): void
+    public function testParsePage()
     {
         $xml = $this->loadSample('page.xml');
 

@@ -1,39 +1,75 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of an ProductionDetail element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_Detail implements CultureFeed_Cdb_IElement
 {
-    private string $calendarSummary;
-    private CultureFeed_Cdb_Data_PerformerList $performers;
+    /**
+     * @var string
+     */
+    protected $calendarSummary;
 
+    /**
+     * @var CultureFeed_Cdb_Data_PerformerList
+     */
+    protected $performers;
+
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->media = new CultureFeed_Cdb_Data_Media();
     }
 
-    public function getCalendarSummary(): string
+    /**
+     * Get the calendar summary.
+     *
+     * @return string
+     */
+    public function getCalendarSummary()
     {
         return $this->calendarSummary;
     }
 
-    public function getPerformers(): CultureFeed_Cdb_Data_PerformerList
+    /**
+     * Get the performers.
+     *
+     * @return CultureFeed_Cdb_Data_PerformersList
+     */
+    public function getPerformers()
     {
         return $this->performers;
     }
 
-    public function setCalendarSummary(string $summary): void
+    /**
+     * Set the calendar summary.
+     *
+     * @param string $summary
+     */
+    public function setCalendarSummary($summary)
     {
         $this->calendarSummary = $summary;
     }
 
-    public function setPerformers(CultureFeed_Cdb_Data_PerformerList $performers): void
+    /**
+     * Set the performers.
+     *
+     * @param CultureFeed_Cdb_Data_PerformersList $performers
+     */
+    public function setPerformers(CultureFeed_Cdb_Data_PerformerList $performers)
     {
         $this->performers = $performers;
     }
 
-    public function appendToDOM(DOMElement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $detailElement = $dom->createElement('productiondetail');
@@ -74,22 +110,28 @@ final class CultureFeed_Cdb_Data_ProductionDetail extends CultureFeed_Cdb_Data_D
         $element->appendChild($detailElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_ProductionDetail
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_ProductionDetail
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
+
         if (empty($xmlElement->title)) {
-            throw new CultureFeed_Cdb_ParseException(
-                'Title missing for productiondetail element'
+            throw new CultureFeed_ParseException(
+                "Title missing for productiondetail element"
             );
         }
 
         $attributes = $xmlElement->attributes();
         if (empty($attributes['lang'])) {
-            throw new CultureFeed_Cdb_ParseException(
-                'Language (lang) missing for productiondetail element'
+            throw new CultureFeed_ParseException(
+                "Language (lang) missing for productiondetail element"
             );
         }
 
-        $productionDetail = new CultureFeed_Cdb_Data_ProductionDetail();
+        $productionDetail = new Culturefeed_Cdb_Data_ProductionDetail();
         $productionDetail->setTitle((string) $xmlElement->title);
         $productionDetail->setLanguage((string) $attributes['lang']);
 

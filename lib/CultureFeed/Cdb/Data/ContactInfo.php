@@ -1,68 +1,92 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of a contactinfo element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
 {
     /**
-     * @var CultureFeed_Cdb_Data_Address[]
+     * List of addresses.
+     * @var array
      */
-    private array $addresses = [];
+    protected $addresses = array();
 
     /**
-     * @var CultureFeed_Cdb_Data_Phone[]
+     * List of phones.
+     * @var array
      */
-    private array $phones = [];
+    protected $phones = array();
 
     /**
+     * List of mails.
      * @var CultureFeed_Cdb_Data_Mail[]
      */
-    private array $mails = [];
+    protected $mails = array();
 
     /**
-     * @var CultureFeed_Cdb_Data_Url[]
+     * List of urls.
+     * @var array
      */
-    private array $urls = [];
+    protected $urls = array();
 
     /**
-     * @return CultureFeed_Cdb_Data_Address[]
+     * Get the list of addresses.
+     *
+     * @return array
      */
-    public function getAddresses(): array
+    public function getAddresses()
     {
         return $this->addresses;
     }
 
     /**
-     * @return CultureFeed_Cdb_Data_Phone[]
+     * Get the list of phones.
      */
-    public function getPhones(): array
+    public function getPhones()
     {
         return $this->phones;
     }
 
     /**
+     * Get the list of mails.
+     *
      * @return CultureFeed_Cdb_Data_Mail[]
      */
-    public function getMails(): array
+    public function getMails()
     {
         return $this->mails;
     }
 
     /**
-     * @return CultureFeed_Cdb_Data_Url[]
+     * Get the list of urls.
      */
-    public function getUrls(): array
+    public function getUrls()
     {
         return $this->urls;
     }
 
-    public function addAddress(CultureFeed_Cdb_Data_Address $address): void
+    /**
+     * Add an address to the address list.
+     *
+     * @param CultureFeed_Cdb_Data_Address $address
+     */
+    public function addAddress(CultureFeed_Cdb_Data_Address $address)
     {
         $this->addresses[] = $address;
     }
 
-    public function removeAddress(int $index): void
+    /**
+     * Remove an address at a given index.
+     *
+     * @param int $index
+     *   Index to remove.
+     *
+     * @throws Exception
+     */
+    public function removeAddress($index)
     {
+
         if (!isset($this->addresses[$index])) {
             throw new Exception('Trying to remove an unexisting address.');
         }
@@ -70,13 +94,27 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
         unset($this->addresses[$index]);
     }
 
-    public function addPhone(CultureFeed_Cdb_Data_Phone $phone): void
+    /**
+     * Add a phone to the phone list.
+     *
+     * @param CultureFeed_Cdb_Data_Phone $phone
+     */
+    public function addPhone(CultureFeed_Cdb_Data_Phone $phone)
     {
         $this->phones[] = $phone;
     }
 
-    public function removePhone(int $index): void
+    /**
+     * Remove a phone at a given index.
+     *
+     * @param int $index
+     *   Index to remove.
+     *
+     * @throws Exception
+     */
+    public function removePhone($index)
     {
+
         if (!isset($this->phones[$index])) {
             throw new Exception('Trying to remove an unexisting phone.');
         }
@@ -84,18 +122,35 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
         unset($this->phones[$index]);
     }
 
-    public function deletePhones(): void
+    /**
+     * Delete all phones
+     */
+    public function deletePhones()
     {
-        $this->phones = [];
+        $this->phones = array();
     }
 
-    public function addMail(CultureFeed_Cdb_Data_Mail $mail): void
+    /**
+     * Add a mail to the mail list.
+     *
+     * @param CultureFeed_Cdb_Data_Mail $mail
+     */
+    public function addMail(CultureFeed_Cdb_Data_Mail $mail)
     {
         $this->mails[] = $mail;
     }
 
-    public function removeMail(int $index): void
+    /**
+     * Remove a mail at a given index.
+     *
+     * @param int $index
+     *   Index to remove.
+     *
+     * @throws Exception
+     */
+    public function removeMail($index)
     {
+
         if (!isset($this->mails[$index])) {
             throw new Exception('Trying to remove an unexisting mail.');
         }
@@ -103,18 +158,35 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
         unset($this->mails[$index]);
     }
 
-    public function deleteMails(): void
+    /**
+     * Delete all mails
+     */
+    public function deleteMails()
     {
-        $this->mails = [];
+        $this->mails = array();
     }
 
-    public function addUrl(CultureFeed_Cdb_Data_Url $url): void
+    /**
+     * Add an url to the url list.
+     *
+     * @param CultureFeed_Cdb_Data_Url $url
+     */
+    public function addUrl(CultureFeed_Cdb_Data_Url $url)
     {
         $this->urls[] = $url;
     }
 
-    public function removeUrl(int $index): void
+    /**
+     * Remove an url at a given index.
+     *
+     * @param int $index
+     *   Index to remove.
+     *
+     * @throws Exception
+     */
+    public function removeUrl($index)
     {
+
         if (!isset($this->urls[$index])) {
             throw new Exception('Trying to remove an unexisting url.');
         }
@@ -122,17 +194,22 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
         unset($this->urls[$index]);
     }
 
-    public function deleteUrls(): void
+    /**
+     * Delete all urls
+     */
+    public function deleteUrls()
     {
-        $this->urls = [];
+        $this->urls = array();
     }
 
     /**
-     * @return array<string, array<string>>
+     * Get the reservation contact info.
+     * @return array()
      */
-    public function getReservationInfo(): array
+    public function getReservationInfo()
     {
-        $info = [];
+
+        $info = array();
 
         foreach ($this->urls as $url) {
             if ($url->isForReservations()) {
@@ -156,11 +233,13 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
     }
 
     /**
-     * @return array<string, array<string>>
+     * Get the main contact info.
+     * @return array()
      */
-    public function getMainInfo(): array
+    public function getMainInfo()
     {
-        $info = [];
+
+        $info = array();
 
         foreach ($this->urls as $url) {
             if ($url->isMain()) {
@@ -169,33 +248,38 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
         }
 
         foreach ($this->phones as $phone) {
-            if ($phone->isMainPhone()) {
+            if ($phone->isMain()) {
                 $info['phone'][] = $phone->getNumber();
             }
         }
 
         foreach ($this->mails as $mail) {
-            if ($mail->isMainMail()) {
-                $info['mails'][] = $mail->getMailAddress();
+            if ($mail->isMain()) {
+                $info['mails'][] = $mail->getAddress();
             }
         }
 
         return $info;
     }
 
-    public function getReservationUrl(): ?string
+    /**
+     * Get the reservation url.
+     */
+    public function getReservationUrl()
     {
         foreach ($this->urls as $url) {
             if ($url->isForReservations()) {
                 return $url->getUrl();
             }
         }
-
-        return null;
     }
 
-    public function appendToDOM(DOMElement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $contactElement = $dom->createElement('contactinfo');
@@ -219,10 +303,17 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
         $element->appendChild($contactElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_ContactInfo
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_ContactInfo
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
+
         $contactInfo = new CultureFeed_Cdb_Data_ContactInfo();
 
+        // Address from contact information.
         if (!empty($xmlElement->address)) {
             $contactInfo->addAddress(
                 CultureFeed_Cdb_Data_Address::parseFromCdbXml(
@@ -231,6 +322,7 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
             );
         }
 
+        // Mails.
         if (!empty($xmlElement->mail)) {
             foreach ($xmlElement->mail as $mailElement) {
                 $contactInfo->addMail(
@@ -239,6 +331,7 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
             }
         }
 
+        // Phone numbers.
         if (!empty($xmlElement->phone)) {
             foreach ($xmlElement->phone as $phoneElement) {
                 $contactInfo->addPhone(
@@ -247,6 +340,7 @@ final class CultureFeed_Cdb_Data_ContactInfo implements CultureFeed_Cdb_IElement
             }
         }
 
+        // Urls.
         if (!empty($xmlElement->url)) {
             foreach ($xmlElement->url as $urlElement) {
                 $contactInfo->addUrl(

@@ -1,15 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_ProductionDetailList extends CultureFeed_Cdb_Data_DetailList implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of a list of production details in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_ProductionDetailList extends CultureFeed_Cdb_Data_DetailList implements CultureFeed_Cdb_IElement
 {
-    public function appendToDOM(DOMElement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMElement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $detailsElement = $dom->createElement('productiondetails');
-        /** @var CultureFeed_Cdb_Data_ProductionDetail $detail */
         foreach ($this as $detail) {
             $detail->appendToDom($detailsElement);
         }
@@ -17,8 +22,14 @@ final class CultureFeed_Cdb_Data_ProductionDetailList extends CultureFeed_Cdb_Da
         $element->appendChild($detailsElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_ProductionDetailList
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_ProductionDetailList
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
+
         $detailList = new CultureFeed_Cdb_Data_ProductionDetailList();
         if (!empty($xmlElement->productiondetail)) {
             foreach ($xmlElement->productiondetail as $detailElement) {

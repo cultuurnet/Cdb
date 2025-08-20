@@ -1,40 +1,95 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_Calendar_BookingPeriod implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of a booking period element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_Calendar_BookingPeriod implements CultureFeed_Cdb_IElement
 {
-    private int $dateFrom;
-    private int $dateTill;
+    /**
+     * Start date
+     * @var int
+     */
+    protected $dateFrom;
 
-    public function __construct(int $dateFrom, int $dateTill)
+    /**
+     * End date
+     * @var int
+     */
+    protected $dateTill;
+
+    /**
+     * Construct a new booking period.
+     *
+     * @param int $dateFrom
+     *   Timestamp of the from date.
+     * @param int $dateTill
+     *   Timestamp of the end date.
+     */
+    public function __construct($dateFrom, $dateTill)
     {
         $this->dateFrom = $dateFrom;
         $this->dateTill = $dateTill;
     }
 
-    public function getDateFrom(): int
+    /**
+     * Get the start date.
+     */
+    public function getDateFrom()
     {
         return $this->dateFrom;
     }
 
-    public function getDateTill(): int
+    /**
+     * Get the end date.
+     */
+    public function getDateTill()
     {
         return $this->dateTill;
     }
 
-    public function setDateFrom(int $dateFrom): void
+    /**
+     * Set the from date.
+     *
+     * @param int
+     *   Timestamp from the date.
+     */
+    public function setDateFrom($dateFrom)
     {
+
+        if (!is_numeric($dateFrom)) {
+            throw new UnexpectedValueException(
+                'Invalid from date: ' . $dateFrom . ', value should be a timestamp'
+            );
+        }
+
         $this->dateFrom = $dateFrom;
     }
 
-    public function setDateTill(int $dateTill): void
+    /**
+     * Set the till date.
+     *
+     * @param string $dateTill
+     *   Till date to set.
+     */
+    public function setDateTill($dateTill)
     {
+
+        if (!is_numeric($dateTill)) {
+            throw new UnexpectedValueException(
+                'Invalid from date: ' . $dateTill . ', value should be a timestamp'
+            );
+        }
+
         $this->dateTill = $dateTill;
     }
 
-    public function appendToDOM(DOMELement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMELement $element)
     {
+
         $dom = $element->ownerDocument;
 
         $bookingElement = $dom->createElement('bookingperiod');
@@ -49,9 +104,14 @@ final class CultureFeed_Cdb_Data_Calendar_BookingPeriod implements CultureFeed_C
         $element->appendChild($bookingElement);
     }
 
-
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Calendar_BookingPeriod
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_Calendar_BookingPeriod
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
+
         if (empty($xmlElement->datefrom)) {
             throw new CultureFeed_Cdb_ParseException(
                 "Required attribute 'datefrom' is missing on bookingperiod"

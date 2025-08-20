@@ -1,19 +1,18 @@
 <?php
 
-declare(strict_types=1);
-
-use PHPUnit\Framework\TestCase;
-
-final class CultureFeed_Cdb_Data_FileTest extends TestCase
+class CultureFeed_Cdb_Data_FileTest extends PHPUnit_Framework_TestCase
 {
-    protected CultureFeed_Cdb_Data_File $file;
+    /**
+     * @var CultureFeed_Cdb_Data_File
+     */
+    protected $file;
 
-    public function setUp(): void
+    public function setUp()
     {
         $this->file = new CultureFeed_Cdb_Data_File();
     }
 
-    public function testAppendsFiletypeElementContainingFiletype(): void
+    public function testAppendsFiletypeElementContainingFiletype()
     {
         $this->file->setFileType('jpeg');
 
@@ -33,7 +32,7 @@ final class CultureFeed_Cdb_Data_FileTest extends TestCase
         $this->assertEquals('jpeg', $filetypeElement->textContent);
     }
 
-    public function testAppendsTitleElementContainingTitle(): void
+    public function testAppendsTitleElementContainingTitle()
     {
         // Ensure title contains a character like & which has
         // a special meaning in XML, to test for proper escaping.
@@ -54,7 +53,7 @@ final class CultureFeed_Cdb_Data_FileTest extends TestCase
         $this->assertEquals($title, $items->item(0)->textContent);
     }
 
-    public function testGetSubBrand(): void
+    public function testGetSubBrand()
     {
         $this->assertNull($this->file->getSubBrand());
 
@@ -64,7 +63,7 @@ final class CultureFeed_Cdb_Data_FileTest extends TestCase
         $this->assertEquals($subBrand, $this->file->getSubBrand());
     }
 
-    public function testAppendsSubBrand(): void
+    public function testAppendsSubBrand()
     {
         $subBrand = '2b88e17a-27fc-4310-9556-4df7188a051f';
         $this->file->setSubBrand($subBrand);
@@ -76,7 +75,10 @@ final class CultureFeed_Cdb_Data_FileTest extends TestCase
         $this->assertEquals($subBrand, $items->item(0)->textContent);
     }
 
-    private function xpathOnMediaWithFileAppended(CultureFeed_Cdb_Data_File $file): DOMXPath
+    /**
+     * @return DOMXPath
+     */
+    private function xpathOnMediaWithFileAppended(CultureFeed_Cdb_Data_File $file)
     {
         $dom = new DOMDocument();
         $mediaElement = $dom->createElement('media');
@@ -87,7 +89,7 @@ final class CultureFeed_Cdb_Data_FileTest extends TestCase
         return new DOMXPath($dom);
     }
 
-    public function testGetDescription(): void
+    public function testGetDescription()
     {
         $this->assertNull($this->file->getDescription());
 

@@ -1,49 +1,99 @@
 <?php
 
-declare(strict_types=1);
-
-final class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
+/**
+ * @class
+ * Representation of a price element in the cdb xml.
+ */
+class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
 {
-    private ?float $value;
-    private ?string $description = null;
-    private ?string $title = null;
+    /**
+     * The total price.
+     * @var float|NULL
+     */
+    protected $value;
 
-    public function __construct(float $value = null)
+    /**
+     * The description from this price.
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * Construct the price object.
+     *
+     * @param float|NULL $value
+     *   The total value.
+     */
+    public function __construct($value = null)
     {
         $this->value = $value;
     }
 
-    public function getValue(): ?float
+    /**
+     * Get the price value.
+     *
+     * @return float|null
+     */
+    public function getValue()
     {
         return $this->value;
     }
 
-    public function setValue(?float $value): void
+    /**
+     * Set the value.
+     *
+     * @param float|null $value
+     *   Value to set.
+     */
+    public function setValue($value)
     {
         $this->value = $value;
     }
 
-    public function getDescription(): ?string
+    /**
+     * Get the description
+     */
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    /**
+     * Set the description.
+     *
+     * @param string $description
+     *   Description to set.
+     */
+    public function setDescription($description)
     {
         $this->description = $description;
     }
 
-    public function getTitle(): ?string
+    /**
+     * @return string
+     */
+    public function getTitle()
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): void
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
     {
         $this->title = $title;
     }
 
-    public function appendToDOM(DOMELement $element): void
+    /**
+     * @see CultureFeed_Cdb_IElement::appendToDOM()
+     */
+    public function appendToDOM(DOMELement $element)
     {
         $dom = $element->ownerDocument;
 
@@ -57,7 +107,7 @@ final class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
 
         if (isset($this->value)) {
             $valueElement = $dom->createElement('pricevalue');
-            $valueElement->appendChild($dom->createTextNode((string) $this->value));
+            $valueElement->appendChild($dom->createTextNode($this->value));
             $priceElement->appendChild($valueElement);
         }
 
@@ -72,9 +122,14 @@ final class CultureFeed_Cdb_Data_Price implements CultureFeed_Cdb_IElement
         $element->appendChild($priceElement);
     }
 
-    public static function parseFromCdbXml(SimpleXMLElement $xmlElement): CultureFeed_Cdb_Data_Price
+    /**
+     * @see CultureFeed_Cdb_IElement::parseFromCdbXml(SimpleXMLElement
+     *     $xmlElement)
+     * @return CultureFeed_Cdb_Data_Price
+     */
+    public static function parseFromCdbXml(SimpleXMLElement $xmlElement)
     {
-        $value = !empty($xmlElement->pricevalue) ? (float) $xmlElement->pricevalue : null;
+        $value = $xmlElement->pricevalue->count() ? (string) $xmlElement->pricevalue : null;
         $price = new CultureFeed_Cdb_Data_Price($value);
 
         if (!empty($xmlElement->pricedescription)) {

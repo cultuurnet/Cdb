@@ -1,54 +1,101 @@
 <?php
 
-declare(strict_types=1);
-
 /**
- * @implements Iterator<CultureFeed_Cdb_Data_Detail>
+ * @class
+ * Representation of a list of details in the cdb xml.
  */
 abstract class CultureFeed_Cdb_Data_DetailList implements CultureFeed_Cdb_IElement, Iterator
 {
-    protected int $position = 0;
-    /** @var array<CultureFeed_Cdb_Data_Detail> */
-    protected array $details = [];
+    /**
+     * Current position in the list.
+     * @var int
+     */
+    protected $position = 0;
 
-    public function add(CultureFeed_Cdb_Data_Detail $detail): void
+    /**
+     * The list of details.
+     * @var array
+     */
+    protected $details = array();
+
+    /**
+     * Add a new detail to the list.
+     *
+     * @param CultureFeed_Cdb_Data_Detail $detail
+     *   Detail to add.
+     */
+    public function add(CultureFeed_Cdb_Data_Detail $detail)
     {
         $this->details[] = $detail;
     }
 
-    public function rewind(): void
+    /**
+     * @see Iterator::rewind()
+     */
+    public function rewind()
     {
         $this->position = 0;
     }
 
-    public function current(): CultureFeed_Cdb_Data_Detail
+    /**
+     * @see Iterator::current()
+     */
+    public function current()
     {
         return $this->details[$this->position];
     }
 
-    public function key(): int
+    /**
+     * @see Iterator::key()
+     */
+    public function key()
     {
         return $this->position;
     }
 
-    public function next(): void
+    /**
+     * @see Iterator::next()
+     */
+    public function next()
     {
         ++$this->position;
     }
 
-    public function valid(): bool
+    /**
+     * @see Iterator::valid()
+     */
+    public function valid()
     {
         return isset($this->details[$this->position]);
     }
 
-    public function getDetailByLanguage(string $language_code): ?CultureFeed_Cdb_Data_Detail
+    /**
+     * Get the details for a given language.
+     *
+     * @param string $language_code
+     *   Language code to get.
+     *
+     * @return CultureFeed_Cdb_Data_Detail|NULL
+     */
+    public function getDetailByLanguage($language_code)
     {
+        $this->rewind();
         foreach ($this as $detail) {
             if ($language_code == $detail->getLanguage()) {
                 return $detail;
             }
         }
+    }
 
-        return null;
+    /**
+     * Get the first detail.
+     *
+     * @return CultureFeed_Cdb_Data_Detail|NULL
+     */
+    public function getFirst()
+    {
+        // Reset indices to 0, 1, 2, ... before trying to get the value for index 0.
+        $details = array_values($this->details);
+        return isset($details[0]) ? $details[0] : null;
     }
 }
