@@ -222,7 +222,7 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
         return $this->ageFrom;
     }
 
-    public function setAgeFrom(int $age): void
+    public function setAgeFrom(?int $age): void
     {
         $this->ageFrom = $age;
     }
@@ -232,7 +232,7 @@ final class CultureFeed_Cdb_Item_Event extends CultureFeed_Cdb_Item_Base impleme
         return $this->ageTo;
     }
 
-    public function setAgeTo(int $age): void
+    public function setAgeTo(?int $age): void
     {
         $this->ageTo = $age;
     }
